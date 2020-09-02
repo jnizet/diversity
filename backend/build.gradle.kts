@@ -31,6 +31,7 @@ dependencies {
     }
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.ninja-squad:DbSetup")
+    testImplementation("com.squareup.okhttp3:mockwebserver")
 }
 
 tasks.withType<Test> {
