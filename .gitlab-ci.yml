@@ -1,0 +1,23 @@
+image: circleci/openjdk:11-browsers
+
+variables:
+ POSTGRES_HOST_AUTH_METHOD: trust
+
+test:
+ stage: test
+ services:
+  - name: postgres:12.2-alpine
+    alias: postgres
+ script:
+  # install postgresql client
+  - sudo apt-get install -y postgresql-client
+  # create the test db before running the tests
+  - psql -h postgres -U postgres -f backend/database/database.sql
+  # run tests and build
+  - ./gradlew check build --no-daemon --parallel
+ cache:
+  key: "${CI_COMMIT_REF_NAME}"
+  policy: pull-push
+  paths:
+   - .gradle
+   - e2e/node_modules/

@@ -5,12 +5,17 @@
   "license": "MIT",
   "scripts": {
     "e2e": "cypress open",
-    "e2e:standalone": "cypress run --headless",
-    "format": "prettier --write \"**/*.+(ts|js|json|html|css)\""
+    "e2e:headless": "cypress run --headless",
+    "start": "java -jar ../backend/build/libs/diversity.jar",
+    "e2e:standalone": "start-server-and-test start http://localhost:8080 e2e:headless",
+    "format": "prettier --write \"**/*.+(ts|js|json|html|css)\"",
+    "format:check": "prettier --check \"cypress/**/*.+(ts|js|json|html|scss)\" > prettier-result.txt 2>&1"
   },
   "devDependencies": {
     "cypress": "5.1.0",
+    "mocha-spec-json-output-reporter": "1.1.7",
     "prettier": "2.1.1",
+    "start-server-and-test": "1.11.3",
     "typescript": "4.0.2"
   },
   "prettier": {
