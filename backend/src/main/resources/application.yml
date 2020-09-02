@@ -1,0 +1,24 @@
+server:
+  compression:
+    enabled: true
+    mime-types:
+      - application/json
+      - application/javascript
+      - text/html
+      - text/css
+
+spring:
+  datasource:
+    url: jdbc:postgresql:diversity
+    username: diversity
+    password: diversity
+  flyway:
+    enabled: true
+
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:postgresql:diversity_test
+    username: diversity
+    password: diversity
