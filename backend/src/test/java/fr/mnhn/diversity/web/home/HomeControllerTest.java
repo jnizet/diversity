@@ -26,6 +26,7 @@ class HomeControllerTest {
         mockMvc.perform(get("/"))
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+            .andExpect(content().string(containsString("<title>Diversité</title>")))
             .andExpect(content().string(containsString("<h1>Hello</h1>")));
     }
 }
