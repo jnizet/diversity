@@ -22,3 +22,13 @@ spring:
     url: jdbc:postgresql:diversity_test
     username: diversity
     password: diversity
+
+---
+server:
+  port: 8081
+spring:
+  profiles: e2e
+  datasource:
+    url: jdbc:postgresql:diversity_e2e
+    username: diversity
+    password: diversity

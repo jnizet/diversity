@@ -6,8 +6,8 @@
   "scripts": {
     "e2e": "cypress open",
     "e2e:headless": "cypress run --headless",
-    "start": "java -jar ../backend/build/libs/diversity.jar",
-    "e2e:standalone": "start-server-and-test start http://localhost:8080 e2e:headless",
+    "start:e2e": "java -jar ../backend/build/libs/diversity.jar --spring.profiles.active=e2e",
+    "e2e:standalone": "start-server-and-test 'yarn start:e2e' http://localhost:8081 'yarn e2e:headless'",
     "format": "prettier --write \"**/*.+(ts|js|json|html|css)\"",
     "format:check": "prettier --check \"cypress/**/*.+(ts|js|json|html|scss)\" > prettier-result.txt 2>&1"
   },

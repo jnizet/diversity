@@ -14,3 +14,9 @@ create database diversity_test owner diversity
     lc_collate 'fr_FR.UTF-8'
     lc_ctype 'fr_FR.UTF-8'
     template=template0;
+
+create database diversity_e2e owner diversity
+    encoding 'UTF8'
+    lc_collate 'fr_FR.UTF-8'
+    lc_ctype 'fr_FR.UTF-8'
+    template=template0;
