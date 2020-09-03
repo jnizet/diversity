@@ -2,6 +2,7 @@ package fr.mnhn.diversity.service.indicator;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -52,64 +53,66 @@ public class IndicatorService {
                    .replace("{?embed}", "?embed=CALCULATIONRESULTS");
     }
 
-    private static class IndicatorBody {
-        private String shortLabel;
+    private static final class IndicatorBody {
 
-        @JsonProperty("_links")
-        private IndicatorLinks links;
+        private final String shortLabel;
+        private final IndicatorLinks links;
+
+        @JsonCreator
+        public IndicatorBody(@JsonProperty("shortLabel") String shortLabel,
+                             @JsonProperty("_links") IndicatorLinks links) {
+            this.shortLabel = shortLabel;
+            this.links = links;
+        }
 
         public String getShortLabel() {
             return shortLabel;
         }
 
-        public void setShortLabel(String shortLabel) {
-            this.shortLabel = shortLabel;
-        }
-
         public IndicatorLinks getLinks() {
             return links;
         }
-
-        public void setLinks(IndicatorLinks links) {
-            this.links = links;
-        }
     }
 
-    private static class IndicatorLinks {
-        @JsonProperty("calculationReference")
-        private List<IndicatorLink> calculationReferences;
+    private static final class IndicatorLinks {
+
+        private final List<IndicatorLink> calculationReferences;
+
+        @JsonCreator
+        public IndicatorLinks(@JsonProperty("calculationReference") List<IndicatorLink> calculationReferences) {
+            this.calculationReferences = calculationReferences;
+        }
 
         public List<IndicatorLink> getCalculationReferences() {
             return calculationReferences;
         }
-
-        public void setCalculationReferences(List<IndicatorLink> calculationReferences) {
-            this.calculationReferences = calculationReferences;
-        }
     }
 
-    private static class IndicatorLink {
-        private String href;
+    private static final class IndicatorLink {
+
+        private final String href;
+
+        @JsonCreator
+        public IndicatorLink(@JsonProperty("href") String href) {
+            this.href = href;
+        }
 
         public String getHref() {
             return href;
         }
-
-        public void setHref(String href) {
-            this.href = href;
-        }
     }
 
-    private static class IndicatorValueBody {
-        @JsonProperty("_embedded")
+    private static final class IndicatorValueBody {
+
         private Embedded embedded;
+
+        @JsonCreator
+        public IndicatorValueBody(@JsonProperty("_embedded") Embedded embedded) {
+            this.embedded = embedded;
+        }
 
         public Embedded getEmbedded() {
             return embedded;
-        }
-
-        public void setEmbedded(Embedded embedded) {
-            this.embedded = embedded;
         }
 
         public IndicatorValue getIndicatorValue() {
@@ -122,15 +125,17 @@ public class IndicatorService {
         }
     }
 
-    private static class Embedded {
-        private List<CalculationResult> calculationResults;
+    private static final class Embedded {
+
+        private final List<CalculationResult> calculationResults;
+
+        @JsonCreator
+        public Embedded(@JsonProperty("calculationResults") List<CalculationResult> calculationResults) {
+            this.calculationResults = calculationResults;
+        }
 
         public List<CalculationResult> getCalculationResults() {
             return calculationResults;
-        }
-
-        public void setCalculationResults(List<CalculationResult> calculationResults) {
-            this.calculationResults = calculationResults;
         }
 
         public CalculationResult findCalculationResult() {
@@ -142,58 +147,57 @@ public class IndicatorService {
         }
     }
 
-    private static class CalculationResult {
-        private String code;
-        private List<CalculationValue> values;
+    private static final class CalculationResult {
+        private final String code;
+        private final List<CalculationValue> values;
+
+        @JsonCreator
+        public CalculationResult(@JsonProperty("code") String code,
+                                 @JsonProperty("values") List<CalculationValue> values) {
+            this.code = code;
+            this.values = values;
+        }
 
         public String getCode() {
             return code;
         }
 
-        public void setCode(String code) {
-            this.code = code;
-        }
-
         public List<CalculationValue> getValues() {
             return values;
         }
-
-        public void setValues(List<CalculationValue> values) {
-            this.values = values;
-        }
     }
 
-    private static class CalculationValue {
-        @JsonProperty("metric")
-        private List<Metric> metrics;
+    private static final class CalculationValue {
+
+        private final List<Metric> metrics;
+
+        @JsonCreator
+        public CalculationValue(@JsonProperty("metric") List<Metric> metrics) {
+            this.metrics = metrics;
+        }
 
         public List<Metric> getMetrics() {
             return metrics;
         }
-
-        public void setMetrics(List<Metric> metrics) {
-            this.metrics = metrics;
-        }
     }
 
-    private static class Metric {
-        private String value;
-        private String unit;
+    private static final class Metric {
+        private final String value;
+        private final String unit;
+
+        @JsonCreator
+        public Metric(@JsonProperty("value") String value,
+                      @JsonProperty("unit") String unit) {
+            this.value = value;
+            this.unit = unit;
+        }
 
         public String getValue() {
             return value;
         }
 
-        public void setValue(String value) {
-            this.value = value;
-        }
-
         public String getUnit() {
             return unit;
-        }
-
-        public void setUnit(String unit) {
-            this.unit = unit;
         }
 
         public double getValueAsDouble() {
