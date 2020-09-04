@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
  */
 class PageServiceTest {
     @Test
-    public void shouldPopulatePage() throws JsonProcessingException {
+    public void shouldPopulatePage() {
         PageModel pageModel =
             PageModel.builder("Home")
                      .text("title")
@@ -63,6 +63,50 @@ class PageServiceTest {
                     Map.of(
                         "image", Element.image(7L, "carousel.1.image", "carousel1.jpg","1"),
                         "legend", Element.text(8L, "carousel.1.legend", "Image 1")
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void shouldPopulatePageWhenListDoesNotContainLeafElement() throws JsonProcessingException {
+        PageModel pageModel =
+            PageModel.builder("Home")
+                     .list(ListElement.builder("carousel")
+                                      .section(SectionElement.builder("section")
+                                                             .image("image")
+                                                             .text("legend")
+                                      )
+                     )
+                     .build();
+
+        Page page = new Page(1L, "Home", "home", List.of(
+            Element.image(5L, "carousel.0.section.image", "carousel0.jpg","0"),
+            Element.text(6L, "carousel.0.section.legend", "Image 0"),
+            Element.image(7L, "carousel.1.section.image", "carousel1.jpg","1"),
+            Element.text(8L, "carousel.1.section.legend", "Image 1")
+        ));
+
+        PageService service = new PageService();
+        Map<String, Object> result = service.buildPage(pageModel, page);
+
+        assertThat(result).isEqualTo(
+            Map.of(
+                "carousel", List.of(
+                    Map.of(
+                        "section",
+                        Map.of(
+                           "image", Element.image(5L, "carousel.0.section.image", "carousel0.jpg","0"),
+                           "legend", Element.text(6L, "carousel.0.section.legend", "Image 0")
+                        )
+                    ),
+                    Map.of(
+                        "section",
+                        Map.of(
+                            "image", Element.image(7L, "carousel.1.section.image", "carousel1.jpg","1"),
+                            "legend", Element.text(8L, "carousel.1.section.legend", "Image 1")
+                        )
                     )
                 )
             )

@@ -103,28 +103,84 @@ public class PageService {
 
         @Override
         public Void visitList(ListElement list) {
+            // start by adding the empty list to the result
             List<Object> theList = new ArrayList<>();
             result.put(list.getName(), theList);
+
+            // if the list model has no element (which should never happen), there is nothing to add to the list
             if (list.getElements().isEmpty()) {
                 return null;
             }
-            String firstElementName = list.getElements().get(0).getName();
-            String listKey = prefix + list.getName();
-            boolean stop = false;
-            for (int i = 0; !stop; i++) {
-                String elementsPrefix = listKey + "." + i + ".";
-                String firstElementKey = elementsPrefix + firstElementName;
-                if (!page.getElements().containsKey(firstElementKey)) {
-                    stop = true;
-                } else {
+
+            // look for a child element which is not a list nor a section (i.e. a leaf element). This element would
+            // thus have the keys
+            // ....listName.0.elementName,
+            // ....listName.1.elementName
+            // etc.
+            list.getElements().stream().filter(PageElement::isLeaf).findAny().ifPresentOrElse(leafElement -> {
+                // if we have such a leaf element, we loop until we don't find a key named ....listName.N.elementName
+                String listKey = prefix + list.getName();
+                String leafElementName = leafElement.getName();
+                boolean stop = false;
+                for (int i = 0; !stop; i++) {
+                    String elementsPrefix = listKey + "." + i + ".";
+                    String leafElementKey = elementsPrefix + leafElementName;
+                    if (!page.getElements().containsKey(leafElementKey)) {
+                        // the key is not found, so we there is no element to add to the list anymore
+                        stop = true;
+                    } else {
+                        PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix);
+                        for (PageElement element : list.getElements()) {
+                            element.accept(listVisitor);
+                        }
+                        theList.add(listVisitor.getResult());
+                    }
+                }
+            }, () -> {
+                // there is no leaf element. This should happen very rarely: it means there are only sections or lists
+                // in the list. Since those only exist in the model, to structure the page, but not in the database
+                // as page elements, we have to find the biggest value of N in the keys looking like like
+                // ....listName.N....
+                // This is less efficient because we have to iterate through the
+                // entries of the map
+                String listKey = prefix + list.getName();
+                String keyPrefix = listKey + ".";
+                int maxListIndex = findMaxListIndex(keyPrefix);
+                for (int i = 0; i <= maxListIndex; i++) {
+                    String elementsPrefix = keyPrefix + i + ".";
                     PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix);
                     for (PageElement element : list.getElements()) {
                         element.accept(listVisitor);
                     }
                     theList.add(listVisitor.getResult());
                 }
-            }
+            });
+
             return null;
+        }
+
+        private int findMaxListIndex(String keyPrefix) {
+            return page.getElements()
+                       .values()
+                       .stream()
+                       .map(Element::getKey)
+                       .filter(key -> key.startsWith(keyPrefix))
+                       .mapToInt(key -> {
+                           String end = key.substring(keyPrefix.length());
+                           int dotIndex = end.indexOf('.');
+                           if (dotIndex < 0) {
+                               return -1;
+                           }
+                           String indexAsString = end.substring(0, dotIndex);
+                           try {
+                               return Integer.parseInt(indexAsString);
+                           }
+                           catch (NumberFormatException e) {
+                               return -1;
+                           }
+                       })
+                       .max()
+                       .orElse(-1);
         }
 
         @Override

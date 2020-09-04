@@ -25,6 +25,10 @@ public abstract class PageElement {
 
     public abstract <T> T accept(PageElementVisitor<T> visitor);
 
+    public boolean isLeaf() {
+        return !(this instanceof ContainerElement);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
