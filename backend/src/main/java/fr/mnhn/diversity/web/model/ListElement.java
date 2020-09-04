@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.web.home.model;
+package fr.mnhn.diversity.web.model;
 
 /**
  * A list element of a page model. Such an element can be repeated 0 to N times inside the actual page instance,

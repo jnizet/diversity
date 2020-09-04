@@ -20,6 +20,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("com.ninja-squad:DbSetup")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -30,7 +31,6 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("com.ninja-squad:DbSetup")
     testImplementation("com.squareup.okhttp3:mockwebserver")
 }
 

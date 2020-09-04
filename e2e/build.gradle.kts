@@ -60,6 +60,7 @@ tasks {
         inputs.dir("cypress")
         inputs.file("package.json")
         inputs.file("cypress.json")
+        inputs.file("${project(":backend").buildDir}/libs/diversity.jar")
         outputs.file("cypress-results.json")
     }
 

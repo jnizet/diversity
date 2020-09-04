@@ -85,4 +85,14 @@ class PageRepositoryTest {
         assertThat(tourism.getHref()).isEqualTo("https://tourism.fr");
         assertThat(tourism.getText()).isEqualTo("Tourism office");
     }
+
+    @Test
+    void shouldFindByName() {
+        TRACKER.skipNextLaunch();
+        Page page = repository.findByName("Home").get();
+
+        assertThat(page.getId()).isEqualTo(1L);
+        assertThat(page.getName()).isEqualTo("Home");
+        assertThat(page.getElements()).hasSize(3);
+    }
 }

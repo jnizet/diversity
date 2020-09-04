@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.web.home.model;
+package fr.mnhn.diversity.web.model;
 
 /**
  * A section of a page, only useful to group some page elements together

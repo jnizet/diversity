@@ -33,11 +33,11 @@ public abstract class Element {
         return new Text(id, key, text);
     }
 
-    public static Element image(Long id, String key, String imageId, String alt) {
+    public static Image image(Long id, String key, String imageId, String alt) {
         return new Image(id, key, imageId, alt);
     }
 
-    public static Element link(Long id, String key, String text, String href) {
+    public static Link link(Long id, String key, String text, String href) {
         return new Link(id, key, text, href);
     }
 

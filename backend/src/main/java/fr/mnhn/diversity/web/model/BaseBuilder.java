@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.web.home.model;
+package fr.mnhn.diversity.web.model;
 
 /**
  * Base class for builders which have a name and a description

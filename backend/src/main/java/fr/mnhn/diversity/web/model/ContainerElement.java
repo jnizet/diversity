@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.web.home.model;
+package fr.mnhn.diversity.web.model;
 
 import java.util.List;
 import java.util.Objects;

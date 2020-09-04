@@ -8,9 +8,9 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.mnhn.diversity.repository.Element;
 import fr.mnhn.diversity.repository.Page;
-import fr.mnhn.diversity.web.home.model.ListElement;
-import fr.mnhn.diversity.web.home.model.PageModel;
-import fr.mnhn.diversity.web.home.model.SectionElement;
+import fr.mnhn.diversity.web.model.ListElement;
+import fr.mnhn.diversity.web.model.PageModel;
+import fr.mnhn.diversity.web.model.SectionElement;
 import org.junit.jupiter.api.Test;
 
 /**

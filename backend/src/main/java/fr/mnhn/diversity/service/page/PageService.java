@@ -8,20 +8,23 @@ import java.util.Map;
 import fr.mnhn.diversity.repository.Element;
 import fr.mnhn.diversity.repository.ElementType;
 import fr.mnhn.diversity.repository.Page;
-import fr.mnhn.diversity.web.home.model.ImageElement;
-import fr.mnhn.diversity.web.home.model.LinkElement;
-import fr.mnhn.diversity.web.home.model.ListElement;
-import fr.mnhn.diversity.web.home.model.PageElement;
-import fr.mnhn.diversity.web.home.model.PageElementVisitor;
-import fr.mnhn.diversity.web.home.model.PageModel;
-import fr.mnhn.diversity.web.home.model.SectionElement;
-import fr.mnhn.diversity.web.home.model.TextElement;
+import fr.mnhn.diversity.web.model.ImageElement;
+import fr.mnhn.diversity.web.model.LinkElement;
+import fr.mnhn.diversity.web.model.ListElement;
+import fr.mnhn.diversity.web.model.PageElement;
+import fr.mnhn.diversity.web.model.PageElementVisitor;
+import fr.mnhn.diversity.web.model.PageModel;
+import fr.mnhn.diversity.web.model.SectionElement;
+import fr.mnhn.diversity.web.model.TextElement;
+import org.springframework.stereotype.Service;
 
 /**
  * A service allowing to populate a page from a persistent Page instance and its PageModel
  * @author JB Nizet
  */
+@Service
 public class PageService {
+
     /**
      * Returns a Map containing the structure of the page, matching with the given model.
      * The map keys are the names of the PageModel elements.
