@@ -14,7 +14,7 @@ test:
   # create the test db before running the tests
   - psql -h postgres -U postgres -f backend/database/database.sql
   # run tests and build
-  - ./gradlew check build --no-daemon --parallel
+  - sudo ./gradlew check build --no-daemon --parallel
  cache:
   key: "${CI_COMMIT_REF_NAME}"
   policy: pull-push
