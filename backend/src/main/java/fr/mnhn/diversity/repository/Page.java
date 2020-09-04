@@ -1,7 +1,11 @@
 package fr.mnhn.diversity.repository;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * A page, with its elements, as stored in the database
@@ -24,15 +28,18 @@ public final class Page {
     private final String modelName;
 
     /**
-     * The elements of the page, sorted by their key
+     * The elements of the page, indexed by their key
      */
-    private final List<Element> elements;
+    private final Map<String, Element> elements;
 
-    public Page(Long id, String name, String modelName, List<Element> elements) {
+    public Page(Long id, String name, String modelName, Collection<Element> elements) {
         this.id = id;
         this.name = name;
         this.modelName = modelName;
-        this.elements = Collections.unmodifiableList(elements);
+        this.elements = Collections.unmodifiableMap(
+            elements.stream()
+                    .collect(Collectors.toMap(Element::getKey, Function.identity()))
+        );
     }
 
     public Long getId() {
@@ -47,7 +54,37 @@ public final class Page {
         return modelName;
     }
 
-    public List<Element> getElements() {
+    public Map<String, Element> getElements() {
         return elements;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Page)) {
+            return false;
+        }
+        Page page = (Page) o;
+        return Objects.equals(id, page.id) &&
+            Objects.equals(name, page.name) &&
+            Objects.equals(modelName, page.modelName) &&
+            Objects.equals(elements, page.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, modelName, elements);
+    }
+
+    @Override
+    public String toString() {
+        return "Page{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", modelName='" + modelName + '\'' +
+            ", elements=" + elements +
+            '}';
     }
 }

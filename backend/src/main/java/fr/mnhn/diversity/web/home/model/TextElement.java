@@ -19,6 +19,11 @@ public final class TextElement extends PageElement {
     }
 
     @Override
+    public <T> T accept(PageElementVisitor<T> visitor) {
+        return visitor.visitText(this);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

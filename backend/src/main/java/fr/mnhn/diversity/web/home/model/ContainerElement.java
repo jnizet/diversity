@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * Base class for page elements which contain other page elements
  * @author JB Nizet
  */
-public class ContainerElement extends PageElement {
+public abstract class ContainerElement extends PageElement {
     private final List<PageElement> elements;
 
     protected ContainerElement(String name,

@@ -1,10 +1,12 @@
 package fr.mnhn.diversity.repository;
 
+import java.util.Objects;
+
 /**
  * An element of a page, as stored in the database
  * @author JB Nizet
  */
-public class Element {
+public abstract class Element {
 
     /**
      * The technical ID of the element
@@ -21,46 +23,22 @@ public class Element {
      */
     private final String key;
 
-    /**
-     * The text of the element, for elements of type TEXT and LINK. null otherwise
-     */
-    private final String text;
-
-    /**
-     * The image ID of the IMAGE element, null otherwise
-     */
-    private final String imageId;
-
-    /**
-     * The alt of the IMAGE element, null otherwise
-     */
-    private final String alt;
-
-    /**
-     * The href of the LINK element, null otherwise
-     */
-    private final String href;
-
-    private Element(Long id, ElementType type, String key, String text, String imageId, String alt, String href) {
+    protected Element(Long id, ElementType type, String key) {
         this.id = id;
         this.type = type;
         this.key = key;
-        this.text = text;
-        this.imageId = imageId;
-        this.alt = alt;
-        this.href = href;
     }
 
-    public static Element text(Long id, String key, String text) {
-        return new Element(id, ElementType.TEXT, key, text, null, null, null);
+    public static Text text(Long id, String key, String text) {
+        return new Text(id, key, text);
     }
 
     public static Element image(Long id, String key, String imageId, String alt) {
-        return new Element(id, ElementType.IMAGE, key, null, imageId, alt, null);
+        return new Image(id, key, imageId, alt);
     }
 
     public static Element link(Long id, String key, String text, String href) {
-        return new Element(id, ElementType.LINK, key, text, null, null, href);
+        return new Link(id, key, text, href);
     }
 
     public Long getId() {
@@ -75,19 +53,31 @@ public class Element {
         return key;
     }
 
-    public String getText() {
-        return text;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Element)) {
+            return false;
+        }
+        Element element = (Element) o;
+        return Objects.equals(id, element.id) &&
+            type == element.type &&
+            Objects.equals(key, element.key);
     }
 
-    public String getImageId() {
-        return imageId;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, key);
     }
 
-    public String getAlt() {
-        return alt;
-    }
-
-    public String getHref() {
-        return href;
+    @Override
+    public String toString() {
+        return "Element{" +
+            "id=" + id +
+            ", type=" + type +
+            ", key='" + key + '\'' +
+            '}';
     }
 }

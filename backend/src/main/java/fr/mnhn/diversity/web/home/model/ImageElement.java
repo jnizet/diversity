@@ -11,6 +11,11 @@ public final class ImageElement extends PageElement {
     }
 
     @Override
+    public <T> T accept(PageElementVisitor<T> visitor) {
+        return visitor.visitImage(this);
+    }
+
+    @Override
     public String toString() {
         return "ImageElement{} " + super.toString();
     }

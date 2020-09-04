@@ -11,6 +11,11 @@ public final class ListElement extends ContainerElement {
     }
 
     @Override
+    public <T> T accept(PageElementVisitor<T> visitor) {
+        return visitor.visitList(this);
+    }
+
+    @Override
     public String toString() {
         return "ListElement{} " + super.toString();
     }

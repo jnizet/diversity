@@ -65,20 +65,20 @@ class PageRepositoryTest {
         assertThat(page.getModelName()).isEqualTo("home");
         assertThat(page.getElements()).hasSize(3);
 
-        Element landscape = page.getElements().get(0);
+        Image landscape = (Image) page.getElements().get("landscape");
         assertThat(landscape.getType()).isEqualTo(ElementType.IMAGE);
         assertThat(landscape.getId()).isEqualTo(13L);
         assertThat(landscape.getKey()).isEqualTo("landscape");
         assertThat(landscape.getImageId()).isEqualTo("image1");
         assertThat(landscape.getAlt()).isEqualTo("Beautiful landscape");
 
-        Element title = page.getElements().get(1);
+        Text title = (Text) page.getElements().get("title");
         assertThat(title.getType()).isEqualTo(ElementType.TEXT);
         assertThat(title.getId()).isEqualTo(11L);
         assertThat(title.getKey()).isEqualTo("title");
         assertThat(title.getText()).isEqualTo("Welcome to MNHN");
 
-        Element tourism = page.getElements().get(2);
+        Link tourism = (Link) page.getElements().get("tourism");
         assertThat(tourism.getType()).isEqualTo(ElementType.LINK);
         assertThat(tourism.getId()).isEqualTo(12L);
         assertThat(tourism.getKey()).isEqualTo("tourism");

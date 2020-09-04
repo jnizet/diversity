@@ -10,6 +10,11 @@ public final class SectionElement extends ContainerElement {
     }
 
     @Override
+    public <T> T accept(PageElementVisitor<T> visitor) {
+        return visitor.visitSection(this);
+    }
+
+    @Override
     public String toString() {
         return "SectionElement{} " + super.toString();
     }

@@ -11,6 +11,11 @@ public final class LinkElement extends PageElement {
     }
 
     @Override
+    public <T> T accept(PageElementVisitor<T> visitor) {
+        return visitor.visitLink(this);
+    }
+
+    @Override
     public String toString() {
         return "LinkElement{} " + super.toString();
     }

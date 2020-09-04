@@ -6,7 +6,7 @@ import java.util.Objects;
  * Common base class for all page elements
  * @author JB Nizet
  */
-public class PageElement {
+public abstract class PageElement {
     private final String name;
     private final String description;
 
@@ -22,6 +22,8 @@ public class PageElement {
     public String getDescription() {
         return description;
     }
+
+    public abstract <T> T accept(PageElementVisitor<T> visitor);
 
     @Override
     public boolean equals(Object o) {
