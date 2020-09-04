@@ -1,3 +1,7 @@
+diversity:
+  database:
+    host-and-port: localhost:5432
+
 server:
   compression:
     enabled: true
@@ -19,7 +23,7 @@ spring:
 spring:
   profiles: test
   datasource:
-    url: jdbc:postgresql:diversity_test
+    url: jdbc:postgresql://${diversity.database.host-and-port}/diversity_test
     username: diversity
     password: diversity
 
@@ -29,6 +33,6 @@ server:
 spring:
   profiles: e2e
   datasource:
-    url: jdbc:postgresql:diversity_e2e
+    url: jdbc:postgresql://${diversity.database.host-and-port}/diversity_e2e
     username: diversity
     password: diversity

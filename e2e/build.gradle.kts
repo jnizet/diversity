@@ -48,7 +48,13 @@ tasks {
     // This is not a yarn_e2e task because the task to run is `yarn e2e:standalone`
     // and tasks with colons are not supported
     val e2e by registering(YarnTask::class) {
-        args = listOf("run", "e2e:standalone")
+        // On CI, we need to start the app with a different postgres host
+        // so we have a dedicated task in the package.json
+        if (project.findProperty("CI") != null) {
+            args = listOf("run", "e2e:standalone:ci")
+        } else {
+            args = listOf("run", "e2e:standalone")
+        }
         dependsOn(prepare)
         dependsOn(":backend:bootJar")
         inputs.dir("cypress")

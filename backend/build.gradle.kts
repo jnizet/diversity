@@ -36,6 +36,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    // On CI, Gitlab will spin a Postgres service on host "postgres"
+    if (project.findProperty("CI") != null) {
+        systemProperty("diversity.database.host-and-port", "postgres:5432")
+    }
 }
 
 tasks.bootJar {
