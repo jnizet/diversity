@@ -51,20 +51,22 @@ public class PageRepository {
                 pageData = new PageData(rs.getLong("id"), rs.getString("name"), rs.getString("model_name"));
             }
             long elementId = rs.getLong("element_id");
-            ElementType type = ElementType.valueOf(rs.getString("type"));
-            String key = rs.getString("key");
-            switch (type) {
-                case TEXT:
-                    elements.add(Element.text(elementId, key, rs.getString("text")));
-                    break;
-                case IMAGE:
-                    elements.add(Element.image(elementId, key, rs.getString("image_id"), rs.getString("alt")));
-                    break;
-                case LINK:
-                    elements.add(Element.link(elementId, key, rs.getString("text"), rs.getString("href")));
-                    break;
-                default:
-                    throw new IllegalStateException("Unknown element type: " + type);
+            if (!rs.wasNull()) { // in case a page has no element
+                ElementType type = ElementType.valueOf(rs.getString("type"));
+                String key = rs.getString("key");
+                switch (type) {
+                    case TEXT:
+                        elements.add(Element.text(elementId, key, rs.getString("text")));
+                        break;
+                    case IMAGE:
+                        elements.add(Element.image(elementId, key, rs.getString("image_id"), rs.getString("alt")));
+                        break;
+                    case LINK:
+                        elements.add(Element.link(elementId, key, rs.getString("text"), rs.getString("href")));
+                        break;
+                    default:
+                        throw new IllegalStateException("Unknown element type: " + type);
+                }
             }
         }
 

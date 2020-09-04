@@ -6,6 +6,8 @@
 <body>
   <header>
     Layout header
+    <a th:href="@{/}">Accueil</a>
+    <a th:href="@{/apropos}">À propos</a>
   </header>
   <div th:replace="${content}">
     <p>Layout content</p>

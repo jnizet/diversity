@@ -1,8 +1,7 @@
 package fr.mnhn.diversity.e2e;
 
 import static com.ninja_squad.dbsetup.Operations.*;
-import static fr.mnhn.diversity.repository.ElementType.IMAGE;
-import static fr.mnhn.diversity.repository.ElementType.TEXT;
+import static fr.mnhn.diversity.repository.ElementType.*;
 
 import javax.sql.DataSource;
 
@@ -11,6 +10,7 @@ import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.generator.SequenceValueGenerator;
 import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import com.ninja_squad.dbsetup.operation.Operation;
+import fr.mnhn.diversity.web.about.AboutModel;
 import fr.mnhn.diversity.web.home.HomeModel;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -43,13 +43,16 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .build();
 
         Long home = 1L;
+        Long about = 2L;
         Operation pages =
             insertInto("page")
                 .columns("id", "name", "model_name")
                 .values(home, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName())
+                .values(about, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName())
                 .build();
 
         SequenceValueGenerator elementIdGenerator = ValueGenerators.sequence();
+
         Operation homeElements =
             insertInto("page_element")
                 .withDefaultValue("page_id", home)
@@ -73,11 +76,32 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(IMAGE, "science.image", null, "600x400?text=science+participative", "Science participative", null)
                 .build();
 
+        Operation aboutElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", about)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href")
+                .values(TEXT, "header.title", "Pourquoi un compteur de la biodiversité en outre-mer ?", null, null, null)
+                .values(TEXT, "header.subtitle", "Partager la connaissance et encourager chacun...", null, null, null)
+                .values(IMAGE, "header.background", null, "600x400?text=fond", "Fond", null)
+                .values(TEXT, "header.paragraphs.0.text", "Les territoires d'outre-mer présentent...", null, null, null)
+                .values(TEXT, "header.paragraphs.1.text", "La mission du compteur est de...", null, null, null)
+                .values(TEXT, "carousel.0.title", "Partager la connaissance scientifique", null, null, null)
+                .values(TEXT, "carousel.0.text", "Quelles sont les espèces présentes sur ce territoire...", null, null, null)
+                .values(IMAGE, "carousel.0.image", null, "600x400?text=carousel+1", "1", null)
+                .values(LINK, "carousel.0.link", "Voir tous les indicateurs", null, null, "/indicators")
+                .values(TEXT, "partners.title", "Ils contribuent au compteur de la biodiversité", null, null, null)
+                .values(IMAGE, "partners.partners.0.logo", null, "50?text=logo1", "Logo1", null)
+                .values(IMAGE, "partners.partners.1.logo", null, "50?text=logo2", "Logo2", null)
+                .values(IMAGE, "partners.partners.2.logo", null, "50?text=logo3", "Logo3", null)
+                .build();
+
         new DbSetup(destination, sequenceOf(
             deleteAll,
             territories,
             pages,
-            homeElements
+            homeElements,
+            aboutElements
         )).launch();
     }
 }

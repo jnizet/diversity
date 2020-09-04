@@ -1,5 +1,7 @@
 package fr.mnhn.diversity.web.home;
 
+import static fr.mnhn.diversity.web.WebTestUtil.image;
+import static fr.mnhn.diversity.web.WebTestUtil.text;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,11 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import fr.mnhn.diversity.repository.Element;
-import fr.mnhn.diversity.repository.Image;
 import fr.mnhn.diversity.repository.Page;
 import fr.mnhn.diversity.repository.PageRepository;
-import fr.mnhn.diversity.repository.Text;
 import fr.mnhn.diversity.service.page.PageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,13 +85,5 @@ class HomeControllerTest {
             .andExpect(content().string(containsString("<h2>Presentation</h2>")))
             .andExpect(content().string(containsString("<h2>Indicators</h2>")))
             .andExpect(content().string(containsString("<h2>Science</h2>")));
-    }
-
-    private Text text(String text) {
-        return Element.text(0L, "text", text);
-    }
-
-    private Image image(String imageId) {
-        return Element.image(0L, "image", imageId, "alt");
     }
 }
