@@ -19,8 +19,8 @@ public class TerritoryRepository {
     }
 
     public List<Territory> list() {
-        return jdbcTemplate.query("select id, name from territory order by name", (rs, rowNum) -> {
-            return new Territory(rs.getLong("id"), rs.getString("name"));
+        return jdbcTemplate.query("select id, name, slug from territory order by name", (rs, rowNum) -> {
+            return new Territory(rs.getLong("id"), rs.getString("name"), rs.getString("slug"));
         });
     }
 }

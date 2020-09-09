@@ -1,5 +1,9 @@
 delete from page_element;
 delete from page;
+delete from territory;
+
+insert into territory (id, name, slug) values (1, 'Réunion', 'reunion');
+insert into territory (id, name, slug) values (2, 'Saint-Pierre-Et-Miquelon', 'st-pierre-et-miquelon');
 
 insert into page (id, name, model_name) values (1, 'Home', 'home');
 insert into page (id, name, model_name) values (2, 'About', 'about');

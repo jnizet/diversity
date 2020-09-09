@@ -37,9 +37,9 @@ class TerritoryRepositoryTest {
                 sequenceOf(
                     deleteAllFrom("territory"),
                     insertInto("territory")
-                        .columns("id", "name")
-                        .values(1L, "Réunion")
-                        .values(2L, "Guadeloupe")
+                        .columns("id", "name", "slug")
+                        .values(1L, "Réunion", "reunion")
+                        .values(2L, "Guadeloupe", "guadeloupe")
                         .build()
                 )
             );
@@ -50,8 +50,8 @@ class TerritoryRepositoryTest {
     void shouldListTerritories() {
         TRACKER.skipNextLaunch();
         assertThat(repository.list()).containsExactly(
-            new Territory(2L, "Guadeloupe"),
-            new Territory(1L, "Réunion")
+            new Territory(2L, "Guadeloupe", "guadeloupe"),
+            new Territory(1L, "Réunion", "reunion")
         );
     }
 }

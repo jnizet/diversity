@@ -36,10 +36,10 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Operation deleteAll = deleteAllFrom("territory", "page_element", "page");
         Operation territories =
             insertInto("territory")
-                .columns("id", "name")
-                .values(1L, "Guadeloupe")
-                .values(2L, "Martinique")
-                .values(3L, "Réunion")
+                .columns("id", "name", "slug")
+                .values(1L, "Guadeloupe", "guadeloupe")
+                .values(2L, "Saint-Pierre-Et-Miquelon", "st-pierre-et-miquelon")
+                .values(3L, "Réunion", "reunion")
                 .build();
 
         Long home = 1L;

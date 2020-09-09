@@ -1,6 +1,7 @@
 create table territory (
     id   BIGINT primary key,
-    name VARCHAR not null
+    name VARCHAR not null,
+    slug VARCHAR not null unique
 );
 
 create sequence territory_seq start with 1000;
