@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title th:replace="${title}">Layout Title</title>
-</head>
-<body>
-  <header>
-    Layout header
-    <a th:href="@{/}">Accueil</a>
-    <a th:href="@{/apropos}">À propos</a>
-  </header>
-  <div th:replace="${content}">
-    <p>Layout content</p>
-  </div>
-  <footer>
-    Layout footer
-  </footer>
-</body>
+  <head>
+    <title th:replace="${title}">Layout Title</title>
+  </head>
+  <body>
+    <header>
+      Layout header
+      <a th:href="@{/}">Accueil</a>
+      <a th:href="@{/apropos}">À propos</a>
+    </header>
+    <div th:replace="${content}">
+      <p>Layout content</p>
+    </div>
+    <footer>Layout footer</footer>
+  </body>
 </html>
