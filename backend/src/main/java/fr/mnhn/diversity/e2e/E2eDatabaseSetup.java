@@ -1,7 +1,7 @@
 package fr.mnhn.diversity.e2e;
 
 import static com.ninja_squad.dbsetup.Operations.*;
-import static fr.mnhn.diversity.repository.ElementType.*;
+import static fr.mnhn.diversity.model.ElementType.*;
 
 import javax.sql.DataSource;
 
@@ -10,8 +10,8 @@ import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.generator.SequenceValueGenerator;
 import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import com.ninja_squad.dbsetup.operation.Operation;
-import fr.mnhn.diversity.web.about.AboutModel;
-import fr.mnhn.diversity.web.home.HomeModel;
+import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.home.HomeModel;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
