@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+  <head>
+    <title th:text="${name.text}">Territoire</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+
+  <body>
+    <main>
+      <h1 th:text="${name.text}">Nom du territoire</h1>
+
+      <!-- Carte d'identité -->
+      <div class="identity">
+        <h2 th:text="${identity.title.text}">Titre de présentation</h2>
+        <p th:text="${identity.presentation.text}">Texte de présentation</p>
+        <img th:src="@{/images/{imageId}/image(imageId=*{identity.infography.imageId})}" th:alt="*{identity.infography.alt}" />
+      </div>
+
+      <!-- Lieux d'intérêt -->
+      <div class="interests">
+        <h2 th:text="${interests.title.text}">Title</h2>
+        <div th:each="imageElement : ${interests.images}" th:object="${imageElement.image}">
+          <img th:src="@{/images/{imageId}/image(imageId=*{imageId})}" th:alt="*{alt}" />
+        </div>
+      </div>
+
+      <!-- Indicateurs -->
+      <div class="indicators">
+        <h2 th:text="${indicators.title.text}">Title</h2>
+        <div th:each="indicator : ${indicators.indicators}">
+          <h3 th:text="${indicator.name.text}"></h3>
+          <p th:text="${indicator.value.text}"></p>
+          <img th:src="@{/images/{imageId}/image(imageId=${indicator.image.imageId})}" th:alt="${indicator.image.alt}" />
+          <a th:href="@{${indicator.link.href}}" th:text="${indicator.link.text}">Link</a>
+        </div>
+      </div>
+
+      <!-- Espèces -->
+      <div class="species">
+        <h2 th:text="${species.title.text}">Title</h2>
+        <div th:each="speciesItem : ${species.species}">
+          <h3 th:text="${speciesItem.name.text}"></h3>
+          <p th:text="${speciesItem.description.text}"></p>
+          <img th:src="@{/images/{imageId}/image(imageId=${speciesItem.image.imageId})}" th:alt="${speciesItem.image.alt}" />
+        </div>
+      </div>
+
+      <!-- Écosystème -->
+      <div class="ecosystems">
+        <h2 th:text="${ecosystems.title.text}">Title</h2>
+        <div th:each="ecosystem : ${ecosystems.ecosystems}">
+          <h3 th:text="${ecosystem.name.text}"></h3>
+          <p th:text="${ecosystem.description.text}"></p>
+          <img th:src="@{/images/{imageId}/image(imageId=${ecosystem.image.imageId})}" th:alt="${ecosystem.image.alt}" />
+        </div>
+      </div>
+
+      <!-- Frise chronologie -->
+      <div class="timeline">
+        <h2 th:text="${timeline.title.text}">Title</h2>
+        <div th:each="event : ${timeline.events}">
+          <h3 th:text="${event.name.text}"></h3>
+          <p th:text="${event.description.text}"></p>
+        </div>
+      </div>
+
+      <!-- Risques et menaces -->
+      <div class="risks">
+        <h2 th:text="${risks.title.text}">Title</h2>
+        <div th:each="risk : ${risks.risks}">
+          <h3 th:text="${risk.name.text}"></h3>
+          <p th:text="${risk.description.text}"></p>
+          <img th:src="@{/images/{imageId}/image(imageId=${risk.image.imageId})}" th:alt="${risk.image.alt}" />
+        </div>
+      </div>
+
+      <!-- Bandeau autre territoire -->
+      <div class="other-territory">
+        <img th:src="@{/images/{imageId}/image(imageId=${other.image.imageId})}" th:alt="${other.image.alt}" />
+        <a th:href="@{*{other.link.href}}" th:text="*{other.link.text}">Link</a>
+      </div>
+    </main>
+  </body>
+</html>

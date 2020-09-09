@@ -22,12 +22,23 @@ insert into image (id, content_type, original_file_name) values
     (31, 'image/png', 'fiche-technique.png'),
     (32, 'image/png', 'comprendre.png'),
     (33, 'image/png', 'vignette1.png'),
-    (34, 'image/png', 'vignette2.png')
+    (34, 'image/png', 'vignette2.png'),
+    (101, 'image/png', 'interest1.png'),
+    (102, 'image/png', 'interest2.png'),
+    (103, 'image/png', 'indicators1.png'),
+    (104, 'image/png', 'papangue.png'),
+    (105, 'image/png', 'other.png'),
+    (106, 'image/png', 'reunion.png'),
+    (107, 'image/png', 'st-pierre-et-miquelon.png.png'),
+    (108, 'image/png', 'tourbieres.png'),
+    (109, 'image/png', 'ressources-naturelles.png');
 
 insert into page (id, name, model_name) values
    (1, 'Home', 'home'),
    (2, 'About', 'about'),
-   (3, 'recifs', 'ecogesture');
+   (3, 'recifs', 'ecogesture'),
+   (10, 'reunion', 'territory'),
+   (11, 'st-pierre-et-miquelon', 'territory');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href) values
 --     Home
@@ -38,14 +49,14 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href) val
     (15, 1, 'IMAGE', 'carousel.images.2.image', null, 3, '3', null),
     (16, 1, 'TEXT', 'carousel.territoriesButton', 'Découvrir les territoires', null, null, null),
     (17, 1, 'TEXT', 'presentation.title', 'Le compteur de biodiversité Outre-Mer', null, null, null),
-    (18, 1, 'TEXT', 'presentation.text', 'Les territoires d''outre-mer présentent une biodiversité perticulièrement riche et variée, ...', null, null, null),
+    (18, 1, 'TEXT', 'presentation.text', 'Les territoires d''outre-mer présentent une biodiversité particulièrement riche et variée, ...', null, null, null),
     (19, 1, 'IMAGE', 'presentation.image', null, 4, 'À propos', null),
     (20, 1, 'TEXT', 'presentation.more', 'En savoir plus', null, null, null),
-    (21, 1, 'TEXT', 'indicators.title', 'Une biodiversité unique et fragile, protégons-la !', null, null, null),
-    (22, 1, 'TEXT', 'indicators.text', 'La concervation de la biodiversité dépend de sa connaissance ...', null, null, null),
+    (21, 1, 'TEXT', 'indicators.title', 'Une biodiversité unique et fragile, protégeons-la !', null, null, null),
+    (22, 1, 'TEXT', 'indicators.text', 'La conservation de la biodiversité dépend de sa connaissance ...', null, null, null),
     (23, 1, 'IMAGE', 'indicators.image', null, 5, 'Indicateurs', null),
     (24, 1, 'TEXT', 'science.title', 'Du « super-corail » pour sauver les récifs', null, null, null),
-    (25, 1, 'TEXT', 'science.text', 'Au sein de l''archipel des Seychelles le premier projet de restauration des récifs coraliens à grande échelle a débuté.', null, null, null),
+    (25, 1, 'TEXT', 'science.text', 'Au sein de l''archipel des Seychelles le premier projet de restauration des récifs coralliens à grande échelle a débuté.', null, null, null),
     (26, 1, 'IMAGE', 'science.image', null, 6, 'Science participative', null),
 
 --     About
@@ -76,6 +87,67 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href) val
     (90, 3, 'IMAGE', 'action.cards.0.icon', null, 33, 'Crème solaire', null),
     (91, 3, 'TEXT', 'action.cards.0.description', 'Je choisis une crème solaire non nocive pour l''environnement', null, null, null),
     (92, 3, 'IMAGE', 'action.cards.1.icon', null, 34, 'Bateau', null),
-    (93, 3, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null);
+    (93, 3, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null),
+
+--     Territory
+--     Reunion
+    (200, 10, 'TEXT', 'name',  'La Réunion', null, null, null),
+    (201, 10, 'TEXT', 'identity.title',  'Un climat tropical', null, null, null),
+    (202, 10, 'TEXT', 'identity.presentation',  'À l''ouest de l''Océan Indien...', null, null, null),
+    (203, 10, 'IMAGE', 'identity.infography', null, 106, 'Infographie Réunion', null),
+    (204, 10, 'TEXT', 'interests.title', 'À la découverte d''endroits emblématiques', null, null, null),
+    (205, 10, 'IMAGE', 'interests.images.0.image', null, 101, '1', null),
+    (206, 10, 'IMAGE', 'interests.images.1.image', null, 102, '2', null),
+    (207, 10, 'TEXT', 'indicators.title', 'Indicateurs', null, null, null),
+    (208, 10, 'TEXT', 'indicators.indicators.0.name', 'Espèces inventoriées à la Réunion', null, null, null),
+    (209, 10, 'TEXT', 'indicators.indicators.0.value', '4123', null, null, null),
+    (210, 10, 'IMAGE', 'indicators.indicators.0.image', null, 103, 'Espèces inventoriées à la Réunion', null),
+    (211, 10, 'LINK', 'indicators.indicators.0.link', 'Voir les espèces inventoriées ', null, null, '/indicators/especes-inventoriee-la-reunion'),
+    (212, 10, 'TEXT', 'indicators.indicators.1.name', 'Surface des forêts', null, null, null),
+    (213, 10, 'TEXT', 'indicators.indicators.1.value', '219000', null, null, null),
+    (214, 10, 'IMAGE', 'indicators.indicators.1.image', null, 103, 'Surface des forêts', null),
+    (215, 10, 'LINK', 'indicators.indicators.1.link', 'Voir les forêts ', null, null, '/indicators/forêts-la-reunion'),
+    (216, 10, 'TEXT', 'species.title', 'Espèces', null, null, null),
+    (217, 10, 'TEXT', 'species.species.0.name', 'Papangue', null, null, null),
+    (218, 10, 'TEXT', 'species.species.0.description', 'Dernier rapace de la Réunion', null, null, null),
+    (219, 10, 'IMAGE', 'species.species.0.image', null, 104, 'Papangue', null),
+    (220, 10, 'TEXT', 'ecosystems.title', 'Écosystèmes', null, null, null),
+    (221, 10, 'TEXT', 'timeline.title', 'Frise chronologique', null, null, null),
+    (222, 10, 'TEXT', 'risks.title', 'Risques et enjeux', null, null, null),
+    (223, 10, 'IMAGE', 'other.image', null, 105, 'Autre territoire', null),
+    (224, 10, 'LINK', 'other.link', 'Portail local de l''environnement', null, null, 'https://oeil.nc'),
+
+--     St-Pierre-Et-Miquelon
+    (300, 11, 'TEXT', 'name',  'Saint-Pierre-et-Miquelon', null, null, null),
+    (301, 11, 'TEXT', 'identity.title',  'Un climat subarctique, froid et humide', null, null, null),
+    (302, 11, 'TEXT', 'identity.presentation',  'Au sud de Terre-Neuve (Canada)...', null, null, null),
+    (303, 11, 'IMAGE', 'identity.infography', null, 107, 'Infographie Saint-Pierre-et-Miquelon', null),
+    (304, 11, 'TEXT', 'interests.title', 'À la découverte d''endroits emblématiques', null, null, null),
+    (305, 11, 'IMAGE', 'interests.images.0.image', null, 101, '1', null),
+    (306, 11, 'IMAGE', 'interests.images.1.image', null, 102, '2', null),
+    (308, 11, 'TEXT', 'indicators.title', 'Indicateurs', null, null, null),
+    (309, 11, 'TEXT', 'indicators.indicators.0.name', 'Espèces inventoriées à Saint-Pierre-Et-Miquelon', null, null, null),
+    (310, 11, 'TEXT', 'indicators.indicators.0.value', '2083', null, null, null),
+    (311, 11, 'IMAGE', 'indicators.indicators.0.image', null, 103, 'Espèces inventoriées à Saint-Pierre-Et-Miquelon', null),
+    (312, 11, 'LINK', 'indicators.indicators.0.link', 'Voir les espèces inventoriées ', null, null, '/indicators/especes-inventoriee-st-pierre-et-miquelon'),
+    (313, 11, 'TEXT', 'species.title', 'Espèces', null, null, null),
+    (314, 11, 'TEXT', 'species.species.0.name', 'Cerf de Virginie', null, null, null),
+    (315, 11, 'TEXT', 'species.species.0.description', 'Peu de mammifères terrestres...', null, null, null),
+    (316, 11, 'IMAGE', 'species.species.0.image', null, 104, 'Cerf de Virginie', null),
+    (317, 11, 'TEXT', 'ecosystems.title', 'Écosystèmes', null, null, null),
+    (318, 11, 'TEXT', 'ecosystems.ecosystems.0.name', 'Les marais tourbeux', null, null, null),
+    (319, 11, 'TEXT', 'ecosystems.ecosystems.0.description', 'Ces zones humides...', null, null, null),
+    (320, 11, 'IMAGE', 'ecosystems.ecosystems.0.image', null, 108, 'Tourbières', null),
+    (321, 11, 'TEXT', 'timeline.title', 'Frise chronologique', null, null, null),
+    (322, 11, 'TEXT', 'timeline.events.0.name', '1535', null, null, null),
+    (323, 11, 'TEXT', 'timeline.events.0.description', 'Prise de possession française...', null, null, null),
+    (324, 11, 'TEXT', 'timeline.events.1.name', '17ème siècle', null, null, null),
+    (325, 11, 'TEXT', 'timeline.events.1.description', 'Premières installations permanentes...', null, null, null),
+    (326, 11, 'TEXT', 'risks.title', 'Risques et enjeux', null, null, null),
+    (327, 11, 'TEXT', 'risks.risks.0.name', 'Les ressources naturelles', null, null, null),
+    (328, 11, 'TEXT', 'risks.risks.0.description', 'Le territoire est pour l''instant...', null, null, null),
+    (329, 11, 'IMAGE', 'risks.risks.0.image', null, 109, 'Ressources naturelles', null),
+    (330, 11, 'IMAGE', 'other.image', null, 105, 'Autre territoire', null),
+    (331, 11, 'LINK', 'other.link', 'Portail local de l''environnement', null, null, 'https://oeil.nc');
 
 commit;
