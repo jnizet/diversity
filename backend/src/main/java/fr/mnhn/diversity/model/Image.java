@@ -11,20 +11,20 @@ public final class Image extends Element {
     /**
      * The image ID of the element
      */
-    private final String imageId;
+    private final Long imageId;
 
     /**
      * The alt of the element
      */
     private final String alt;
 
-    public Image(Long id, String key, String imageId, String alt) {
+    public Image(Long id, String key, Long imageId, String alt) {
         super(id, ElementType.IMAGE, key);
         this.imageId = imageId;
         this.alt = alt;
     }
 
-    public String getImageId() {
+    public Long getImageId() {
         return imageId;
     }
 

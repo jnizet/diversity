@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 
 /**
  * Tests for {@link PageRepository}
@@ -33,16 +34,20 @@ class PageRepositoryTest {
             new DbSetup(
                 new DataSourceDestination(dataSource),
                 sequenceOf(
-                    deleteAllFrom("page_element", "page"),
+                    deleteAllFrom("page_element", "page", "image"),
                     insertInto("page")
                         .columns("id", "name", "model_name")
                         .values(1L, "Home", "home")
+                        .build(),
+                    insertInto("image")
+                        .columns("id", "content_type", "original_file_name")
+                        .values(1L, MediaType.IMAGE_JPEG_VALUE, "beautiful-landscape.jpg")
                         .build(),
                     insertInto("page_element")
                         .columns("id", "page_id", "type", "key", "text", "image_id", "alt", "href")
                         .values(11L, 1L, "TEXT", "title", "Welcome to MNHN", null, null, null)
                         .values(12L, 1L, "LINK", "tourism", "Tourism office", null, null, "https://tourism.fr")
-                        .values(13L, 1L, "IMAGE", "landscape", null, "image1", "Beautiful landscape", null)
+                        .values(13L, 1L, "IMAGE", "landscape", null, 1L, "Beautiful landscape", null)
                         .build()
                     )
             );
@@ -70,7 +75,7 @@ class PageRepositoryTest {
         assertThat(landscape.getType()).isEqualTo(ElementType.IMAGE);
         assertThat(landscape.getId()).isEqualTo(13L);
         assertThat(landscape.getKey()).isEqualTo("landscape");
-        assertThat(landscape.getImageId()).isEqualTo("image1");
+        assertThat(landscape.getImageId()).isEqualTo(1L);
         assertThat(landscape.getAlt()).isEqualTo("Beautiful landscape");
 
         Text title = (Text) page.getElements().get("title");

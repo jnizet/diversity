@@ -2,7 +2,7 @@ diversity:
   database:
     host-and-port: localhost:5432
   images:
-    directory: /tmp/diversity-images
+    directory: ./e2e/images
 
 server:
   compression:
@@ -30,11 +30,15 @@ spring:
     password: diversity
 
 ---
-server:
-  port: 8081
 spring:
   profiles: e2e
   datasource:
     url: jdbc:postgresql://${diversity.database.host-and-port}/diversity_e2e
     username: diversity
     password: diversity
+server:
+  port: 8081
+diversity:
+  images:
+    directory: ./e2e/images
+

@@ -49,26 +49,26 @@ class HomeControllerTest {
                 "carousel", Map.of(
                     "title", text("Hello"),
                     "images", List.of(
-                        Map.of("image", image("carousel1")),
-                        Map.of("image", image("carousel2"))
+                        Map.of("image", image(1L)),
+                        Map.of("image", image(2L))
                     ),
                     "text", text("carousel text"),
                     "territoriesButton", text("carousel button")
                 ),
                 "presentation", Map.of(
                     "title", text("Presentation"),
-                    "image", image("presentation"),
+                    "image", image(3L),
                     "text", text("presentation text"),
                     "more", text("More")
                 ),
                 "indicators", Map.of(
                     "title", text("Indicators"),
-                    "image", image("indicators"),
+                    "image", image(4L),
                     "text", text("indicators text")
                 ),
                 "science", Map.of(
                     "title", text("Science"),
-                    "image", image("science"),
+                    "image", image(5L),
                     "text", text("science text")
                 )
             )

@@ -60,6 +60,8 @@ class ImageControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.IMAGE_JPEG))
                .andExpect(header().longValue(HttpHeaders.CONTENT_LENGTH, bytes.length))
+               .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"test.jpg\""))
+               .andExpect(header().exists(HttpHeaders.CACHE_CONTROL))
                .andExpect(content().bytes(bytes));
     }
 

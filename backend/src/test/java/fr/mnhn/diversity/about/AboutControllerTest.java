@@ -48,7 +48,7 @@ class AboutControllerTest {
                 "header", Map.of(
                     "title", text("About"),
                     "subtitle", text("Hello"),
-                    "background", image("background"),
+                    "background", image(1L),
                     "paragraphs", List.of(
                         Map.of("text", text("paragraph1")),
                         Map.of("text", text("paragraph2"))
@@ -59,13 +59,13 @@ class AboutControllerTest {
                         "title", text("Slide1"),
                         "text", text("Text1"),
                         "link", link("Link1"),
-                        "image", image("Image1")
+                        "image", image(2L)
                     )
                 ),
                 "partners", Map.of(
                     "title", text("Partners"),
                     "partners", List.of(
-                        Map.of("logo", image("Logo1"))
+                        Map.of("logo", image(3L))
                     )
                 )
             )

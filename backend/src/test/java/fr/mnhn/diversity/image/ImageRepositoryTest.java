@@ -35,7 +35,7 @@ class ImageRepositoryTest {
             new DbSetup(
                 new DataSourceDestination(dataSource),
                 sequenceOf(
-                    deleteAllFrom("image"),
+                    deleteAllFrom("page_element", "page", "image"),
                     insertInto("image")
                         .columns("id", "content_type", "original_file_name")
                         .values(1L, "image/jpeg", "test.jpg")

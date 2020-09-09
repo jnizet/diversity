@@ -14,7 +14,7 @@ public class ModelTestingUtil {
         return Element.text(0L, "text", text);
     }
 
-    public static Image image(String imageId) {
+    public static Image image(Long imageId) {
         return Element.image(0L, "image", imageId, "alt");
     }
 

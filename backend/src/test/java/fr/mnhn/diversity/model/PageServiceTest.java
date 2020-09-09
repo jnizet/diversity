@@ -33,12 +33,12 @@ class PageServiceTest {
 
         Page page = new Page(1L, "Home", "home", List.of(
             Element.text(1L, "title", "Diversity"),
-            Element.image(2L, "welcome.welcomeImage", "welcome.jpg", "Welcome image"),
+            Element.image(2L, "welcome.welcomeImage", 1L, "Welcome image"),
             Element.text(3L, "welcome.welcomeLegend", "Welcome here"),
             Element.link(4L, "welcome.tourismLink", "Click here", "https://tourism.fr"),
-            Element.image(5L, "carousel.0.image", "carousel0.jpg","0"),
+            Element.image(5L, "carousel.0.image", 2L,"0"),
             Element.text(6L, "carousel.0.legend", "Image 0"),
-            Element.image(7L, "carousel.1.image", "carousel1.jpg","1"),
+            Element.image(7L, "carousel.1.image", 3L,"1"),
             Element.text(8L, "carousel.1.legend", "Image 1")
         ));
 
@@ -49,17 +49,17 @@ class PageServiceTest {
             Map.of(
                 "title", Element.text(1L, "title", "Diversity"),
                 "welcome", Map.of(
-                    "welcomeImage", Element.image(2L, "welcome.welcomeImage", "welcome.jpg", "Welcome image"),
+                    "welcomeImage", Element.image(2L, "welcome.welcomeImage", 1L, "Welcome image"),
                     "welcomeLegend", Element.text(3L, "welcome.welcomeLegend", "Welcome here"),
                     "tourismLink", Element.link(4L, "welcome.tourismLink", "Click here", "https://tourism.fr")
                 ),
                 "carousel", List.of(
                     Map.of(
-                        "image", Element.image(5L, "carousel.0.image", "carousel0.jpg","0"),
+                        "image", Element.image(5L, "carousel.0.image", 2L,"0"),
                         "legend", Element.text(6L, "carousel.0.legend", "Image 0")
                     ),
                     Map.of(
-                        "image", Element.image(7L, "carousel.1.image", "carousel1.jpg","1"),
+                        "image", Element.image(7L, "carousel.1.image", 3L,"1"),
                         "legend", Element.text(8L, "carousel.1.legend", "Image 1")
                     )
                 )
@@ -80,9 +80,9 @@ class PageServiceTest {
                      .build();
 
         Page page = new Page(1L, "Home", "home", List.of(
-            Element.image(5L, "carousel.0.section.image", "carousel0.jpg","0"),
+            Element.image(5L, "carousel.0.section.image", 1L,"0"),
             Element.text(6L, "carousel.0.section.legend", "Image 0"),
-            Element.image(7L, "carousel.1.section.image", "carousel1.jpg","1"),
+            Element.image(7L, "carousel.1.section.image", 2L,"1"),
             Element.text(8L, "carousel.1.section.legend", "Image 1")
         ));
 
@@ -95,14 +95,14 @@ class PageServiceTest {
                     Map.of(
                         "section",
                         Map.of(
-                           "image", Element.image(5L, "carousel.0.section.image", "carousel0.jpg","0"),
+                           "image", Element.image(5L, "carousel.0.section.image", 1L, "0"),
                            "legend", Element.text(6L, "carousel.0.section.legend", "Image 0")
                         )
                     ),
                     Map.of(
                         "section",
                         Map.of(
-                            "image", Element.image(7L, "carousel.1.section.image", "carousel1.jpg","1"),
+                            "image", Element.image(7L, "carousel.1.section.image", 2L, "1"),
                             "legend", Element.text(8L, "carousel.1.section.legend", "Image 1")
                         )
                     )

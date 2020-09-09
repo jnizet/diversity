@@ -11,7 +11,7 @@
       <div
         style="width: 600px; height: 400px"
         th:attr="aria-label=${header.background.alt}"
-        th:styleappend="'background-image: url(https://via.placeholder.com/' + ${header.background.imageId} + ')'"
+        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=${header.background.imageId})} + ')'"
       >
         <h1 th:text="${header.title.text}"></h1>
         <p th:text="${header.subtitle.text}"></p>
@@ -24,7 +24,7 @@
         th:object="${carouselElement}"
         style="width: 600px; height: 400px"
         th:attr="aria-label=*{image.alt}"
-        th:styleappend="'background-image: url(https://via.placeholder.com/' + *{image.imageId} + ')'"
+        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{image.imageId})} + ')'"
       >
         <h2 th:text="*{title.text}">Title</h2>
         <p th:text="*{text.text}">Title</p>
@@ -34,7 +34,7 @@
       <div>
         <h2 th:text="${partners.title.text}"></h2>
         <div th:each="partner : ${partners.partners}">
-          <img th:src="'https://via.placeholder.com/' + ${partner.logo.imageId}" th:alt="${partner.logo.alt}" />
+          <img th:src="@{/images/{imageId}/image(imageId=${partner.logo.imageId})}" th:alt="${partner.logo.alt}" />
         </div>
       </div>
     </main>
