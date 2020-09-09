@@ -11,6 +11,7 @@ import com.ninja_squad.dbsetup.generator.SequenceValueGenerator;
 import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import com.ninja_squad.dbsetup.operation.Operation;
 import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -33,7 +34,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Operation deleteAll = deleteAllFrom("territory", "page_element", "page", "image");
         Operation territories =
             insertInto("territory")
@@ -45,11 +46,13 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
         Long home = 1L;
         Long about = 2L;
+        Long ecogesture1 = 3L;
         Operation pages =
             insertInto("page")
                 .columns("id", "name", "model_name")
                 .values(home, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName())
                 .values(about, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName())
+                .values(ecogesture1, "recifs", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
                 .build();
 
         String png = MediaType.IMAGE_PNG_VALUE;
@@ -66,6 +69,11 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(8L, png, "logo1.png")
                 .values(9L, png, "logo2.png")
                 .values(10L, png, "logo3.png")
+                .values(30L, png, "ecogeste.png")
+                .values(31L, png, "fiche-technique.png")
+                .values(32L, png, "comprendre.png")
+                .values(33L, png, "vignette1.png")
+                .values(34L, png, "vignette2.png")
                 .build();
 
         SequenceValueGenerator elementIdGenerator = ValueGenerators.sequence();
@@ -113,6 +121,25 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(IMAGE, "partners.partners.2.logo", null, 10L, "Logo3", null)
                 .build();
 
+        Operation ecogesture1Elements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", ecogesture1)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href")
+                .values(TEXT, "presentation.name", "Protégeons les récifs coralliens", null, null, null)
+                .values(TEXT, "presentation.category", "Loisirs", null, null, null)
+                .values(TEXT, "presentation.description", "Sinon ils vont mourir", null, null, null)
+                .values(IMAGE, "presentation.image", null, 30L, "Jolis coraux", null)
+                .values(IMAGE, "presentation.file", null, 31L, "Fiche technique", null)
+                .values(TEXT, "understand.title", "Comprendre : un écosystème très riche", null, null, null)
+                .values(TEXT, "understand.text", "Les récifs coralliens affichent plus d'un tiers des espèces marines connues...", null, null, null)
+                .values(IMAGE, "understand.image", null, 32L, "Comprendre", null)
+                .values(TEXT, "action.title", "Les bons gestes pour protéger les récifs", null, null, null)
+                .values(IMAGE, "action.cards.0.icon", null, 33L, "Crème solaire", null)
+                .values(TEXT, "action.cards.0.description", "Je choisis une crème solaire non nocive pour l'environnement", null, null, null)
+                .values(IMAGE, "action.cards.1.icon", null, 34L, "Bateau", null)
+                .values(TEXT, "action.cards.1.description", "En bâteau, je ne jette pas l'ancre à proximité de récifs", null, null, null)
+                .build();
 
         new DbSetup(destination, sequenceOf(
             deleteAll,
@@ -120,7 +147,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             images,
             pages,
             homeElements,
-            aboutElements
+            aboutElements,
+            ecogesture1Elements
         )).launch();
     }
 }

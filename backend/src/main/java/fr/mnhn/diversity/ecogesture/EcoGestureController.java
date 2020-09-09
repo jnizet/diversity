@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.home;
+package fr.mnhn.diversity.ecogesture;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.model.Page;
@@ -7,30 +7,34 @@ import fr.mnhn.diversity.model.PageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * The Controller for the home page
+ * Controller used to display the eco-gesture details pages and the eco-gestures home page
  * @author JB Nizet
  */
 @Controller
-@RequestMapping("/")
 @Transactional
-public class HomeController {
-
+@RequestMapping("/ecogestes")
+public class EcoGestureController {
     private final PageRepository pageRepository;
     private final PageService pageService;
 
-    public HomeController(PageRepository pageRepository, PageService pageService) {
+    public EcoGestureController(PageRepository pageRepository, PageService pageService) {
         this.pageRepository = pageRepository;
         this.pageService = pageService;
     }
 
-    @GetMapping
-    public ModelAndView home() {
-        Page page = pageRepository.findByNameAndModel(HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName())
+    /**
+     * Displays the details of an eco gesture.
+     * @param pageName the name of the page
+     */
+    @GetMapping("/{pageName}")
+    public ModelAndView detail(@PathVariable("pageName") String pageName) {
+        Page page = pageRepository.findByNameAndModel(pageName, EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
-        return new ModelAndView("home", pageService.buildPage(HomeModel.HOME_PAGE_MODEL, page));
+        return new ModelAndView("ecogesture/ecogesture", pageService.buildPage(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page));
     }
 }

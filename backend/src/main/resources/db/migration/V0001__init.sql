@@ -17,7 +17,8 @@ create sequence image_seq start with 1000;
 create table page (
     id         BIGINT primary key,
     name       VARCHAR not null,
-    model_name VARCHAR not null
+    model_name VARCHAR not null,
+    constraint page_name_model_name_un unique (name, model_name)
 );
 
 create sequence page_seq start with 1000;
@@ -33,7 +34,7 @@ create table page_element (
     href     VARCHAR,
     constraint page_id_fk foreign key (page_id) references page(id),
     constraint image_id_fk foreign key (image_id) references image(id),
-    constraint key_un unique (page_id, key)
+    constraint page_element_key_un unique (page_id, key)
 );
 
 create sequence page_element_seq start with 1000;

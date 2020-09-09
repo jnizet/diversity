@@ -1,0 +1,57 @@
+package fr.mnhn.diversity.ecogesture;
+
+import fr.mnhn.diversity.model.meta.ListElement;
+import fr.mnhn.diversity.model.meta.PageModel;
+import fr.mnhn.diversity.model.meta.SectionElement;
+import fr.mnhn.diversity.model.meta.TextElement;
+
+/**
+ * The model for eco-gestures.
+ * @author JB Nizet
+ */
+public final class EcoGestureModel {
+
+    /**
+     * The model of an ecogesture. This model has several (8 initially) instances in database, and more can be created.
+     * These eco-gesture models are displayed one by one on the eco-gesture details page, but parts of them are also
+     * displayed in the eco-gestures home page.
+     */
+    public static final PageModel ECO_GESTURE_PAGE_MODEL =
+        PageModel.builder("ecogesture")
+                 .section(SectionElement
+                              .builder("presentation")
+                              .describedAs("Présentation de l'écogeste, et informations affichées sur sa vignette dans la page d'accueil des écogests")
+                              .text("name", "Nom de l'écogeste")
+                              // TODO add some information to the model, or use a different element type, because it should be edited as a select box
+                              .text("category", "Catégorie de l'écogeste")
+                              .text("description", "Description de l'écogeste, affichée sur sa vignette")
+                              .image("image", "Illustration de l'écogeste")
+                              // TODO should we use an image? I guess it doesn't hurt, as long as we add a PDF format
+                              .image("file", "Fiche technique de l'écogeste")
+                 )
+                 .section(SectionElement
+                              .builder("understand")
+                              .describedAs("Comprendre l'écogeste")
+                              .text("title", "Titre de la rubrique")
+                              .text(TextElement.builder("text").describedAs("Texte de la rubrique").multiLine())
+                              .image("image", "Illustration de la rubrique")
+                              // TODO add indicator
+                 )
+                 .section(SectionElement
+                              .builder("action")
+                              .describedAs("Écogeste en actions")
+                              .text("title", "Titre de la rubrique")
+                              .list(
+                                  ListElement.builder("cards").describedAs("Vignettes")
+                                      .image("icon", "Icône de la vignette")
+                                      .text(TextElement.builder("description").describedAs("Icône de la vignette").multiLine())
+                              )
+                 )
+                 // the last two sections seem to be common to all ecogestures, so thay're not modeled here.
+                 // either we will hard-code everything there, or well specify a specific "sub-page" model that is
+                 // common to all eco-gesture pages
+                 .build();
+
+    private EcoGestureModel() {
+    }
+}

@@ -25,7 +25,7 @@ public class PageRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Optional<Page> get(Long id) {
+    public Optional<Page> findById(Long id) {
         String sql =
             "select page.id, page.name, page.model_name, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
                 " from page" +
@@ -34,13 +34,13 @@ public class PageRepository {
         return jdbcTemplate.query(sql, Map.of("id", id), this::extractPage);
     }
 
-    public Optional<Page> findByName(String name) {
+    public Optional<Page> findByNameAndModel(String name, String modelName) {
         String sql =
             "select page.id, page.name, page.model_name, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
                 " from page" +
                 " left outer join page_element el on page.id = el.page_id" +
-                " where page.name = :name";
-        return jdbcTemplate.query(sql, Map.of("name", name), this::extractPage);
+                " where page.name = :name and page.model_name = :modelName";
+        return jdbcTemplate.query(sql, Map.of("name", name, "modelName", modelName), this::extractPage);
     }
 
     private Optional<Page> extractPage(ResultSet rs) throws SQLException {

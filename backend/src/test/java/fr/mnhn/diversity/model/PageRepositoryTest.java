@@ -58,13 +58,13 @@ class PageRepositoryTest {
     @Test
     void shouldGetEmptyIfWrongId() {
         TRACKER.skipNextLaunch();
-        assertThat(repository.get(123456789L)).isEmpty();
+        assertThat(repository.findById(123456789L)).isEmpty();
     }
 
     @Test
     void shouldGetPage() {
         TRACKER.skipNextLaunch();
-        Page page = repository.get(1L).get();
+        Page page = repository.findById(1L).get();
 
         assertThat(page.getId()).isEqualTo(1L);
         assertThat(page.getName()).isEqualTo("Home");
@@ -93,9 +93,9 @@ class PageRepositoryTest {
     }
 
     @Test
-    void shouldFindByName() {
+    void shouldFindByNameAndModel() {
         TRACKER.skipNextLaunch();
-        Page page = repository.findByName("Home").get();
+        Page page = repository.findByNameAndModel("Home", "home").get();
 
         assertThat(page.getId()).isEqualTo(1L);
         assertThat(page.getName()).isEqualTo("Home");

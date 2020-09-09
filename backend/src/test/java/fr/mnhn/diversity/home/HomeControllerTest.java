@@ -43,7 +43,8 @@ class HomeControllerTest {
     @BeforeEach
     void prepare() {
         Page page = new Page(1L, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName(), Collections.emptyList());
-        when(mockPageRepository.findByName(HomeModel.HOME_PAGE_NAME)).thenReturn(Optional.of(page));
+        when(mockPageRepository.findByNameAndModel(HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName()))
+            .thenReturn(Optional.of(page));
         when(mockPageService.buildPage(HomeModel.HOME_PAGE_MODEL, page)).thenReturn(
             Map.of(
                 "carousel", Map.of(

@@ -17,11 +17,17 @@ insert into image (id, content_type, original_file_name) values
     (7, 'image/png', 'fond.png'),
     (8, 'image/png', 'logo1.png'),
     (9, 'image/png', 'logo2.png'),
-    (10, 'image/png', 'logo3.png');
+    (10, 'image/png', 'logo3.png'),
+    (30, 'image/png', 'ecogeste.png'),
+    (31, 'image/png', 'fiche-technique.png'),
+    (32, 'image/png', 'comprendre.png'),
+    (33, 'image/png', 'vignette1.png'),
+    (34, 'image/png', 'vignette2.png')
 
 insert into page (id, name, model_name) values
    (1, 'Home', 'home'),
-   (2, 'About', 'about');
+   (2, 'About', 'about'),
+   (3, 'recifs', 'ecogesture');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href) values
 --     Home
@@ -55,6 +61,21 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href) val
     (50, 2, 'TEXT', 'partners.title', 'Ils contribuent au compteur de la biodiversité', null, null, null),
     (51, 2, 'IMAGE', 'partners.partners.0.logo', null, 8, 'Logo1', null),
     (52, 2, 'IMAGE', 'partners.partners.1.logo', null, 9, 'Logo2', null),
-    (53, 2, 'IMAGE', 'partners.partners.2.logo', null, 10, 'Logo3', null);
+    (53, 2, 'IMAGE', 'partners.partners.2.logo', null, 10, 'Logo3', null),
+
+--     Ecogesture 1
+    (81, 3, 'TEXT', 'presentation.name', 'Protégeons les récifs coralliens', null, null, null),
+    (82, 3, 'TEXT', 'presentation.category', 'Loisirs', null, null, null),
+    (83, 3, 'TEXT', 'presentation.description', 'Sinon ils vont mourir', null, null, null),
+    (84, 3, 'IMAGE', 'presentation.image', null, 30, 'Jolis coraux', null),
+    (85, 3, 'IMAGE', 'presentation.file', null, 31, 'Fiche technique', null),
+    (86, 3, 'TEXT', 'understand.title', 'Comprendre : un écosystème très riche', null, null, null),
+    (87, 3, 'TEXT', 'understand.text', 'Les récifs coralliens affichent plus d''un tiers des espèces marines connues...', null, null, null),
+    (88, 3, 'IMAGE', 'understand.image', null, 32, 'Comprendre', null),
+    (89, 3, 'TEXT', 'action.title', 'Les bons gestes pour protéger les récifs', null, null, null),
+    (90, 3, 'IMAGE', 'action.cards.0.icon', null, 33, 'Crème solaire', null),
+    (91, 3, 'TEXT', 'action.cards.0.description', 'Je choisis une crème solaire non nocive pour l''environnement', null, null, null),
+    (92, 3, 'IMAGE', 'action.cards.1.icon', null, 34, 'Bateau', null),
+    (93, 3, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null);
 
 commit;

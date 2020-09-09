@@ -42,7 +42,8 @@ class AboutControllerTest {
     @BeforeEach
     void prepare() {
         Page page = new Page(1L, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName(), Collections.emptyList());
-        when(mockPageRepository.findByName(AboutModel.ABOUT_PAGE_NAME)).thenReturn(Optional.of(page));
+        when(mockPageRepository.findByNameAndModel(AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName()))
+            .thenReturn(Optional.of(page));
         when(mockPageService.buildPage(AboutModel.ABOUT_PAGE_MODEL, page)).thenReturn(
             Map.of(
                 "header", Map.of(
