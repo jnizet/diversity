@@ -5,6 +5,7 @@ insert into page (id, name, model_name) values (1, 'Home', 'home');
 insert into page (id, name, model_name) values (2, 'About', 'about');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href) values
+--     Home
     (11, 1, 'TEXT', 'carousel.title', 'Ensemble protégeons la diversité des Outre-Mer', null, null, null),
     (12, 1, 'TEXT', 'carousel.text', 'Partez à la rencontre des espèces et des écosystèmes des territoires français d''outre-mer', null, null, null),
     (13, 1, 'IMAGE', 'carousel.images.0.image', null, '600x400?text=carousel+1', '1', null),
@@ -22,6 +23,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href) val
     (25, 1, 'TEXT', 'science.text', 'Au sein de l''archipel des Seychelles le premier projet de restauration des récifs coraliens à grande échelle a débuté.', null, null, null),
     (26, 1, 'IMAGE', 'science.image', null, '600x400?text=science+participative', 'Science participative', null),
 
+--     About
     (41, 2, 'TEXT', 'header.title', 'Pourquoi un compteur de la biodiversité en outre-mer ?', null, null, null),
     (42, 2, 'TEXT', 'header.subtitle', 'Partager la connaissance et encourager chacun...', null, null, null),
     (43, 2, 'IMAGE', 'header.background', null, '600x400?text=fond', 'Fond', null),
