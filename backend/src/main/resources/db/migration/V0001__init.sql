@@ -28,3 +28,11 @@ create table page_element (
 );
 
 create sequence page_element_seq start with 1000;
+
+create table image (
+    id                 BIGINT primary key,
+    content_type       VARCHAR not null,
+    original_file_name VARCHAR not null
+);
+
+create sequence image_seq start with 1000;

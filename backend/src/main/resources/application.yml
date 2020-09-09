@@ -1,6 +1,8 @@
 diversity:
   database:
     host-and-port: localhost:5432
+  images:
+    directory: /tmp/diversity-images
 
 server:
   compression:
