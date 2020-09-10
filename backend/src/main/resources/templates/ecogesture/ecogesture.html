@@ -10,6 +10,7 @@
     <main>
       <h1 th:text="${presentation.name.text}">Title</h1>
       <p th:text="${presentation.category.text}">Category</p>
+      <p th:text="${presentation.description.text}">Description</p>
       <img th:src="@{/images/{imageId}/image(imageId=${presentation.image.imageId})}" th:alt="${presentation.image.alt}" />
       <p>
         <a th:href="@{/images/{imageId}/image(imageId=${presentation.file.imageId})}">Télécharger la fiche technique</a>

@@ -48,6 +48,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long home = 1L;
         Long about = 2L;
         Long ecogesture1 = 3L;
+        Long ecogestureHome = 4L;
         Long reunion = 10L;
         Long stPierreEtMiquelon = 11L;
         Operation pages =
@@ -56,6 +57,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(home, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName())
                 .values(about, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName())
                 .values(ecogesture1, "recifs", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
+                .values(ecogestureHome, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName())
                 .values(reunion, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName())
                 .values(stPierreEtMiquelon, "st-pierre-et-miquelon", TerritoryModel.TERRITORY_PAGE_MODEL.getName())
                 .build();
@@ -79,6 +81,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(32L, png, "comprendre.png")
                 .values(33L, png, "vignette1.png")
                 .values(34L, png, "vignette2.png")
+                .values(91L, png, "ecogestes.png")
                 .values(101L, png, "interest1.png")
                 .values(102L, png, "interest2.png")
                 .values(103L, png, "indicators1.png")
@@ -155,6 +158,16 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "action.cards.1.description", "En bâteau, je ne jette pas l'ancre à proximité de récifs", null, null, null)
                 .build();
 
+        Operation ecogestureHomeElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", ecogestureHome)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href")
+                .values(TEXT, "title", "Réinventons notre façon de vivre et de voyager grâce aux écogestes", null, null, null)
+                .values(TEXT, "presentation", "Lorem ipsum dolor", null, null, null)
+                .values(IMAGE, "image", null, 91L, "Ecogestes", null)
+                .build();
+
         Operation reunionElements =
             insertInto("page_element")
                 .withDefaultValue("page_id", reunion)
@@ -221,6 +234,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             homeElements,
             aboutElements,
             ecogesture1Elements,
+            ecogestureHomeElements,
             reunionElements,
             stPierreEtMiquelonElements
         )).launch();

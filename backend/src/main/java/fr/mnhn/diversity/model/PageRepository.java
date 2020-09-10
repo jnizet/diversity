@@ -3,9 +3,12 @@ package fr.mnhn.diversity.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -43,13 +46,25 @@ public class PageRepository {
         return jdbcTemplate.query(sql, Map.of("name", name, "modelName", modelName), this::extractPage);
     }
 
-    private Optional<Page> extractPage(ResultSet rs) throws SQLException {
-        PageData pageData = null;
-        List<Element> elements = new ArrayList<>();
+    public List<Page> findByModel(String modelName) {
+        String sql =
+            "select page.id, page.name, page.model_name, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
+                " from page" +
+                " left outer join page_element el on page.id = el.page_id" +
+                " where page.model_name = :modelName";
+        return jdbcTemplate.query(sql, Map.of("modelName", modelName), this::extractPages);
+    }
+
+    private List<Page> extractPages(ResultSet rs) throws SQLException {
+        Map<Long, PageData> pageDataById = new HashMap<>();
+        Map<Long, List<Element>> elementsById = new HashMap<>();
         while (rs.next()) {
-            if (pageData == null) {
-                pageData = new PageData(rs.getLong("id"), rs.getString("name"), rs.getString("model_name"));
-            }
+            Long pageId = rs.getLong("id");
+            String name = rs.getString("name");
+            String modelName = rs.getString("model_name");
+            pageDataById.computeIfAbsent(pageId, id -> new PageData(id, name, modelName));
+            List<Element> elements = elementsById.computeIfAbsent(pageId, id -> new ArrayList<>());
+
             long elementId = rs.getLong("element_id");
             if (!rs.wasNull()) { // in case a page has no element
                 ElementType type = ElementType.valueOf(rs.getString("type"));
@@ -70,10 +85,19 @@ public class PageRepository {
             }
         }
 
-        return pageData == null ? Optional.empty() : Optional.of(new Page(pageData.id,
-                                                                          pageData.name,
-                                                                          pageData.modelName,
-                                                                          elements));
+        return pageDataById.values()
+                           .stream()
+                           .sorted(Comparator.comparing(pageData -> pageData.id))
+                           .map(pageData -> new Page(pageData.id,
+                                                     pageData.name,
+                                                     pageData.modelName,
+                                                     elementsById.get(pageData.id)))
+                           .collect(Collectors.toList());
+    }
+
+    private Optional<Page> extractPage(ResultSet rs) throws SQLException {
+        List<Page> pages = extractPages(rs);
+        return pages.isEmpty() ? Optional.empty() : Optional.of(pages.get(0));
     }
 
     private static class PageData {

@@ -24,7 +24,7 @@ public final class EcoGestureModel {
                               .text("name", "Nom de l'écogeste")
                               // TODO add some information to the model, or use a different element type, because it should be edited as a select box
                               .text("category", "Catégorie de l'écogeste")
-                              .text("description", "Description de l'écogeste, affichée sur sa vignette")
+                              .text("description", "Description de l'écogeste")
                               .image("image", "Illustration de l'écogeste")
                               // TODO should we use an image? I guess it doesn't hurt, as long as we add a PDF format
                               .image("file", "Fiche technique de l'écogeste")
@@ -51,6 +51,18 @@ public final class EcoGestureModel {
                  // either we will hard-code everything there, or well specify a specific "sub-page" model that is
                  // common to all eco-gesture pages
                  .build();
+
+    /**
+     * The model of the ecogestures home page. To display this page, this model is not sufficient: it also displays
+     * one card per ecogesture, and these cards are created using the {@link #ECO_GESTURE_PAGE_MODEL}
+     */
+    public static final PageModel ECO_GESTURE_HOME_PAGE_MODEL =
+        PageModel.builder("ecogestures")
+                 .text("title", "Titre de la page")
+                 .text(TextElement.builder("presentation").describedAs("Présentation des écogestes").multiLine())
+                 .image("image", "Illustration")
+                 .build();
+    public static final String ECO_GESTURE_HOME_PAGE_NAME = "EcoGestureHome";
 
     private EcoGestureModel() {
     }

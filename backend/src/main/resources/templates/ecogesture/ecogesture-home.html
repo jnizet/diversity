@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+  <head>
+    <title>Écogestes</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+
+  <body>
+    <main>
+      <h1 th:text="${home.title.text}">Title</h1>
+      <p th:text="${home.presentation.text}">Presentation</p>
+      <img th:src="@{/images/{imageId}/image(imageId=${home.image.imageId})}" th:alt="${home.image.alt}" />
+
+      <!-- TODO categories -->
+      <div th:each="gesture : ${gestures}">
+        <a th:href="@{/ecogestes/{gesture}(gesture=${gesture.pageName})}" class="ecogesture-link">
+          <img
+            th:src="@{/images/{imageId}/image(imageId=${gesture.content.presentation.image.imageId})}"
+            th:alt="${gesture.content.presentation.image.alt}"
+          />
+        </a>
+        <p th:text="${gesture.content.presentation.name.text}"></p>
+      </div>
+    </main>
+  </body>
+</html>

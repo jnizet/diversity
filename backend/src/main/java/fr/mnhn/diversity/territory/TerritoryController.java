@@ -30,7 +30,7 @@ public class TerritoryController {
     @GetMapping("/{territorySlug}")
     public ModelAndView territory(@PathVariable("territorySlug") String territorySlug) {
         Page page = pageRepository.findByNameAndModel(territorySlug, TerritoryModel.TERRITORY_PAGE_MODEL.getName()).orElseThrow(NotFoundException::new);
-        return new ModelAndView("territory", pageService.buildPage(TerritoryModel.TERRITORY_PAGE_MODEL, page));
+        return new ModelAndView("territory", pageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page));
     }
 
 }

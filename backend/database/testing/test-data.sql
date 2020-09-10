@@ -23,6 +23,7 @@ insert into image (id, content_type, original_file_name) values
     (32, 'image/png', 'comprendre.png'),
     (33, 'image/png', 'vignette1.png'),
     (34, 'image/png', 'vignette2.png'),
+    (91, 'image/png', 'ecogestes.png'),
     (101, 'image/png', 'interest1.png'),
     (102, 'image/png', 'interest2.png'),
     (103, 'image/png', 'indicators1.png'),
@@ -37,6 +38,7 @@ insert into page (id, name, model_name) values
    (1, 'Home', 'home'),
    (2, 'About', 'about'),
    (3, 'recifs', 'ecogesture'),
+   (4, 'EcoGestureHome', 'ecogestures'),
    (10, 'reunion', 'territory'),
    (11, 'st-pierre-et-miquelon', 'territory');
 
@@ -88,6 +90,11 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href) val
     (91, 3, 'TEXT', 'action.cards.0.description', 'Je choisis une crème solaire non nocive pour l''environnement', null, null, null),
     (92, 3, 'IMAGE', 'action.cards.1.icon', null, 34, 'Bateau', null),
     (93, 3, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null),
+
+--     Ecogestures home
+    (161, 4, 'TEXT', 'title', 'Réinventons notre façon de vivre et de voyager grâce aux écogestes', null, null, null),
+    (162, 4, 'TEXT', 'presentation', 'Lorem ipsum dolor', null, null, null),
+    (163, 4, 'IMAGE', 'image', null, 91, 'Ecogestes', null),
 
 --     Territory
 --     Reunion

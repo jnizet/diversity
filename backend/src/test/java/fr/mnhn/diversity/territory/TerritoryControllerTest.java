@@ -41,7 +41,7 @@ class TerritoryControllerTest {
     void prepare() {
         Page page = new Page(1L, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), Collections.emptyList());
         when(mockPageRepository.findByNameAndModel("reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName())).thenReturn(Optional.of(page));
-        when(mockPageService.buildPage(TerritoryModel.TERRITORY_PAGE_MODEL, page)).thenReturn(
+        when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page)).thenReturn(
                 Map.of(
                         "name", text("La Réunion"),
                         "identity", Map.of(

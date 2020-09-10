@@ -71,12 +71,20 @@ public class PageService {
      *     }
      * </pre>
      */
-    public Map<String, Object> buildPage(PageModel model, Page page) {
+    public Map<String, Object> buildPageContent(PageModel model, Page page) {
         PagePopulatorVisitor visitor = new PagePopulatorVisitor(page, "");
         for (PageElement pageElement : model.getElements()) {
             pageElement.accept(visitor);
         }
         return visitor.getResult();
+    }
+
+    /**
+     * Builds the content of the page, and returns it, along with its page.
+     * @see #buildPageContent(PageModel, Page)
+     */
+    public NamedPageContent buildNamedPageContent(PageModel model, Page page) {
+        return new NamedPageContent(page.getName(), buildPageContent(model, page));
     }
 
     private static class PagePopulatorVisitor implements PageElementVisitor<Void> {

@@ -43,7 +43,7 @@ class PageServiceTest {
         ));
 
         PageService service = new PageService();
-        Map<String, Object> result = service.buildPage(pageModel, page);
+        Map<String, Object> result = service.buildPageContent(pageModel, page);
 
         assertThat(result).isEqualTo(
             Map.of(
@@ -87,7 +87,7 @@ class PageServiceTest {
         ));
 
         PageService service = new PageService();
-        Map<String, Object> result = service.buildPage(pageModel, page);
+        Map<String, Object> result = service.buildPageContent(pageModel, page);
 
         assertThat(result).isEqualTo(
             Map.of(

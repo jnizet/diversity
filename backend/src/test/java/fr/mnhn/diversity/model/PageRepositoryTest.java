@@ -4,6 +4,7 @@ import static com.ninja_squad.dbsetup.Operations.*;
 import static fr.mnhn.diversity.common.testing.Tracker.TRACKER;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import javax.sql.DataSource;
 
 import com.ninja_squad.dbsetup.DbSetup;
@@ -38,6 +39,8 @@ class PageRepositoryTest {
                     insertInto("page")
                         .columns("id", "name", "model_name")
                         .values(1L, "Home", "home")
+                        .values(2L, "gesture1", "gesture")
+                        .values(3L, "gesture2", "gesture")
                         .build(),
                     insertInto("image")
                         .columns("id", "content_type", "original_file_name")
@@ -48,6 +51,8 @@ class PageRepositoryTest {
                         .values(11L, 1L, "TEXT", "title", "Welcome to MNHN", null, null, null)
                         .values(12L, 1L, "LINK", "tourism", "Tourism office", null, null, "https://tourism.fr")
                         .values(13L, 1L, "IMAGE", "landscape", null, 1L, "Beautiful landscape", null)
+                        .values(21L, 2L, "TEXT", "title", "Gesture 1", null, null, null)
+                        .values(31L, 3L, "TEXT", "title", "Gesture 2", null, null, null)
                         .build()
                     )
             );
@@ -100,5 +105,20 @@ class PageRepositoryTest {
         assertThat(page.getId()).isEqualTo(1L);
         assertThat(page.getName()).isEqualTo("Home");
         assertThat(page.getElements()).hasSize(3);
+    }
+
+    @Test
+    void shouldFindByModel() {
+        TRACKER.skipNextLaunch();
+        List<Page> pages = repository.findByModel("unknown");
+        assertThat(pages.isEmpty());
+
+        pages = repository.findByModel("gesture");
+        assertThat(pages).hasSize(2);
+
+        assertThat(pages.get(0).getId()).isEqualTo(2L);
+        assertThat(pages.get(0).getElements()).hasSize(1);
+        assertThat(pages.get(1).getId()).isEqualTo(3L);
+        assertThat(pages.get(1).getElements()).hasSize(1);
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import fr.mnhn.diversity.model.NamedPageContent;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
@@ -41,38 +42,65 @@ class EcoGestureControllerTest {
 
     @BeforeEach
     void prepare() {
-        Page page = new Page(1L, "corals", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), Collections.emptyList());
-        when(mockPageRepository.findByNameAndModel(page.getName(), page.getModelName()))
-            .thenReturn(Optional.of(page));
-        when(mockPageService.buildPage(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page)).thenReturn(
-            Map.of(
-                "presentation", Map.of(
-                    "name", text("Corals"),
-                    "category", text("Leisure"),
-                    "description", text("Description"),
-                    "image", image(1L),
-                    "file", image(2L)
-                ),
-                "understand", Map.of(
-                    "title", text("Understand"),
-                    "text", text("understand text"),
-                    "image", image(3L)
-                ),
-                "action", Map.of(
-                    "title", text("Action"),
-                    "cards", List.of(
-                        Map.of(
-                            "icon", image(4L),
-                            "description", text("Card 1 description")
-                        ),
-                        Map.of(
-                            "icon", image(5L),
-                            "description", text("Card 2 description")
-                        )
+        Page coralsPage = new Page(1L, "corals", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(coralsPage.getName(), coralsPage.getModelName()))
+            .thenReturn(Optional.of(coralsPage));
+
+        Page homePage = new Page(2L, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(homePage.getName(), homePage.getModelName()))
+            .thenReturn(Optional.of(homePage));
+
+        List<Page> gesturePages = List.of(coralsPage);
+        when(mockPageRepository.findByModel(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
+            .thenReturn(gesturePages);
+
+        Map<String, Object> coralsContent = Map.of(
+            "presentation", Map.of(
+                "name", text("Corals"),
+                "category", text("Leisure"),
+                "description", text("Description"),
+                "image", image(1L),
+                "file", image(2L)
+            ),
+            "understand", Map.of(
+                "title", text("Understand"),
+                "text", text("understand text"),
+                "image", image(3L)
+            ),
+            "action", Map.of(
+                "title", text("Action"),
+                "cards", List.of(
+                    Map.of(
+                        "icon", image(4L),
+                        "description", text("Card 1 description")
+                    ),
+                    Map.of(
+                        "icon", image(5L),
+                        "description", text("Card 2 description")
                     )
                 )
             )
         );
+
+        Map<String, Object> homeContent = Map.of(
+            "title", text("Ecogestures"),
+            "presentation", text("Presentation"),
+            "image", image(1L)
+        );
+
+        when(mockPageService.buildPageContent(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL, homePage)).thenReturn(homeContent);
+        when(mockPageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, coralsPage)).thenReturn(coralsContent);
+        when(mockPageService.buildNamedPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, coralsPage)).thenReturn(new NamedPageContent(coralsPage.getName(), coralsContent));
+    }
+
+    @Test
+    void shouldDisplayHomePage() throws Exception {
+        mockMvc.perform(get("/ecogestes"))
+               .andExpect(status().isOk())
+               .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+               .andExpect(content().string(containsString("<title>Écogestes</title>")))
+               .andExpect(content().string(containsString("<h1>Ecogestures</h1>")))
+               .andExpect(content().string(containsString("<p>Corals</p>")));
     }
 
     @Test
