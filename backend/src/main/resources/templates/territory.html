@@ -14,7 +14,7 @@
       <div class="identity">
         <h2 th:text="${identity.title.text}">Titre de présentation</h2>
         <p th:text="${identity.presentation.text}">Texte de présentation</p>
-        <img th:src="@{/images/{imageId}/image(imageId=*{identity.infography.imageId})}" th:alt="*{identity.infography.alt}" />
+        <img th:src="@{/images/{imageId}/image(imageId=${identity.infography.imageId})}" th:alt="${identity.infography.alt}" />
       </div>
 
       <!-- Lieux d'intérêt -->
@@ -78,7 +78,7 @@
       <!-- Bandeau autre territoire -->
       <div class="other-territory">
         <img th:src="@{/images/{imageId}/image(imageId=${other.image.imageId})}" th:alt="${other.image.alt}" />
-        <a th:href="@{*{other.link.href}}" th:text="*{other.link.text}">Link</a>
+        <a th:href="@{${other.link.href}}" th:text="${other.link.text}">Link</a>
       </div>
     </main>
   </body>

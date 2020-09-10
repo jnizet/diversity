@@ -13,6 +13,7 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
+import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -51,6 +52,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long ecogestureHome = 4L;
         Long reunion = 10L;
         Long stPierreEtMiquelon = 11L;
+        Long especesEnvahissantes = 30L;
         Operation pages =
             insertInto("page")
                 .columns("id", "name", "model_name")
@@ -60,6 +62,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(ecogestureHome, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName())
                 .values(reunion, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName())
                 .values(stPierreEtMiquelon, "st-pierre-et-miquelon", TerritoryModel.TERRITORY_PAGE_MODEL.getName())
+                .values(especesEnvahissantes, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName())
                 .build();
 
         String png = MediaType.IMAGE_PNG_VALUE;
@@ -226,6 +229,35 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(LINK, "other.link", "Portail local de l'environnement", null, null, "https://oeil.nc")
                 .build();
 
+        Operation especesEnvahissantesElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", especesEnvahissantes)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href")
+                .values(TEXT, "name", "Espèces envahissantes", null, null, null)
+                .values(TEXT, "presentation.category", "Espèces", null, null, null)
+                .values(TEXT, "presentation.value", "60", null, null, null)
+                .values(TEXT, "presentation.description", "espèces sur les 100...", null, null, null)
+                .values(IMAGE, "presentation.image", null, 104L, "Illustration", null)
+                .values(TEXT, "understand.title", "Comprendre", null, null, null)
+                .values(IMAGE, "understand.image", null, 104L, "Espèces envahissantes", null)
+                .values(TEXT, "understand.sections.0.title", "Raison 1", null, null, null)
+                .values(TEXT, "understand.sections.0.description", "Comprendre raison 1", null, null, null)
+                .values(TEXT, "indicators.title", "Indicateurs", null, null, null)
+                .values(TEXT, "indicators.indicators.0.name", "Réunion", null, null, null)
+                .values(TEXT, "indicators.indicators.0.value", "12", null, null, null)
+                .values(IMAGE, "indicators.indicators.0.image", null, 104L, "Espèces envahissantes", null)
+                .values(TEXT, "ecogestures.title", "Écogestes", null, null, null)
+                .values(TEXT, "ecogestures.ecogestures.0.name", "Protégeons les récifs coralliens", null, null, null)
+                .values(TEXT, "ecogestures.ecogestures.0.category", "Loisirs", null, null, null)
+                .values(TEXT, "ecogestures.ecogestures.0.description", "Protégeons les récifs corallien...", null, null, null)
+                .values(IMAGE, "ecogestures.ecogestures.0.image", null, 108L, "Tortue", null)
+                .values(LINK, "ecogestures.ecogestures.0.link", "/ecogestes/recifs", null, null, "/indicateurs/surfaces-forets")
+                .values(TEXT, "next.name", "Surfaces des forêts", null, null, null)
+                .values(IMAGE, "next.image", null, 105L, "Surfaces des forêts", null)
+                .values(LINK, "next.link", "Surfaces des forêts", null, null, "/indicateurs/surfaces-forets")
+                .build();
+
         new DbSetup(destination, sequenceOf(
             deleteAll,
             territories,
@@ -236,7 +268,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             ecogesture1Elements,
             ecogestureHomeElements,
             reunionElements,
-            stPierreEtMiquelonElements
+            stPierreEtMiquelonElements,
+            especesEnvahissantesElements
         )).launch();
     }
 }

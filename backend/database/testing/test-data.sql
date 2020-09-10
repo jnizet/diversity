@@ -40,7 +40,8 @@ insert into page (id, name, model_name) values
    (3, 'recifs', 'ecogesture'),
    (4, 'EcoGestureHome', 'ecogestures'),
    (10, 'reunion', 'territory'),
-   (11, 'st-pierre-et-miquelon', 'territory');
+   (11, 'st-pierre-et-miquelon', 'territory'),
+   (30, 'especes-envahissantes', 'indicator');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href) values
 --     Home
@@ -155,6 +156,36 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href) val
     (328, 11, 'TEXT', 'risks.risks.0.description', 'Le territoire est pour l''instant...', null, null, null),
     (329, 11, 'IMAGE', 'risks.risks.0.image', null, 109, 'Ressources naturelles', null),
     (330, 11, 'IMAGE', 'other.image', null, 105, 'Autre territoire', null),
-    (331, 11, 'LINK', 'other.link', 'Portail local de l''environnement', null, null, 'https://oeil.nc');
+    (331, 11, 'LINK', 'other.link', 'Portail local de l''environnement', null, null, 'https://oeil.nc'),
+
+--     Indicator
+--     Espèces envahissantes
+    (500, 30, 'TEXT', 'name',  'Espèces envahissantes', null, null, null),
+    (501, 30, 'TEXT', 'presentation.category',  'Espèces', null, null, null),
+    (502, 30, 'TEXT', 'presentation.value',  '60', null, null, null),
+    (503, 30, 'TEXT', 'presentation.description',  'espèces sur les 100...', null, null, null),
+    (504, 30, 'IMAGE', 'presentation.image',  null, 104, 'Espèces envahissantes', null),
+    (505, 30, 'TEXT', 'understand.title',  'Comprendre', null, null, null),
+    (506, 30, 'IMAGE', 'understand.image',  null, 104, 'Espèces envahissantes', null),
+    (507, 30, 'TEXT', 'understand.sections.0.title',  'Raison 1', null, null, null),
+    (508, 30, 'TEXT', 'understand.sections.0.description',  'Explication raison 1', null, null, null),
+    (509, 30, 'TEXT', 'understand.sections.1.title',  'Raison 2', null, null, null),
+    (510, 30, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null),
+    (511, 30, 'TEXT', 'indicators.title',  'Espèces envahissantes par territoire', null, null, null),
+    (512, 30, 'TEXT', 'indicators.indicators.0.name',  'Réunion', null, null, null),
+    (513, 30, 'TEXT', 'indicators.indicators.0.value',  '12', null, null, null),
+    (514, 30, 'IMAGE', 'indicators.indicators.0.image',  null, 104, 'Espèces envahissantes', null),
+    (515, 30, 'TEXT', 'indicators.indicators.1.name',  'Martinique', null, null, null),
+    (516, 30, 'TEXT', 'indicators.indicators.1.value',  '31', null, null, null),
+    (517, 30, 'IMAGE', 'indicators.indicators.1.image',  null, 104, 'Espèces envahissantes', null),
+    (518, 30, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null),
+    (519, 30, 'TEXT', 'ecogestures.ecogestures.0.name', 'Protégeons les récifs corallien', null, null, null),
+    (520, 30, 'TEXT', 'ecogestures.ecogestures.0.category', 'Loisirs', null, null, null),
+    (521, 30, 'TEXT', 'ecogestures.ecogestures.0.description', 'Protégeons les récifs corallien...', null, null, null),
+    (522, 30, 'LINK', 'ecogestures.ecogestures.0.link', 'Protégeons les récifs corallien', null, null, '/ecogestes/recifs'),
+    (523, 30, 'IMAGE', 'ecogestures.ecogestures.0.image', null, 104, 'Tortue', null),
+    (524, 30, 'TEXT', 'next.name', 'Surfaces des forêts', null, null, null),
+    (525, 30, 'IMAGE', 'next.image', null, 105, 'Surfaces des forêts', null),
+    (526, 30, 'LINK', 'next.link', 'Surfaces des forêts', null, null, '/indicateurs/surface-forêts');
 
 commit;
