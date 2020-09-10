@@ -187,7 +187,7 @@ class IndicatorServiceTest {
             new IndicatorData(
                 indicatorId,
                 "Évolution du nombre d'unités conservatoires (UC) des ressources génétiques des principales essences forestières métropolitaines",
-                "https://odata-indicateurs.mnhn.fr/calculations/2d019839-0b90-422d-93f6-516db2d0fcc0?embed=CALCULATIONRESULTS"
+                "2d019839-0b90-422d-93f6-516db2d0fcc0"
             )
         );
 
@@ -517,8 +517,7 @@ class IndicatorServiceTest {
                 .setBody(body)
         );
 
-        String url = server.url("/calculations/1efa9368-2a31-4415-91e3-d5cc2f224b7a?embed=CALCULATIONRESULTS").toString();
-        IndicatorValue indicatorValue = service.indicatorValue(url).block();
+        IndicatorValue indicatorValue = service.indicatorValue("1efa9368-2a31-4415-91e3-d5cc2f224b7a").block();
 
         assertThat(indicatorValue).isEqualTo(
             new IndicatorValue(
@@ -527,6 +526,6 @@ class IndicatorServiceTest {
             )
         );
 
-        assertThat(server.takeRequest().getRequestUrl().toString()).isEqualTo(url);
+        assertThat(server.takeRequest().getPath()).isEqualTo("/calculations/1efa9368-2a31-4415-91e3-d5cc2f224b7a?embed=CALCULATIONRESULTS");
     }
 }

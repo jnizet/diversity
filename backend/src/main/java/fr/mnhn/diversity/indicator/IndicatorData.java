@@ -9,12 +9,12 @@ import java.util.Objects;
 public final class IndicatorData {
     private final String id;
     private final String shortLabel;
-    private final String computationUrl;
+    private final String calculationReference;
 
-    public IndicatorData(String id, String shortLabel, String computationUrl) {
+    public IndicatorData(String id, String shortLabel, String calculationReference) {
         this.id = id;
         this.shortLabel = shortLabel;
-        this.computationUrl = computationUrl;
+        this.calculationReference = calculationReference;
     }
 
     public String getId() {
@@ -25,8 +25,8 @@ public final class IndicatorData {
         return shortLabel;
     }
 
-    public String getComputationUrl() {
-        return computationUrl;
+    public String getCalculationReference() {
+        return calculationReference;
     }
 
     @Override
@@ -40,12 +40,12 @@ public final class IndicatorData {
         IndicatorData that = (IndicatorData) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(shortLabel, that.shortLabel) &&
-            Objects.equals(computationUrl, that.computationUrl);
+            Objects.equals(calculationReference, that.calculationReference);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, shortLabel, computationUrl);
+        return Objects.hash(id, shortLabel, calculationReference);
     }
 
     @Override
@@ -53,7 +53,7 @@ public final class IndicatorData {
         return "IndicatorData{" +
             "id='" + id + '\'' +
             ", shortLabel='" + shortLabel + '\'' +
-            ", computationUrl='" + computationUrl + '\'' +
+            ", calculationReference='" + calculationReference + '\'' +
             '}';
     }
 }

@@ -33,72 +33,39 @@ public class IndicatorService {
                  new IndicatorData(
                      indicatorId,
                      body.getShortLabel(),
-                     extractComputationUrl(body.getLinks().getCalculationReferences().get(0).getHref())
+                     body.getCalculationReference()
                  )
             );
     }
 
-    public Mono<IndicatorValue> indicatorValue(String url) {
+    public Mono<IndicatorValue> indicatorValue(String calculationReference) {
         return webClient
             .get()
-            .uri(url)
+            .uri("/calculations/{calculationReference}?embed=CALCULATIONRESULTS", calculationReference)
             .accept(MediaType.APPLICATION_JSON)
             .retrieve()
             .bodyToMono(IndicatorValueBody.class)
             .map(IndicatorValueBody::getIndicatorValue);
     }
 
-    private String extractComputationUrl(String href) {
-        return href.replace("http://", "https://")
-                   .replace("{?embed}", "?embed=CALCULATIONRESULTS");
-    }
-
     private static final class IndicatorBody {
 
         private final String shortLabel;
-        private final IndicatorLinks links;
+        private final String calculationReference;
 
         @JsonCreator
         public IndicatorBody(@JsonProperty("shortLabel") String shortLabel,
-                             @JsonProperty("_links") IndicatorLinks links) {
+                             @JsonProperty("calculReference") String calculationReference) {
             this.shortLabel = shortLabel;
-            this.links = links;
+            this.calculationReference = calculationReference;
         }
 
         public String getShortLabel() {
             return shortLabel;
         }
 
-        public IndicatorLinks getLinks() {
-            return links;
-        }
-    }
-
-    private static final class IndicatorLinks {
-
-        private final List<IndicatorLink> calculationReferences;
-
-        @JsonCreator
-        public IndicatorLinks(@JsonProperty("calculationReference") List<IndicatorLink> calculationReferences) {
-            this.calculationReferences = calculationReferences;
-        }
-
-        public List<IndicatorLink> getCalculationReferences() {
-            return calculationReferences;
-        }
-    }
-
-    private static final class IndicatorLink {
-
-        private final String href;
-
-        @JsonCreator
-        public IndicatorLink(@JsonProperty("href") String href) {
-            this.href = href;
-        }
-
-        public String getHref() {
-            return href;
+        public String getCalculationReference() {
+            return this.calculationReference;
         }
     }
 
@@ -116,7 +83,7 @@ public class IndicatorService {
         }
 
         public IndicatorValue getIndicatorValue() {
-            CalculationResult calculationResult = embedded.findCalculationResult();
+            CalculationResult calculationResult = embedded.findMainCalculationResult();
             Metric metric = calculationResult.getValues().get(0).getMetrics().get(0);
             return new IndicatorValue(
                 metric.getValueAsDouble(),
@@ -134,32 +101,28 @@ public class IndicatorService {
             this.calculationResults = calculationResults;
         }
 
-        public List<CalculationResult> getCalculationResults() {
-            return calculationResults;
-        }
-
-        public CalculationResult findCalculationResult() {
+        public CalculationResult findMainCalculationResult() {
             return calculationResults
                 .stream()
-                .filter(r -> r.getCode().equals("R1"))
+                .filter(r -> r.isMain())
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("no result with code R1"));
+                .orElseThrow(() -> new IllegalStateException("no main calculation result found"));
         }
     }
 
     private static final class CalculationResult {
-        private final String code;
+        private final boolean main;
         private final List<CalculationValue> values;
 
         @JsonCreator
-        public CalculationResult(@JsonProperty("code") String code,
+        public CalculationResult(@JsonProperty("main") boolean main,
                                  @JsonProperty("values") List<CalculationValue> values) {
-            this.code = code;
+            this.main = main;
             this.values = values;
         }
 
-        public String getCode() {
-            return code;
+        public boolean isMain() {
+            return main;
         }
 
         public List<CalculationValue> getValues() {
