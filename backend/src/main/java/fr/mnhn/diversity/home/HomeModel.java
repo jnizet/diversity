@@ -3,7 +3,6 @@ package fr.mnhn.diversity.home;
 import fr.mnhn.diversity.model.meta.ListElement;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
-import fr.mnhn.diversity.model.meta.TextElement;
 
 /**
  * The model for the home page
@@ -16,7 +15,7 @@ public final class HomeModel {
         PageModel.builder("home")
                  .section(SectionElement.builder("carousel").describedAs("Carousel")
                      .text("title", "Titre du carousel, affiché sur chaque slide")
-                     .text(TextElement.builder("text").describedAs("Texte du carousel, affiché sur chaque slide").multiLine())
+                     .multiLineText("text", "Texte du carousel, affiché sur chaque slide")
                      .list(ListElement.builder("images").describedAs("Les photos affichées par le carousel")
                          .image("image")
                      )
@@ -30,12 +29,12 @@ public final class HomeModel {
                  )
                  .section(SectionElement.builder("indicators").describedAs("Section indicateurs")
                      .text("title", "Titre de la section")
-                     .text(TextElement.builder("text").describedAs("Texte introductif").multiLine())
+                     .multiLineText("text", "Texte introductif")
                      .image("image")
                  )
                  .section(SectionElement.builder("science").describedAs("Section sciences participatives")
                      .text("title", "Titre de la section")
-                     .text(TextElement.builder("text").describedAs("Texte introductif").multiLine())
+                     .multiLineText("text", "Texte introductif")
                      .image("image")
                  )
                  .build();

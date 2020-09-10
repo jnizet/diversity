@@ -28,6 +28,7 @@ create table page (
     id         BIGINT primary key,
     name       VARCHAR not null,
     model_name VARCHAR not null,
+    title      VARCHAR not null,
     constraint page_name_model_name_un unique (name, model_name)
 );
 
@@ -42,9 +43,15 @@ create table page_element (
     image_id BIGINT,
     alt      VARCHAR,
     href     VARCHAR,
+    title    BOOLEAN not null default false,
     constraint page_id_fk foreign key (page_id) references page(id),
     constraint image_id_fk foreign key (image_id) references image(id),
     constraint page_element_key_un unique (page_id, key)
 );
 
+create index page_element_text_idx
+    on page_element
+        using gin(to_tsvector('french', page_element.text));
+
 create sequence page_element_seq start with 1000;
+

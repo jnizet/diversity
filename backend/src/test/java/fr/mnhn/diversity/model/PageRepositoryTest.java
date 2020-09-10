@@ -37,10 +37,10 @@ class PageRepositoryTest {
                 sequenceOf(
                     deleteAllFrom("page_element", "page", "image"),
                     insertInto("page")
-                        .columns("id", "name", "model_name")
-                        .values(1L, "Home", "home")
-                        .values(2L, "gesture1", "gesture")
-                        .values(3L, "gesture2", "gesture")
+                        .columns("id", "name", "model_name", "title")
+                        .values(1L, "Home", "home", "Accueil")
+                        .values(2L, "gesture1", "gesture", "Ecogeste")
+                        .values(3L, "gesture2", "gesture", "Ecogestes")
                         .build(),
                     insertInto("image")
                         .columns("id", "content_type", "original_file_name")
@@ -67,13 +67,14 @@ class PageRepositoryTest {
     }
 
     @Test
-    void shouldGetPage() {
+    void shouldFindById() {
         TRACKER.skipNextLaunch();
         Page page = repository.findById(1L).get();
 
         assertThat(page.getId()).isEqualTo(1L);
         assertThat(page.getName()).isEqualTo("Home");
         assertThat(page.getModelName()).isEqualTo("home");
+        assertThat(page.getTitle()).isEqualTo("Accueil");
         assertThat(page.getElements()).hasSize(3);
 
         Image landscape = (Image) page.getElements().get("landscape");

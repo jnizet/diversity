@@ -21,7 +21,7 @@ public final class EcoGestureModel {
                  .section(SectionElement
                               .builder("presentation")
                               .describedAs("Présentation de l'écogeste, et informations affichées sur sa vignette dans la page d'accueil des écogests")
-                              .text("name", "Nom de l'écogeste")
+                              .titleText("name", "Nom de l'écogeste")
                               // TODO add some information to the model, or use a different element type, because it should be edited as a select box
                               .text("category", "Catégorie de l'écogeste")
                               .text("description", "Description de l'écogeste")
@@ -33,7 +33,7 @@ public final class EcoGestureModel {
                               .builder("understand")
                               .describedAs("Comprendre l'écogeste")
                               .text("title", "Titre de la rubrique")
-                              .text(TextElement.builder("text").describedAs("Texte de la rubrique").multiLine())
+                              .multiLineText("text", "Texte de la rubrique")
                               .image("image", "Illustration de la rubrique")
                               // TODO add indicator
                  )
@@ -44,7 +44,7 @@ public final class EcoGestureModel {
                               .list(
                                   ListElement.builder("cards").describedAs("Vignettes")
                                       .image("icon", "Icône de la vignette")
-                                      .text(TextElement.builder("description").describedAs("Icône de la vignette").multiLine())
+                                      .multiLineText("description", "Icône de la vignette")
                               )
                  )
                  // the last two sections seem to be common to all ecogestures, so thay're not modeled here.

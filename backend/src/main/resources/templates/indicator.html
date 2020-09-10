@@ -2,27 +2,27 @@
 
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
   <head>
-    <title th:text="${name.text}">Indicateur</title>
+    <title th:text="${page.title}">Indicateur</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
 
   <body>
-    <main>
-      <h1 th:text="${name.text}">Nom de l'indicateur</h1>
+    <main th:object="${page.content}">
+      <h1 th:text="*{name.text}">Nom de l'indicateur</h1>
 
       <!-- Présentation -->
       <div class="presentation">
-        <h2 th:text="${presentation.category.text}">Catégorie de l'indicateur</h2>
-        <p th:text="${indicator.OUTRE_MER.value.text}">Valeur de l'indicateur</p>
-        <p th:text="${presentation.description.text}">Description de l'indicateur</p>
-        <img th:src="@{/images/{imageId}/image(imageId=${presentation.image.imageId})}" th:alt="${presentation.image.alt}" />
+        <h2 th:text="*{presentation.category.text}">Catégorie de l'indicateur</h2>
+        <p th:text="*{indicator.OUTRE_MER.value.text}">Valeur de l'indicateur</p>
+        <p th:text="*{presentation.description.text}">Description de l'indicateur</p>
+        <img th:src="@{/images/{imageId}/image(imageId=*{presentation.image.imageId})}" th:alt="*{presentation.image.alt}" />
       </div>
 
       <!-- Comprendre l'indicateur -->
       <div class="understand">
-        <h2 th:text="${understand.title.text}">Comprendre l'indicateur</h2>
-        <img th:src="@{/images/{imageId}/image(imageId=${understand.image.imageId})}" th:alt="${understand.image.alt}" />
-        <div th:each="section : ${understand.sections}">
+        <h2 th:text="*{understand.title.text}">Comprendre l'indicateur</h2>
+        <img th:src="@{/images/{imageId}/image(imageId=*{understand.image.imageId})}" th:alt="*{understand.image.alt}" />
+        <div th:each="section : *{understand.sections}">
           <h3 th:text="${section.title.text}">Sous-titre de description de l'indicateur</h3>
           <p th:text="${section.description.text}">Texte de description de l'indicateur</p>
         </div>
@@ -30,17 +30,17 @@
 
       <!-- Indicateurs par territoire -->
       <div class="indicators">
-        <h2 th:text="${indicators.title.text}">Indicateurs par territoire</h2>
-        <div th:each="territory : ${T(fr.mnhn.diversity.territory.Territory).values()}" th:if="${indicator.get(territory.name()) != null && territory.name() != 'OUTRE_MER'}">
+        <h2 th:text="*{indicators.title.text}">Indicateurs par territoire</h2>
+        <div th:each="territory : ${T(fr.mnhn.diversity.territory.Territory).values()}" th:if="${page.content.indicator.get(territory.name()) != null && territory.name() != 'OUTRE_MER'}">
           <h3 th:text="${territory.getName()}">Nom du territoire</h3>
-          <p th:text="${indicator.get(territory.name()).value.text}">Valeur de l'indicateur</p>
+          <p th:text="${page.content.indicator.get(territory.name()).value.text}">Valeur de l'indicateur</p>
         </div>
       </div>
 
       <!-- Écogestes -->
       <div class="ecogestures">
-        <h2 th:text="${ecogestures.title.text}">Title</h2>
-        <div th:each="ecogesture : ${ecogestures.ecogestures}">
+        <h2 th:text="*{ecogestures.title.text}">Title</h2>
+        <div th:each="ecogesture : *{ecogestures.ecogestures}">
           <h3 th:text="${ecogesture.name.text}">Nom de l'écogeste</h3>
           <p th:text="${ecogesture.description.text}">Description de l'écogeste</p>
           <p th:text="${ecogesture.category.text}">Catégorie de l'écogeste</p>
@@ -51,8 +51,8 @@
 
       <!-- Bandeau indicateur suivant -->
       <div class="next-indicator">
-        <h2 th:text="${next.name.text}">Nom de l'indicateur suivant</h2>
-        <img th:src="@{/images/{imageId}/image(imageId=${next.image.imageId})}" th:alt="${next.image.alt}" />
+        <h2 th:text="*{next.name.text}">Nom de l'indicateur suivant</h2>
+        <img th:src="@{/images/{imageId}/image(imageId=*{next.image.imageId})}" th:alt="*{next.image.alt}" />
         <a th:href="@{*{next.link.href}}" th:text="*{next.link.text}">Lien vers l'indicateur</a>
       </div>
     </main>

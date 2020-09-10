@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.mnhn.diversity.model.meta.ListElement;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
@@ -31,7 +30,7 @@ class PageServiceTest {
                      )
                      .build();
 
-        Page page = new Page(1L, "Home", "home", List.of(
+        Page page = new Page(1L, "Home", "home", "Welcome", List.of(
             Element.text(1L, "title", "Diversity"),
             Element.image(2L, "welcome.welcomeImage", 1L, "Welcome image"),
             Element.text(3L, "welcome.welcomeLegend", "Welcome here"),
@@ -43,9 +42,14 @@ class PageServiceTest {
         ));
 
         PageService service = new PageService();
-        Map<String, Object> result = service.buildPageContent(pageModel, page);
+        PageContent result = service.buildPageContent(pageModel, page);
 
-        assertThat(result).isEqualTo(
+        assertThat(result.getId()).isEqualTo(page.getId());
+        assertThat(result.getName()).isEqualTo(page.getName());
+        assertThat(result.getModelName()).isEqualTo(page.getModelName());
+        assertThat(result.getTitle()).isEqualTo(page.getTitle());
+
+        assertThat(result.getContent()).isEqualTo(
             Map.of(
                 "title", Element.text(1L, "title", "Diversity"),
                 "welcome", Map.of(
@@ -68,7 +72,7 @@ class PageServiceTest {
     }
 
     @Test
-    public void shouldPopulatePageWhenListDoesNotContainLeafElement() throws JsonProcessingException {
+    public void shouldPopulatePageWhenListDoesNotContainLeafElement() {
         PageModel pageModel =
             PageModel.builder("Home")
                      .list(ListElement.builder("carousel")
@@ -79,7 +83,7 @@ class PageServiceTest {
                      )
                      .build();
 
-        Page page = new Page(1L, "Home", "home", List.of(
+        Page page = new Page(1L, "Home", "home", "Welcome", List.of(
             Element.image(5L, "carousel.0.section.image", 1L,"0"),
             Element.text(6L, "carousel.0.section.legend", "Image 0"),
             Element.image(7L, "carousel.1.section.image", 2L,"1"),
@@ -87,9 +91,9 @@ class PageServiceTest {
         ));
 
         PageService service = new PageService();
-        Map<String, Object> result = service.buildPageContent(pageModel, page);
+        PageContent result = service.buildPageContent(pageModel, page);
 
-        assertThat(result).isEqualTo(
+        assertThat(result.getContent()).isEqualTo(
             Map.of(
                 "carousel", List.of(
                     Map.of(

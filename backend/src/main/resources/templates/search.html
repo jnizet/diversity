@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+  <head>
+    <title>Résultats de la recherche</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+
+  <body>
+    <main>
+      <h1>Résultats de la recherche</h1>
+
+      <p th:if="${#lists.isEmpty(results)}">Aucun résultat</p>
+      <p th:if="${#lists.size(results) == 1}">Un seul résultat trouvé</p>
+      <p th:if="${#lists.size(results) > 1}"><span th:text="${#lists.size(results)}">5</span> résultats trouvés</p>
+
+      <div th:each="result : ${results}">
+        <h2><a th:href="@{${result.url}}" th:text="${result.title}">Titre</a></h2>
+        <p th:utext="${result.highlight}">highlight</p>
+      </div>
+    </main>
+  </body>
+</html>

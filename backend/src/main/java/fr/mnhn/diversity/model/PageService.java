@@ -23,19 +23,10 @@ import org.springframework.stereotype.Service;
 public class PageService {
 
     /**
-     * Returns a Map containing the structure of the page, matching with the given model.
-     * The map keys are the names of the PageModel elements.
-     * It's values are
-     * <ul>
-     *   <li>another Map if the element with that name is a SectionElement</li>
-     *   <li>a List if the element with that name is a ListElement</li>
-     *   <li>an Element of the matching type if the element with that name is a TextElement, a LinkElement or an ImageElement</li>
-     * </ul>
-     *
-     * The elements of the inner maps and lists, similarly, are of the same types, depending on the content of the
-     * SectionElement and ListElement.
-     *
-     * So, for example, for a page model such as
+     * Returns a {@link PageContent} containing the information of the given page, and its content, structured as
+     * described in {@link PageContent#content}.
+     * F
+     * or example, for a page model such as
      *
      * <pre>
      *     - ImageElement background
@@ -55,36 +46,13 @@ public class PageService {
      * </ul>
      *
      * As soon as an index in the list is not found, it's considered ended. So there can't be null elements in the list.
-     *
-     * And that will create a Map such as
-     *
-     * <pre>
-     *     {
-     *         background: Image
-     *         part1: {
-     *             title: Text
-     *             carousel: [
-     *                 Image
-     *                 Image
-     *             ]
-     *         }
-     *     }
-     * </pre>
      */
-    public Map<String, Object> buildPageContent(PageModel model, Page page) {
+    public PageContent buildPageContent(PageModel model, Page page) {
         PagePopulatorVisitor visitor = new PagePopulatorVisitor(page, "");
         for (PageElement pageElement : model.getElements()) {
             pageElement.accept(visitor);
         }
-        return visitor.getResult();
-    }
-
-    /**
-     * Builds the content of the page, and returns it, along with its page.
-     * @see #buildPageContent(PageModel, Page)
-     */
-    public NamedPageContent buildNamedPageContent(PageModel model, Page page) {
-        return new NamedPageContent(page.getName(), buildPageContent(model, page));
+        return new PageContent(page, visitor.getResult());
     }
 
     private static class PagePopulatorVisitor implements PageElementVisitor<Void> {

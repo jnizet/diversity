@@ -3,7 +3,6 @@ package fr.mnhn.diversity.about;
 import fr.mnhn.diversity.model.meta.ListElement;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
-import fr.mnhn.diversity.model.meta.TextElement;
 
 /**
  * The model for the about page (A propos)
@@ -16,15 +15,15 @@ public final class AboutModel {
         PageModel.builder("about")
                  .section(SectionElement.builder("header").describedAs("En-tête")
                                         .image("background", "Image de fond de l'en-tête")
-                                        .text("title", "Titre de la page")
-                                        .text(TextElement.builder("subtitle").describedAs("Sous-titre de la page").multiLine())
+                                        .titleText("title", "Titre de la page")
+                                        .multiLineText("subtitle", "Sous-titre de la page")
                                         .list(ListElement.builder("paragraphs").describedAs("Les paragraphes de texte présentant le site")
                                                          .text("text")
                                         )
                  )
                  .list(ListElement.builder("carousel").describedAs("Carousel de présentation des pages")
                                   .text("title", "Titre du slide")
-                                  .text(TextElement.builder("text").describedAs("Texte du slide").multiLine())
+                                  .multiLineText("text", "Texte du slide")
                                   .link("link", "Lien vers la page décrite par le slide")
                                   .image("image", "Image du slide")
                  )

@@ -9,6 +9,9 @@
       <a th:href="@{/}">Accueil</a>
       <a th:href="@{/apropos}">À propos</a>
       <a th:href="@{/ecogestes}">Écogestes</a>
+      <form method="get" th:action="@{/recherche}">
+        <input name="texte" id="search" placeholder="Rechercher" th:value="${#execInfo.processedTemplateName == 'search' ? param.texte : ''}"/>
+      </form>
     </header>
     <div th:replace="${content}">
       <p>Layout content</p>

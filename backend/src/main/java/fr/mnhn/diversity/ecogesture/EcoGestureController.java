@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.model.Page;
-import fr.mnhn.diversity.model.NamedPageContent;
+import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
 import org.springframework.stereotype.Controller;
@@ -43,7 +43,7 @@ public class EcoGestureController {
                                       .orElseThrow(NotFoundException::new);
 
         // build the content of the home page
-        Map<String, Object> homePageModel = pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL, homePage);
+        PageContent homePageContent = pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL, homePage);
 
         // but the home page also displays a gallery of the presentation names and images of all ecogestures,
         // so we load all the ecogesture pages too.
@@ -53,15 +53,15 @@ public class EcoGestureController {
         // - only load the actual elements that we need from the database (the presentation section only)
         List<Page> ecoGesturePages =
             pageRepository.findByModel(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName());
-        List<NamedPageContent> gestures =
+        List<PageContent> gesturePageContents =
             ecoGesturePages.stream()
-                           .map(page -> pageService.buildNamedPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page))
+                           .map(page -> pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page))
                            .collect(Collectors.toList());
 
         return new ModelAndView("ecogesture/ecogesture-home",
                                 Map.of(
-                                    "home", homePageModel,
-                                    "gestures", gestures
+                                    "page", homePageContent,
+                                    "gesturePages", gesturePageContents
                                 )
         );
     }
@@ -74,6 +74,6 @@ public class EcoGestureController {
     public ModelAndView detail(@PathVariable("pageName") String pageName) {
         Page page = pageRepository.findByNameAndModel(pageName, EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
-        return new ModelAndView("ecogesture/ecogesture", pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page));
+        return new ModelAndView("ecogesture/ecogesture", "page", pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page));
     }
 }

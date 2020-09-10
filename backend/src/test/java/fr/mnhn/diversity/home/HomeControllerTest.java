@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import fr.mnhn.diversity.model.Page;
+import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,35 +43,38 @@ class HomeControllerTest {
 
     @BeforeEach
     void prepare() {
-        Page page = new Page(1L, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName(), Collections.emptyList());
+        Page page = new Page(1L, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName(), "Diversité", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName()))
             .thenReturn(Optional.of(page));
         when(mockPageService.buildPageContent(HomeModel.HOME_PAGE_MODEL, page)).thenReturn(
-            Map.of(
-                "carousel", Map.of(
-                    "title", text("Hello"),
-                    "images", List.of(
-                        Map.of("image", image(1L)),
-                        Map.of("image", image(2L))
+            new PageContent(
+                page,
+                Map.of(
+                    "carousel", Map.of(
+                        "title", text("Hello"),
+                        "images", List.of(
+                            Map.of("image", image(1L)),
+                            Map.of("image", image(2L))
+                        ),
+                        "text", text("carousel text"),
+                        "territoriesButton", text("carousel button")
                     ),
-                    "text", text("carousel text"),
-                    "territoriesButton", text("carousel button")
-                ),
-                "presentation", Map.of(
-                    "title", text("Presentation"),
-                    "image", image(3L),
-                    "text", text("presentation text"),
-                    "more", text("More")
-                ),
-                "indicators", Map.of(
-                    "title", text("Indicators"),
-                    "image", image(4L),
-                    "text", text("indicators text")
-                ),
-                "science", Map.of(
-                    "title", text("Science"),
-                    "image", image(5L),
-                    "text", text("science text")
+                    "presentation", Map.of(
+                        "title", text("Presentation"),
+                        "image", image(3L),
+                        "text", text("presentation text"),
+                        "more", text("More")
+                    ),
+                    "indicators", Map.of(
+                        "title", text("Indicators"),
+                        "image", image(4L),
+                        "text", text("indicators text")
+                    ),
+                    "science", Map.of(
+                        "title", text("Science"),
+                        "image", image(5L),
+                        "text", text("science text")
+                    )
                 )
             )
         );

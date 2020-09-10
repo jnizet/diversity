@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import fr.mnhn.diversity.model.Page;
+import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
 import fr.mnhn.diversity.territory.Territory;
@@ -40,11 +41,14 @@ class IndicatorControllerTest {
 
     @BeforeEach
     void prepare() {
-        Page page = new Page(1L, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), Collections.emptyList());
-        when(mockPageRepository.findByNameAndModel("especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName())).thenReturn(Optional.of(page));
+        Page page = new Page(1L, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes", Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel("especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
+            .thenReturn(Optional.of(page));
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page)).thenReturn(
+            new PageContent(
+                page,
                 Map.of(
-                        "name", text("Espèces envahissantes"),
+                        "name", text("Les espèces envahissantes"),
                         "indicator", Map.of(
                                 Territory.OUTRE_MER.name(), Map.of ("value", text("60")),
                                 Territory.REUNION.name(), Map.of ("value", text("6")),
@@ -99,6 +103,7 @@ class IndicatorControllerTest {
                                 "link", link("other")
                         )
                 )
+            )
         );
     }
 
@@ -108,7 +113,7 @@ class IndicatorControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Espèces envahissantes</title>")))
-               .andExpect(content().string(containsString("<h1>Espèces envahissantes</h1>")))
+               .andExpect(content().string(containsString("<h1>Les espèces envahissantes</h1>")))
                .andExpect(content().string(containsString("<h2>Comprendre</h2>")))
                .andExpect(content().string(containsString("<h2>Indicateurs</h2>")))
                .andExpect(content().string(containsString("<h3>Réunion</h3>")))

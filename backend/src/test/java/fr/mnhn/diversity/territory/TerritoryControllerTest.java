@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import fr.mnhn.diversity.model.Page;
+import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,9 +40,11 @@ class TerritoryControllerTest {
 
     @BeforeEach
     void prepare() {
-        Page page = new Page(1L, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), Collections.emptyList());
+        Page page = new Page(1L, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Territoire - La Réunion", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel("reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName())).thenReturn(Optional.of(page));
         when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page)).thenReturn(
+            new PageContent(
+                page,
                 Map.of(
                         "name", text("La Réunion"),
                         "identity", Map.of(
@@ -111,6 +114,7 @@ class TerritoryControllerTest {
                                 "link", link("other")
                         )
                 )
+            )
         );
     }
 
@@ -119,7 +123,7 @@ class TerritoryControllerTest {
         mockMvc.perform(get("/territoires/reunion"))
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-               .andExpect(content().string(containsString("<title>La Réunion</title>")))
+               .andExpect(content().string(containsString("<title>Territoire - La Réunion</title>")))
                .andExpect(content().string(containsString("<h1>La Réunion</h1>")))
                .andExpect(content().string(containsString("<h2>Interests</h2>")))
                .andExpect(content().string(containsString("<h2>Indicators</h2>")))

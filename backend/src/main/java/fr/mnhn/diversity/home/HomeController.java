@@ -31,6 +31,6 @@ public class HomeController {
     public ModelAndView home() {
         Page page = pageRepository.findByNameAndModel(HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
-        return new ModelAndView("home", pageService.buildPageContent(HomeModel.HOME_PAGE_MODEL, page));
+        return new ModelAndView("home", "page", pageService.buildPageContent(HomeModel.HOME_PAGE_MODEL, page));
     }
 }

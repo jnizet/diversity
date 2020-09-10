@@ -30,7 +30,7 @@ public class IndicatorController {
     @GetMapping("/{indicatorSlug}")
     public ModelAndView territory(@PathVariable("indicatorSlug") String indicatorSlug) {
         Page page = pageRepository.findByNameAndModel(indicatorSlug, IndicatorModel.INDICATOR_PAGE_MODEL.getName()).orElseThrow(NotFoundException::new);
-        return new ModelAndView("indicator", pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page));
+        return new ModelAndView("indicator", "page", pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page));
     }
 
 }

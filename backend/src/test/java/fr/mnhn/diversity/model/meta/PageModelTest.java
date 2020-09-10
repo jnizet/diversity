@@ -14,7 +14,7 @@ class PageModelTest {
         PageModel home =
             PageModel.builder("Home")
                 .describedAs("The home page")
-                .text("mainTitle")
+                .titleText("mainTitle", "The main title")
                 .section(SectionElement.builder("welcomeSection")
                                        .text(TextElement.builder("paragraph").multiLine())
                 )
@@ -30,7 +30,9 @@ class PageModelTest {
 
         TextElement mainTitle = (TextElement) home.getElements().get(0);
         assertThat(mainTitle.getName()).isEqualTo("mainTitle");
+        assertThat(mainTitle.getDescription()).isEqualTo("The main title");
         assertThat(mainTitle.isMultiLine()).isFalse();
+        assertThat(mainTitle.isTitle()).isTrue();
 
         SectionElement section = (SectionElement) home.getElements().get(1);
         assertThat(section.getName()).isEqualTo("welcomeSection");

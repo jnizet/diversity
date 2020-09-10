@@ -2,25 +2,25 @@
 
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
   <head>
-    <title>À propos</title>
+    <title th:text="${page.title}">À propos</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
 
   <body>
-    <main>
+    <main th:object="${page.content}">
       <div
         style="width: 600px; height: 400px"
-        th:attr="aria-label=${header.background.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=${header.background.imageId})} + ')'"
+        th:attr="aria-label=*{header.background.alt}"
+        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{header.background.imageId})} + ')'"
       >
-        <h1 th:text="${header.title.text}"></h1>
-        <p th:text="${header.subtitle.text}"></p>
+        <h1 th:text="*{header.title.text}"></h1>
+        <p th:text="*{header.subtitle.text}"></p>
       </div>
 
-      <p th:each="paragraph : ${header.paragraphs}" th.text="${paragraph.text}"></p>
+      <p th:each="paragraph : *{header.paragraphs}" th.text="*{paragraph.text}"></p>
 
       <div
-        th:each="carouselElement : ${carousel}"
+        th:each="carouselElement : *{carousel}"
         th:object="${carouselElement}"
         style="width: 600px; height: 400px"
         th:attr="aria-label=*{image.alt}"
@@ -32,9 +32,9 @@
       </div>
 
       <div>
-        <h2 th:text="${partners.title.text}"></h2>
-        <div th:each="partner : ${partners.partners}">
-          <img th:src="@{/images/{imageId}/image(imageId=${partner.logo.imageId})}" th:alt="${partner.logo.alt}" />
+        <h2 th:text="*{partners.title.text}"></h2>
+        <div th:each="partner : *{partners.partners}" th:object="${partner}">
+          <img th:src="@{/images/{imageId}/image(imageId=*{logo.imageId})}" th:alt="*{logo.alt}" />
         </div>
       </div>
     </main>

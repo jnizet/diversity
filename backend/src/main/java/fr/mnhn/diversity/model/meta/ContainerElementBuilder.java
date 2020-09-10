@@ -52,6 +52,14 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
         return this.text(TextElement.builder(name).describedAs(description));
     }
 
+    public B multiLineText(String name, String description) {
+        return this.text(TextElement.builder(name).describedAs(description).multiLine());
+    }
+
+    public B titleText(String name, String description) {
+        return this.text(TextElement.builder(name).describedAs(description).title());
+    }
+
     public B text(String name) {
         return this.text(name, null);
     }

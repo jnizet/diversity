@@ -9,12 +9,12 @@ import fr.mnhn.diversity.model.meta.SectionElement;
  */
 public final class TerritoryModel {
     public static final PageModel TERRITORY_PAGE_MODEL =
-            PageModel.builder("territory")
-                     .text("name").describedAs("Nom du territoire")
+            PageModel.builder("territory").describedAs("Territoire")
+                     .titleText("name", "Nom du territoire")
                      // Carte d'identité
                      .section(SectionElement.builder("identity").describedAs("Carte d'identité")
-                                            .text("title", "Titre de la présentation")
-                                            .text("presentation", "Texte de la présentation")
+                                            .titleText("title", "Titre de la présentation")
+                                            .multiLineText("presentation", "Texte de la présentation")
                                             .image("infography", "Infographie de la présentation")
                      )
                     // Lieux d'intérêts
@@ -40,7 +40,7 @@ public final class TerritoryModel {
                                             .text("title", "Titre de la section espèces")
                                             .list(ListElement.builder("species").describedAs("Les espèces du territoire")
                                                              .text("name", "Nom de l'espèce")
-                                                             .text("description", "Description de l'espèce")
+                                                             .multiLineText("description", "Description de l'espèce")
                                                              .image("image", "Image illustrant l'espèce")
                                             )
                      )
@@ -49,7 +49,7 @@ public final class TerritoryModel {
                                             .text("title", "Titre de la section écosystèmes")
                                             .list(ListElement.builder("ecosystems").describedAs("Les écosystèmes du territoire")
                                                              .text("name", "Nom de l'écosystème")
-                                                             .text("description", "Description de l'écosystème")
+                                                             .multiLineText("description", "Description de l'écosystème")
                                                              .image("image", "Image illustrant l'écosystème")
                                             )
                      )
@@ -58,7 +58,7 @@ public final class TerritoryModel {
                                             .text("title", "Titre de la frise chronologique")
                                             .list(ListElement.builder("events").describedAs("Les événements de la frise")
                                                              .text("name", "Nom de l'événement")
-                                                             .text("description", "Description de l'événement")
+                                                             .multiLineText("description", "Description de l'événement")
                                             )
                      )
                      // Risques et menaces
@@ -66,7 +66,7 @@ public final class TerritoryModel {
                                             .text("title", "Titre de la section risques")
                                             .list(ListElement.builder("risks").describedAs("Les risques et menaces du territoire")
                                                              .text("name", "Nom du risque")
-                                                             .text("description", "Description du risque")
+                                                             .multiLineText("description", "Description du risque")
                                                              .image("image", "Image illustrant le risque")
                                             )
                      )

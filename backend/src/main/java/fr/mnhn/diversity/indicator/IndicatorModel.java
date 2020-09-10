@@ -11,7 +11,7 @@ public final class IndicatorModel {
     public static final PageModel INDICATOR_PAGE_MODEL =
             PageModel.builder("indicator")
                      .describedAs("Indicator page")
-                     .text("name", "Nom de l'indicateur")
+                     .titleText("name", "Nom de l'indicateur")
                      // TODO: indicators value are stored as text for now
                      .section(SectionElement.builder("indicator")
                                             .section(SectionElement.builder("OUTRE_MER")

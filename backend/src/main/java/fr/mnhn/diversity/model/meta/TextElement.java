@@ -8,14 +8,20 @@ import java.util.Objects;
  */
 public final class TextElement extends PageElement {
     private final boolean multiLine;
+    private final boolean title;
 
     public TextElement(Builder builder) {
         super(builder.name, builder.description);
         this.multiLine = builder.multiLine;
+        this.title = builder.title;
     }
 
     public boolean isMultiLine() {
         return multiLine;
+    }
+
+    public boolean isTitle() {
+        return this.title;
     }
 
     @Override
@@ -35,18 +41,20 @@ public final class TextElement extends PageElement {
             return false;
         }
         TextElement that = (TextElement) o;
-        return multiLine == that.multiLine;
+        return multiLine == that.multiLine &&
+            title == that.title;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), multiLine);
+        return Objects.hash(super.hashCode(), multiLine, title);
     }
 
     @Override
     public String toString() {
         return "TextElement{" +
             "multiLine=" + multiLine +
+            ", title=" + title +
             "} " + super.toString();
     }
 
@@ -56,6 +64,7 @@ public final class TextElement extends PageElement {
 
     public static class Builder extends BaseBuilder<Builder> implements PageElementBuilder {
         private boolean multiLine = false;
+        private boolean title = false;
 
         public Builder(String name) {
             super(name);
@@ -63,6 +72,11 @@ public final class TextElement extends PageElement {
 
         public Builder multiLine() {
             this.multiLine = true;
+            return this;
+        }
+
+        public Builder title() {
+            this.title = true;
             return this;
         }
 

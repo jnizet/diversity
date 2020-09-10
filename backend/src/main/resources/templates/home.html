@@ -2,45 +2,45 @@
 
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
   <head>
-    <title>Diversité</title>
+    <title th:text="${page.title}">Accueil</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
 
   <body>
-    <main>
-      <h1 th:text="${carousel.title.text}">Title</h1>
-      <div th:each="imageElement : ${carousel.images}" th:object="${imageElement.image}">
+    <main th:object="${page.content}">
+      <h1 th:text="*{carousel.title.text}">Title</h1>
+      <div th:each="imageElement : *{carousel.images}" th:object="${imageElement.image}">
         <img th:src="@{/images/{imageId}/image(imageId=*{imageId})}" th:alt="*{alt}" />
       </div>
-      <p th:text="${carousel.text.text}"></p>
-      <a th:href="@{/territoires}" th:text="${carousel.territoriesButton.text}"></a>
+      <p th:text="*{carousel.text.text}"></p>
+      <a th:href="@{/territoires}" th:text="*{carousel.territoriesButton.text}"></a>
 
       <div
         style="width: 600px; height: 400px"
-        th:attr="aria-label=${presentation.image.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=${presentation.image.imageId})} + ')'"
+        th:attr="aria-label=*{presentation.image.alt}"
+        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{presentation.image.imageId})} + ')'"
       >
-        <h2 th:text="${presentation.title.text}"></h2>
-        <p th:text="${presentation.text.text}"></p>
-        <a th:href="@{/apropos}" th:text="${presentation.more.text}"></a>
+        <h2 th:text="*{presentation.title.text}"></h2>
+        <p th:text="*{presentation.text.text}"></p>
+        <a th:href="@{/apropos}" th:text="*{presentation.more.text}"></a>
       </div>
 
       <div
         style="width: 600px; height: 400px"
-        th:attr="aria-label=${indicators.image.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=${indicators.image.imageId})} + ')'"
+        th:attr="aria-label=*{indicators.image.alt}"
+        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{indicators.image.imageId})} + ')'"
       >
-        <h2 th:text="${indicators.title.text}"></h2>
-        <p th:text="${indicators.text.text}"></p>
+        <h2 th:text="*{indicators.title.text}"></h2>
+        <p th:text="*{indicators.text.text}"></p>
       </div>
 
       <div
         style="width: 600px; height: 400px"
-        th:attr="aria-label=${science.image.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=${science.image.imageId})} + ')'"
+        th:attr="aria-label=*{science.image.alt}"
+        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{science.image.imageId})} + ')'"
       >
-        <h2 th:text="${science.title.text}"></h2>
-        <p th:text="${science.text.text}"></p>
+        <h2 th:text="*{science.title.text}"></h2>
+        <p th:text="*{science.text.text}"></p>
       </div>
     </main>
   </body>

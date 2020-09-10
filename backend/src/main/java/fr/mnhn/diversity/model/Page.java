@@ -28,14 +28,21 @@ public final class Page {
     private final String modelName;
 
     /**
+     * The title of the page, displayed in the browser tab, and also displayed to
+     * as a search result
+     */
+    private final String title;
+
+    /**
      * The elements of the page, indexed by their key
      */
     private final Map<String, Element> elements;
 
-    public Page(Long id, String name, String modelName, Collection<Element> elements) {
+    public Page(Long id, String name, String modelName, String title, Collection<Element> elements) {
         this.id = id;
         this.name = name;
         this.modelName = modelName;
+        this.title = title;
         this.elements = Collections.unmodifiableMap(
             elements.stream()
                     .collect(Collectors.toMap(Element::getKey, Function.identity()))
@@ -54,6 +61,10 @@ public final class Page {
         return modelName;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public Map<String, Element> getElements() {
         return elements;
     }
@@ -70,12 +81,13 @@ public final class Page {
         return Objects.equals(id, page.id) &&
             Objects.equals(name, page.name) &&
             Objects.equals(modelName, page.modelName) &&
+            Objects.equals(title, page.title) &&
             Objects.equals(elements, page.elements);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, modelName, elements);
+        return Objects.hash(id, name, modelName, title, elements);
     }
 
     @Override
@@ -84,6 +96,7 @@ public final class Page {
             "id=" + id +
             ", name='" + name + '\'' +
             ", modelName='" + modelName + '\'' +
+            ", title='" + title + '\'' +
             ", elements=" + elements +
             '}';
     }

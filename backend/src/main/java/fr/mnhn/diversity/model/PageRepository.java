@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Repository;
 public class PageRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private ResultSetExtractor<Optional<Page>> pageExtractor;
 
     public PageRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -30,7 +28,7 @@ public class PageRepository {
 
     public Optional<Page> findById(Long id) {
         String sql =
-            "select page.id, page.name, page.model_name, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
+            "select page.id, page.name, page.model_name, page.title, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
                 " from page" +
                 " left outer join page_element el on page.id = el.page_id" +
                 " where page.id = :id";
@@ -39,7 +37,7 @@ public class PageRepository {
 
     public Optional<Page> findByNameAndModel(String name, String modelName) {
         String sql =
-            "select page.id, page.name, page.model_name, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
+            "select page.id, page.name, page.model_name, page.title, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
                 " from page" +
                 " left outer join page_element el on page.id = el.page_id" +
                 " where page.name = :name and page.model_name = :modelName";
@@ -48,12 +46,14 @@ public class PageRepository {
 
     public List<Page> findByModel(String modelName) {
         String sql =
-            "select page.id, page.name, page.model_name, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
+            "select page.id, page.name, page.model_name, page.title, el.id as element_id, el.type, el.key, el.text, el.image_id, el.alt, el.href" +
                 " from page" +
                 " left outer join page_element el on page.id = el.page_id" +
                 " where page.model_name = :modelName";
         return jdbcTemplate.query(sql, Map.of("modelName", modelName), this::extractPages);
     }
+
+
 
     private List<Page> extractPages(ResultSet rs) throws SQLException {
         Map<Long, PageData> pageDataById = new HashMap<>();
@@ -62,7 +62,8 @@ public class PageRepository {
             Long pageId = rs.getLong("id");
             String name = rs.getString("name");
             String modelName = rs.getString("model_name");
-            pageDataById.computeIfAbsent(pageId, id -> new PageData(id, name, modelName));
+            String title = rs.getString("title");
+            pageDataById.computeIfAbsent(pageId, id -> new PageData(id, name, modelName, title));
             List<Element> elements = elementsById.computeIfAbsent(pageId, id -> new ArrayList<>());
 
             long elementId = rs.getLong("element_id");
@@ -91,6 +92,7 @@ public class PageRepository {
                            .map(pageData -> new Page(pageData.id,
                                                      pageData.name,
                                                      pageData.modelName,
+                                                     pageData.title,
                                                      elementsById.get(pageData.id)))
                            .collect(Collectors.toList());
     }
@@ -104,11 +106,13 @@ public class PageRepository {
         private final Long id;
         private final String name;
         private final String modelName;
+        private final String title;
 
-        public PageData(Long id, String name, String modelName) {
+        public PageData(Long id, String name, String modelName, String title) {
             this.id = id;
             this.name = name;
             this.modelName = modelName;
+            this.title = title;
         }
     }
 }
