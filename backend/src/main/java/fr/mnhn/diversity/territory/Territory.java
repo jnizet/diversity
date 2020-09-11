@@ -1,32 +1,41 @@
 package fr.mnhn.diversity.territory;
 
-import java.util.Objects;
-
 /**
- * A territory
- * @author JB Nizet
+ * An enum representing all the available territories
  */
-public final class Territory {
-    private final Long id;
-    private final String name;
+public enum Territory {
+    OUTRE_MER("Outre-mer", "Outre-mer", null),
+    REUNION("Réunion", "Réunion", "reunion"),
+    GUADELOUPE("Guadeloupe", "Guadeloupe", "guadeloupe"),
+    SAINT_PIERRE_ET_MIQUELON("Saint-Pierre-Et-Miquelon", "Saint-Pierre-Et-Miquelon", "st-pierre-et-miquelon");
+
     /**
-     * Field used as a functional ID and in the URLS,
-     * for example `/territoires/st-pierre-et-miquelon`
+     * Name of the territory
+     */
+    private final String name;
+
+    /**
+     * Key representing a territory in the external HTTP services
+     */
+    private final String biomKey;
+
+    /**
+     * Slug identifier used in the URLs for a territory (/territoires/slug)
      */
     private final String slug;
 
-    public Territory(Long id, String name, String slug) {
-        this.id = id;
+    Territory(String name, String biomKey, String slug) {
         this.name = name;
+        this.biomKey = biomKey;
         this.slug = slug;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getBiomKey() {
+        return biomKey;
     }
 
     public String getSlug() {
@@ -34,30 +43,11 @@ public final class Territory {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Territory)) {
-            return false;
-        }
-        Territory territory = (Territory) o;
-        return Objects.equals(id, territory.id) &&
-            Objects.equals(name, territory.name)&&
-            Objects.equals(slug, territory.slug);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, slug);
-    }
-
-    @Override
     public String toString() {
         return "Territory{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", slug='" + slug + '\'' +
-            '}';
+                "name='" + name + '\'' +
+                ", biomKey='" + biomKey + '\'' +
+                ", slug='" + slug + '\'' +
+                "} " + super.toString();
     }
 }

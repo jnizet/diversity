@@ -1,11 +1,15 @@
 delete from page_element;
 delete from page;
 delete from image;
-delete from territory;
+delete from indicator_value;
+delete from indicator;
 
-insert into territory (id, name, slug) values
-    (1, 'Réunion', 'reunion'),
-    (2, 'Saint-Pierre-Et-Miquelon', 'st-pierre-et-miquelon');
+insert into indicator (id, biom_id) values
+    (1, 'indicator1');
+
+insert into indicator_value (id, indicator_id, territory, value, unit) values
+    (1, 1, 'REUNION', 23.4, 'km');
+
 
 insert into image (id, content_type, original_file_name) values
     (1, 'image/png', 'carousel1.png'),

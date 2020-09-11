@@ -37,14 +37,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Operation deleteAll = deleteAllFrom("territory", "page_element", "page", "image");
-        Operation territories =
-            insertInto("territory")
-                .columns("id", "name", "slug")
-                .values(1L, "Guadeloupe", "guadeloupe")
-                .values(2L, "Saint-Pierre-Et-Miquelon", "st-pierre-et-miquelon")
-                .values(3L, "Réunion", "reunion")
-                .build();
+        Operation deleteAll = deleteAllFrom("page_element", "page", "image");
 
         Long home = 1L;
         Long about = 2L;
@@ -260,7 +253,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
         new DbSetup(destination, sequenceOf(
             deleteAll,
-            territories,
             images,
             pages,
             homeElements,

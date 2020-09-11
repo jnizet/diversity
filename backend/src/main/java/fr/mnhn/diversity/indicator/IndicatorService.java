@@ -10,7 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 /**
- * Service used to get indicators from externalHTTP services
+ * Service used to get indicators from external HTTP services
  * @author JB Nizet
  */
 @Service
