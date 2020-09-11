@@ -15,6 +15,7 @@ import java.util.Optional;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
+import fr.mnhn.diversity.territory.Territory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,14 @@ class IndicatorControllerTest {
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page)).thenReturn(
                 Map.of(
                         "name", text("Espèces envahissantes"),
+                        "indicator", Map.of(
+                                Territory.OUTRE_MER.name(), Map.of ("value", text("60")),
+                                Territory.REUNION.name(), Map.of ("value", text("6")),
+                                Territory.GUADELOUPE.name(), Map.of ("value", text("14")),
+                                Territory.SAINT_PIERRE_ET_MIQUELON.name(), Map.of ("value", text("23"))
+                        ),
                         "presentation", Map.of(
                                 "category", text("Espèces"),
-                                "value", text("60"),
                                 "description", text("espèces sur les 100..."),
                                 "image", image(1L)
                         ),
@@ -106,7 +112,9 @@ class IndicatorControllerTest {
                .andExpect(content().string(containsString("<h2>Comprendre</h2>")))
                .andExpect(content().string(containsString("<h2>Indicateurs</h2>")))
                .andExpect(content().string(containsString("<h3>Réunion</h3>")))
-               .andExpect(content().string(containsString("<h3>Martinique</h3>")))
+               .andExpect(content().string(containsString("<p>6</p>")))
+               .andExpect(content().string(containsString("<h3>Guadeloupe</h3>")))
+               .andExpect(content().string(containsString("<p>14</p>")))
                .andExpect(content().string(containsString("<h2>Ecogestes</h2>")))
                .andExpect(content().string(containsString("<h3>Ecogesture1</h3>")));
     }
