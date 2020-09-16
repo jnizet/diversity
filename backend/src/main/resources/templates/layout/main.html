@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" th:fragment="layout (title, opengraph, content)" xmlns:th="http://www.thymeleaf.org">
   <head>
     <title th:replace="${title}">Layout Title</title>
+
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Compteur de biodiversite Outre-mer" />
+    <th:block th:replace="${opengraph}" />
   </head>
   <body>
     <header>
@@ -10,7 +15,12 @@
       <a th:href="@{/apropos}">À propos</a>
       <a th:href="@{/ecogestes}">Écogestes</a>
       <form method="get" th:action="@{/recherche}">
-        <input name="texte" id="search" placeholder="Rechercher" th:value="${#execInfo.processedTemplateName == 'search' ? param.texte : ''}"/>
+        <input
+          name="texte"
+          id="search"
+          placeholder="Rechercher"
+          th:value="${#execInfo.processedTemplateName == 'search' ? param.texte : ''}"
+        />
       </form>
     </header>
     <div th:replace="${content}">

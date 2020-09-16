@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::meta%og}, ~{::main})}">
   <head>
     <title th:text="${page.title}">Indicateur</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
+    <meta
+      th:ref="og"
+      property="og:description"
+      th:attr="content=${page.content.indicator.OUTRE_MER.value.text + ' ' + page.content.presentation.description.text}"
+    />
+    <meta
+      th:ref="og"
+      property="og:image"
+      th:attr="content=@{/images/{imageId}/image(imageId=${page.content.presentation.image.imageId})}"
+    />
   </head>
 
   <body>
@@ -31,7 +43,10 @@
       <!-- Indicateurs par territoire -->
       <div class="indicators">
         <h2 th:text="*{indicators.title.text}">Indicateurs par territoire</h2>
-        <div th:each="territory : ${T(fr.mnhn.diversity.territory.Territory).values()}" th:if="${page.content.indicator.get(territory.name()) != null && territory.name() != 'OUTRE_MER'}">
+        <div
+          th:each="territory : ${T(fr.mnhn.diversity.territory.Territory).values()}"
+          th:if="${page.content.indicator.get(territory.name()) != null && territory.name() != 'OUTRE_MER'}"
+        >
           <h3 th:text="${territory.getName()}">Nom du territoire</h3>
           <p th:text="${page.content.indicator.get(territory.name()).value.text}">Valeur de l'indicateur</p>
         </div>

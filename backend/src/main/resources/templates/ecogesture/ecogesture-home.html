@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::meta%og}, ~{::main})}">
   <head>
     <title th:text="${page.title}">Écogestes</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
+    <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.text}" />
+    <meta th:ref="og" property="og:image" th:attr="content=@{/images/{imageId}/image(imageId=${page.content.image.imageId})}" />
   </head>
 
   <body>
