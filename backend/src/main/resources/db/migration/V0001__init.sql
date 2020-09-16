@@ -1,9 +1,24 @@
+create table category (
+    id   BIGINT primary key,
+    name VARCHAR not null
+);
+
+create sequence category_seq start with 1000;
+
 create table indicator (
     id      BIGINT primary key,
     biom_id VARCHAR not null
 );
 
 create sequence indicator_seq start with 1000;
+
+create table indicator_category (
+    indicator_id BIGINT,
+    category_id BIGINT,
+    constraint indicator_id_fk foreign key (indicator_id) references indicator(id),
+    constraint category_id_fk foreign key (category_id) references category(id),
+    primary key (indicator_id, category_id)
+);
 
 create table indicator_value (
    id           BIGINT primary key,

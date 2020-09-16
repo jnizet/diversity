@@ -1,8 +1,11 @@
 package fr.mnhn.diversity.indicator;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.territory.Territory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,8 +23,37 @@ public class IndicatorRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Lists all the indicators and their categories
+     */
     public List<Indicator> list() {
-        return jdbcTemplate.query("select id, biom_id from indicator order by biom_id", (rs, rowNum) -> new Indicator(rs.getLong("id"), rs.getString("biom_id")));
+        String query = "select indicator.id, indicator.biom_id, cat.id as category_id, cat.name as category_name from indicator" +
+                " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
+                " left outer join category cat on cat.id = ind_cat.category_id";
+        Map<Long, Indicator> indicatorsById = new HashMap<>();
+        Map<Long, List<IndicatorCategory>> categoriesByIndicatorId = new HashMap<>();
+        jdbcTemplate.query(query, (rs) -> {
+            long indicatorId = rs.getLong("id");
+            String biomId = rs.getString("biom_id");
+            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId, List.of()));
+            List<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId, id -> new ArrayList<>());
+            long categoryId = rs.getLong("category_id");
+            if (!rs.wasNull()) { // if an indicator has a category
+                String categoryName = rs.getString("category_name");
+                categoriesForIndicator.add(new IndicatorCategory(categoryId, categoryName));
+            }
+        });
+        return indicatorsById.values()
+                             .stream()
+                             .sorted(Comparator.comparing(Indicator::getBiomId))
+                             .map(indicator -> new Indicator(indicator.getId(),
+                                                             indicator.getBiomId(),
+                                                             categoriesByIndicatorId.get(indicator.getId())
+                                                                                    .stream()
+                                                                                    .sorted(Comparator.comparing(IndicatorCategory::getName))
+                                                                                    .collect(Collectors.toList())
+                             ))
+                             .collect(Collectors.toList());
     }
 
     /**

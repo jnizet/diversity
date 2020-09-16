@@ -4,6 +4,7 @@ import static com.ninja_squad.dbsetup.Operations.*;
 import static fr.mnhn.diversity.common.testing.Tracker.TRACKER;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 
@@ -32,12 +33,22 @@ class IndicatorRepositoryTest {
                 new DbSetup(
                         new DataSourceDestination(dataSource),
                         sequenceOf(
-                                deleteAllFrom("indicator_value"),
-                                deleteAllFrom("indicator"),
+                                deleteAllFrom("indicator_value", "indicator_category", "indicator", "category"),
+                                insertInto("category")
+                                        .columns("id", "name")
+                                        .values(101L, "category1")
+                                        .values(102L, "category2")
+                                        .build(),
                                 insertInto("indicator")
                                         .columns("id", "biom_id")
                                         .values(1L, "indicator2")
                                         .values(2L, "indicator1")
+                                        .build(),
+                                insertInto("indicator_category")
+                                        .columns("indicator_id", "category_id")
+                                        .values(2L, 102L)
+                                        .values(2L, 101L)
+                                        .values(1L, 102L)
                                         .build()
                         )
                 );
@@ -47,16 +58,17 @@ class IndicatorRepositoryTest {
     @Test
     void shouldListIndicators() {
         TRACKER.skipNextLaunch();
+        IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
+        IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
         assertThat(repository.list()).containsExactly(
-                new Indicator(2L, "indicator1"),
-                new Indicator(1L, "indicator2")
+                new Indicator(2L, "indicator1", List.of(category1, category2)),
+                new Indicator(1L, "indicator2", List.of(category2))
         );
     }
 
     @Test
     void shouldSaveAndGetValues() {
-        TRACKER.skipNextLaunch();
-        Indicator indicator = new Indicator(1L, "indicator2");
+        Indicator indicator = new Indicator(1L, "indicator2", List.of());
         IndicatorValue valueOutreMer = new IndicatorValue(278.9, "km");
         IndicatorValue valueReunion = new IndicatorValue(12.4, "km");
         IndicatorValue valueGuadeloupe = new IndicatorValue(3.8, "km");

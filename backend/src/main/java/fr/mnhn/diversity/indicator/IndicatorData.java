@@ -39,8 +39,8 @@ public final class IndicatorData {
         }
         IndicatorData that = (IndicatorData) o;
         return Objects.equals(id, that.id) &&
-            Objects.equals(shortLabel, that.shortLabel) &&
-            Objects.equals(calculationReference, that.calculationReference);
+                Objects.equals(shortLabel, that.shortLabel) &&
+                Objects.equals(calculationReference, that.calculationReference);
     }
 
     @Override
@@ -51,9 +51,9 @@ public final class IndicatorData {
     @Override
     public String toString() {
         return "IndicatorData{" +
-            "id='" + id + '\'' +
-            ", shortLabel='" + shortLabel + '\'' +
-            ", calculationReference='" + calculationReference + '\'' +
-            '}';
+                "id='" + id + '\'' +
+                ", shortLabel='" + shortLabel + '\'' +
+                ", calculationReference='" + calculationReference + '\'' +
+                '}';
     }
 }
