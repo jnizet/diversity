@@ -35,14 +35,27 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-    // On CI, Gitlab will spin a Postgres service on host "postgres"
-    if (project.findProperty("CI") != null) {
-        systemProperty("diversity.database.host-and-port", "postgres:5432")
+tasks {
+    withType<Test> {
+        useJUnitPlatform()
+        // On CI, Gitlab will spin a Postgres service on host "postgres"
+        if (project.findProperty("CI") != null) {
+            systemProperty("diversity.database.host-and-port", "postgres:5432")
+        }
     }
-}
 
-tasks.bootJar {
-    archiveFileName.set("diversity.jar")
+    bootJar {
+        dependsOn(":frontend:assemble")
+        archiveFileName.set("diversity.jar")
+        bootInf {
+            into("classes/static") {
+                from(project(":frontend").file("build/dist"))
+            }
+        }
+    }
+
+    bootRun {
+        workingDir = rootDir
+        args = listOf("--spring.profiles.active=dev")
+    }
 }

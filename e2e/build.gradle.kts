@@ -1,31 +1,11 @@
 import com.moowork.gradle.node.yarn.YarnTask
 
 plugins {
-    base
-    id("com.github.node-gradle.node")
-}
-
-node {
-    version = "12.18.3"
-    npmVersion = "6.14.6"
-    yarnVersion = "1.22.5"
-    download = true
+    id("diversity.node-conventions")
 }
 
 tasks {
-    npmInstall {
-        enabled = false
-    }
-
-    val yarn_install by getting {
-        inputs.file("package.json")
-        inputs.file("yarn.lock")
-        outputs.dir("node_modules")
-    }
-
-    val prepare by registering {
-        dependsOn(yarn_install)
-    }
+    val prepare by getting
 
     // This is not a yarn_format task because the task to run is `yarn format:check`
     // and tasks with colons are not supported

@@ -20,6 +20,18 @@ spring:
     password: diversity
   flyway:
     enabled: true
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths:
+            - '/*.js'
+            - '/*.css'
+      cache: true
+    cache:
+      cachecontrol:
+        max-age: '365d'
 
 ---
 spring:
@@ -42,3 +54,13 @@ diversity:
   images:
     directory: ./e2e/images
 
+---
+spring:
+  profiles:
+    dev
+  resources:
+    static-locations:
+      - classpath:/static/
+      - file:./frontend/build/dist/
+    chain:
+      cache: false

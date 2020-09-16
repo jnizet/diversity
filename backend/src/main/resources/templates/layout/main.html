@@ -7,6 +7,8 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Compteur de biodiversite Outre-mer" />
     <th:block th:replace="${opengraph}" />
+
+    <link rel="stylesheet" th:href="@{/style.css}">
   </head>
   <body>
     <header>
@@ -27,5 +29,6 @@
       <p>Layout content</p>
     </div>
     <footer>Layout footer</footer>
+    <script th:src="@{/bundle.js}"></script>
   </body>
 </html>
