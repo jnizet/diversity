@@ -8,7 +8,7 @@
     <meta property="og:site_name" content="Compteur de biodiversite Outre-mer" />
     <th:block th:replace="${opengraph}" />
 
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}" />
   </head>
   <body>
     <header>
@@ -28,7 +28,10 @@
     <div th:replace="${content}">
       <p>Layout content</p>
     </div>
-    <footer>Layout footer</footer>
+    <footer>
+      Layout footer
+      <div th:insert="~{layout/contact::contact}"></div>
+    </footer>
     <script th:src="@{/bundle.js}"></script>
   </body>
 </html>

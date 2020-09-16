@@ -4,5 +4,6 @@
   "reporterOptions": {
     "fileName": "cypress-results.json"
   },
-  "video": false
+  "video": false,
+  "experimentalFetchPolyfill": true
 }
