@@ -2,7 +2,7 @@
   "baseUrl": "http://localhost:8081",
   "reporter": "mocha-spec-json-output-reporter",
   "reporterOptions": {
-    "fileName": "cypress-results.json"
+    "fileName": "build/cypress-results.json"
   },
   "video": false,
   "experimentalFetchPolyfill": true

@@ -11,18 +11,10 @@ tasks {
     // and tasks with colons are not supported
     val checkFormat by registering(YarnTask::class) {
         args = listOf("run", "format:check")
-        execRunner.ignoreExitValue = true
         dependsOn(prepare)
         inputs.dir("cypress")
         inputs.file("package.json")
-        outputs.file("prettier-result.txt")
-        doLast {
-            file("prettier-result.txt").useLines { sequence ->
-                if (sequence.any { it.contains("cypress") }) {
-                    throw GradleException ("Formatting warning found. Check prettier-result.txt")
-                }
-            }
-        }
+        outputs.file("$buildDir/prettier-result.txt")
     }
 
     // This is not a yarn_e2e task because the task to run is `yarn e2e:standalone`
@@ -41,16 +33,11 @@ tasks {
         inputs.file("package.json")
         inputs.file("cypress.json")
         inputs.file("${project(":backend").buildDir}/libs/diversity.jar")
-        outputs.file("cypress-results.json")
+        outputs.file("$buildDir/cypress-results.json")
     }
 
     check {
         dependsOn(checkFormat)
         dependsOn(e2e)
-    }
-
-    clean {
-        dependsOn("cleanCheckFormat")
-        dependsOn("cleanE2e")
     }
 }

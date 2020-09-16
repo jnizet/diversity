@@ -3,8 +3,7 @@ import { hideElement, setElementVisible, showElement } from '../elements';
 
 const MAX_CHARACTERS = 700;
 // taken from Angular
-const EMAIL_REGEXP =
-  /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export class ContactController extends Controller {
   static targets = ['form', 'from', 'invalidFrom', 'body', 'invalidBody', 'remainingCharacters', 'send', 'sendFailed'];
@@ -32,7 +31,7 @@ export class ContactController extends Controller {
 
   private setVisible(visible: boolean) {
     this.visible = visible;
-    setElementVisible(this.formTarget, visible)
+    setElementVisible(this.formTarget, visible);
     if (this.visible) {
       this.fromTarget.focus();
     }
@@ -47,7 +46,7 @@ export class ContactController extends Controller {
     hideElement(this.sendFailedTarget);
     const formElements = [this.fromTarget, this.bodyTarget, this.sendTarget];
     if (this.validate()) {
-      formElements.forEach(e => e.disabled = true);
+      formElements.forEach(e => (e.disabled = true));
       try {
         await fetch('/messages', {
           method: 'POST',
@@ -62,7 +61,7 @@ export class ContactController extends Controller {
       } catch (e) {
         showElement(this.sendFailedTarget);
       } finally {
-        formElements.forEach(e => e.disabled = false);
+        formElements.forEach(e => (e.disabled = false));
       }
     }
   }

@@ -7,6 +7,16 @@ plugins {
 tasks {
     val prepare by getting
 
+    // This is not a yarn_format task because the task to run is `yarn format:check`
+    // and tasks with colons are not supported
+    val checkFormat by registering(YarnTask::class) {
+        args = listOf("run", "format:check")
+        dependsOn(prepare)
+        inputs.dir("src")
+        inputs.file("package.json")
+        outputs.file("build/prettier-result.txt")
+    }
+
     // This is not a yarn_build task because the task to run is `yarn build:prod`
     // and tasks with colons are not supported
     val yarnBuildProd by registering(YarnTask::class) {
@@ -23,5 +33,9 @@ tasks {
 
     assemble {
         dependsOn(yarnBuildProd)
+    }
+
+    check {
+        dependsOn(checkFormat)
     }
 }

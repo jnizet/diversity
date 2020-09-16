@@ -11,7 +11,7 @@
     "e2e:standalone": "start-server-and-test 'yarn start:e2e' http-get://localhost:8081 'yarn e2e:headless'",
     "e2e:standalone:ci": "start-server-and-test 'yarn start:e2e:ci' http-get://localhost:8081 'yarn e2e:headless'",
     "format": "prettier --write \"**/*.+(ts|js|json|html|css)\"",
-    "format:check": "prettier --check \"cypress/**/*.+(ts|js|json|html|scss)\" > prettier-result.txt 2>&1",
+    "format:check": "prettier --check \"cypress/**/*.+(ts|js|json|html|scss)\" > build/prettier-result.txt 2>&1",
     "format:backend-templates": "prettier --write --print-width 140 ../backend/src/main/resources/templates"
   },
   "devDependencies": {
