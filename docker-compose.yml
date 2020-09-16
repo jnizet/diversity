@@ -13,3 +13,11 @@ services:
       - ./backend/database/setup:/docker-entrypoint-initdb.d/:cached
     ports:
       - 5432:5432
+
+  smtp:
+    # latest
+    image: mailhog/mailhog@sha256:98c7e2e6621c897ad86f31610d756d76b8ee622c354c28a76f4ed49fb6ed996f
+    container_name: diversity-smtp
+    ports:
+      - 25:1025
+      - 8025:8025

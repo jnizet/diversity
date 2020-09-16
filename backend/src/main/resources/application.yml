@@ -3,6 +3,9 @@ diversity:
     host-and-port: localhost:5432
   images:
     directory: ./e2e/images
+  contact:
+    email: contact@mnhn.com
+    subject: Message du portail diversité
 
 server:
   compression:
@@ -32,6 +35,8 @@ spring:
     cache:
       cachecontrol:
         max-age: '365d'
+  mail:
+    host: localhost
 
 ---
 spring:
