@@ -7,7 +7,7 @@ plugins {
 tasks {
     val prepare by getting
 
-    // This is not a yarn_format task because the task to run is `yarn format:check`
+    // This is not a yarn_build task because the task to run is `yarn build:prod`
     // and tasks with colons are not supported
     val yarnBuildProd by registering(YarnTask::class) {
         args = listOf("run", "build:prod")
