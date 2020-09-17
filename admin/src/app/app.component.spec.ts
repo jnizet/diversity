@@ -1,31 +1,34 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ComponentTester } from 'ngx-speculoos';
+import { RouterOutlet } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+
+class AppComponentTester extends ComponentTester<AppComponent> {
+  constructor() {
+    super(AppComponent);
+  }
+
+  get routerOutlet() {
+    return this.debugElement.query(By.directive(RouterOutlet));
+  }
+}
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+  let tester: AppComponentTester;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      imports: [RouterTestingModule]
+    });
+
+    tester = new AppComponentTester();
+    tester.detectChanges();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'admin'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('admin');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('admin app is running!');
+  it('should have a router outlet', () => {
+    expect(tester.routerOutlet).not.toBeNull();
   });
 });

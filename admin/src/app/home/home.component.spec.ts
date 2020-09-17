@@ -1,25 +1,30 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
+import { ComponentTester } from 'ngx-speculoos';
+
+class HomeComponentTester extends ComponentTester<HomeComponent> {
+  constructor() {
+    super(HomeComponent);
+  }
+
+  get title() {
+    return this.element('h1');
+  }
+}
 
 describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
-    })
-    .compileComponents();
-  });
+  let tester: HomeComponentTester;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      declarations: [HomeComponent]
+    });
+    tester = new HomeComponentTester();
+    tester.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should display home', () => {
+    expect(tester.title).toHaveText('Administration du portail');
   });
 });
