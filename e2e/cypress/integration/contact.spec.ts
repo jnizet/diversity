@@ -24,13 +24,13 @@ describe('Contact', () => {
     cy.get('footer').contains('Veuillez saisir un message').should('be.visible');
 
     cy.get('#contact-body').type('Hi there!');
-    cy.get('footer').contains('Nombre de caractères restants: 691');
+    cy.get('footer').contains('Nombre de caractères restants : 691');
     cy.get('footer').contains('Envoyer').click();
 
     cy.get('footer').contains('Veuillez saisir un message').should('not.be.visible');
 
     cy.get('#contact-body').clear();
-    cy.get('footer').contains('Nombre de caractères restants: 700');
+    cy.get('footer').contains('Nombre de caractères restants : 700');
     cy.get('footer').contains('Envoyer').click();
 
     cy.get('footer').contains('Veuillez saisir un message').should('be.visible');
@@ -38,8 +38,7 @@ describe('Contact', () => {
 
   it('should send an email', () => {
     cy.route2('POST', '/messages', {
-      delayMs: 1000,
-      body: {}
+      delayMs: 1000
     }).as('sendMessage');
     cy.visit('/');
 
@@ -62,6 +61,18 @@ describe('Contact', () => {
     cy.get('#contact-from').should('be.enabled');
     cy.get('#contact-body').should('be.enabled');
     cy.get('#contact-send').should('be.enabled');
+  });
+
+  it('should really send an email', () => {
+    cy.visit('/');
+
+    cy.get('footer').contains('Contact').click();
+
+    cy.get('#contact-from').type('test@mnhn.fr');
+    cy.get('#contact-body').type('test message');
+    cy.get('#contact-send').click();
+
+    cy.get('#contact-form').should('not.be.visible');
   });
 
   it('should show an error if sending an email fails', () => {
