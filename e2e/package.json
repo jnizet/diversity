@@ -15,7 +15,7 @@
     "format:backend-templates": "prettier --write --print-width 140 ../backend/src/main/resources/templates"
   },
   "devDependencies": {
-    "cypress": "5.1.0",
+    "cypress": "5.2.0",
     "mocha-spec-json-output-reporter": "1.1.7",
     "prettier": "2.1.1",
     "start-server-and-test": "1.11.3",
