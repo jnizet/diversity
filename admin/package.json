@@ -6,9 +6,9 @@
     "start": "ng serve",
     "build": "ng build --prod --no-progress",
     "test": "ng test --code-coverage --no-progress --no-watch",
-    "lint": "ng lint > tslint-result.txt",
+    "lint": "ng lint > build/tslint-result.txt",
     "format": "prettier --write \"src/**/*.+(ts|js|json|html|scss)\"",
-    "format:check": "prettier --check \"src/**/*.+(ts|js|json|html|scss)\" > prettier-result.txt"
+    "format:check": "prettier --check \"src/**/*.+(ts|js|json|html|scss)\" > build/prettier-result.txt"
   },
   "private": true,
   "dependencies": {
