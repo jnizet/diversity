@@ -28,10 +28,7 @@
       ]
     },
     "max-classes-per-file": false,
-    "max-line-length": [
-      true,
-      140
-    ],
+    "max-line-length": false,
     "member-ordering": [
       true,
       {
@@ -43,7 +40,6 @@
         ]
       }
     ],
-    "no-any": true,
     "no-console": [
       true,
       "debug",
@@ -65,10 +61,6 @@
       true,
       "as-needed"
     ],
-    "quotemark": [
-      true,
-      "single"
-    ],
     "semicolon": {
       "options": [
         "always"
@@ -83,10 +75,6 @@
         "named": "never"
       }
     },
-    "typedef": [
-      true,
-      "call-signature"
-    ],
     "typedef-whitespace": {
       "options": [
         {
@@ -148,6 +136,11 @@
       "element",
       "app",
       "kebab-case"
+    ],
+    "ban": [
+      true,
+      {"name": "fit", "message": "Focused tests are not allowed."},
+      {"name": "fdescribe", "message": "Focused test suites are not allowed."}
     ]
   }
 }
