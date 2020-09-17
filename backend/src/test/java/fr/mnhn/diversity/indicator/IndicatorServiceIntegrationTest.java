@@ -2,6 +2,9 @@ package fr.mnhn.diversity.indicator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Map;
+
+import fr.mnhn.diversity.territory.Territory;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +30,10 @@ public class IndicatorServiceIntegrationTest {
         " But it's nice to have this test during development to check that everything is OK.")
     @Test
     void shouldGetIndicatorAndValue() {
-        IndicatorData indicatorData = service.indicatorData("ff0ae3a9-fe01-41c9-a6e2-603b26b266fa").block();
-        IndicatorValue indicatorValue = service.indicatorValue(indicatorData.getCalculationReference()).block();
+        IndicatorData indicatorData = service.indicatorData("b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6").block();
+        Map<Territory, IndicatorValue> indicatorValues = service.indicatorValues(indicatorData.getCalculationReference()).block();
 
-        assertThat(indicatorData.getShortLabel()).isEqualTo("Proportion d'espèces en catégories éteintes ou menacées dans la liste rouge UICN-MNHN pour la France métropolitaine et ultramarine par rapport au nombre total d'espèces évaluées (pour les groupes évalués dans leur totalité)");
-        assertThat(indicatorValue.getValue()).isBetween(0.0, 100.0);
+        assertThat(indicatorData.getShortLabel()).isEqualTo("Évolution du taux de boisement dans les Outre-Mer");
+        assertThat(indicatorValues.get(Territory.OUTRE_MER).getValue()).isBetween(0.0, 100.0);
     }
 }

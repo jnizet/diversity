@@ -3,7 +3,9 @@ package fr.mnhn.diversity.indicator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.util.Map;
 
+import fr.mnhn.diversity.territory.Territory;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
@@ -50,128 +52,128 @@ class IndicatorServiceTest {
         String body =
             // language=json
             "{\n" +
-                "    \"code\": \"SNB-TMF-16-UCA1\",\n" +
-                "    \"label\": \"Conservation du patrimoine génétique des arbres en forêt\",\n" +
-                "    \"shortLabel\": \"Évolution du nombre d'unités conservatoires (UC) des ressources génétiques des principales essences forestières métropolitaines\",\n" +
-                "    \"description\": \"Cet indicateur suit l’effort de conservation dynamique des ressources génétiques de populations autochtones d’arbres forestiers représentatives de la diversité génétique de l’espèce en France métropolitaine.\",\n" +
-                "    \"catcherPhrase\": \"La conservation des ressources génétiques des arbres forestiers cible 9 espèces d’arbres et repose sur 101 unités de conservation in situ\",\n" +
-                "    \"creationDate\": \"2019-11-20\",\n" +
-                "    \"status\": \"En cours\",\n" +
-                "    \"operator\": \"Irstea, UR EFNO, Nogent-sur-Vernisson\",\n" +
-                "    \"backer\": \"ONB\",\n" +
-                "    \"interest\": \"\",\n" +
-                "    \"impactLevel\": \"\",\n" +
-                "    \"sets\": [\n" +
-                "        \"Biodiversité & forêt\"\n" +
-                "    ],\n" +
-                "    \"associatedQuestion\": [\n" +
-                "        \"Quelles sont les actions et politiques mises en place pour préserver la biodiversité en forêt ?\"\n" +
-                "    ],\n" +
-                "    \"interpretationKey\": \"A la suite de la 1ere Conférence ministérielle pour la protection des forêts en Europe (Strasbourg, 1990), la France s’est engagée à mettre en œuvre une politique de conservation des ressources génétiques forestières. Comme préconisé par la Résolution 2 de la Conférence, la priorité a été donnée à la conservation in situ (en forêt) des ressources génétiques forestières. La Commission des Ressources Génétiques Forestières (CRGF) a défini les modalités pratiques de mise en œuvre de cette politique, notamment la mise en place d’un réseau national de gestion et de conservation des ressources génétiques des principales espèces d’arbres forestiers (cette approche est complétée par la conservation ex situ et des collections). La conservation in situ de ressources génétiques forestières d’intérêt national porte actuellement sur neuf espèces d’arbres ou essences : chêne sessile, épicéa commun, hêtre, orme de montagne, orme lisse, peuplier noir, pin maritime, pin sylvestre, sapin pectiné. Cela représente 8,4 % des essences forestières indigènes qui font ainsi l'objet d'un programme de conservation de leurs ressources génétiques. Les unités conservatoires (UC) visent la conservation dynamique des ressources génétiques autochtones représentatives de la diversité de l’espèce en France métropolitaine. Pour les essences dites « sociales » (qui tolèrent la concurrence intra-spécifique et peuvent constituer naturellement des peuplements purs de grande surface), une UC est typiquement constituée par (i) un noyau de 15 ha environ, enjeu principal des efforts de conservation, et (ii) d’une zone tampon de l’ordre d’une centaine d’hectares, dont le rôle essentiel est de limiter les flux de gènes extérieurs pouvant agir comme des sources d’altérations génétiques indésirables. Les modalités de gestion sont consignées dans une charte de gestion. Ces unités sont conçues et gérées de manière à ce que la régénération naturelle puisse se dérouler dans de bonnes conditions de brassage des gènes (nombreux parents, régénération abondante) et en faisant jouer la sélection naturelle pour faciliter le processus d'adaptation de la population aux changements de son environnement. Dans le cas des grandes essences sociales et d'UC situées au cœur de l'aire de l'espèce concernée, ces unités sont constituées de plusieurs milliers d’arbres reproducteurs. Dans le cas d'espèces plus rares ou de populations marginales, certaines UC peuvent comporter moins de cent arbres reproducteurs. Les critères de sélection des unités conservatoires portent sur l’autochtonie, l’isolement de sources de pollen et de graines exogènes, la taille de la population reproductrice et l’accord formel du propriétaire pour une gestion dynamique de la régénération naturelle.\",\n" +
-                "    \"associatedIndicators\": [\n" +
-                "        \"\"\n" +
-                "    ],\n" +
-                "    \"areas\": [\n" +
-                "        \"Forêts\"\n" +
-                "    ],\n" +
-                "    \"pressures\": [\n" +
-                "        \"\"\n" +
-                "    ],\n" +
-                "    \"policies\": [\n" +
-                "        \"Gestion des espaces naturels\",\n" +
-                "        \"Maîtrise des pressions liées aux activités humaines\",\n" +
-                "        \"Action internationale et climatique\"\n" +
-                "    ],\n" +
-                "    \"nationalGoal\": [\n" +
-                "        \"Préserver les espèces et leur diversité\",\n" +
-                "        \"Préserver et restaurer les écosystèmes et leur fonctionnement\",\n" +
-                "        \"Garantir la durabilité de l’utilisation des ressources biologiques\"\n" +
-                "    ],\n" +
-                "    \"europeanGoal\": [\n" +
-                "        \"\"\n" +
-                "    ],\n" +
-                "    \"internationalGoal\": [],\n" +
-                "    \"landUseType\": [\n" +
-                "        \"\"\n" +
-                "    ],\n" +
-                "    \"relationGoal\": [\n" +
-                "        \"La représentativité des réseaux est fondée sur un échantillonnage de la diversité des contextes bioclimatiques de présence de l’espèce et, dans la mesure du possible, sur les résultats d’études génétiques portant sur la structuration géographique de la diversité génétique actuelle (présence/absence de certains marqueurs moléculaires ou enzymatiques dans certaines populations) ou ancienne (ex : marqueurs de l’ADN chloroplastiques indicateurs de lignées issues de différents refuges glaciaires).\"\n" +
-                "    ],\n" +
-                "    \"updatingFrequency\": \"Annuelle\",\n" +
-                "    \"breakSerie\": [\n" +
-                "        \"Non\"\n" +
-                "    ],\n" +
-                "    \"remarkBreakSerie\": \"\",\n" +
-                "    \"geographicalCoverage\": [\n" +
-                "        \"Métropole\"\n" +
-                "    ],\n" +
-                "    \"dataOrigin\": \"Registre national des Matériels de base (tenu à jour deux fois par an par l'Irstea). Listes d’UC à télécharger ici http://agriculture.gouv.fr/la-politique-nationale-de-conservation-des-ressources-genetiques-forestieres\",\n" +
-                "    \"qualityRobustnessOpinion\": [\n" +
-                "        \"Très robuste\"\n" +
-                "    ],\n" +
-                "    \"qualityPrecision\": [\n" +
-                "        \"Précis\"\n" +
-                "    ],\n" +
-                "    \"qualitySensitivity\": [\n" +
-                "        \"Sensible\"\n" +
-                "    ],\n" +
-                "    \"qualityEfficiency\": [\n" +
-                "        \"Efficace\"\n" +
-                "    ],\n" +
-                "    \"qualityDataAccessibility\": [\n" +
-                "        \"Facilement accessibles\"\n" +
-                "    ],\n" +
-                "    \"qualityDataHomogeneity\": [\n" +
-                "        \"Homogènes\"\n" +
-                "    ],\n" +
-                "    \"qualityDataReliability\": [\n" +
-                "        \"Très fiables\"\n" +
-                "    ],\n" +
-                "    \"qualityDataContinuity\": [\n" +
-                "        \"Pérennité garantie\"\n" +
-                "    ],\n" +
-                "    \"qualityDataAbundance\": [\n" +
-                "        \"Abondantes\"\n" +
-                "    ],\n" +
-                "    \"qualityDataCost\": [\n" +
-                "        \"Coût moyen\"\n" +
-                "    ],\n" +
-                "    \"qualityLevelAppropriation\": [\n" +
-                "        \"Familier\"\n" +
-                "    ],\n" +
-                "    \"qualityRemarks\": \"\",\n" +
-                "    \"advantages\": \"\",\n" +
-                "    \"limits\": \"L’évolution du nombre d’UC sera comprise très aisément mais le concept de conservation dynamique n’est pas familier, voire contre-intuitif dans la mesure où l’on vise à conserver un processus d’adaptation et non à figer l’état d’une ressource.\",\n" +
-                "    \"improvements\": \"Cet indicateur « de réponse » renseigne sur les mesures prises par le ministère en charge de la forêt pour favoriser la préservation de la biodiversité intraspécifique des espèces d’arbres des forêts métropolitaines. La CRGF souhaiterait le compléter par un « indicateur d’état » décrivant l’état et l’évolution de la diversité génétique de populations d’arbres forestiers mais, à l’heure actuelle, aucun indicateur standardisé n’est encore disponible pour ce genre d’évaluation sur le terrain.\",\n" +
-                "    \"calculReference\": \"2d019839-0b90-422d-93f6-516db2d0fcc0\",\n" +
-                "    \"publiONB\": true,\n" +
-                "    \"publiINPN\": false,\n" +
-                "    \"publiSIE\": false,\n" +
-                "    \"tags\": [\n" +
-                "        \"\"\n" +
-                "    ],\n" +
-                "    \"resultDescription\": \"\",\n" +
-                "    \"version\": 1,\n" +
-                "    \"targetValue\": \"Oui. En l'état actuel des connaissances de la structuration de la diversité génétique des essences forestières, il n'est pas possible de se référer à un nombre idéal d'unités conservatoires (UC) par essence pour une conservation efficace du pool génétique. Il n'y a donc pas de valeur cible à proprement parler, mais l’objectif de la CRGF est de l’ordre d’une vingtaine d’UC par grande essence sociale. EUFORGEN recommande aux pays participant au programme paneuropéen de sélectionner au moins une UC dans chacune des grandes zones bioclimatiques où l’espèce est indigène, ce nombre n’étant jamais supérieur à 5 en France (de Vries et al., 2015).\",\n" +
-                "    \"concernedOrientation\": [\n" +
-                "        \"B - Préserver le vivant et sa capacité à évoluer\",\n" +
-                "        \"D - Assurer un usage durable et équitable de la biodiversité\"\n" +
-                "    ],\n" +
-                "    \"_links\": {\n" +
-                "        \"self\": {\n" +
-                "            \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/c4201cd7-bd98-45a2-b8be-922fa2ad3cca\"\n" +
-                "        },\n" +
-                "        \"calculationReference\": [\n" +
-                "            {\n" +
-                "                \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/2d019839-0b90-422d-93f6-516db2d0fcc0{?embed}\",\n" +
-                "                \"templated\": true\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/2d019839-0b90-422d-93f6-516db2d0fcc0{?embed}\",\n" +
-                "                \"templated\": true\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    }\n" +
+                "  \"code\": \"SNB-TMF-16-TBO1\",\n" +
+                "  \"label\": \"Taux de boisement dans les Outre-Mer\",\n" +
+                "  \"shortLabel\": \"Évolution du taux de boisement dans les Outre-Mer\",\n" +
+                "  \"description\": \"L'indicateur fournit la part des territoires ultramarins couverts par la forêt. Sont considérées comme forêts « des terres occupant une superficie de plus de 0,5 hectare avec des arbres atteignant une hauteur supérieure à cinq mètres et un couvert arboré de plus de 10 %, ou avec des arbres capables d’atteindre ces seuils in situ ; la définition exclut les terres à vocation agricole ou urbaine prédominante » (définition de l’organisation des Nations unies pour l’alimentation et l’agriculture - FAO). Les taux de boisement sont donnés globalement et individuellement, pour 11 territoires ultramarins, d’après les inventaires successifs de l'Evaluation des ressources forestières mondiales ou Forest Ressource Assessement (FRA) de la FAO de 1990, 1995, 2000, 2005,2010 et 2015.\",\n" +
+                "  \"catcherPhrase\": \"La forêt occupe 85 % du territoire en Outre-mer.\",\n" +
+                "  \"creationDate\": \"2019-11-21\",\n" +
+                "  \"status\": \"En cours\",\n" +
+                "  \"operator\": \"Non renseigné\",\n" +
+                "  \"backer\": \"ONB\",\n" +
+                "  \"interest\": \"\",\n" +
+                "  \"impactLevel\": \"\",\n" +
+                "  \"sets\": [\n" +
+                "    \"Biodiversité & forêt\",\n" +
+                "    \"Biodiversité & outre-mer\"\n" +
+                "  ],\n" +
+                "  \"associatedQuestion\": [\n" +
+                "    \"Quels sont l'état et la dynamique de la biodiversité en forêt ?\",\n" +
+                "    \"Comment les facteurs qui influencent l’état de la biodiversité en forêt évoluent-ils ?\"\n" +
+                "  ],\n" +
+                "  \"interpretationKey\": \"Les forêts primaires et autres écosystèmes forestiers des  territoires Outre-mer français présentent une biodiversité considérable. La forêt tropicale humide guyanaise présente une biodiversité extrêment riche et complexe, l'une des plus importante au monde, que l'on ne connait encore que très partiellement. En outre, les îles ultramarines abritent un grand nombre d'espèces endémiques. Les enjeux de conservation de la biodiversité forestière y sont également importants. Le destruction des forêts est reconnue comme une pression majeure pesant sur la biodiversité forestière. En effet, une diminution de la quantité d'habitats disponibles entraine généralement une diminution de la richesse en espèces au sein de ces habitats. Le suivi du taux de boisement dans les Outre-Mer français donne une information à la fois sur l'intensité d'une menace (la destruction des forêts) et, indirectement, sur l'état de la biodiversité forestière. L'indicateur englobe 11 territoires ultramarins très hétérogènes avec des caractéristiques forestières différentes. Les surfaces forestières ultramarines les plus importantes sont en Guyane (plus de 8 millions d’hectares, soit près de 99 % de la superficie de ce territoire) et en Nouvelle-Calédonie (plus de 800 000 hectares, soit un taux de boisement de 46 %). La forêt de Polynésie française arrive en troisième position avec 155 000 hectares (taux de boisement de 42 %) tandis que trois autres territoires insulaires (Guadeloupe, Martinique, Réunion) présentent des superficies forestières plus faibles  (50-100 000 ha) et des taux de boisement variant entre 35 et 45 %. Les petites îles de Saint-Martin (Mer des Caraïbes), Mayotte (Océan Indien) et Saint-Pierre-et-Miquelon (océan Atlantique Nord) sont les plus faiblement boisées (< 20 %)  et Saint-Barthélemy (Mer des Caraïbes) est dépourvue de toute végétation forestière. Le taux de boisement global des territoires Outre-Mer considérés, retracé par les inventaires de la FAO (Forest ressources assessment ou FRA) depuis 1990, reste stable  (85 %). Plus en détail, les évolutions des taux de boisement des territoires ultramarins depuis 25 ans sont également de faibles amplitudes : - la forêt amazonienne guyanaise recule très faiblement (environ 3500 ha/an, hors création du barrage du Petit Saut) ; - les autres forêts ultramarines d’une certaine importance en superficie (Guadeloupe, Martinique, Réunion, Nouvelle-Calédonie) semblent connaître peu d’évolution, mais la fiabilité des estimations est souvent assez faible ; - la baisse apparente de la forêt de Mayotte  est pour partie au moins d’ordre méthodologique, mais la pression exercée par une population en hausse, due à une forte immigration, pourrait jouer un rôle ; - les raisons de la hausse apparente du taux de boisement en Polynésie sont également incertaines, et pour partie d’ordre méthodologique (en l’absence d’inventaire forestier).\",\n" +
+                "  \"associatedIndicators\": [\n" +
+                "    \"\"\n" +
+                "  ],\n" +
+                "  \"areas\": [\n" +
+                "    \"Forêts\"\n" +
+                "  ],\n" +
+                "  \"pressures\": [\n" +
+                "    \"Destruction des habitats\"\n" +
+                "  ],\n" +
+                "  \"policies\": [\n" +
+                "    \"Gestion des espaces naturels\"\n" +
+                "  ],\n" +
+                "  \"nationalGoal\": [\n" +
+                "    \"Préserver les espèces et leur diversité\",\n" +
+                "    \"Préserver et restaurer les écosystèmes et leur fonctionnement\",\n" +
+                "    \"Maîtriser les pressions sur la biodiversité\"\n" +
+                "  ],\n" +
+                "  \"europeanGoal\": [\n" +
+                "    \"\"\n" +
+                "  ],\n" +
+                "  \"internationalGoal\": [],\n" +
+                "  \"landUseType\": [\n" +
+                "    \"\"\n" +
+                "  ],\n" +
+                "  \"relationGoal\": [\n" +
+                "    \"En écologie, certaines théories montrent que la richesse spécifique d'un habitat est proportionnelle à sa taille. Le corollaire de cette approche est que la réduction des habitats conduit inéluctablement à la réduction de la biodiversité globale au sein de ces habitats, selon une loi exponentielle dite \\\"Loi d'Arrhenius\\\"(Chevassus-Au-Louis, 2006). Ainsi, la destruction des habitats est reconnue comme étant une des pressions majeures pesant sur la biodiversité au niveau mondial. Une diminution des taux de boisement dans les territoires Outre-Mer français devraient donc poser des problèmes à une partie de la biodiversité forestière de ces territoires.\"\n" +
+                "  ],\n" +
+                "  \"updatingFrequency\": \"2 à 5 ans\",\n" +
+                "  \"breakSerie\": [\n" +
+                "    \"Non\"\n" +
+                "  ],\n" +
+                "  \"remarkBreakSerie\": \"\",\n" +
+                "  \"geographicalCoverage\": [\n" +
+                "    \"Outre-mer\"\n" +
+                "  ],\n" +
+                "  \"dataOrigin\": \"Les données sont publiées tous les 5 ans depuis 1990 dans le cadre de l'Evaluation des ressources mondiales (Forest Ressources Assessment ou FRA) de la FAO. Le rapportage pour le FRA est organisé par territoire ultramarin. Si le rapporteur est souvent l’ONF, les producteurs des données sont variables :  IFN (IGN), Consultants, etc. 11 Territoires ultramarins français : - DROM (Guyane, Guadeloupe, Martinique, La Réunion, Mayotte) ; - COM (Saint-Martin, Saint-Barthélemy, Nouvelle-Calédonie, Polynésie française, Wallis-et-Futuna, Saint-Pierre-et-Miquelon) ; - Les Terres australes et antarctiques françaises (TAAF) sont exclues car elles ne portent pas de végétation forestière. Les années de rendu statistique (1990, 1995, 2000, 2005, 2010, 2015) cachent des dates très variables de prise de données. On peut citer à titre d’exemples : - Guyane : 1989, 1990, 1993, 2000, 2006, 2010 (principalement des données satellitales évaluées par l'IFN en 1990 et 2006) ; - Réunion :  1990, 2000, 2005, 2010, 2015 ; - Guadeloupe  1988, 1997, 2004, 2010/11/12/13, 2015 ; - Martinique : 1997, 2006, 2008, 2012, 2010 2013 ; - Mayotte :  1949, 1997, 2003, 2010, 2012.\",\n" +
+                "  \"qualityRobustnessOpinion\": [\n" +
+                "    \"Robuste\"\n" +
+                "  ],\n" +
+                "  \"qualityPrecision\": [\n" +
+                "    \"Précis\"\n" +
+                "  ],\n" +
+                "  \"qualitySensitivity\": [\n" +
+                "    \"\"\n" +
+                "  ],\n" +
+                "  \"qualityEfficiency\": [\n" +
+                "    \"\"\n" +
+                "  ],\n" +
+                "  \"qualityDataAccessibility\": [\n" +
+                "    \"Facilement accessibles\"\n" +
+                "  ],\n" +
+                "  \"qualityDataHomogeneity\": [\n" +
+                "    \"Assez homogènes\"\n" +
+                "  ],\n" +
+                "  \"qualityDataReliability\": [\n" +
+                "    \"Assez fiables\"\n" +
+                "  ],\n" +
+                "  \"qualityDataContinuity\": [\n" +
+                "    \"Pérenne\"\n" +
+                "  ],\n" +
+                "  \"qualityDataAbundance\": [\n" +
+                "    \"Assez abondantes\"\n" +
+                "  ],\n" +
+                "  \"qualityDataCost\": [\n" +
+                "    \"Coût élevé\"\n" +
+                "  ],\n" +
+                "  \"qualityLevelAppropriation\": [\n" +
+                "    \"Familier\"\n" +
+                "  ],\n" +
+                "  \"qualityRemarks\": \"\",\n" +
+                "  \"advantages\": \"\",\n" +
+                "  \"limits\": \"\",\n" +
+                "  \"improvements\": \"L’amélioration de la qualité des résultats sera graduelle, fonction de l'évolution des méthodes de suivi. En 2015, le ministère en charge de l’environnement a annoncé un projet visant à établir ou améliorer le suivi cartographique des territoires ultramarins (espaces naturels). A moyen terme, il devrait être possible de disposer de données de surface pour les principaux types forestiers dans une partie au moins des territoires ultramarins.\",\n" +
+                "  \"calculReference\": \"5fff928a-e730-4386-a786-8a7e012a6e42\",\n" +
+                "  \"publiONB\": true,\n" +
+                "  \"publiINPN\": false,\n" +
+                "  \"publiSIE\": false,\n" +
+                "  \"tags\": [\n" +
+                "    \"\"\n" +
+                "  ],\n" +
+                "  \"resultDescription\": \"\",\n" +
+                "  \"version\": 1,\n" +
+                "  \"targetValue\": \"Non\",\n" +
+                "  \"concernedOrientation\": [\n" +
+                "    \"B - Préserver le vivant et sa capacité à évoluer\",\n" +
+                "    \"D - Assurer un usage durable et équitable de la biodiversité\"\n" +
+                "  ],\n" +
+                "  \"_links\": {\n" +
+                "    \"self\": {\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6\"\n" +
+                "    },\n" +
+                "    \"calculationReference\": [\n" +
+                "      {\n" +
+                "        \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42{?embed}\",\n" +
+                "        \"templated\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42{?embed}\",\n" +
+                "        \"templated\": true\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  }\n" +
                 "}";
 
         server.enqueue(
@@ -180,14 +182,14 @@ class IndicatorServiceTest {
                 .setBody(body)
         );
 
-        String indicatorId = "c4201cd7-bd98-45a2-b8be-922fa2ad3cca";
+        String indicatorId = "b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6";
         IndicatorData indicator = service.indicatorData(indicatorId).block();
 
         assertThat(indicator).isEqualTo(
             new IndicatorData(
                 indicatorId,
-                "Évolution du nombre d'unités conservatoires (UC) des ressources génétiques des principales essences forestières métropolitaines",
-                "2d019839-0b90-422d-93f6-516db2d0fcc0"
+                "Évolution du taux de boisement dans les Outre-Mer",
+                "5fff928a-e730-4386-a786-8a7e012a6e42"
             )
         );
 
@@ -199,316 +201,166 @@ class IndicatorServiceTest {
         String body =
             // language=json
             "{\n" +
-                "    \"indicatorId\": \"a75b794e-826f-448b-a695-45bb8b0245e1\",\n" +
-                "    \"title\": \"Aires protégées terrestres en métropole\",\n" +
-                "    \"date\": \"2018-12-14\",\n" +
-                "    \"vintage\": \"2018\",\n" +
-                "    \"analysisDate\": null,\n" +
-                "    \"comment\": \"REMARQUE : cet indicateur a fait l'objet d'une deuxième analyse en 2015-2016, consultable ci-dessous, qui fait actuellement l'objet d'une expertise pour faire évoluer la fiche Indicateur si nécessaire. Une appréciation du degré de prise en considération des remarques émises lors de cette deuxième évaluation  sera publiée  ci-dessous à l'issue.\",\n" +
-                "    \"_links\": {\n" +
-                "        \"self\": {\n" +
-                "            \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/1efa9368-2a31-4415-91e3-d5cc2f224b7a\"\n" +
-                "        },\n" +
-                "        \"resource\": {\n" +
-                "            \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/1efa9368-2a31-4415-91e3-d5cc2f224b7a/resource\"\n" +
-                "        },\n" +
-                "        \"indicator\": {\n" +
-                "            \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/a75b794e-826f-448b-a695-45bb8b0245e1\"\n" +
-                "        }\n" +
+                "  \"indicatorId\": \"b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6\",\n" +
+                "  \"title\": \"Taux de boisement dans les Outre-Mer\",\n" +
+                "  \"date\": \"2016-05-19\",\n" +
+                "  \"vintage\": \"2015\",\n" +
+                "  \"analysisDate\": null,\n" +
+                "  \"comment\": \"Cet indicateur a fait l'objet d'une analyse en 2018, consultable ci-dessous, qui fait actuellement l'objet d'une expertise pour faire évoluer la fiche Indicateur si nécessaire.\",\n" +
+                "  \"_links\": {\n" +
+                "    \"self\": {\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42\"\n" +
                 "    },\n" +
-                "    \"_embedded\": {\n" +
-                "        \"calculationResults\": [\n" +
-                "            {\n" +
-                "                \"code\": \"R3\",\n" +
-                "                \"calculationId\": \"1efa9368-2a31-4415-91e3-d5cc2f224b7a\",\n" +
-                "                \"title\": \"Historique de l'indicateur\",\n" +
-                "                \"main\": false,\n" +
-                "                \"description\": \"\",\n" +
-                "                \"source\": \"INPN, UMS PatriNat (AFB-CNRS-MNHN) - Base Espaces protégés, printemps 2018. Traitements : SDES, 2018\",\n" +
-                "                \"note\": \"\",\n" +
-                "                \"resourceFilename\": \"visuel2.png\",\n" +
-                "                \"resourceFormat\": \"image\",\n" +
-                "                \"resourceType\": \"diagramme\",\n" +
-                "                \"resourceTitle\": \"Évolution de la part de la superficie terrestre du territoire métropolitain classée en aires protégées (protection forte)\",\n" +
-                "                \"resourceSource\": \"INPN, UMS PatriNat (AFB-CNRS-MNHN) - Base Espaces protégés, printemps 2018. Traitements : SDES, 2018\",\n" +
-                "                \"resourcesPath\": \"a75b794e-826f-448b-a695-45bb8b0245e1/1efa9368-2a31-4415-91e3-d5cc2f224b7a/visuel2.png\",\n" +
-                "                \"values\": [\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2017\",\n" +
-                "                        \"thematic\": \"Valeur non publiée\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"En mars 2017\",\n" +
-                "                                \"value\": \"1,352370238\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2015\",\n" +
-                "                        \"thematic\": \"Valeur publiée en mai 2015\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"En février 2015\",\n" +
-                "                                \"value\": \"1,345064269\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2016\",\n" +
-                "                        \"thematic\": \"Valeur publiée en mai 2016\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"En février 2016\",\n" +
-                "                                \"value\": \"1,350429485\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2011\",\n" +
-                "                        \"thematic\": \"Valeur publiée en mai 2012\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Au 1er janvier 2011\",\n" +
-                "                                \"value\": \"1,265416055\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2012\",\n" +
-                "                        \"thematic\": \"Valeur publiée en mai 2013\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Au 1er janvier 2012\",\n" +
-                "                                \"value\": \"1,280404859\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2013\",\n" +
-                "                        \"thematic\": \"Valeur publiée en mai 2014\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Au 1er juin 2013\",\n" +
-                "                                \"value\": \"1,315002972\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Valeur publiée en septembre 2018\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Au printemps 2018\",\n" +
-                "                                \"value\": \"1,365192838\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    }\n" +
-                "                ],\n" +
-                "                \"declination\": \"\",\n" +
-                "                \"identifiant\": \"01484262-931e-470b-aaa1-6c66e4f69077\",\n" +
-                "                \"_links\": {\n" +
-                "                    \"resource\": {\n" +
-                "                        \"href\": \"http://odata-indicateurs.mnhn.fr/calculationResults/01484262-931e-470b-aaa1-6c66e4f69077/resource\"\n" +
-                "                    }\n" +
-                "                }\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"code\": \"R2\",\n" +
-                "                \"calculationId\": \"1efa9368-2a31-4415-91e3-d5cc2f224b7a\",\n" +
-                "                \"title\": \"Surface terrestre et proportion du territoire classée en aires protégées\",\n" +
-                "                \"main\": false,\n" +
-                "                \"description\": \"\",\n" +
-                "                \"source\": \"INPN, UMS PatriNat (AFB-CNRS-MNHN) - Base Espaces protégés, printemps 2018. Traitements : SDES, 2018\",\n" +
-                "                \"note\": \"\",\n" +
-                "                \"resourceFilename\": \"visuel1.png\",\n" +
-                "                \"resourceFormat\": \"image\",\n" +
-                "                \"resourceType\": \"diagramme\",\n" +
-                "                \"resourceTitle\": \"Surfaces terrestres des aires protégées métropolitaines (protections fortes)\",\n" +
-                "                \"resourceSource\": \"INPN, UMS PatriNat (AFB-CNRS-MNHN) - Base Espaces protégés, printemps 2018. Traitements : SDES, 2018\",\n" +
-                "                \"resourcesPath\": \"a75b794e-826f-448b-a695-45bb8b0245e1/1efa9368-2a31-4415-91e3-d5cc2f224b7a/visuel1.png\",\n" +
-                "                \"values\": [\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Arrêté de protection de biotope\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"1630,6584\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            },\n" +
-                "                            {\n" +
-                "                                \"label\": \"Proportion du territoire\",\n" +
-                "                                \"value\": \"0,296962956\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Cœur de parc national\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"3632,8723\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            },\n" +
-                "                            {\n" +
-                "                                \"label\": \"Proportion du territoire\",\n" +
-                "                                \"value\": \"0,661590739\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"Métropole\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Protection forte (sans doubles comptes)\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"7496,4339\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Réserve biologique\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"426,0324\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            },\n" +
-                "                            {\n" +
-                "                                \"label\": \"Proportion du territoire\",\n" +
-                "                                \"value\": \"0,077585741\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"Métropole\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Territoire entier\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"549111,7219\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Réserve naturelle nationale\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"1524,0775\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            },\n" +
-                "                            {\n" +
-                "                                \"label\": \"Proportion du territoire\",\n" +
-                "                                \"value\": \"0,277553263\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Réserve naturelle régionale\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"375,595\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            },\n" +
-                "                            {\n" +
-                "                                \"label\": \"Proportion du territoire\",\n" +
-                "                                \"value\": \"0,06840047\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    },\n" +
-                "                    {\n" +
-                "                        \"hold\": \"\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Réserve naturelle de Corse\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Surface terrestre\",\n" +
-                "                                \"value\": \"32,1569\",\n" +
-                "                                \"unit\": \"km²\"\n" +
-                "                            },\n" +
-                "                            {\n" +
-                "                                \"label\": \"Proportion du territoire\",\n" +
-                "                                \"value\": \"0,005856167\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    }\n" +
-                "                ],\n" +
-                "                \"declination\": \"\",\n" +
-                "                \"identifiant\": \"b8602dcf-ade7-400a-91b0-aef4e343898b\",\n" +
-                "                \"_links\": {\n" +
-                "                    \"resource\": {\n" +
-                "                        \"href\": \"http://odata-indicateurs.mnhn.fr/calculationResults/b8602dcf-ade7-400a-91b0-aef4e343898b/resource\"\n" +
-                "                    }\n" +
-                "                }\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"code\": \"R1\",\n" +
-                "                \"calculationId\": \"1efa9368-2a31-4415-91e3-d5cc2f224b7a\",\n" +
-                "                \"title\": \"Valeur de l'indicateur\",\n" +
-                "                \"main\": true,\n" +
-                "                \"description\": \"Pourcentage au printemps 2018\",\n" +
-                "                \"source\": \"INPN, UMS PatriNat (AFB-CNRS-MNHN) - Base Espaces protégés, printemps 2018. Traitements : SDES, 2018\",\n" +
-                "                \"note\": \"\",\n" +
-                "                \"resourceFilename\": \"\",\n" +
-                "                \"resourceFormat\": \"\",\n" +
-                "                \"resourceType\": \"\",\n" +
-                "                \"resourceTitle\": \"\",\n" +
-                "                \"resourceSource\": \"\",\n" +
-                "                \"resourcesPath\": null,\n" +
-                "                \"values\": [\n" +
-                "                    {\n" +
-                "                        \"hold\": \"Métropole\",\n" +
-                "                        \"period\": \"2018\",\n" +
-                "                        \"thematic\": \"Protection forte (sans doubles comptes)\",\n" +
-                "                        \"metric\": [\n" +
-                "                            {\n" +
-                "                                \"label\": \"Proportion du territoire\",\n" +
-                "                                \"value\": \"1,365192838\",\n" +
-                "                                \"unit\": \"%\"\n" +
-                "                            }\n" +
-                "                        ]\n" +
-                "                    }\n" +
-                "                ],\n" +
-                "                \"declination\": \"\",\n" +
-                "                \"identifiant\": \"dae463a9-60ba-4109-ac09-448d9036b27d\"\n" +
-                "            }\n" +
-                "        ]\n" +
+                "    \"resource\": {\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42/resource\"\n" +
+                "    },\n" +
+                "    \"indicator\": {\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6\"\n" +
                 "    }\n" +
+                "  },\n" +
+                "  \"_embedded\": {\n" +
+                "    \"calculationResults\": [\n" +
+                "      {\n" +
+                "        \"code\": \"R2\",\n" +
+                "        \"calculationId\": \"5fff928a-e730-4386-a786-8a7e012a6e42\",\n" +
+                "        \"title\": \"Évolution de la surface forestière et du taux de boisement dans les Outre-mer\",\n" +
+                "        \"main\": false,\n" +
+                "        \"description\": \"\",\n" +
+                "        \"source\": \"Rapportage FRA (Forest Ressources Assessment)\",\n" +
+                "        \"note\": \"\",\n" +
+                "        \"resourceFilename\": \"visuel1.jpg\",\n" +
+                "        \"resourceFormat\": \"image\",\n" +
+                "        \"resourceType\": \"diagramme\",\n" +
+                "        \"resourceTitle\": \"Évolution des surfaces forestières ultramarines (11 territoires) - Évolution des surfaces forestières ultramarines (zoom 9 territoires)\",\n" +
+                "        \"resourceSource\": \"\",\n" +
+                "        \"resourcesPath\": \"b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6/5fff928a-e730-4386-a786-8a7e012a6e42/visuel1.jpg\",\n" +
+                "        \"values\": [\n" +
+                "          {\n" +
+                "            \"hold\": \"Saint-Martin\",\n" +
+                "            \"period\": \"1990\",\n" +
+                "            \"thematic\": \"Caraibes\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"20\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Mayotte\",\n" +
+                "            \"period\": \"2000\",\n" +
+                "            \"thematic\": \"Océan indien\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"23,68421053\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Martinique\",\n" +
+                "            \"period\": \"2005\",\n" +
+                "            \"thematic\": \"Caraibes\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"46,22641509\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Nouvelle-Calédonie\",\n" +
+                "            \"period\": \"2005\",\n" +
+                "            \"thematic\": \"Océan pacifique\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"45,89715536\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Polynésie française\",\n" +
+                "            \"period\": \"2005\",\n" +
+                "            \"thematic\": \"Océan pacifique\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"35,51912568\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Guadeloupe\",\n" +
+                "            \"period\": \"1990\",\n" +
+                "            \"thematic\": \"Caraibes\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"43,45238095\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Guyane\",\n" +
+                "            \"period\": \"2015\",\n" +
+                "            \"thematic\": \"Amérique sud\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"98,64110653\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          }\n" +
+                "        ],\n" +
+                "        \"declination\": \"Outre-mer\",\n" +
+                "        \"identifiant\": \"1c8453c3-ab09-41c6-9490-05280239801a\",\n" +
+                "        \"_links\": {\n" +
+                "          \"resource\": {\n" +
+                "            \"href\": \"http://odata-indicateurs.mnhn.fr/calculationResults/1c8453c3-ab09-41c6-9490-05280239801a/resource\"\n" +
+                "          }\n" +
+                "        }\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"code\": \"R1\",\n" +
+                "        \"calculationId\": \"5fff928a-e730-4386-a786-8a7e012a6e42\",\n" +
+                "        \"title\": \"Valeur de l'indicateur\",\n" +
+                "        \"main\": true,\n" +
+                "        \"description\": \"Pourcentage en 2015\",\n" +
+                "        \"source\": \"Rapportage FRA (Forest Ressources Assessment)\",\n" +
+                "        \"note\": \"\",\n" +
+                "        \"resourceFilename\": \"\",\n" +
+                "        \"resourceFormat\": \"\",\n" +
+                "        \"resourceType\": \"\",\n" +
+                "        \"resourceTitle\": \"\",\n" +
+                "        \"resourceSource\": \"\",\n" +
+                "        \"resourcesPath\": null,\n" +
+                "        \"values\": [\n" +
+                "          {\n" +
+                "            \"hold\": \"Outre-mer\",\n" +
+                "            \"period\": \"2015\",\n" +
+                "            \"thematic\": \"Total (11 territoires ultramarins) \",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"Taux de boisement\",\n" +
+                "                \"value\": \"84,6404637\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          }\n" +
+                "        ],\n" +
+                "        \"declination\": \"\",\n" +
+                "        \"identifiant\": \"b29f7bc2-45cc-4de4-ae94-1a0adf2f364e\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  }\n" +
                 "}";
 
         server.enqueue(
@@ -517,15 +369,23 @@ class IndicatorServiceTest {
                 .setBody(body)
         );
 
-        IndicatorValue indicatorValue = service.indicatorValue("1efa9368-2a31-4415-91e3-d5cc2f224b7a").block();
+        Map<Territory, IndicatorValue> indicatorValues = service.indicatorValues("5fff928a-e730-4386-a786-8a7e012a6e42").block();
 
-        assertThat(indicatorValue).isEqualTo(
+        assertThat(indicatorValues.get(Territory.OUTRE_MER)).isEqualTo(
             new IndicatorValue(
-                1.365192838,
+                84.6404637,
                 "%"
             )
         );
 
-        assertThat(server.takeRequest().getPath()).isEqualTo("/calculations/1efa9368-2a31-4415-91e3-d5cc2f224b7a?embed=CALCULATIONRESULTS");
+        assertThat(indicatorValues.get(Territory.REUNION)).isNull();
+        assertThat(indicatorValues.get(Territory.GUADELOUPE)).isEqualTo(
+            new IndicatorValue(
+                43.45238095,
+                "%"
+            )
+        );
+
+        assertThat(server.takeRequest().getPath()).isEqualTo("/calculations/5fff928a-e730-4386-a786-8a7e012a6e42?embed=CALCULATIONRESULTS");
     }
 }
