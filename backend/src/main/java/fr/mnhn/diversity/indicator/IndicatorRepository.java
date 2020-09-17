@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.territory.Territory;
@@ -35,7 +36,7 @@ public class IndicatorRepository {
         jdbcTemplate.query(query, (rs) -> {
             long indicatorId = rs.getLong("id");
             String biomId = rs.getString("biom_id");
-            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId, List.of()));
+            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId));
             List<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId, id -> new ArrayList<>());
             long categoryId = rs.getLong("category_id");
             if (!rs.wasNull()) { // if an indicator has a category
@@ -57,9 +58,43 @@ public class IndicatorRepository {
     }
 
     /**
-     * Saves a new IndicatorValue for the indicator and terrritory
+     * Deletes the indicator values for the given indicator and territories
      */
-    public void saveValue(Indicator indicator, Territory territory, IndicatorValue indicatorValue) {
+    public void deleteValues(Indicator indicator, Set<Territory> territories) {
+        if (territories.isEmpty()) {
+            return;
+        }
+        Map<String, Object> paramMap = Map.of(
+            "indicator_id", indicator.getId(),
+            "territories", territories.stream().map(Territory::name).collect(Collectors.toSet())
+        );
+        jdbcTemplate.update("delete from indicator_value" +
+                                " where indicator_id = :indicator_id and territory in (:territories)",
+                            paramMap);
+    }
+
+    /**
+     * Updates the indicator value for the given indicator and territory
+     * @return true if the value was updated, false if not, because the value didn't exist yet.
+     */
+    public boolean updateValue(Indicator indicator, Territory territory, IndicatorValue indicatorValue) {
+        Map<String, Object> paramMap = Map.of(
+            "indicator_id", indicator.getId(),
+            "territory", territory.name(),
+            "value", indicatorValue.getValue(),
+            "unit", indicatorValue.getUnit()
+        );
+        int updatedRows =
+            jdbcTemplate.update("update indicator_value set value = :value, unit = :unit" +
+                                    " where indicator_id = :indicator_id and territory = :territory",
+                                paramMap);
+        return updatedRows > 0;
+    }
+
+    /**
+     * Inserts a new IndicatorValue for the indicator and terrritory
+     */
+    public void insertValue(Indicator indicator, Territory territory, IndicatorValue indicatorValue) {
         Map<String, Object> paramMap = Map.of(
                 "indicator_id", indicator.getId(),
                 "territory", territory.name(),

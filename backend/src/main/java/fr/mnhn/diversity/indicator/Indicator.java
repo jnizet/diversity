@@ -17,6 +17,10 @@ public final class Indicator {
         this.categories = categories;
     }
 
+    public Indicator(Long id, String biomId) {
+        this(id, biomId, List.of());
+    }
+
     public Long getId() {
         return id;
     }
