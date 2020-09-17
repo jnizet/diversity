@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.indicator;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -9,11 +10,18 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author JB Nizet
  */
 @Configuration
+@EnableConfigurationProperties(IndicatorProperties.class)
 public class IndicatorConfig {
+
+    private final IndicatorProperties indicatorProperties;
+
+    public IndicatorConfig(IndicatorProperties indicatorProperties) {
+        this.indicatorProperties = indicatorProperties;
+    }
 
     @Bean
     @Indicators
     public WebClient indicatorsWebClient(WebClient.Builder builder) {
-        return builder.baseUrl("https://odata-indicateurs.mnhn.fr").build();
+        return builder.baseUrl(indicatorProperties.getBaseUrl()).build();
     }
 }

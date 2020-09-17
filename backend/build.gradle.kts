@@ -14,7 +14,10 @@ repositories {
 
 dependencies {
     implementation(platform(project(":platform")))
+    annotationProcessor(platform(project(":platform")))
     developmentOnly(platform(project(":platform")))
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")

@@ -15,10 +15,17 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties("diversity.contact")
 @Validated
 public class ContactProperties {
+
+    /**
+     * The email address where contact messages received by the application are sent
+     */
     @NotNull
     @Email
     private String email;
 
+    /**
+     * The subject of the emails sent when a contact message is received
+     */
     @NotBlank
     private String subject;
 
