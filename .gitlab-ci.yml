@@ -1,21 +1,23 @@
 image: circleci/openjdk:11-browsers
 
 variables:
- POSTGRES_HOST_AUTH_METHOD: trust
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 test:
- stage: test
- services:
-  - name: postgres:12.2-alpine
-    alias: postgres
- script:
-  # install postgresql client
-  - sudo apt-get install -y postgresql-client
-  # create the test db before running the tests
-  - psql -h postgres -U postgres -f backend/database/setup/database.sql
-  # run tests and build
-  # that should not be necessary, but we need to run it as sudo,
-  # because Yarn can't install otherwise, with a privilege issue.
-  # As we run as sudo, we can't rely on environment variable to know if we are on CI or not
-  # so we need to manually pass the CI property, used in the gradle config
-  - sudo ./gradlew check build --no-daemon -PCI=true
+  stage: test
+  services:
+    - name: postgres:12.2-alpine
+      alias: postgres
+    - name: mailhog/mailhog@sha256:98c7e2e6621c897ad86f31610d756d76b8ee622c354c28a76f4ed49fb6ed996f
+      alias: mailhog
+  script:
+    # install postgresql client
+    - sudo apt-get install -y postgresql-client
+    # create the test db before running the tests
+    - psql -h postgres -U postgres -f backend/database/setup/database.sql
+    # run tests and build
+    # that should not be necessary, but we need to run it as sudo,
+    # because Yarn can't install otherwise, with a privilege issue.
+    # As we run as sudo, we can't rely on environment variable to know if we are on CI or not
+    # so we need to manually pass the CI property, used in the gradle config
+    - sudo ./gradlew check build --no-daemon -PCI=true

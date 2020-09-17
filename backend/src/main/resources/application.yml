@@ -69,3 +69,14 @@ spring:
       - file:./frontend/build/dist/
     chain:
       cache: false
+
+---
+spring:
+  profiles:
+    ci
+  mail:
+    host: mailhog
+    port: 1025
+diversity:
+  database:
+    host-and-port: postgres:5432
