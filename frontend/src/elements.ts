@@ -6,6 +6,10 @@ export function hideElement(element: Element) {
   element.classList.add('d-none');
 }
 
+export function isElementVisible(element: Element): boolean {
+  return !element.classList.contains('d-none');
+}
+
 export function setElementVisible(element: Element, visible: boolean) {
   if (visible) {
     showElement(element);
