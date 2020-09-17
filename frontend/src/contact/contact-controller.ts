@@ -48,13 +48,16 @@ export class ContactController extends Controller {
     if (this.validate()) {
       formElements.forEach(e => (e.disabled = true));
       try {
-        await fetch('/messages', {
+        const response = await fetch('/messages', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({ from: this.fromTarget.value, body: this.bodyTarget.value })
         });
+        if (!response.ok) {
+          throw new Error('Request failed.');
+        }
         this.fromTarget.value = '';
         this.bodyTarget.value = '';
         this.setVisible(false);

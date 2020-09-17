@@ -5,5 +5,6 @@
     "fileName": "build/cypress-results.json"
   },
   "video": false,
-  "experimentalFetchPolyfill": true
+  "experimentalFetchPolyfill": true,
+  "experimentalNetworkStubbing": true
 }

@@ -1,12 +1,4 @@
 describe('Contact', () => {
-  beforeEach(() => {
-    cy.server();
-    cy.route({
-      method: 'POST',
-      url: '/messages'
-    }).as('sendMessage');
-  });
-
   it('should toggle contact', () => {
     cy.visit('/');
 
@@ -45,6 +37,10 @@ describe('Contact', () => {
   });
 
   it('should send an email', () => {
+    cy.route2('POST', '/messages', {
+      delayMs: 1000,
+      body: {}
+    }).as('sendMessage');
     cy.visit('/');
 
     cy.get('footer').contains('Contact').click();
@@ -69,11 +65,10 @@ describe('Contact', () => {
   });
 
   it('should show an error if sending an email fails', () => {
-    cy.route({
-      method: 'POST',
-      url: '/messages',
-      status: 500,
-      response: {}
+    cy.route2('POST', '/messages', {
+      statusCode: 500,
+      delayMs: 1000,
+      body: {}
     }).as('errorSendingMessage');
 
     cy.visit('/');
@@ -88,8 +83,24 @@ describe('Contact', () => {
     cy.get('#contact-body').should('be.disabled');
     cy.get('#contact-send').should('be.disabled');
 
-    cy.wait('@errorSendingMessage')
-      .should('have.property', 'status', 500);
+    cy.wait('@errorSendingMessage');
+
+    cy.get('#contact-form').should('be.visible');
+    cy.get('#contact-error').should('be.visible');
+  });
+
+  it('should show an error if network fails', () => {
+    cy.route2('POST', '/messages', {
+      forceNetworkError: true
+    });
+
+    cy.visit('/');
+
+    cy.get('footer').contains('Contact').click();
+
+    cy.get('#contact-from').type('test@mnhn.fr');
+    cy.get('#contact-body').type('test message');
+    cy.get('#contact-send').click();
 
     cy.get('#contact-form').should('be.visible');
     cy.get('#contact-error').should('be.visible');
