@@ -44,3 +44,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Build results
+prettier-result.txt
+tslint-result.txt
