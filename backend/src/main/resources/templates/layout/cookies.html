@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="cookies" class="d-none" data-controller="cookies" data-target="cookies.warning">
+      Les cookies assurent le bon fonctionnement de nos services. En poursuivant votre navigation, vous acceptez l'utilisation des cookies.
+      <!-- TODO add link "En savoir plus", but where should it point to? -->
+      <button type="button" data-action="cookies#accept">Accepter et fermer</button>
+    </div>
+  </body>
+</html>
