@@ -37,7 +37,7 @@
               th:src="@{/images/{imageId}/image(imageId=${card.page.content.presentation.image.imageId})}"
               th:alt="${card.page.content.presentation.image.alt}"
             />
-            <a th:href="@{/indicateurs/{indicatorName}(indicatorName=${card.indicator.biomId})}">En savoir plus</a>
+            <a th:href="@{/indicateurs/{slug}(slug=${card.indicator.slug})}">En savoir plus</a>
           </div>
         </div>
       </div>

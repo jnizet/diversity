@@ -59,13 +59,13 @@ public class IndicatorController {
         );
     }
 
-    @GetMapping("/{indicatorName}")
-    public ModelAndView indicator(@PathVariable("indicatorName") String indicatorName) {
-        Page page = pageRepository.findByNameAndModel(indicatorName, IndicatorModel.INDICATOR_PAGE_MODEL.getName())
+    @GetMapping("/{slug}")
+    public ModelAndView indicator(@PathVariable("slug") String slug) {
+        Page page = pageRepository.findByNameAndModel(slug, IndicatorModel.INDICATOR_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
         PageContent pageContent = pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page);
 
-        Indicator indicator = indicatorRepository.findByName(indicatorName)
+        Indicator indicator = indicatorRepository.findBySlug(slug)
             .orElseThrow(NotFoundException::new);
 
         Map<Territory, IndicatorValue> valuesByTerritory = indicatorRepository.getValues(indicator);
@@ -84,23 +84,22 @@ public class IndicatorController {
     private List<IndicatorCard> getIndicatorCards() {
         // An indicator might already exist in the database, but not have a page yet.
         // so we get all the indicator pages, and find the associated indicator by its name, which is supposed to be
-        // the biomId of the indicator
-        // TODO maybe we should use something more readable than the biomId as page name/slug
-        Map<String, Indicator> indicatorsByPageName =
-            indicatorRepository.list().stream().collect(Collectors.toMap(Indicator::getBiomId, Function.identity()));
+        // the slug of the indicator
+        Map<String, Indicator> indicatorsBySlug =
+            indicatorRepository.list().stream().collect(Collectors.toMap(Indicator::getSlug, Function.identity()));
         List<Page> indicatorPages = pageRepository.findByModel(IndicatorModel.INDICATOR_PAGE_MODEL.getName());
 
         Map<Indicator, IndicatorValue> valuesByIndicator =
-            indicatorRepository.getValuesForIndicatorsAndTerritory(indicatorsByPageName.values(), Territory.OUTRE_MER);
+            indicatorRepository.getValuesForIndicatorsAndTerritory(indicatorsBySlug.values(), Territory.OUTRE_MER);
 
         List<IndicatorCard> cards =
             indicatorPages.stream()
-                          .filter(indicatorPage -> indicatorsByPageName.containsKey(indicatorPage.getName()))
-                          .filter(indicatorPage -> valuesByIndicator.containsKey(indicatorsByPageName.get(indicatorPage.getName())))
-                          .map(indicatorPage -> new IndicatorCard(indicatorsByPageName.get(indicatorPage.getName()),
+                          .filter(indicatorPage -> indicatorsBySlug.containsKey(indicatorPage.getName()))
+                          .filter(indicatorPage -> valuesByIndicator.containsKey(indicatorsBySlug.get(indicatorPage.getName())))
+                          .map(indicatorPage -> new IndicatorCard(indicatorsBySlug.get(indicatorPage.getName()),
                                                                   pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL,
                                                                                                indicatorPage),
-                                                                  valuesByIndicator.get(indicatorsByPageName.get(indicatorPage.getName()))))
+                                                                  valuesByIndicator.get(indicatorsBySlug.get(indicatorPage.getName()))))
                           .collect(Collectors.toList());
         return cards;
     }

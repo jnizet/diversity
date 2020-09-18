@@ -54,13 +54,11 @@ class IndicatorControllerTest {
         IndicatorCategory category2 = new IndicatorCategory(2L, "category2");
         IndicatorCategory category3 = new IndicatorCategory(3L, "category3");
 
-        Indicator invasiveSpecies = new Indicator(1L, "especes-envahissantes", List.of(category1, category2));
-        Indicator deforestation = new Indicator(2L, "deforestation", List.of(category2, category3));
-        Indicator notExisting = new Indicator(3L, "not-existing", List.of(category3));
+        Indicator invasiveSpecies = new Indicator(1L, "i1", "especes-envahissantes", List.of(category1, category2));
+        Indicator deforestation = new Indicator(2L, "i2", "deforestation", List.of(category2, category3));
+        Indicator notExisting = new Indicator(3L, "i3", "not-existing", List.of(category3));
 
-
-
-        Page invasiveSpeciesPage = new Page(1L, invasiveSpecies.getBiomId(), IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes", Collections.emptyList());
+        Page invasiveSpeciesPage = new Page(1L, invasiveSpecies.getSlug(), IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(invasiveSpeciesPage.getName(), IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
             .thenReturn(Optional.of(invasiveSpeciesPage));
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, invasiveSpeciesPage)).thenReturn(
@@ -124,7 +122,7 @@ class IndicatorControllerTest {
                 )
             )
         );
-        when(mockIndicatorRepository.findByName(invasiveSpecies.getBiomId())).thenReturn(Optional.of(invasiveSpecies));
+        when(mockIndicatorRepository.findBySlug(invasiveSpecies.getSlug())).thenReturn(Optional.of(invasiveSpecies));
         when(mockIndicatorRepository.getValues(invasiveSpecies)).thenReturn(
             Map.of(
                 Territory.OUTRE_MER, new IndicatorValue(60, null),
@@ -133,7 +131,7 @@ class IndicatorControllerTest {
             )
         );
 
-        Page deforestationPage = new Page(2L, deforestation.getBiomId(), IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation", Collections.emptyList());
+        Page deforestationPage = new Page(2L, deforestation.getSlug(), IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(deforestationPage.getName(), IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
             .thenReturn(Optional.of(deforestationPage));
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, deforestationPage)).thenReturn(

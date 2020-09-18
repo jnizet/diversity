@@ -33,7 +33,7 @@ public class IndicatorRepository {
      * Lists all the indicators and their categories
      */
     public List<Indicator> list() {
-        String query = "select indicator.id, indicator.biom_id, cat.id as category_id, cat.name as category_name from indicator" +
+        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
                 " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
                 " left outer join category cat on cat.id = ind_cat.category_id";
         return jdbcTemplate.query(query, this::extractIndicators);
@@ -131,12 +131,12 @@ public class IndicatorRepository {
             });
     }
 
-    public Optional<Indicator> findByName(String name) {
-        String query = "select indicator.id, indicator.biom_id, cat.id as category_id, cat.name as category_name from indicator" +
+    public Optional<Indicator> findBySlug(String slug) {
+        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
             " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
             " left outer join category cat on cat.id = ind_cat.category_id" +
-            " where indicator.biom_id = :name";
-        List<Indicator> indicators = jdbcTemplate.query(query, Map.of("name", name), this::extractIndicators);
+            " where indicator.slug = :slug";
+        List<Indicator> indicators = jdbcTemplate.query(query, Map.of("slug", slug), this::extractIndicators);
         return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
     }
 
@@ -146,7 +146,8 @@ public class IndicatorRepository {
         while(rs.next()) {
             long indicatorId = rs.getLong("id");
             String biomId = rs.getString("biom_id");
-            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId));
+            String slug = rs.getString("slug");
+            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId, slug));
             List<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId,
                                                                                                      id -> new ArrayList<>());
             long categoryId = rs.getLong("category_id");
@@ -161,6 +162,7 @@ public class IndicatorRepository {
                              .sorted(Comparator.comparing(Indicator::getBiomId))
                              .map(indicator -> new Indicator(indicator.getId(),
                                                              indicator.getBiomId(),
+                                                             indicator.getSlug(),
                                                              categoriesByIndicatorId.get(indicator.getId())
                                                                                     .stream()
                                                                                     .sorted(Comparator.comparing(IndicatorCategory::getName))

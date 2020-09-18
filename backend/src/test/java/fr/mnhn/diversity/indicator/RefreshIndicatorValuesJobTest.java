@@ -31,13 +31,17 @@ class RefreshIndicatorValuesJobTest {
         mockIndicatorService = mock(IndicatorService.class);
         job = new RefreshIndicatorValuesJob(mockIndicatorRepository, mockIndicatorService);
 
-        indicator1 = new Indicator(1L, "indicator1");
-        indicator2 = new Indicator(2L, "indicator2");
+        indicator1 = new Indicator(1L, "indicator1", "slug1");
+        indicator2 = new Indicator(2L, "indicator2", "slug1");
 
         when(mockIndicatorRepository.list()).thenReturn(List.of(indicator1, indicator2));
 
-        when(mockIndicatorService.indicatorData(indicator1.getBiomId())).thenReturn(Mono.just(new IndicatorData(indicator1.getBiomId(), "i1", "r1")));
-        when(mockIndicatorService.indicatorData(indicator2.getBiomId())).thenReturn(Mono.just(new IndicatorData(indicator2.getBiomId(), "i2", "r2")));
+        when(mockIndicatorService.indicatorData(indicator1.getBiomId())).thenReturn(
+            Mono.just(new IndicatorData(indicator1.getBiomId(), "i1", "r1"))
+        );
+        when(mockIndicatorService.indicatorData(indicator2.getBiomId())).thenReturn(
+            Mono.just(new IndicatorData(indicator2.getBiomId(), "i2", "r2"))
+        );
 
         when(mockIndicatorService.indicatorValues("r1")).thenReturn(
             Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),

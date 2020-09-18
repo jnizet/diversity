@@ -6,9 +6,9 @@ delete from indicator_category;
 delete from indicator;
 delete from category;
 
-insert into indicator (id, biom_id) values
-    (1, 'especes-envahissantes'),
-    (2, 'deforestation');
+insert into indicator (id, biom_id, slug) values
+    (1, 'i1', 'especes-envahissantes'),
+    (2, 'i2', 'deforestation');
 
 insert into indicator_value (id, indicator_id, territory, value, unit) values
     (11, 1, 'OUTRE_MER', 64, null),

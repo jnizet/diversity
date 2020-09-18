@@ -7,7 +7,10 @@ create sequence category_seq start with 1000;
 
 create table indicator (
     id      BIGINT primary key,
-    biom_id VARCHAR not null
+    slug    VARCHAR not null,
+    biom_id VARCHAR not null,
+    constraint indicator_slug_un unique (slug),
+    constraint indicator_biom_id_un unique (biom_id)
 );
 
 create sequence indicator_seq start with 1000;

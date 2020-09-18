@@ -44,10 +44,10 @@ class IndicatorRepositoryTest {
                                         .values(102L, "category2")
                                         .build(),
                                 insertInto("indicator")
-                                        .columns("id", "biom_id")
-                                        .values(1L, "indicator2")
-                                        .values(2L, "indicator1")
-                                        .values(3L, "indicator3")
+                                        .columns("id", "biom_id", "slug")
+                                        .values(1L, "indicator2", "slug2")
+                                        .values(2L, "indicator1", "slug1")
+                                        .values(3L, "indicator3", "slug3")
                                         .build(),
                                 insertInto("indicator_category")
                                         .columns("indicator_id", "category_id")
@@ -74,26 +74,26 @@ class IndicatorRepositoryTest {
         IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
         IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
         assertThat(repository.list()).containsExactly(
-                new Indicator(2L, "indicator1", List.of(category1, category2)),
-                new Indicator(1L, "indicator2", List.of(category2)),
-                new Indicator(3L, "indicator3", List.of())
+                new Indicator(2L, "indicator1", "slug1", List.of(category1, category2)),
+                new Indicator(1L, "indicator2", "slug2", List.of(category2)),
+                new Indicator(3L, "indicator3", "slug3", List.of())
         );
     }
 
     @Test
-    void shouldFindByName() {
+    void shouldFindBySlug() {
         TRACKER.skipNextLaunch();
         IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
         IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
-        assertThat(repository.findByName("indicator1")).contains(
-            new Indicator(2L, "indicator1", List.of(category1, category2))
+        assertThat(repository.findBySlug("slug1")).contains(
+            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2))
         );
-        assertThat(repository.findByName("unknown")).isEmpty();
+        assertThat(repository.findBySlug("unknown")).isEmpty();
     }
 
     @Test
     void shouldInsertAndGetValues() {
-        Indicator indicator = new Indicator(1L, "indicator2");
+        Indicator indicator = new Indicator(1L, "indicator2", "slug2");
         IndicatorValue valueOutreMer = new IndicatorValue(278.9, "km");
         IndicatorValue valueReunion = new IndicatorValue(12.4, "km");
         IndicatorValue valueGuadeloupe = new IndicatorValue(3.8, "km");
@@ -113,7 +113,7 @@ class IndicatorRepositoryTest {
 
     @Test
     void shouldDeleteValues() {
-        Indicator indicator = new Indicator(3L, "indicator3");
+        Indicator indicator = new Indicator(3L, "indicator3", "slug3");
         assertThat(repository.getValues(indicator)).hasSize(4);
 
         repository.deleteValues(indicator, EnumSet.of(REUNION, SAINT_PIERRE_ET_MIQUELON));
@@ -122,21 +122,21 @@ class IndicatorRepositoryTest {
 
     @Test
     void shouldUpdateValue() {
-        Indicator indicator = new Indicator(3L, "indicator3");
+        Indicator indicator = new Indicator(3L, "indicator3", "slug3");
         IndicatorValue newValue = new IndicatorValue(50, "patates");
         assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isTrue();
 
         assertThat(repository.getValues(indicator).get(OUTRE_MER)).isEqualTo(newValue);
 
-        indicator = new Indicator(1L, "indicator2");
+        indicator = new Indicator(1L, "indicator2", "slug2");
         assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isFalse();
     }
 
     @Test
     void shouldGetValuesForIndicatorsAndTerritory() {
         TRACKER.skipNextLaunch();
-        Indicator indicator2 = new Indicator(1L, "indicator2");
-        Indicator indicator3 = new Indicator(3L, "indicator3");
+        Indicator indicator2 = new Indicator(1L, "indicator2", "slug2");
+        Indicator indicator3 = new Indicator(3L, "indicator3", "slug3");
         Set<Indicator> indicators = Set.of(indicator3, indicator2);
 
         Map<Indicator, IndicatorValue> result = repository.getValuesForIndicatorsAndTerritory(indicators, OUTRE_MER);
