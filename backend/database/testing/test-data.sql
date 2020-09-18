@@ -11,7 +11,8 @@ insert into indicator (id, biom_id) values
 
 insert into indicator_value (id, indicator_id, territory, value, unit) values
     (1, 1, 'OUTRE_MER', 64, null),
-    (2, 1, 'REUNION', 40, null);
+    (2, 1, 'REUNION', 40, null),
+    (3, 1, 'GUADELOUPE', 14, null);
 
 insert into category (id, name) values
     (1, 'Écosystèmes'),
@@ -181,8 +182,6 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
 --     Indicator
 --     Espèces envahissantes
     (500, 30, 'TEXT', 'name',  'Espèces envahissantes', null, null, null, true),
-    (501, 30, 'TEXT', 'presentation.category',  'Espèces', null, null, null, false),
-    (502, 30, 'TEXT', 'indicator.OUTRE_MER.value',  '14', null, null, null, false),
     (503, 30, 'TEXT', 'presentation.description',  'espèces sur les 100...', null, null, null, false),
     (504, 30, 'IMAGE', 'presentation.image',  null, 104, 'Espèces envahissantes', null, false),
     (505, 30, 'TEXT', 'understand.title',  'Comprendre', null, null, null, false),
@@ -192,9 +191,6 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (509, 30, 'TEXT', 'understand.sections.1.title',  'Raison 2', null, null, null, false),
     (510, 30, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null, false),
     (511, 30, 'TEXT', 'indicators.title',  'Espèces envahissantes par territoire', null, null, null, false),
-    (512, 30, 'TEXT', 'indicator.REUNION.value',  '6', null, null, null, false),
-    (513, 30, 'TEXT', 'indicator.GUADELOUPE.value',  '60', null, null, null, false),
-    (514, 30, 'TEXT', 'indicator.SAINT_PIERRE_ET_MIQUELON.value',  '24', null, null, null, false),
     (518, 30, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
     (519, 30, 'TEXT', 'ecogestures.ecogestures.0.name', 'Protégeons les récifs corallien', null, null, null, false),
     (520, 30, 'TEXT', 'ecogestures.ecogestures.0.category', 'Loisirs', null, null, null, false),

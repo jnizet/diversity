@@ -13,24 +13,8 @@ public final class IndicatorModel {
             PageModel.builder("indicator")
                      .describedAs("Indicator page")
                      .titleText("name", "Nom de l'indicateur")
-                     // TODO: indicators value are stored as text for now
-                     .section(SectionElement.builder("indicator")
-                                            .section(SectionElement.builder("OUTRE_MER")
-                                                                   .text("value", "Valeur de l'indicateur")
-                                            )
-                                            .section(SectionElement.builder("REUNION")
-                                                                   .text("value", "Valeur de l'indicateur")
-                                            )
-                                            .section(SectionElement.builder("GUADELOUPE")
-                                                                   .text("value", "Valeur de l'indicateur")
-                                            )
-                                            .section(SectionElement.builder("SAINT_PIERRE_ET_MIQUELON")
-                                                                   .text("value", "Valeur de l'indicateur")
-                                            )
-                     )
                      // Présentation
                      .section(SectionElement.builder("presentation").describedAs("Présentation de l'indicateur")
-                                            .text("category", "Catégorie de l'indicateur")
                                             .text("description", "Description de l'indicateur")
                                             .image("image", "Illustration de l'indicateur")
                      )
@@ -46,12 +30,6 @@ public final class IndicatorModel {
                      // Indicateurs par territoire
                      .section(SectionElement.builder("indicators").describedAs("Indicateurs par territoires")
                                             .text("title", "Titre de la section indicateurs")
-                                            .list(ListElement.builder("indicators").describedAs("Les indicateurs du territoire")
-                                                             .text("name", "Nom du territoire")
-                                                             // TODO: indicators value are stored as text for now
-                                                             .text("value", "Valeur de l'indicateur")
-                                                             .image("image", "Image illustrant le territoire")
-                                            )
                      )
                      // Écogestes
                      .section(SectionElement.builder("ecogestures").describedAs("Écogestes")

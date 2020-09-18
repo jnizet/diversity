@@ -50,8 +50,18 @@ class IndicatorControllerTest {
 
     @BeforeEach
     void prepare() {
-        Page invasiveSpeciesPage = new Page(1L, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes", Collections.emptyList());
-        when(mockPageRepository.findByNameAndModel("especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
+        IndicatorCategory category1 = new IndicatorCategory(1L, "category1");
+        IndicatorCategory category2 = new IndicatorCategory(2L, "category2");
+        IndicatorCategory category3 = new IndicatorCategory(3L, "category3");
+
+        Indicator invasiveSpecies = new Indicator(1L, "especes-envahissantes", List.of(category1, category2));
+        Indicator deforestation = new Indicator(2L, "deforestation", List.of(category2, category3));
+        Indicator notExisting = new Indicator(3L, "not-existing", List.of(category3));
+
+
+
+        Page invasiveSpeciesPage = new Page(1L, invasiveSpecies.getBiomId(), IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes", Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(invasiveSpeciesPage.getName(), IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
             .thenReturn(Optional.of(invasiveSpeciesPage));
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, invasiveSpeciesPage)).thenReturn(
             new PageContent(
@@ -114,8 +124,16 @@ class IndicatorControllerTest {
                 )
             )
         );
+        when(mockIndicatorRepository.findByName(invasiveSpecies.getBiomId())).thenReturn(Optional.of(invasiveSpecies));
+        when(mockIndicatorRepository.getValues(invasiveSpecies)).thenReturn(
+            Map.of(
+                Territory.OUTRE_MER, new IndicatorValue(60, null),
+                Territory.REUNION, new IndicatorValue(40, null),
+                Territory.GUADELOUPE, new IndicatorValue(14, null)
+            )
+        );
 
-        Page deforestationPage = new Page(2L, "deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation", Collections.emptyList());
+        Page deforestationPage = new Page(2L, deforestation.getBiomId(), IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(deforestationPage.getName(), IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
             .thenReturn(Optional.of(deforestationPage));
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, deforestationPage)).thenReturn(
@@ -147,13 +165,6 @@ class IndicatorControllerTest {
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_HOME_PAGE_MODEL, homePage))
             .thenReturn(new PageContent(homePage, homeContent));
 
-        IndicatorCategory category1 = new IndicatorCategory(1L, "category1");
-        IndicatorCategory category2 = new IndicatorCategory(2L, "category2");
-        IndicatorCategory category3 = new IndicatorCategory(3L, "category3");
-
-        Indicator invasiveSpecies = new Indicator(1L, invasiveSpeciesPage.getName(), List.of(category1, category2));
-        Indicator deforestation = new Indicator(2L, deforestationPage.getName(), List.of(category2, category3));
-        Indicator notExisting = new Indicator(3L, "not-existing", List.of(category3));
         when(mockIndicatorRepository.list()).thenReturn(
             List.of(invasiveSpecies, deforestation, notExisting)
         );
@@ -177,10 +188,11 @@ class IndicatorControllerTest {
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Espèces envahissantes</title>")))
                .andExpect(content().string(containsString("<h1>Les espèces envahissantes</h1>")))
+               .andExpect(content().string(containsString("<p>60</p>")))
                .andExpect(content().string(containsString("<h2>Comprendre</h2>")))
                .andExpect(content().string(containsString("<h2>Indicateurs</h2>")))
                .andExpect(content().string(containsString("<h3>Réunion</h3>")))
-               .andExpect(content().string(containsString("<p>6</p>")))
+               .andExpect(content().string(containsString("<p>40</p>")))
                .andExpect(content().string(containsString("<h3>Guadeloupe</h3>")))
                .andExpect(content().string(containsString("<p>14</p>")))
                .andExpect(content().string(containsString("<h2>Ecogestes</h2>")))

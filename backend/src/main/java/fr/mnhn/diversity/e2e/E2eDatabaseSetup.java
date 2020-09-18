@@ -63,6 +63,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .columns("id", "indicator_id", "territory", "value", "unit")
                 .values(1, 1, "OUTRE_MER", 64, null)
                 .values(2, 1, "REUNION", 40, null)
+                .values(3, 1, "GUADELOUPE", 14, null)
                 .build();
 
         Long home = 1L;
@@ -268,7 +269,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .columns("type", "key", "text", "image_id", "alt", "href")
                 .values(TEXT, "name", "Espèces envahissantes", null, null, null)
                 .values(TEXT, "presentation.category", "Espèces", null, null, null)
-                .values(TEXT, "indicator.OUTRE_MER.value", "60", null, null, null)
                 .values(TEXT, "presentation.description", "espèces sur les 100...", null, null, null)
                 .values(IMAGE, "presentation.image", null, 104L, "Illustration", null)
                 .values(TEXT, "understand.title", "Comprendre", null, null, null)
@@ -276,9 +276,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.sections.0.title", "Raison 1", null, null, null)
                 .values(TEXT, "understand.sections.0.description", "Comprendre raison 1", null, null, null)
                 .values(TEXT, "indicators.title", "Indicateurs", null, null, null)
-                .values(TEXT, "indicator.REUNION.value", "6", null, null, null)
-                .values(TEXT, "indicator.GUADELOUPE.value", "14", null, null, null)
-                .values(TEXT, "indicator.SAINT_PIERRE_ET_MIQUELON.value", "23", null, null, null)
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null)
                 .values(TEXT, "ecogestures.ecogestures.0.name", "Protégeons les récifs coralliens", null, null, null)
                 .values(TEXT, "ecogestures.ecogestures.0.category", "Loisirs", null, null, null)

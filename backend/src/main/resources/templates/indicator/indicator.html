@@ -9,7 +9,7 @@
     <meta
       th:ref="og"
       property="og:description"
-      th:attr="content=${page.content.indicator.OUTRE_MER.value.text + ' ' + page.content.presentation.description.text}"
+      th:attr="content=${#indicators.formatValue(outremerIndicatorValue) + ' ' + page.content.presentation.description.text}"
     />
     <meta
       th:ref="og"
@@ -24,8 +24,7 @@
 
       <!-- Présentation -->
       <div class="presentation">
-        <h2 th:text="*{presentation.category.text}">Catégorie de l'indicateur</h2>
-        <p th:text="*{indicator.OUTRE_MER.value.text}">Valeur de l'indicateur</p>
+        <p th:text="${#indicators.formatValue(outremerIndicatorValue)}">Valeur de l'indicateur</p>
         <p th:text="*{presentation.description.text}">Description de l'indicateur</p>
         <img th:src="@{/images/{imageId}/image(imageId=*{presentation.image.imageId})}" th:alt="*{presentation.image.alt}" />
       </div>
@@ -43,12 +42,9 @@
       <!-- Indicateurs par territoire -->
       <div class="indicators">
         <h2 th:text="*{indicators.title.text}">Indicateurs par territoire</h2>
-        <div
-          th:each="territory : ${T(fr.mnhn.diversity.territory.Territory).values()}"
-          th:if="${page.content.indicator.get(territory.name()) != null && territory.name() != 'OUTRE_MER'}"
-        >
-          <h3 th:text="${territory.getName()}">Nom du territoire</h3>
-          <p th:text="${page.content.indicator.get(territory.name()).value.text}">Valeur de l'indicateur</p>
+        <div th:each="card : ${territoryCards}">
+          <h3 th:text="${card.territory.name}">Nom du territoire</h3>
+          <p th:text="${#indicators.formatValue(card.indicatorValue)}">Valeur de l'indicateur</p>
         </div>
       </div>
 

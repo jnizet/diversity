@@ -81,6 +81,17 @@ class IndicatorRepositoryTest {
     }
 
     @Test
+    void shouldFindByName() {
+        TRACKER.skipNextLaunch();
+        IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
+        IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
+        assertThat(repository.findByName("indicator1")).contains(
+            new Indicator(2L, "indicator1", List.of(category1, category2))
+        );
+        assertThat(repository.findByName("unknown")).isEmpty();
+    }
+
+    @Test
     void shouldInsertAndGetValues() {
         Indicator indicator = new Indicator(1L, "indicator2");
         IndicatorValue valueOutreMer = new IndicatorValue(278.9, "km");
@@ -91,7 +102,7 @@ class IndicatorRepositoryTest {
         repository.insertValue(indicator, REUNION, valueReunion);
         repository.insertValue(indicator, GUADELOUPE, valueGuadeloupe);
 
-        assertThat(repository.getValues(indicator).getValues()).isEqualTo(
+        assertThat(repository.getValues(indicator)).isEqualTo(
                 Map.of(
                         OUTRE_MER, valueOutreMer,
                         REUNION, valueReunion,
@@ -103,10 +114,10 @@ class IndicatorRepositoryTest {
     @Test
     void shouldDeleteValues() {
         Indicator indicator = new Indicator(3L, "indicator3");
-        assertThat(repository.getValues(indicator).getValues()).hasSize(4);
+        assertThat(repository.getValues(indicator)).hasSize(4);
 
         repository.deleteValues(indicator, EnumSet.of(REUNION, SAINT_PIERRE_ET_MIQUELON));
-        assertThat(repository.getValues(indicator).getValues()).hasSize(2);
+        assertThat(repository.getValues(indicator)).hasSize(2);
     }
 
     @Test
@@ -115,7 +126,7 @@ class IndicatorRepositoryTest {
         IndicatorValue newValue = new IndicatorValue(50, "patates");
         assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isTrue();
 
-        assertThat(repository.getValues(indicator).getValues().get(OUTRE_MER)).isEqualTo(newValue);
+        assertThat(repository.getValues(indicator).get(OUTRE_MER)).isEqualTo(newValue);
 
         indicator = new Indicator(1L, "indicator2");
         assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isFalse();

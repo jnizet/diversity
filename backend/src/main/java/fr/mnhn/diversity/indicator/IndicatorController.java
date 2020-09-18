@@ -59,10 +59,26 @@ public class IndicatorController {
         );
     }
 
-    @GetMapping("/{indicatorSlug}")
-    public ModelAndView indicator(@PathVariable("indicatorSlug") String indicatorSlug) {
-        Page page = pageRepository.findByNameAndModel(indicatorSlug, IndicatorModel.INDICATOR_PAGE_MODEL.getName()).orElseThrow(NotFoundException::new);
-        return new ModelAndView("indicator/indicator", "page", pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page));
+    @GetMapping("/{indicatorName}")
+    public ModelAndView indicator(@PathVariable("indicatorName") String indicatorName) {
+        Page page = pageRepository.findByNameAndModel(indicatorName, IndicatorModel.INDICATOR_PAGE_MODEL.getName())
+                                  .orElseThrow(NotFoundException::new);
+        PageContent pageContent = pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page);
+
+        Indicator indicator = indicatorRepository.findByName(indicatorName)
+            .orElseThrow(NotFoundException::new);
+
+        Map<Territory, IndicatorValue> valuesByTerritory = indicatorRepository.getValues(indicator);
+
+        IndicatorValue outremerIndicatorValue = valuesByTerritory.get(Territory.OUTRE_MER);
+        List<TerritoryCard> territoryCards = getTerritoryCards(valuesByTerritory);
+
+        return new ModelAndView("indicator/indicator",
+                                Map.of(
+                                    "page", pageContent,
+                                    "outremerIndicatorValue", outremerIndicatorValue,
+                                    "territoryCards", territoryCards
+                                ));
     }
 
     private List<IndicatorCard> getIndicatorCards() {
@@ -97,6 +113,15 @@ public class IndicatorController {
                     .collect(Collectors.toList());
     }
 
+    private List<TerritoryCard> getTerritoryCards(Map<Territory, IndicatorValue> valuesByTerritory) {
+        return valuesByTerritory.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey() != Territory.OUTRE_MER)
+                .sorted(Map.Entry.comparingByKey())
+                .map(entry -> new TerritoryCard(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
     private static class IndicatorCard {
         private final Indicator indicator;
         private final PageContent page;
@@ -116,6 +141,24 @@ public class IndicatorController {
 
         public PageContent getPage() {
             return page;
+        }
+
+        public IndicatorValue getIndicatorValue() {
+            return indicatorValue;
+        }
+    }
+
+    private static class TerritoryCard {
+        private final Territory territory;
+        private final IndicatorValue indicatorValue;
+
+        public TerritoryCard(Territory territory, IndicatorValue indicatorValue) {
+            this.territory = territory;
+            this.indicatorValue = indicatorValue;
+        }
+
+        public Territory getTerritory() {
+            return territory;
         }
 
         public IndicatorValue getIndicatorValue() {

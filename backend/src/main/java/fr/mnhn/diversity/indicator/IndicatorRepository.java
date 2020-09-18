@@ -1,11 +1,14 @@
 package fr.mnhn.diversity.indicator;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -33,30 +36,7 @@ public class IndicatorRepository {
         String query = "select indicator.id, indicator.biom_id, cat.id as category_id, cat.name as category_name from indicator" +
                 " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
                 " left outer join category cat on cat.id = ind_cat.category_id";
-        Map<Long, Indicator> indicatorsById = new HashMap<>();
-        Map<Long, List<IndicatorCategory>> categoriesByIndicatorId = new HashMap<>();
-        jdbcTemplate.query(query, (rs) -> {
-            long indicatorId = rs.getLong("id");
-            String biomId = rs.getString("biom_id");
-            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId));
-            List<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId, id -> new ArrayList<>());
-            long categoryId = rs.getLong("category_id");
-            if (!rs.wasNull()) { // if an indicator has a category
-                String categoryName = rs.getString("category_name");
-                categoriesForIndicator.add(new IndicatorCategory(categoryId, categoryName));
-            }
-        });
-        return indicatorsById.values()
-                             .stream()
-                             .sorted(Comparator.comparing(Indicator::getBiomId))
-                             .map(indicator -> new Indicator(indicator.getId(),
-                                                             indicator.getBiomId(),
-                                                             categoriesByIndicatorId.get(indicator.getId())
-                                                                                    .stream()
-                                                                                    .sorted(Comparator.comparing(IndicatorCategory::getName))
-                                                                                    .collect(Collectors.toList())
-                             ))
-                             .collect(Collectors.toList());
+        return jdbcTemplate.query(query, this::extractIndicators);
     }
 
     /**
@@ -109,7 +89,7 @@ public class IndicatorRepository {
     /**
      * Gets all the values per territory for an indicator
      */
-    public IndicatorValues getValues(Indicator indicator) {
+    public Map<Territory, IndicatorValue> getValues(Indicator indicator) {
         return jdbcTemplate.query(
                 "select value, unit, territory from indicator_value where indicator_id = :indicator_id",
                 Map.of("indicator_id", indicator.getId()),
@@ -120,7 +100,7 @@ public class IndicatorRepository {
                         IndicatorValue value = new IndicatorValue(rs.getDouble("value"), rs.getString("unit"));
                         values.put(Territory.valueOf(territoryKey), value);
                     }
-                    return new IndicatorValues(values);
+                    return values;
                 });
     }
 
@@ -149,5 +129,43 @@ public class IndicatorRepository {
                 }
                 return result;
             });
+    }
+
+    public Optional<Indicator> findByName(String name) {
+        String query = "select indicator.id, indicator.biom_id, cat.id as category_id, cat.name as category_name from indicator" +
+            " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
+            " left outer join category cat on cat.id = ind_cat.category_id" +
+            " where indicator.biom_id = :name";
+        List<Indicator> indicators = jdbcTemplate.query(query, Map.of("name", name), this::extractIndicators);
+        return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
+    }
+
+    private List<Indicator> extractIndicators(ResultSet rs) throws SQLException {
+        Map<Long, Indicator> indicatorsById = new HashMap<>();
+        Map<Long, List<IndicatorCategory>> categoriesByIndicatorId = new HashMap<>();
+        while(rs.next()) {
+            long indicatorId = rs.getLong("id");
+            String biomId = rs.getString("biom_id");
+            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId));
+            List<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId,
+                                                                                                     id -> new ArrayList<>());
+            long categoryId = rs.getLong("category_id");
+            if (!rs.wasNull()) { // if an indicator has a category
+                String categoryName = rs.getString("category_name");
+                categoriesForIndicator.add(new IndicatorCategory(categoryId, categoryName));
+            }
+        }
+
+        return indicatorsById.values()
+                             .stream()
+                             .sorted(Comparator.comparing(Indicator::getBiomId))
+                             .map(indicator -> new Indicator(indicator.getId(),
+                                                             indicator.getBiomId(),
+                                                             categoriesByIndicatorId.get(indicator.getId())
+                                                                                    .stream()
+                                                                                    .sorted(Comparator.comparing(IndicatorCategory::getName))
+                                                                                    .collect(Collectors.toList())
+                             ))
+                             .collect(Collectors.toList());
     }
 }
