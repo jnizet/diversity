@@ -33,7 +33,7 @@ public class EcoGestureController {
     }
 
     /**
-     * Displays the home page of the eco gestures. It displays a presentation section, and then a gallery
+     * Displays the home page of the eco-gestures. It displays a presentation section, and then a gallery
      * of all the eco-gestures.
      */
     @GetMapping()
@@ -67,12 +67,12 @@ public class EcoGestureController {
     }
 
     /**
-     * Displays the details of an eco gesture.
-     * @param pageName the name of the page
+     * Displays the details of an eco-gesture.
+     * @param slug the slug of the eco-gesture, which is also the name of the eco-gesture page
      */
-    @GetMapping("/{pageName}")
-    public ModelAndView detail(@PathVariable("pageName") String pageName) {
-        Page page = pageRepository.findByNameAndModel(pageName, EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
+    @GetMapping("/{slug}")
+    public ModelAndView detail(@PathVariable("slug") String slug) {
+        Page page = pageRepository.findByNameAndModel(slug, EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
         return new ModelAndView("ecogesture/ecogesture", "page", pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page));
     }

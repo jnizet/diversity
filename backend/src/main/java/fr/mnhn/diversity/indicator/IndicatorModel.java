@@ -34,13 +34,6 @@ public final class IndicatorModel {
                      // Écogestes
                      .section(SectionElement.builder("ecogestures").describedAs("Écogestes")
                                             .text("title", "Titre de la section écogestes")
-                                            .list(ListElement.builder("ecogestures").describedAs("Les écogestes du territoire")
-                                                             .text("name", "Nom de l'écogeste")
-                                                             .text("description", "Description de l'écogeste")
-                                                             .text("category", "Catégorie de l'écogeste")
-                                                             .image("image", "Image illustrant l'écogeste")
-                                                             .link("link", "Lien vers l'écogeste")
-                                            )
                      )
                      // Bandeau indicateur suivant
                      .section(SectionElement.builder("next").describedAs("Bandeau indicateur suivant")

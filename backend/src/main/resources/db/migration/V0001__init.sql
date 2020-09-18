@@ -34,6 +34,22 @@ create table indicator_value (
 
 create sequence indicator_value_seq start with 1000;
 
+create table ecogesture (
+    id      BIGINT primary key,
+    slug    VARCHAR not null,
+    constraint ecogesture_slug_un unique (slug)
+);
+
+create sequence ecogesture_seq start with 1000;
+
+create table indicator_ecogesture (
+    indicator_id BIGINT,
+    ecogesture_id BIGINT,
+    constraint indicator_id_fk foreign key (indicator_id) references indicator(id),
+    constraint ecogesture_id_fk foreign key (ecogesture_id) references ecogesture(id),
+    primary key (indicator_id, ecogesture_id)
+);
+
 create table image (
     id                 BIGINT primary key,
     content_type       VARCHAR not null,

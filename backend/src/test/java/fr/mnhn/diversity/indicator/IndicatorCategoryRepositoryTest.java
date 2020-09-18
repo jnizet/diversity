@@ -1,7 +1,8 @@
 package fr.mnhn.diversity.indicator;
 
 import static com.ninja_squad.dbsetup.Operations.*;
-import static fr.mnhn.diversity.common.testing.Tracker.TRACKER;
+import static fr.mnhn.diversity.common.testing.RepositoryTests.DELETE_ALL;
+import static fr.mnhn.diversity.common.testing.RepositoryTests.TRACKER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -31,7 +32,7 @@ class IndicatorCategoryRepositoryTest {
                 new DbSetup(
                         new DataSourceDestination(dataSource),
                         sequenceOf(
-                                deleteAllFrom("indicator_category", "category"),
+                                DELETE_ALL,
                                 insertInto("category")
                                         .columns("id", "name")
                                         .values(1L, "category2")

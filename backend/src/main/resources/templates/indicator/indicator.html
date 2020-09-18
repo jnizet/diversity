@@ -51,13 +51,18 @@
       <!-- Écogestes -->
       <div class="ecogestures">
         <h2 th:text="*{ecogestures.title.text}">Title</h2>
-        <div th:each="ecogesture : *{ecogestures.ecogestures}">
-          <h3 th:text="${ecogesture.name.text}">Nom de l'écogeste</h3>
-          <p th:text="${ecogesture.description.text}">Description de l'écogeste</p>
-          <p th:text="${ecogesture.category.text}">Catégorie de l'écogeste</p>
-          <img th:src="@{/images/{imageId}/image(imageId=${ecogesture.image.imageId})}" th:alt="${ecogesture.image.alt}" />
-          <a th:href="@{${ecogesture.link.href}}" th:text="${ecogesture.link.text}">Lien vers l'écogeste</a>
+        <div th:each="card : ${ecogestureCards}">
+          <h3 th:text="${card.page.content.presentation.name.text}">Nom de l'écogeste</h3>
+          <p th:text="${card.page.content.presentation.description.text}">Description de l'écogeste</p>
+          <p th:text="${card.page.content.presentation.category.text}">Catégorie de l'écogeste</p>
+          <a th:href="@{/ecogestes/{slug}(slug=${card.ecogesture.slug})}">
+            <img
+              th:src="@{/images/{imageId}/image(imageId=${card.page.content.presentation.image.imageId})}"
+              th:alt="${card.page.content.presentation.image.alt}"
+            />
+          </a>
         </div>
+        <a th:href="@{/ecogestes}">Voir tous les écogestes</a>
       </div>
 
       <!-- Bandeau indicateur suivant -->

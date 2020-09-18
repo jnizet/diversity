@@ -1,5 +1,5 @@
 describe('Indicator', () => {
-  it('should have a header, title values by territory and footer', () => {
+  it('should have a header, title values by territory, ecogestures and footer', () => {
     cy.visit('/indicateurs/especes-envahissantes');
 
     cy.get('header').should('contain', 'Layout header');
@@ -8,6 +8,7 @@ describe('Indicator', () => {
     cy.get('.indicators p').should('contain', '40');
     cy.get('.indicators h3').should('contain', 'Guadeloupe');
     cy.get('.indicators p').should('contain', '14');
+    cy.get('.ecogestures h3').should('contain', 'Protégeons les récifs coralliens');
     cy.get('footer').should('contain', 'Layout footer');
   });
 });

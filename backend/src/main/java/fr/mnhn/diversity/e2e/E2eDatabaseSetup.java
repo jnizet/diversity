@@ -37,7 +37,18 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Operation deleteAll = deleteAllFrom("page_element", "page", "image", "indicator_value", "indicator_category", "indicator", "category");
+        Operation deleteAll =
+            deleteAllFrom(
+                "indicator_value",
+                "indicator_category",
+                "indicator_ecogesture",
+                "indicator",
+                "category",
+                "ecogesture",
+                "page_element",
+                "page",
+                "image"
+            );
 
         Operation categories =
             insertInto("category")
@@ -71,6 +82,19 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(21, 2, "OUTRE_MER", 5, "%")
                 .values(22, 2, "REUNION", 7, "%")
                 .values(23, 2, "SAINT_PIERRE_ET_MIQUELON", 3, "%")
+                .build();
+
+        Operation ecogestures =
+            insertInto("ecogesture")
+                .columns("id", "slug")
+                .values(1, "recifs")
+                .build();
+
+        Operation indicatorEcogestures =
+            insertInto("indicator_ecogesture")
+                .columns("indicator_id", "ecogesture_id")
+                .values(1, 1)
+                .values(2, 1)
                 .build();
 
         Long home = 1L;
@@ -285,11 +309,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.sections.0.description", "Comprendre raison 1", null, null, null, false)
                 .values(TEXT, "indicators.title", "Indicateurs", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
-                .values(TEXT, "ecogestures.ecogestures.0.name", "Protégeons les récifs coralliens", null, null, null, false)
-                .values(TEXT, "ecogestures.ecogestures.0.category", "Loisirs", null, null, null, false)
-                .values(TEXT, "ecogestures.ecogestures.0.description", "Protégeons les récifs corallien...", null, null, null, false)
-                .values(IMAGE, "ecogestures.ecogestures.0.image", null, 108L, "Tortue", null, false)
-                .values(LINK, "ecogestures.ecogestures.0.link", "/ecogestes/recifs", null, null, "/indicateurs/surfaces-forets", false)
                 .values(TEXT, "next.name", "Surfaces des forêts", null, null, null, false)
                 .values(IMAGE, "next.image", null, 105L, "Surfaces des forêts", null, false)
                 .values(LINK, "next.link", "Surfaces des forêts", null, null, "/indicateurs/surfaces-forets", false)
@@ -311,11 +330,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.sections.1.description",  "Explication raison 2", null, null, null, false)
                 .values(TEXT, "indicators.title",  "Déforestation par territoire", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
-                .values(TEXT, "ecogestures.ecogestures.0.name", "Protégeons les récifs corallien", null, null, null, false)
-                .values(TEXT, "ecogestures.ecogestures.0.category", "Loisirs", null, null, null, false)
-                .values(TEXT, "ecogestures.ecogestures.0.description", "Protégeons les récifs corallien...", null, null, null, false)
-                .values(LINK, "ecogestures.ecogestures.0.link", "Protégeons les récifs corallien", null, null, "/ecogestes/recifs", false)
-                .values(IMAGE, "ecogestures.ecogestures.0.image", null, 104, "Tortue", null, false)
                 .values(TEXT, "next.name", "Espèces envahissantes", null, null, null, false)
                 .values(IMAGE, "next.image", null, 104, "Espèces envahissantes", null, false)
                 .values(LINK, "next.link", "Espèces envahissantes", null, null, "/indicateurs/especes-envahissantes", false)
@@ -327,6 +341,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             indicators,
             indicatorCategories,
             indicatorValues,
+            ecogestures,
+            indicatorEcogestures,
             images,
             pages,
             homeElements,

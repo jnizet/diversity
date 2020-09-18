@@ -1,7 +1,8 @@
 package fr.mnhn.diversity.model;
 
 import static com.ninja_squad.dbsetup.Operations.*;
-import static fr.mnhn.diversity.common.testing.Tracker.TRACKER;
+import static fr.mnhn.diversity.common.testing.RepositoryTests.DELETE_ALL;
+import static fr.mnhn.diversity.common.testing.RepositoryTests.TRACKER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -35,7 +36,7 @@ class PageRepositoryTest {
             new DbSetup(
                 new DataSourceDestination(dataSource),
                 sequenceOf(
-                    deleteAllFrom("page_element", "page", "image"),
+                    DELETE_ALL,
                     insertInto("page")
                         .columns("id", "name", "model_name", "title")
                         .values(1L, "Home", "home", "Accueil")

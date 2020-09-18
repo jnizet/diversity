@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.Ecogesture;
+import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
@@ -44,6 +47,9 @@ class IndicatorControllerTest {
 
     @MockBean
     private IndicatorRepository mockIndicatorRepository;
+
+    @MockBean
+    private EcogestureRepository mockEcogestureRepository;
 
     @MockBean
     private PageService mockPageService;
@@ -177,6 +183,29 @@ class IndicatorControllerTest {
         when(mockPageRepository.findByModel(IndicatorModel.INDICATOR_PAGE_MODEL.getName())).thenReturn(
             List.of(invasiveSpeciesPage, deforestationPage)
         );
+
+        Ecogesture ecogesture = new Ecogesture(42L, "recifs");
+        when(mockEcogestureRepository.findByIndicator(invasiveSpecies.getId())).thenReturn(
+            List.of(ecogesture)
+        );
+
+        Page ecogesturePage = new Page(435L, ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Corals", Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
+            .thenReturn(Optional.of(ecogesturePage));
+        when(mockPageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, ecogesturePage))
+            .thenReturn(
+                new PageContent(
+                    ecogesturePage,
+                    Map.of(
+                        "presentation", Map.of(
+                            "name", text("Protect the corals"),
+                            "category", text("Leisure"),
+                            "description", text("Description"),
+                            "image", image(1L)
+                        )
+                    )
+                )
+            );
     }
 
     @Test
@@ -194,7 +223,7 @@ class IndicatorControllerTest {
                .andExpect(content().string(containsString("<h3>Guadeloupe</h3>")))
                .andExpect(content().string(containsString("<p>14</p>")))
                .andExpect(content().string(containsString("<h2>Ecogestes</h2>")))
-               .andExpect(content().string(containsString("<h3>Ecogesture1</h3>")));
+               .andExpect(content().string(containsString("<h3>Protect the corals</h3>")));
     }
 
     @Test

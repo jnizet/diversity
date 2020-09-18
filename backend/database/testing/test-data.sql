@@ -1,10 +1,12 @@
+delete from indicator_value;
+delete from indicator_category;
+delete from indicator_ecogesture;
+delete from indicator;
+delete from category;
+delete from ecogesture;
 delete from page_element;
 delete from page;
 delete from image;
-delete from indicator_value;
-delete from indicator_category;
-delete from indicator;
-delete from category;
 
 insert into indicator (id, biom_id, slug) values
     (1, 'i1', 'especes-envahissantes'),
@@ -27,6 +29,13 @@ insert into indicator_category (indicator_id, category_id) values
     (1, 1),
     (2, 1),
     (2, 3);
+
+insert into ecogesture (id, slug) values
+    (1, 'recifs');
+
+insert into indicator_ecogesture (indicator_id, ecogesture_id) values
+    (1, 1),
+    (2, 1);
 
 insert into image (id, content_type, original_file_name) values
     (1, 'image/png', 'carousel1.png'),
@@ -200,11 +209,6 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (510, 30, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null, false),
     (511, 30, 'TEXT', 'indicators.title',  'Espèces envahissantes par territoire', null, null, null, false),
     (518, 30, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
-    (519, 30, 'TEXT', 'ecogestures.ecogestures.0.name', 'Protégeons les récifs corallien', null, null, null, false),
-    (520, 30, 'TEXT', 'ecogestures.ecogestures.0.category', 'Loisirs', null, null, null, false),
-    (521, 30, 'TEXT', 'ecogestures.ecogestures.0.description', 'Protégeons les récifs corallien...', null, null, null, false),
-    (522, 30, 'LINK', 'ecogestures.ecogestures.0.link', 'Protégeons les récifs corallien', null, null, '/ecogestes/recifs', false),
-    (523, 30, 'IMAGE', 'ecogestures.ecogestures.0.image', null, 104, 'Tortue', null, false),
     (524, 30, 'TEXT', 'next.name', 'Surfaces des forêts', null, null, null, false),
     (525, 30, 'IMAGE', 'next.image', null, 105, 'Surfaces des forêts', null, false),
     (526, 30, 'LINK', 'next.link', 'Déforestation', null, null, '/indicateurs/deforestation', false),
@@ -222,11 +226,6 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (558, 31, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null, false),
     (559, 31, 'TEXT', 'indicators.title',  'Déforestation par territoire', null, null, null, false),
     (560, 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
-    (561, 31, 'TEXT', 'ecogestures.ecogestures.0.name', 'Protégeons les récifs corallien', null, null, null, false),
-    (562, 31, 'TEXT', 'ecogestures.ecogestures.0.category', 'Loisirs', null, null, null, false),
-    (563, 31, 'TEXT', 'ecogestures.ecogestures.0.description', 'Protégeons les récifs corallien...', null, null, null, false),
-    (564, 31, 'LINK', 'ecogestures.ecogestures.0.link', 'Protégeons les récifs corallien', null, null, '/ecogestes/recifs', false),
-    (565, 31, 'IMAGE', 'ecogestures.ecogestures.0.image', null, 104, 'Tortue', null, false),
     (566, 31, 'TEXT', 'next.name', 'Espèces envahissantes', null, null, null, false),
     (567, 31, 'IMAGE', 'next.image', null, 104, 'Espèces envahissantes', null, false),
     (568, 31, 'LINK', 'next.link', 'Espèces envahissantes', null, null, '/indicateurs/especes-envahissantes', false);

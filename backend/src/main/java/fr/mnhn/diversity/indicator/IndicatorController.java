@@ -3,10 +3,14 @@ package fr.mnhn.diversity.indicator;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
+import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.Ecogesture;
+import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -30,13 +34,16 @@ public class IndicatorController {
     private final PageRepository pageRepository;
     private final PageService pageService;
     private final IndicatorRepository indicatorRepository;
+    private final EcogestureRepository ecogestureRepository;
 
     public IndicatorController(PageRepository pageRepository,
                                PageService pageService,
-                               IndicatorRepository indicatorRepository) {
+                               IndicatorRepository indicatorRepository,
+                               EcogestureRepository ecogestureRepository) {
         this.pageRepository = pageRepository;
         this.pageService = pageService;
         this.indicatorRepository = indicatorRepository;
+        this.ecogestureRepository = ecogestureRepository;
     }
 
     @GetMapping()
@@ -73,11 +80,14 @@ public class IndicatorController {
         IndicatorValue outremerIndicatorValue = valuesByTerritory.get(Territory.OUTRE_MER);
         List<TerritoryCard> territoryCards = getTerritoryCards(valuesByTerritory);
 
+        List<EcogestureCard> ecogestureCards = getEcogestureCards(indicator);
+
         return new ModelAndView("indicator/indicator",
                                 Map.of(
                                     "page", pageContent,
                                     "outremerIndicatorValue", outremerIndicatorValue,
-                                    "territoryCards", territoryCards
+                                    "territoryCards", territoryCards,
+                                    "ecogestureCards", ecogestureCards
                                 ));
     }
 
@@ -121,7 +131,25 @@ public class IndicatorController {
                 .collect(Collectors.toList());
     }
 
+    private List<EcogestureCard> getEcogestureCards(Indicator indicator) {
+        return ecogestureRepository.findByIndicator(indicator.getId())
+            .stream()
+            .map(ecogesture ->
+                    pageRepository.findByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
+                                  .map(page ->
+                                           new EcogestureCard(
+                                              ecogesture,
+                                              pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page)
+                                          )
+                                  )
+            )
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toList());
+    }
+
     private static class IndicatorCard {
+
         private final Indicator indicator;
         private final PageContent page;
         private final IndicatorValue indicatorValue;
@@ -169,4 +197,21 @@ public class IndicatorController {
         }
     }
 
+    private static class EcogestureCard {
+        private final Ecogesture ecogesture;
+        private final PageContent page;
+
+        public EcogestureCard(Ecogesture ecogesture, PageContent page) {
+            this.ecogesture = ecogesture;
+            this.page = page;
+        }
+
+        public Ecogesture getEcogesture() {
+            return ecogesture;
+        }
+
+        public PageContent getPage() {
+            return page;
+        }
+    }
 }
