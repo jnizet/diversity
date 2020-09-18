@@ -37,7 +37,33 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Operation deleteAll = deleteAllFrom("page_element", "page", "image");
+        Operation deleteAll = deleteAllFrom("page_element", "page", "image", "indicator_value", "indicator_category", "indicator", "category");
+
+        Operation categories =
+            insertInto("category")
+                .columns("id", "name")
+                .values(1, "Écosystèmes")
+                .values(2, "Espèces menacées")
+                .build();
+
+        Operation indicators =
+            insertInto("indicator")
+                .columns("id", "biom_id")
+                .values(1, "especes-envahissantes")
+                .build();
+
+        Operation indicatorCategories =
+            insertInto("indicator_category")
+                .columns("indicator_id", "category_id")
+                .values(1, 1)
+                .build();
+
+        Operation indicatorValues =
+            insertInto("indicator_value")
+                .columns("id", "indicator_id", "territory", "value", "unit")
+                .values(1, 1, "OUTRE_MER", 64, null)
+                .values(2, 1, "REUNION", 40, null)
+                .build();
 
         Long home = 1L;
         Long about = 2L;
@@ -45,6 +71,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long ecogestureHome = 4L;
         Long reunion = 10L;
         Long stPierreEtMiquelon = 11L;
+        Long indicatorHome = 29L;
         Long especesEnvahissantes = 30L;
         Operation pages =
             insertInto("page")
@@ -55,6 +82,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(ecogestureHome, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), "Écogestes")
                 .values(reunion, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "La Réunion")
                 .values(stPierreEtMiquelon, "st-pierre-et-miquelon", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Saint Pierre et Miquelon")
+                .values(indicatorHome, IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), "Indicateurs")
                 .values(especesEnvahissantes, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes")
                 .build();
 
@@ -77,6 +105,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(32L, png, "comprendre.png")
                 .values(33L, png, "vignette1.png")
                 .values(34L, png, "vignette2.png")
+                .values(40L, png, "indicateurs.png")
                 .values(91L, png, "ecogestes.png")
                 .values(101L, png, "interest1.png")
                 .values(102L, png, "interest2.png")
@@ -222,6 +251,16 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(LINK, "other.link", "Portail local de l'environnement", null, null, "https://oeil.nc", false)
                 .build();
 
+        Operation indicatorHomeElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", indicatorHome)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "title", "Compter la biodiversité, oui mais comment ?", null, null, null, true)
+                .values(TEXT, "presentation", "Lorem ipsum dolor", null, null, null, false)
+                .values(IMAGE, "image", null, 40, "Indicateurs", null, false)
+                .build();
+
         Operation especesEnvahissantesElements =
             insertInto("page_element")
                 .withDefaultValue("page_id", especesEnvahissantes)
@@ -253,6 +292,10 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
         new DbSetup(destination, sequenceOf(
             deleteAll,
+            categories,
+            indicators,
+            indicatorCategories,
+            indicatorValues,
             images,
             pages,
             homeElements,
@@ -261,6 +304,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             ecogestureHomeElements,
             reunionElements,
             stPierreEtMiquelonElements,
+            indicatorHomeElements,
             especesEnvahissantesElements
         )).launch();
     }

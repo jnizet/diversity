@@ -7,6 +7,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import fr.mnhn.diversity.indicator.api.IndicatorData;
+import fr.mnhn.diversity.indicator.api.IndicatorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;

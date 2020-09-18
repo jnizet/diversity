@@ -4,10 +4,12 @@ import static com.ninja_squad.dbsetup.Operations.*;
 import static fr.mnhn.diversity.common.testing.Tracker.TRACKER;
 import static fr.mnhn.diversity.territory.Territory.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.sql.DataSource;
 
 import com.ninja_squad.dbsetup.DbSetup;
@@ -117,5 +119,18 @@ class IndicatorRepositoryTest {
 
         indicator = new Indicator(1L, "indicator2");
         assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isFalse();
+    }
+
+    @Test
+    void shouldGetValuesForIndicatorsAndTerritory() {
+        TRACKER.skipNextLaunch();
+        Indicator indicator2 = new Indicator(1L, "indicator2");
+        Indicator indicator3 = new Indicator(3L, "indicator3");
+        Set<Indicator> indicators = Set.of(indicator3, indicator2);
+
+        Map<Indicator, IndicatorValue> result = repository.getValuesForIndicatorsAndTerritory(indicators, OUTRE_MER);
+        assertThat(result).containsOnly(
+            entry(indicator3, new IndicatorValue(10, "%"))
+        );
     }
 }

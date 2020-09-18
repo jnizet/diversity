@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.indicator;
+package fr.mnhn.diversity.indicator.api;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

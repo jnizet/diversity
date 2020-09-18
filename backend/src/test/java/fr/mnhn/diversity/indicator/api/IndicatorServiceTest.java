@@ -1,10 +1,11 @@
-package fr.mnhn.diversity.indicator;
+package fr.mnhn.diversity.indicator.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.util.Map;
 
+import fr.mnhn.diversity.indicator.IndicatorValue;
 import fr.mnhn.diversity.territory.Territory;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -19,7 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
- * Tests for {@link fr.mnhn.diversity.indicator.IndicatorService}
+ * Tests for {@link IndicatorService}
  * @author JB Nizet
  */
 @RestClientTest

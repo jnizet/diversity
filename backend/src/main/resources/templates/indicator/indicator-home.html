@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::meta%og}, ~{::main})}">
+  <head>
+    <title th:text="${page.title}">Écogestes</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
+    <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.text}" />
+    <meta th:ref="og" property="og:image" th:attr="content=@{/images/{imageId}/image(imageId=${page.content.image.imageId})}" />
+  </head>
+
+  <body>
+    <main th:object="${page.content}">
+      <h1 th:text="*{title.text}">Title</h1>
+      <p th:text="*{presentation.text}">Presentation</p>
+      <img th:src="@{/images/{imageId}/image(imageId=*{image.imageId})}" th:alt="*{image.alt}" />
+
+      <div style="display: flex">
+        <div id="categories">
+          <div>Tout</div>
+          <div th:each="category: ${categories}" th:text="${category.name}"></div>
+        </div>
+
+        <div id="indicators" style="flex-grow: 1">
+          <div th:each="card: ${cards}">
+            <p th:text="${#indicators.formatValue(card.indicatorValue)}"></p>
+            <p th:text="${card.page.content.presentation.description.text}">Description de l'indicateur</p>
+            <img
+              th:src="@{/images/{imageId}/image(imageId=${card.page.content.presentation.image.imageId})}"
+              th:alt="${card.page.content.presentation.image.alt}"
+            />
+            <a th:href="@{/indicateurs/{indicatorName}(indicatorName=${card.indicator.biomId})}">En savoir plus</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

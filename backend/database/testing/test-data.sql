@@ -2,14 +2,23 @@ delete from page_element;
 delete from page;
 delete from image;
 delete from indicator_value;
+delete from indicator_category;
 delete from indicator;
+delete from category;
 
 insert into indicator (id, biom_id) values
-    (1, 'indicator1');
+    (1, 'especes-envahissantes');
 
 insert into indicator_value (id, indicator_id, territory, value, unit) values
-    (1, 1, 'REUNION', 23.4, 'km');
+    (1, 1, 'OUTRE_MER', 64, null),
+    (2, 1, 'REUNION', 40, null);
 
+insert into category (id, name) values
+    (1, 'Écosystèmes'),
+    (2, 'Espèces menacées');
+
+insert into indicator_category (indicator_id, category_id) values
+    (1, 1);
 
 insert into image (id, content_type, original_file_name) values
     (1, 'image/png', 'carousel1.png'),
@@ -27,6 +36,7 @@ insert into image (id, content_type, original_file_name) values
     (32, 'image/png', 'comprendre.png'),
     (33, 'image/png', 'vignette1.png'),
     (34, 'image/png', 'vignette2.png'),
+    (40, 'image/png', 'indicateurs.png'),
     (91, 'image/png', 'ecogestes.png'),
     (101, 'image/png', 'interest1.png'),
     (102, 'image/png', 'interest2.png'),
@@ -45,7 +55,8 @@ insert into page (id, name, model_name, title) values
    (4, 'EcoGestureHome', 'ecogestures', 'Écogestes'),
    (10, 'reunion', 'territory', 'La Réunion'),
    (11, 'st-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
-(30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes');
+   (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
+   (30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href, title) values
 --     Home
@@ -162,6 +173,10 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (330, 11, 'IMAGE', 'other.image', null, 105, 'Autre territoire', null, false),
     (331, 11, 'LINK', 'other.link', 'Portail local de l''environnement', null, null, 'https://oeil.nc', false),
 
+--     Indicator home
+    (400, 29, 'TEXT', 'title', 'Compter la biodiversité, oui mais comment ?', null, null, null, true),
+    (401, 29, 'TEXT', 'presentation', 'Lorem ipsum dolor', null, null, null, false),
+    (402, 29, 'IMAGE', 'image', null, 40, 'Indicateurs', null, false),
 
 --     Indicator
 --     Espèces envahissantes

@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.indicator;
+package fr.mnhn.diversity.indicator.api;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.mnhn.diversity.indicator.IndicatorValue;
 import fr.mnhn.diversity.territory.Territory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,6 @@ package fr.mnhn.diversity.ecogesture;
 import fr.mnhn.diversity.model.meta.ListElement;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
-import fr.mnhn.diversity.model.meta.TextElement;
 
 /**
  * The model for eco-gestures.
@@ -59,7 +58,7 @@ public final class EcoGestureModel {
     public static final PageModel ECO_GESTURE_HOME_PAGE_MODEL =
         PageModel.builder("ecogestures")
                  .text("title", "Titre de la page")
-                 .text(TextElement.builder("presentation").describedAs("Présentation des écogestes").multiLine())
+                 .multiLineText("presentation", "Présentation des écogestes")
                  .image("image", "Illustration")
                  .build();
     public static final String ECO_GESTURE_HOME_PAGE_NAME = "EcoGestureHome";

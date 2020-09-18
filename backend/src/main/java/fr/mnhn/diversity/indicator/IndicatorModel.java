@@ -8,6 +8,7 @@ import fr.mnhn.diversity.model.meta.SectionElement;
  * The model for the indicator page
  */
 public final class IndicatorModel {
+
     public static final PageModel INDICATOR_PAGE_MODEL =
             PageModel.builder("indicator")
                      .describedAs("Indicator page")
@@ -70,6 +71,19 @@ public final class IndicatorModel {
                                             .link("link", "Lien vers l'indicateur suivant")
                      )
                      .build();
+
+    /**
+     * The model of the indicator home page. To display this page, this model is not sufficient: it also displays
+     * indicator cards and their categories, and these cards are created using the {@link #INDICATOR_PAGE_MODEL}
+     */
+    public static final PageModel INDICATOR_HOME_PAGE_MODEL =
+        // TODO this model is far from being complete. But we will wait until we have the actual page to decide what to add
+        PageModel.builder("indicators")
+                 .text("title", "Titre de la page")
+                 .multiLineText("presentation", "Présentation des indicateurs")
+                 .image("image", "Illustration")
+                 .build();
+    public static final String INDICATOR_HOME_PAGE_NAME = "IndicatorHome";
 
     private IndicatorModel() {
     }

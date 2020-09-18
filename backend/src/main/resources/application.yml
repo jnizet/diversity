@@ -37,6 +37,9 @@ spring:
         max-age: '365d'
   mail:
     host: localhost
+  mvc:
+    locale: fr_FR
+    locale-resolver: fixed
 
 ---
 spring:

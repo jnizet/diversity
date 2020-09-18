@@ -25,7 +25,7 @@ create table indicator_value (
    indicator_id BIGINT,
    territory    VARCHAR not null,
    value        DOUBLE PRECISION not null,
-   unit         VARCHAR not null,
+   unit         VARCHAR,
    constraint indicator_id_fk foreign key (indicator_id) references indicator(id)
 );
 

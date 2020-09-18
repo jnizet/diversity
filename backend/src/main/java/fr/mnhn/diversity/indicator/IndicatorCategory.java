@@ -3,7 +3,7 @@ package fr.mnhn.diversity.indicator;
 import java.util.Objects;
 
 /**
- * A category of an {@link IndicatorData}, as stored in the database
+ * A category of an {@link Indicator}, as stored in the database
  */
 public final class IndicatorCategory {
     private final Long id;

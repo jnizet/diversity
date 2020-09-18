@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import fr.mnhn.diversity.indicator.api.IndicatorService;
 import fr.mnhn.diversity.territory.Territory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

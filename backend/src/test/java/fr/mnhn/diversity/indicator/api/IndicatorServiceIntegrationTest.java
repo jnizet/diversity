@@ -1,9 +1,10 @@
-package fr.mnhn.diversity.indicator;
+package fr.mnhn.diversity.indicator.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
+import fr.mnhn.diversity.indicator.IndicatorValue;
 import fr.mnhn.diversity.territory.Territory;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

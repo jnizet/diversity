@@ -1,11 +1,13 @@
 package fr.mnhn.diversity.indicator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.territory.Territory;
@@ -120,5 +122,32 @@ public class IndicatorRepository {
                     }
                     return new IndicatorValues(values);
                 });
+    }
+
+    /**
+     * Gets all the values per territory for an indicator
+     */
+    public Map<Indicator, IndicatorValue> getValuesForIndicatorsAndTerritory(Collection<Indicator> indicators, Territory territory) {
+        if (indicators.isEmpty()) {
+            return Map.of();
+        }
+
+        Map<Long, Indicator> indicatorsById =
+            indicators.stream().collect(Collectors.toMap(Indicator::getId, Function.identity()));
+
+        return jdbcTemplate.query(
+            "select indicator_id, value, unit from indicator_value" +
+                " where indicator_id in (:indicatorIds) and territory = :territory",
+            Map.of("indicatorIds", indicatorsById.keySet(),
+                   "territory", territory.name()),
+            (rs) -> {
+                Map<Indicator, IndicatorValue> result = new HashMap<>();
+                while (rs.next()) {
+                    Long indicatorId = rs.getLong("indicator_id");
+                    IndicatorValue value = new IndicatorValue(rs.getDouble("value"), rs.getString("unit"));
+                    result.put(indicatorsById.get(indicatorId), value);
+                }
+                return result;
+            });
     }
 }
