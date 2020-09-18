@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "format": "prettier --write \"src/**/*.+(ts|js|json|html|css)\"",
+    "format": "prettier --write \"src/**/*.+(ts|js|json|html|scss)\"",
     "format:check": "prettier --check \"src/**/*.+(ts|js|json|html|scss)\" > build/prettier-result.txt 2>&1",
     "build": "webpack --config webpack.dev.js",
     "build:prod": "webpack --config webpack.prod.js",

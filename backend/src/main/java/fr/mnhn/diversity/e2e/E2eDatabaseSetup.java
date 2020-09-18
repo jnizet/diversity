@@ -44,26 +44,33 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .columns("id", "name")
                 .values(1, "Écosystèmes")
                 .values(2, "Espèces menacées")
+                .values(3, "Végétation")
                 .build();
 
         Operation indicators =
             insertInto("indicator")
                 .columns("id", "biom_id")
                 .values(1, "especes-envahissantes")
+                .values(2, "deforestation")
                 .build();
 
         Operation indicatorCategories =
             insertInto("indicator_category")
                 .columns("indicator_id", "category_id")
                 .values(1, 1)
+                .values(2, 1)
+                .values(2, 3)
                 .build();
 
         Operation indicatorValues =
             insertInto("indicator_value")
                 .columns("id", "indicator_id", "territory", "value", "unit")
-                .values(1, 1, "OUTRE_MER", 64, null)
-                .values(2, 1, "REUNION", 40, null)
-                .values(3, 1, "GUADELOUPE", 14, null)
+                .values(11, 1, "OUTRE_MER", 64, null)
+                .values(12, 1, "REUNION", 40, null)
+                .values(13, 1, "GUADELOUPE", 14, null)
+                .values(21, 2, "OUTRE_MER", 5, "%")
+                .values(22, 2, "REUNION", 7, "%")
+                .values(23, 2, "SAINT_PIERRE_ET_MIQUELON", 3, "%")
                 .build();
 
         Long home = 1L;
@@ -74,6 +81,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long stPierreEtMiquelon = 11L;
         Long indicatorHome = 29L;
         Long especesEnvahissantes = 30L;
+        Long deforestation = 31L;
         Operation pages =
             insertInto("page")
                 .columns("id", "name", "model_name", "title")
@@ -85,6 +93,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(stPierreEtMiquelon, "st-pierre-et-miquelon", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Saint Pierre et Miquelon")
                 .values(indicatorHome, IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), "Indicateurs")
                 .values(especesEnvahissantes, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes")
+                .values(deforestation, "deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation")
                 .build();
 
         String png = MediaType.IMAGE_PNG_VALUE;
@@ -266,25 +275,50 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             insertInto("page_element")
                 .withDefaultValue("page_id", especesEnvahissantes)
                 .withGeneratedValue("id", elementIdGenerator)
-                .columns("type", "key", "text", "image_id", "alt", "href")
-                .values(TEXT, "name", "Espèces envahissantes", null, null, null)
-                .values(TEXT, "presentation.category", "Espèces", null, null, null)
-                .values(TEXT, "presentation.description", "espèces sur les 100...", null, null, null)
-                .values(IMAGE, "presentation.image", null, 104L, "Illustration", null)
-                .values(TEXT, "understand.title", "Comprendre", null, null, null)
-                .values(IMAGE, "understand.image", null, 104L, "Espèces envahissantes", null)
-                .values(TEXT, "understand.sections.0.title", "Raison 1", null, null, null)
-                .values(TEXT, "understand.sections.0.description", "Comprendre raison 1", null, null, null)
-                .values(TEXT, "indicators.title", "Indicateurs", null, null, null)
-                .values(TEXT, "ecogestures.title", "Écogestes", null, null, null)
-                .values(TEXT, "ecogestures.ecogestures.0.name", "Protégeons les récifs coralliens", null, null, null)
-                .values(TEXT, "ecogestures.ecogestures.0.category", "Loisirs", null, null, null)
-                .values(TEXT, "ecogestures.ecogestures.0.description", "Protégeons les récifs corallien...", null, null, null)
-                .values(IMAGE, "ecogestures.ecogestures.0.image", null, 108L, "Tortue", null)
-                .values(LINK, "ecogestures.ecogestures.0.link", "/ecogestes/recifs", null, null, "/indicateurs/surfaces-forets")
-                .values(TEXT, "next.name", "Surfaces des forêts", null, null, null)
-                .values(IMAGE, "next.image", null, 105L, "Surfaces des forêts", null)
-                .values(LINK, "next.link", "Surfaces des forêts", null, null, "/indicateurs/surfaces-forets")
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "name", "Espèces envahissantes", null, null, null, true)
+                .values(TEXT, "presentation.description", "espèces sur les 100...", null, null, null, false)
+                .values(IMAGE, "presentation.image", null, 104L, "Illustration", null, false)
+                .values(TEXT, "understand.title", "Comprendre", null, null, null, false)
+                .values(IMAGE, "understand.image", null, 104L, "Espèces envahissantes", null, false)
+                .values(TEXT, "understand.sections.0.title", "Raison 1", null, null, null, false)
+                .values(TEXT, "understand.sections.0.description", "Comprendre raison 1", null, null, null, false)
+                .values(TEXT, "indicators.title", "Indicateurs", null, null, null, false)
+                .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
+                .values(TEXT, "ecogestures.ecogestures.0.name", "Protégeons les récifs coralliens", null, null, null, false)
+                .values(TEXT, "ecogestures.ecogestures.0.category", "Loisirs", null, null, null, false)
+                .values(TEXT, "ecogestures.ecogestures.0.description", "Protégeons les récifs corallien...", null, null, null, false)
+                .values(IMAGE, "ecogestures.ecogestures.0.image", null, 108L, "Tortue", null, false)
+                .values(LINK, "ecogestures.ecogestures.0.link", "/ecogestes/recifs", null, null, "/indicateurs/surfaces-forets", false)
+                .values(TEXT, "next.name", "Surfaces des forêts", null, null, null, false)
+                .values(IMAGE, "next.image", null, 105L, "Surfaces des forêts", null, false)
+                .values(LINK, "next.link", "Surfaces des forêts", null, null, "/indicateurs/surfaces-forets", false)
+                .build();
+
+        Operation deforestationElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", deforestation)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "name",  "Déforestation", null, null, null, true)
+                .values(TEXT, "presentation.description",  "de la forêt disparaît...", null, null, null, false)
+                .values(IMAGE, "presentation.image",  null, 105, "Forêt", null, false)
+                .values(TEXT, "understand.title",  "Comprendre", null, null, null, false)
+                .values(IMAGE, "understand.image",  null, 105, "Forêt", null, false)
+                .values(TEXT, "understand.sections.0.title",  "Raison 1", null, null, null, false)
+                .values(TEXT, "understand.sections.0.description",  "Explication raison 1", null, null, null, false)
+                .values(TEXT, "understand.sections.1.title",  "Raison 2", null, null, null, false)
+                .values(TEXT, "understand.sections.1.description",  "Explication raison 2", null, null, null, false)
+                .values(TEXT, "indicators.title",  "Déforestation par territoire", null, null, null, false)
+                .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
+                .values(TEXT, "ecogestures.ecogestures.0.name", "Protégeons les récifs corallien", null, null, null, false)
+                .values(TEXT, "ecogestures.ecogestures.0.category", "Loisirs", null, null, null, false)
+                .values(TEXT, "ecogestures.ecogestures.0.description", "Protégeons les récifs corallien...", null, null, null, false)
+                .values(LINK, "ecogestures.ecogestures.0.link", "Protégeons les récifs corallien", null, null, "/ecogestes/recifs", false)
+                .values(IMAGE, "ecogestures.ecogestures.0.image", null, 104, "Tortue", null, false)
+                .values(TEXT, "next.name", "Espèces envahissantes", null, null, null, false)
+                .values(IMAGE, "next.image", null, 104, "Espèces envahissantes", null, false)
+                .values(LINK, "next.link", "Espèces envahissantes", null, null, "/indicateurs/especes-envahissantes", false)
                 .build();
 
         new DbSetup(destination, sequenceOf(
@@ -302,7 +336,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             reunionElements,
             stPierreEtMiquelonElements,
             indicatorHomeElements,
-            especesEnvahissantesElements
+            especesEnvahissantesElements,
+            deforestationElements
         )).launch();
     }
 }

@@ -16,14 +16,21 @@
       <p th:text="*{presentation.text}">Presentation</p>
       <img th:src="@{/images/{imageId}/image(imageId=*{image.imageId})}" th:alt="*{image.alt}" />
 
-      <div style="display: flex">
+      <div style="display: flex" data-controller="indicators">
         <div id="categories">
-          <div>Tout</div>
-          <div th:each="category: ${categories}" th:text="${category.name}"></div>
+          <div class="category selected" data-target="indicators.all" data-action="click->indicators#allClicked">Tout</div>
+          <div
+            class="category"
+            th:each="category: ${categories}"
+            th:text="${category.name}"
+            data-target="indicators.category"
+            data-action="click->indicators#categoryClicked"
+            th:attr="data-id=${category.id}"
+          ></div>
         </div>
 
         <div id="indicators" style="flex-grow: 1">
-          <div th:each="card: ${cards}">
+          <div th:each="card: ${cards}" data-target="indicators.indicator" th:attr="data-categories=${card.categoryIdsAsJsonArray}">
             <p th:text="${#indicators.formatValue(card.indicatorValue)}"></p>
             <p th:text="${card.page.content.presentation.description.text}">Description de l'indicateur</p>
             <img

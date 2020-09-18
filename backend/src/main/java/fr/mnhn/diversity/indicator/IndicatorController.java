@@ -146,6 +146,10 @@ public class IndicatorController {
         public IndicatorValue getIndicatorValue() {
             return indicatorValue;
         }
+
+        public String getCategoryIdsAsJsonArray() {
+            return this.indicator.getCategories().stream().map(category -> category.getId().toString()).collect(Collectors.joining(",", "[", "]"));
+        }
     }
 
     private static class TerritoryCard {

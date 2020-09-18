@@ -18,4 +18,40 @@ describe('Indicator home', () => {
     cy.contains('En savoir plus').click();
     cy.get('h1').should('contain', 'Espèces envahissantes');
   });
+
+  it('should filter indicators by categories', () => {
+    cy.visit('/indicateurs');
+
+    // initially, "All" is selected, categories are not deselected, and all indicators are visible
+    cy.contains('Tout').should('have.class', 'selected');
+    cy.contains('Écosystèmes').should('not.have.class', 'selected');
+    cy.contains('Végétation').should('not.have.class', 'selected');
+    cy.contains('espèces sur les 100').should('be.visible');
+    cy.contains('de la forêt disparaît').should('be.visible');
+
+    // click "Végétation": it becomes selected
+    cy.contains('Végétation').click();
+    cy.contains('Tout').should('not.have.class', 'selected');
+    cy.contains('Écosystèmes').should('not.have.class', 'selected');
+    cy.contains('Végétation').should('have.class', 'selected');
+    cy.contains('espèces sur les 100').should('not.be.visible');
+    cy.contains('de la forêt disparaît').should('be.visible');
+
+    // click "Végétation" again: it becomes not selected
+    cy.contains('Végétation').click();
+    cy.contains('Tout').should('not.have.class', 'selected');
+    cy.contains('Écosystèmes').should('not.have.class', 'selected');
+    cy.contains('Végétation').should('not.have.class', 'selected');
+    cy.contains('espèces sur les 100').should('not.be.visible');
+    cy.contains('de la forêt disparaît').should('not.be.visible');
+
+    // click "Végétation" and "Écosystèmes": since all categories are selected, "All" should become selected
+    cy.contains('Végétation').click();
+    cy.contains('Écosystèmes').click();
+    cy.contains('Tout').should('have.class', 'selected');
+    cy.contains('Écosystèmes').should('not.have.class', 'selected');
+    cy.contains('Végétation').should('not.have.class', 'selected');
+    cy.contains('espèces sur les 100').should('be.visible');
+    cy.contains('de la forêt disparaît').should('be.visible');
+  });
 });

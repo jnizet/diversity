@@ -7,19 +7,26 @@ delete from indicator;
 delete from category;
 
 insert into indicator (id, biom_id) values
-    (1, 'especes-envahissantes');
+    (1, 'especes-envahissantes'),
+    (2, 'deforestation');
 
 insert into indicator_value (id, indicator_id, territory, value, unit) values
-    (1, 1, 'OUTRE_MER', 64, null),
-    (2, 1, 'REUNION', 40, null),
-    (3, 1, 'GUADELOUPE', 14, null);
+    (11, 1, 'OUTRE_MER', 64, null),
+    (12, 1, 'REUNION', 40, null),
+    (13, 1, 'GUADELOUPE', 14, null),
+    (21, 2, 'OUTRE_MER', 5, '%'),
+    (22, 2, 'REUNION', 7, '%'),
+    (23, 2, 'SAINT_PIERRE_ET_MIQUELON', 3, '%');
 
 insert into category (id, name) values
     (1, 'Écosystèmes'),
-    (2, 'Espèces menacées');
+    (2, 'Espèces menacées'),
+    (3, 'Végétation');
 
 insert into indicator_category (indicator_id, category_id) values
-    (1, 1);
+    (1, 1),
+    (2, 1),
+    (2, 3);
 
 insert into image (id, content_type, original_file_name) values
     (1, 'image/png', 'carousel1.png'),
@@ -57,7 +64,8 @@ insert into page (id, name, model_name, title) values
    (10, 'reunion', 'territory', 'La Réunion'),
    (11, 'st-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
    (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
-   (30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes');
+   (30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes'),
+   (31, 'deforestation', 'indicator', 'Déforestation');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href, title) values
 --     Home
@@ -199,7 +207,29 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (523, 30, 'IMAGE', 'ecogestures.ecogestures.0.image', null, 104, 'Tortue', null, false),
     (524, 30, 'TEXT', 'next.name', 'Surfaces des forêts', null, null, null, false),
     (525, 30, 'IMAGE', 'next.image', null, 105, 'Surfaces des forêts', null, false),
-    (526, 30, 'LINK', 'next.link', 'Surfaces des forêts', null, null, '/indicateurs/surface-forêts', false);
+    (526, 30, 'LINK', 'next.link', 'Déforestation', null, null, '/indicateurs/deforestation', false),
+
+--     Indicator
+--     Déforestation
+    (550, 31, 'TEXT', 'name',  'Déforestation', null, null, null, true),
+    (551, 31, 'TEXT', 'presentation.description',  'de la forêt disparaît...', null, null, null, false),
+    (552, 31, 'IMAGE', 'presentation.image',  null, 105, 'Forêt', null, false),
+    (553, 31, 'TEXT', 'understand.title',  'Comprendre', null, null, null, false),
+    (554, 31, 'IMAGE', 'understand.image',  null, 105, 'Forêt', null, false),
+    (555, 31, 'TEXT', 'understand.sections.0.title',  'Raison 1', null, null, null, false),
+    (556, 31, 'TEXT', 'understand.sections.0.description',  'Explication raison 1', null, null, null, false),
+    (557, 31, 'TEXT', 'understand.sections.1.title',  'Raison 2', null, null, null, false),
+    (558, 31, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null, false),
+    (559, 31, 'TEXT', 'indicators.title',  'Déforestation par territoire', null, null, null, false),
+    (560, 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
+    (561, 31, 'TEXT', 'ecogestures.ecogestures.0.name', 'Protégeons les récifs corallien', null, null, null, false),
+    (562, 31, 'TEXT', 'ecogestures.ecogestures.0.category', 'Loisirs', null, null, null, false),
+    (563, 31, 'TEXT', 'ecogestures.ecogestures.0.description', 'Protégeons les récifs corallien...', null, null, null, false),
+    (564, 31, 'LINK', 'ecogestures.ecogestures.0.link', 'Protégeons les récifs corallien', null, null, '/ecogestes/recifs', false),
+    (565, 31, 'IMAGE', 'ecogestures.ecogestures.0.image', null, 104, 'Tortue', null, false),
+    (566, 31, 'TEXT', 'next.name', 'Espèces envahissantes', null, null, null, false),
+    (567, 31, 'IMAGE', 'next.image', null, 104, 'Espèces envahissantes', null, false),
+    (568, 31, 'LINK', 'next.link', 'Espèces envahissantes', null, null, '/indicateurs/especes-envahissantes', false);
 
 
 commit;

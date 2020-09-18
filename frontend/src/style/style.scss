@@ -5,3 +5,11 @@ html {
 .d-none {
   display: none !important;
 }
+
+.category {
+  margin: 0.5rem 0;
+  border: 1px solid lightgray;
+  &.selected {
+    background-color: lightgray;
+  }
+}
