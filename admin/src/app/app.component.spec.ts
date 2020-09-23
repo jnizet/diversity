@@ -4,14 +4,25 @@ import { ComponentTester } from 'ngx-speculoos';
 import { RouterOutlet } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ToastsComponent } from './toasts/toasts.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 class AppComponentTester extends ComponentTester<AppComponent> {
   constructor() {
     super(AppComponent);
   }
 
+  get navbar() {
+    return this.debugElement.query(By.directive(NavbarComponent));
+  }
+
   get routerOutlet() {
     return this.debugElement.query(By.directive(RouterOutlet));
+  }
+
+  get toasts() {
+    return this.debugElement.query(By.directive(ToastsComponent));
   }
 }
 
@@ -20,15 +31,23 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [RouterTestingModule]
+      declarations: [AppComponent, NavbarComponent, ToastsComponent],
+      imports: [RouterTestingModule, FontAwesomeModule]
     });
 
     tester = new AppComponentTester();
     tester.detectChanges();
   });
 
+  it('should have a navbar', () => {
+    expect(tester.navbar).not.toBeNull();
+  });
+
   it('should have a router outlet', () => {
     expect(tester.routerOutlet).not.toBeNull();
+  });
+
+  it('should have toasts', () => {
+    expect(tester.toasts).not.toBeNull();
   });
 });

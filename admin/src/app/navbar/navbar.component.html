@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark py-0">
+  <span class="navbar-brand">
+    <img src="assets/logo.png" alt="Logo" />
+  </span>
+  <button
+    class="navbar-toggler"
+    type="button"
+    [attr.aria-expanded]="!collapsed"
+    [attr.aria-label]="'Afficher/maquer la navigation'"
+    (click)="collapsed = !collapsed"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" [class.show]="!collapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" id="navbar-indicator-categories">
+        <a class="nav-link" routerLink="/indicator-categories" (click)="collapsed = true">
+          <fa-icon [icon]="indicatorCategoriesIcon" class="mr-1"></fa-icon>
+          <span>Catégories des indicateurs</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -128,13 +128,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "biom",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "biom",
       "kebab-case"
     ],
     "ban": [
