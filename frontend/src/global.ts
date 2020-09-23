@@ -1,4 +1,5 @@
 import { TweenMax, TweenLite } from 'gsap';
+import $ from 'jquery';
 
 export function initialize() {
   $(document).ready(function () {

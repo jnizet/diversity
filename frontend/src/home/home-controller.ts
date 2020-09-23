@@ -1,5 +1,6 @@
 import { Controller } from 'stimulus';
 import Swiper, { SwiperOptions } from 'swiper';
+import $ from 'jquery';
 
 export class HomeController extends Controller {
   connect() {
