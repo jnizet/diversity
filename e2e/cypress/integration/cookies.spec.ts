@@ -1,4 +1,4 @@
-describe('Contact', () => {
+describe('Cookies', () => {
   beforeEach(() => {
     cy.clearLocalStorage('cookies-consent');
   });

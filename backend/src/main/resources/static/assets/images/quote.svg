@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="50px" viewBox="0 0 46 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>quote</title>
+    <g id="Accueil" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-704.000000, -1452.000000)" fill="#FFCF3F" id="quote">
+            <g transform="translate(244.000000, 1452.000000)">
+                <g transform="translate(460.000000, 0.000000)">
+                    <polygon id="Rectangle" points="23.4693878 0 27.5510204 0 7.14285714 50 1.73967983e-13 50"></polygon>
+                    <polygon id="Rectangle-Copy" points="41.8693867 3.55271368e-15 45.9510193 3.55271368e-15 25.542856 50 18.3999989 50"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

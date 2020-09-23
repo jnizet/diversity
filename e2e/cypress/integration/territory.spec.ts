@@ -2,7 +2,7 @@ describe('Territory', () => {
   it('should have a page for La Réunion', () => {
     cy.visit('/territoires/reunion');
 
-    cy.get('header').should('contain', 'Layout header');
+    cy.get('header').should('contain', 'Territoires');
 
     // title
     cy.get('h1').should('contain', 'La Réunion');
@@ -26,7 +26,7 @@ describe('Territory', () => {
     cy.get('.species p').should('contain', 'Dernier rapace de la Réunion');
     cy.get('.species img').should('have.attr', 'src', '/images/104/image');
 
-    cy.get('footer').should('contain', 'Layout footer');
+    cy.get('footer').should('contain', 'Territoires');
   });
 
   it('should have a page for Saint-Pierre-Et-Miquelon', () => {

@@ -48,10 +48,6 @@ describe('Contact', () => {
     cy.get('#contact-body').type('test message');
     cy.get('#contact-send').click();
 
-    cy.get('#contact-from').should('be.disabled');
-    cy.get('#contact-body').should('be.disabled');
-    cy.get('#contact-send').should('be.disabled');
-
     cy.wait('@sendMessage');
 
     cy.get('#contact-form').should('not.be.visible');
@@ -89,10 +85,6 @@ describe('Contact', () => {
     cy.get('#contact-from').type('test@mnhn.fr');
     cy.get('#contact-body').type('test message');
     cy.get('#contact-send').click();
-
-    cy.get('#contact-from').should('be.disabled');
-    cy.get('#contact-body').should('be.disabled');
-    cy.get('#contact-send').should('be.disabled');
 
     cy.wait('@errorSendingMessage');
 

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, _, ~{::main})}">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=_, content=~{::main}, bodyClass=null)}"
+>
   <head>
     <title>Résultats de la recherche</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,7 +11,7 @@
 
   <body>
     <main>
-      <h1>Résultats de la recherche</h1>
+      <h1 style="margin-top: 500px">Résultats de la recherche</h1>
 
       <p th:if="${#lists.isEmpty(results)}">Aucun résultat</p>
       <p th:if="${#lists.size(results) == 1}">Un seul résultat trouvé</p>

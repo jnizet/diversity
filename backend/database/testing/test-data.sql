@@ -38,12 +38,13 @@ insert into indicator_ecogesture (indicator_id, ecogesture_id) values
     (2, 1);
 
 insert into image (id, content_type, original_file_name) values
-    (1, 'image/png', 'carousel1.png'),
-    (2, 'image/png', 'carousel2.png'),
-    (3, 'image/png', 'carousel3.png'),
+    (1, 'image/jpeg', 'carousel1.png'),
+    (2, 'image/jpeg', 'carousel2.png'),
+    (3, 'image/jpeg', 'carousel3.png'),
+    (300, 'image/jpeg', 'carousel4.png'),
     (4, 'image/png', 'apropos.png'),
-    (5, 'image/png', 'indicateurs.png'),
-    (6, 'image/png', 'science-participative.png'),
+    (5, 'image/jpeg', 'témoignage.jpg'),
+    (6, 'image/jpeg', 'science-participative.png'),
     (7, 'image/png', 'fond.png'),
     (8, 'image/png', 'logo1.png'),
     (9, 'image/png', 'logo2.png'),
@@ -78,21 +79,23 @@ insert into page (id, name, model_name, title) values
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href, title) values
 --     Home
-    (11, 1, 'TEXT', 'carousel.title', 'Ensemble protégeons la diversité des Outre-Mer', null, null, null, false),
+    (11, 1, 'TEXT', 'carousel.title', 'Découvrez la biodiversité des Outre-Mer', null, null, null, false),
     (12, 1, 'TEXT', 'carousel.text', 'Partez à la rencontre des espèces et des écosystèmes des territoires français d''outre-mer', null, null, null, false),
-    (13, 1, 'IMAGE', 'carousel.images.0.image', null, 1, '1', null, false),
-    (14, 1, 'IMAGE', 'carousel.images.1.image', null, 2, '2', null, false),
-    (15, 1, 'IMAGE', 'carousel.images.2.image', null, 3, '3', null, false),
+    (13, 1, 'IMAGE', 'carousel.images.0.image', null, 1, 'Chelonia mydas ©  B. Guichard', null, false),
+    (14, 1, 'IMAGE', 'carousel.images.1.image', null, 2, 'Légende n°2', null, false),
+    (15, 1, 'IMAGE', 'carousel.images.2.image', null, 3, 'Légende n°3', null, false),
+    (27, 1, 'IMAGE', 'carousel.images.3.image', null, 300, 'Légende n°4', null, false),
     (16, 1, 'TEXT', 'carousel.territoriesButton', 'Découvrir les territoires', null, null, null, false),
     (17, 1, 'TEXT', 'presentation.title', 'Le compteur de biodiversité Outre-Mer', null, null, null, false),
     (18, 1, 'TEXT', 'presentation.text', 'Les territoires d''outre-mer présentent une biodiversité particulièrement riche et variée, ...', null, null, null, false),
     (19, 1, 'IMAGE', 'presentation.image', null, 4, 'À propos', null, false),
     (20, 1, 'TEXT', 'presentation.more', 'En savoir plus', null, null, null, false),
-    (21, 1, 'TEXT', 'indicators.title', 'Une biodiversité unique et fragile, protégeons-la !', null, null, null, false),
-    (22, 1, 'TEXT', 'indicators.text', 'La conservation de la biodiversité dépend de sa connaissance ...', null, null, null, false),
-    (23, 1, 'IMAGE', 'indicators.image', null, 5, 'Indicateurs', null, false),
-    (24, 1, 'TEXT', 'science.title', 'Du « super-corail » pour sauver les récifs', null, null, null, false),
-    (25, 1, 'TEXT', 'science.text', 'Au sein de l''archipel des Seychelles le premier projet de restauration des récifs coralliens à grande échelle a débuté.', null, null, null, false),
+    (21, 1, 'TEXT', 'testimony.title', 'Une biodiversité unique et fragile, protégeons-la !', null, null, null, false),
+    (22, 1, 'TEXT', 'testimony.text', 'La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l''impactent. Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son évolution.', null, null, null, false),
+    (28, 1, 'TEXT', 'testimony.quote', 'Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l''eau, de l''air mais aussi de la qualité de vie.', null, null, null, false),
+    (23, 1, 'IMAGE', 'testimony.image', null, 5, 'Témoignage', null, false),
+    (24, 1, 'TEXT', 'science.title', 'La photo-identification de serpents de mer par un groupe de plongeuses amatrices', null, null, null, false),
+    (25, 1, 'TEXT', 'science.text', 'Surnommées les « grand-mères fantastiques », un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l''Hydrophis major, dans la baie des Citrons, au sud de Nouméa. Leurs photographies très régulières ont permis de recenser 250 individus différents de ce serpent dont on pensait la présence anecdotique.', null, null, null, false),
     (26, 1, 'IMAGE', 'science.image', null, 6, 'Science participative', null, false),
 
 --     About

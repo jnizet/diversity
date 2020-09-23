@@ -3,8 +3,8 @@ describe('About', () => {
     cy.visit('/');
     cy.contains('À propos').click();
 
-    cy.get('header').should('contain', 'Layout header');
+    cy.get('header').should('contain', 'Territoires');
     cy.get('h1').should('contain', 'Pourquoi un compteur de la biodiversité en outre-mer ?');
-    cy.get('footer').should('contain', 'Layout footer');
+    cy.get('footer').should('contain', 'Territoires');
   });
 });

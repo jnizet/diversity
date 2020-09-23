@@ -3,8 +3,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
     <form th:fragment="search" method="get" th:action="@{/recherche}" data-controller="search" style="display: inline">
-      <a id="search-toggler" role="button" href="#" data-action="search#toggle">Search</a>
+      <a id="search-toggler" role="button" href="#" data-action="search#toggle">
+        <img th:src="@{/assets/images/Search.svg}" loading="lazy" alt="" class="search-icon" />
+      </a>
       <input
+        style="margin-left: 1rem"
         name="texte"
         id="search"
         placeholder="Rechercher"

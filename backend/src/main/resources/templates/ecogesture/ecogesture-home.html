@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::meta%og}, ~{::main})}">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
+>
   <head>
     <title th:text="${page.title}">Écogestes</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

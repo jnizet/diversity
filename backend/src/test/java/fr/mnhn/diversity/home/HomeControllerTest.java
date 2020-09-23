@@ -65,10 +65,11 @@ class HomeControllerTest {
                         "text", text("presentation text"),
                         "more", text("More")
                     ),
-                    "indicators", Map.of(
-                        "title", text("Indicators"),
+                    "testimony", Map.of(
+                        "title", text("Testimony"),
                         "image", image(4L),
-                        "text", text("indicators text")
+                        "text", text("testimony text"),
+                        "quote", text("testimony quote")
                     ),
                     "science", Map.of(
                         "title", text("Science"),
@@ -86,9 +87,9 @@ class HomeControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
             .andExpect(content().string(containsString("<title>Diversité</title>")))
-            .andExpect(content().string(containsString("<h1>Hello</h1>")))
-            .andExpect(content().string(containsString("<h2>Presentation</h2>")))
-            .andExpect(content().string(containsString("<h2>Indicators</h2>")))
-            .andExpect(content().string(containsString("<h2>Science</h2>")));
+            .andExpect(content().string(containsString("Hello")))
+            .andExpect(content().string(containsString("Presentation")))
+            .andExpect(content().string(containsString("Testimony")))
+            .andExpect(content().string(containsString("Science")));
     }
 }

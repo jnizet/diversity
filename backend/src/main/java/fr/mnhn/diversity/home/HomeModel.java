@@ -27,10 +27,11 @@ public final class HomeModel {
                      .image("image", "Image affichée pour présenter le site")
                      .text("more", "Lien pour en savoir plus") // internal and thus hard-coded href
                  )
-                 .section(SectionElement.builder("indicators").describedAs("Section indicateurs")
+                 .section(SectionElement.builder("testimony").describedAs("Section témoignage")
                      .text("title", "Titre de la section")
                      .multiLineText("text", "Texte introductif")
-                     .image("image")
+                     .multiLineText("quote", "Citation")
+                     .image("image", "Témoin")
                  )
                  .section(SectionElement.builder("science").describedAs("Section sciences participatives")
                      .text("title", "Titre de la section")

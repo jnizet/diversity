@@ -29,9 +29,9 @@ describe('Search', () => {
     cy.get('#search').type('compteur biodiversité').type('{enter}');
 
     // the search page should be displayed
-    cy.get('header').should('contain', 'Layout header');
+    cy.get('header').should('contain', 'Territoires');
     cy.get('h1').should('contain', 'Résultats de la recherche');
-    cy.get('footer').should('contain', 'Layout footer');
+    cy.get('footer').should('contain', 'Territoires');
 
     // the search input should be displayed with the text pre-filled
     cy.get('#search').should('be.visible').should('have.value', 'compteur biodiversité');

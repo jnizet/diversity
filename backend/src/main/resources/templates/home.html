@@ -1,56 +1,190 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::meta%og}, ~{::main})}">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
+>
   <head>
     <title th:text="${page.title}">Accueil</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
     <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.text.text}" />
-    <meta
-      th:ref="og"
-      th:each="imageElement: ${page.content.carousel.images}"
-      property="og:image"
-      th:attr="content=@{/images/{imageId}/image(imageId=${imageElement.image.imageId})}"
-    />
+    <meta th:ref="og" property="og:image" th:attr="content=@{/assets/images/BIOM.jpg}" />
   </head>
 
   <body>
-    <main th:object="${page.content}">
-      <h1 th:text="*{carousel.title.text}">Title</h1>
-      <div th:each="imageElement : *{carousel.images}" th:object="${imageElement.image}">
-        <img th:src="@{/images/{imageId}/image(imageId=*{imageId})}" th:alt="*{alt}" />
-      </div>
-      <p th:text="*{carousel.text.text}"></p>
-      <a th:href="@{/territoires}" th:text="*{carousel.territoriesButton.text}"></a>
+    <main class="page" th:object="${page.content}">
+      <section class="section-top">
+        <div class="section-top-wrapper">
+          <div class="col-4">
+            <h1 class="section-top-title" th:text="*{carousel.title.text}">Découvrez la biodiversité des outre-mer</h1>
+            <p th:text="*{carousel.text.text}">Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer</p>
+            <a th:href="@{/territoires}" th:text="*{carousel.territoriesButton.text}" class="cta-primary yellow"
+              >découvrir les territoires</a
+            >
+          </div>
+        </div>
+        <div class="swiper-pagination">
+          <div class="bullet active"></div>
+          <div class="bullet"></div>
+          <div class="bullet"></div>
+        </div>
+        <div class="swiper-navigation">
+          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow.svg}" loading="lazy" alt="" class="swiper-next" /></div>
+        </div>
+        <div class="swiper-container swiper-top">
+          <div class="swiper-wrapper">
+            <div th:each="imageElement : *{carousel.images}" th:object="${imageElement.image}" class="swiper-slide swiper-top-slide">
+              <div class="legend-wrapper top-slide">
+                <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+                <div class="legend-text" th:text="*{alt}">Chelonia mydas ©  B. Guichard</div>
+              </div>
+              <img th:src="@{/images/{imageId}/image(imageId=*{imageId})}" loading="lazy" sizes="100vw" alt="*{alt}" class="img-full" />
+              <!-- TODO srcset -->
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <div
-        style="width: 600px; height: 400px"
-        th:attr="aria-label=*{presentation.image.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{presentation.image.imageId})} + ')'"
-      >
-        <h2 th:text="*{presentation.title.text}"></h2>
-        <p th:text="*{presentation.text.text}"></p>
-        <a th:href="@{/apropos}" th:text="*{presentation.more.text}"></a>
-      </div>
+      <section class="section-apropos">
+        <div class="section-label">à propos</div>
+        <div class="section-content">
+          <h3 class="section-title col-3" th:text="*{presentation.title.text}">Le compteur de biodiversité Outre-Mer</h3>
+          <div class="col-5">
+            <p class="apropos-paragraph" th:text="*{presentation.text.text}">
+              Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités
+              humaines.
+              <strong>La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer</strong>
+              afin que chacun, résident ou voyageur de passage, puisse s’informer et s’impliquer à son échelle pour la préservation de cette
+              biodiversité exceptionnelle.
+            </p>
+            <div class="swiper-container swiper-apropos">
+              <ul role="list" class="swiper-wrapper apropos-list w-list-unstyled">
+                <li class="swiper-slide apropos-item">
+                  <a th:href="@{/indicateurs}" class="apropos-link w-inline-block">
+                    <div class="apropos-img-wrapper"><img th:src="@{/assets/images/apropos-indicateur.svg}" loading="lazy" alt="" /></div>
+                    <div class="apropos-title-wrapper">
+                      <div class="apropos-item-title">Indicateurs</div>
+                      <div class="apropos-item-underline"></div>
+                    </div>
+                    <p class="apropos-item-text">Des chiffres clefs pour surveiller l’activité des territoires</p>
+                  </a>
+                </li>
+                <li class="swiper-slide apropos-item">
+                  <a th:href="@{/ecogestes}" class="apropos-link w-inline-block">
+                    <div class="apropos-img-wrapper"><img th:src="@{/assets/images/apropos-ecogeste.svg}" loading="lazy" alt="" /></div>
+                    <div class="apropos-title-wrapper">
+                      <div class="apropos-item-title">Éco-gestes</div>
+                      <div class="apropos-item-underline"></div>
+                    </div>
+                    <p class="apropos-item-text">Des gestes simples à mettre en place dans notre quotidien</p>
+                  </a>
+                </li>
+                <li class="swiper-slide apropos-item">
+                  <a th:href="@{/sciences-participatives}" class="apropos-link w-inline-block">
+                    <div class="apropos-img-wrapper"><img th:src="@{/assets/images/apropos-sciences.svg}" loading="lazy" alt="" /></div>
+                    <div class="apropos-title-wrapper">
+                      <div class="apropos-item-title">Sciences participatives</div>
+                      <div class="apropos-item-underline"></div>
+                    </div>
+                    <p class="apropos-item-text">Contribuez à la mise à jour de la base de donnée</p>
+                  </a>
+                </li>
+                <li class="swiper-slide apropos-item">
+                  <a th:href="@{/territoires}" class="apropos-link w-inline-block">
+                    <div class="apropos-img-wrapper"><img th:src="@{/assets/images/apropos-territoire.svg}" loading="lazy" alt="" /></div>
+                    <div class="apropos-title-wrapper">
+                      <div class="apropos-item-title">Territoires</div>
+                      <div class="apropos-item-underline"></div>
+                    </div>
+                    <p class="apropos-item-text">Participer avec les acteurs locaux à la préservation des Outres-mer</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="section-decoration-text apropos">à propos</div>
+      </section>
 
-      <div
-        style="width: 600px; height: 400px"
-        th:attr="aria-label=*{indicators.image.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{indicators.image.imageId})} + ')'"
-      >
-        <h2 th:text="*{indicators.title.text}"></h2>
-        <p th:text="*{indicators.text.text}"></p>
-      </div>
+      <section class="section-citation">
+        <img th:src="@{/assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote" />
+        <p>Les Outre-Mer regroupent 80% de la biodiversité française, réinventons notre façon de vivre et de voyager</p>
+      </section>
 
-      <div
-        style="width: 600px; height: 400px"
-        th:attr="aria-label=*{science.image.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{science.image.imageId})} + ')'"
-      >
-        <h2 th:text="*{science.title.text}"></h2>
-        <p th:text="*{science.text.text}"></p>
-      </div>
+      <section class="section-map-home">
+        <div class="section-decoration-text zoom">ZOOM</div>
+      </section>
+
+      <section class="section-text-img">
+        <div class="section-label">témoignages</div>
+        <div class="text-img-wrapper">
+          <div class="col-5">
+            <h3 class="section-title col-3" th:text="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h3>
+            <div class="left-1">
+              <img
+                th:src="@{/images/{imageId}/image(imageId=*{testimony.image.imageId})}"
+                loading="lazy"
+                sizes="100vw"
+                alt="*{testimony.image.alt}"
+                class="img-full-width margin-bottom hide-desktop"
+              />
+              <!-- todo srcset -->
+              <p th:text="*{testimony.text.text}">
+                La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l’impactent. Les
+                indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
+                évolution.
+              </p>
+              <blockquote class="block-quote-4" th:text="*{testimony.quote.text}">
+                Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l’eau, de l’air
+                mais aussi de la qualité de vie.
+              </blockquote>
+            </div>
+          </div>
+          <div class="left-1">
+            <img
+              th:src="@{/assets/images/photo_temoignage.jpg}"
+              loading="lazy"
+              sizes="(max-width: 479px) 100vw, (max-width: 767px) 73vw, (max-width: 991px) 79vw, 45vw"
+              alt=""
+              class="img-full-width only-desktop"
+            />
+            <!-- todo srcset -->
+          </div>
+        </div>
+        <div class="section-decoration-text temoignage">témoignages</div>
+      </section>
+
+      <section class="section-full-img">
+        <img
+          th:src="@{/images/{imageId}/image(imageId=*{science.image.imageId})}"
+          loading="lazy"
+          sizes="100vw"
+          alt=""
+          class="img-full anim-zoom dark"
+        />
+        <!-- todo srcset -->
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" th:text="*{science.image.alt}">Chelonia mydas ©  B. Guichard</div>
+        </div>
+        <div class="full-img-wrapper">
+          <div class="section-label">sciences participatives</div>
+          <div class="col-5">
+            <h3 class="section-title" th:text="*{science.title.text}">
+              La photo-identification de serpents de mer par un groupe de plongeuses amatrices
+            </h3>
+            <p class="col-4" th:text="*{science.text.text}">
+              Surnommées les « grand-mères fantastiques », un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de
+              l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud
+              de Nouméa. Leurs photographies très régulières ont permis de recenser 250 individus différents de ce serpent dont on pensait
+              la présence anecdotique.
+            </p>
+            <a th:href="@{/sciences-participatives}" class="cta-primary">en savoir plus</a>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>
