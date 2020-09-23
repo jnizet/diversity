@@ -2,7 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='home')}"
 >
   <head>
     <title th:text="${page.title}">Accueil</title>
@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <main class="page" th:object="${page.content}">
+    <main class="page" th:object="${page.content}" data-controller="home">
       <section class="section-top">
         <div class="section-top-wrapper">
           <div class="col-4">
@@ -144,7 +144,7 @@
           </div>
           <div class="left-1">
             <img
-              th:src="@{/assets/images/photo_temoignage.jpg}"
+              th:src="@{/images/{imageId}/image(imageId=*{testimony.image.imageId})}"
               loading="lazy"
               sizes="(max-width: 479px) 100vw, (max-width: 767px) 73vw, (max-width: 991px) 79vw, 45vw"
               alt=""
