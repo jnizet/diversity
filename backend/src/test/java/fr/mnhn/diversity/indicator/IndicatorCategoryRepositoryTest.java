@@ -1,6 +1,7 @@
 package fr.mnhn.diversity.indicator;
 
-import static com.ninja_squad.dbsetup.Operations.*;
+import static com.ninja_squad.dbsetup.Operations.insertInto;
+import static com.ninja_squad.dbsetup.Operations.sequenceOf;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.DELETE_ALL;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.TRACKER;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,17 +30,17 @@ class IndicatorCategoryRepositoryTest {
     @BeforeEach
     void prepare() {
         DbSetup dbSetup =
-                new DbSetup(
-                        new DataSourceDestination(dataSource),
-                        sequenceOf(
-                                DELETE_ALL,
-                                insertInto("category")
-                                        .columns("id", "name")
-                                        .values(1L, "category2")
-                                        .values(2L, "category1")
-                                        .build()
-                        )
-                );
+            new DbSetup(
+                new DataSourceDestination(dataSource),
+                sequenceOf(
+                    DELETE_ALL,
+                    insertInto("category")
+                        .columns("id", "name")
+                        .values(1L, "category2")
+                        .values(2L, "category1")
+                        .build()
+                )
+            );
         TRACKER.launchIfNecessary(dbSetup);
     }
 
@@ -47,20 +48,60 @@ class IndicatorCategoryRepositoryTest {
     void shouldListCategories() {
         TRACKER.skipNextLaunch();
         assertThat(repository.list()).containsExactly(
-                new IndicatorCategory(2L, "category1"),
-                new IndicatorCategory(1L, "category2")
+            new IndicatorCategory(2L, "category1"),
+            new IndicatorCategory(1L, "category2")
         );
     }
 
     @Test
     void shouldSave() {
-        repository.save(new IndicatorCategory(null, "category3"));
+        repository.create(new IndicatorCategory(null, "category3"));
 
         List<String> categoryNames = repository.list().stream().map(IndicatorCategory::getName).collect(Collectors.toList());
         assertThat(categoryNames).containsExactly(
-                "category1",
-                "category2",
-                "category3"
+            "category1",
+            "category2",
+            "category3"
         );
+    }
+
+    @Test
+    void shouldUpdate() {
+        assertThat(repository.update(new IndicatorCategory(1L, "category3"))).isEqualTo(true);
+
+        List<String> categoryNames = repository.list().stream().map(IndicatorCategory::getName).collect(Collectors.toList());
+        assertThat(categoryNames).containsExactly(
+            "category1",
+            "category3"
+        );
+
+        assertThat(repository.update(new IndicatorCategory(5L, "category3"))).isEqualTo(false);
+    }
+
+    @Test
+    void shouldFindById() {
+        TRACKER.skipNextLaunch();
+        assertThat(repository.findById(3456789L)).isEmpty();
+        assertThat(repository.findById(1L)).contains(
+            new IndicatorCategory(1L, "category2")
+        );
+    }
+
+    @Test
+    void shouldFindByName() {
+        TRACKER.skipNextLaunch();
+        assertThat(repository.findByName("something")).isEmpty();
+        assertThat(repository.findByName("category1")).contains(
+            new IndicatorCategory(2L, "category1")
+        );
+    }
+
+    @Test
+    void shouldDelete() {
+        assertThat(repository.findByName("category1")).contains(
+            new IndicatorCategory(2L, "category1")
+        );
+        repository.delete(new IndicatorCategory(2L, "category1"));
+        assertThat(repository.findByName("category1")).isEmpty();
     }
 }

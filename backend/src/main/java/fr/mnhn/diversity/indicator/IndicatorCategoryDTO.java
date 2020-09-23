@@ -3,20 +3,19 @@ package fr.mnhn.diversity.indicator;
 import java.util.Objects;
 
 /**
- * A category of an {@link Indicator}, as stored in the database
+ * DTO containing information about a category of an indicator
  */
-public final class IndicatorCategory {
+public final class IndicatorCategoryDTO {
     private final Long id;
     private final String name;
 
-    public IndicatorCategory(Long id, String name) {
+    public IndicatorCategoryDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public IndicatorCategory(String name) {
-        this.id = null;
-        this.name = name;
+    public IndicatorCategoryDTO(IndicatorCategory indicatorCategory) {
+        this(indicatorCategory.getId(), indicatorCategory.getName());
     }
 
     public Long getId() {
@@ -31,9 +30,9 @@ public final class IndicatorCategory {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IndicatorCategory category = (IndicatorCategory) o;
-        return Objects.equals(id, category.id) &&
-                Objects.equals(name, category.name);
+        IndicatorCategoryDTO that = (IndicatorCategoryDTO) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(name, that.name);
     }
 
     @Override
@@ -43,9 +42,9 @@ public final class IndicatorCategory {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "IndicatorCategoryDTO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}';
     }
 }
