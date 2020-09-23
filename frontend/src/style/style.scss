@@ -1,6 +1,8 @@
-html {
-  font-family: sans-serif; // 2
-}
+@import 'normalize.css';
+@import 'webflow.css';
+@import 'compteur-biom.webflow.css';
+@import 'swiper.css';
+@import 'global.css';
 
 .d-none {
   display: none !important;
