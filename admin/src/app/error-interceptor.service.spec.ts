@@ -36,9 +36,9 @@ describe('ErrorInterceptorService', () => {
   it('should signal functional errors', () => {
     httpClient.get('api/foo').subscribe({ error: () => {} });
 
-    http.expectOne('api/foo').flush({ functionalError: 'FOO' }, { status: 400, statusText: 'Bad Request' });
+    http.expectOne('api/foo').flush({ functionalError: 'FOO', message: 'Ce nom existe déjà' }, { status: 400, statusText: 'Bad Request' });
 
-    expect(toastService.error).toHaveBeenCalledWith('FOO');
+    expect(toastService.error).toHaveBeenCalledWith('Ce nom existe déjà');
   });
 
   it('should signal server errors', () => {

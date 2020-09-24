@@ -24,8 +24,12 @@ export class ErrorInterceptorService implements HttpInterceptor {
       const functionalError = body?.functionalError;
 
       if (status === 400 && functionalError) {
-        this.toastService.error(functionalError);
+        // The backend returns a message that we can use for the error (as we don't handle other languages than French)
+        // If that's not the case, we fallback on the functional error code.
+        const errorMessage = body?.message ?? functionalError;
+        this.toastService.error(errorMessage);
       } else {
+        // If we don't have a functional error, we display an "unexpected error" message.
         const errorMessage = body?.message ?? body;
         this.toastService.error(`Une erreur inattendue (${status}) s'est produite sur le serveur\u00a0: ${errorMessage}`);
       }

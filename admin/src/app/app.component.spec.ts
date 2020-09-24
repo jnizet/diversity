@@ -7,6 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ToastsComponent } from './toasts/toasts.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ValidationDefaultsComponent } from './validation-defaults/validation-defaults.component';
+import { ValdemortModule } from 'ngx-valdemort';
 
 class AppComponentTester extends ComponentTester<AppComponent> {
   constructor() {
@@ -31,8 +33,8 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, NavbarComponent, ToastsComponent],
-      imports: [RouterTestingModule, FontAwesomeModule]
+      declarations: [AppComponent, NavbarComponent, ToastsComponent, ValidationDefaultsComponent],
+      imports: [RouterTestingModule, FontAwesomeModule, ValdemortModule]
     });
 
     tester = new AppComponentTester();
