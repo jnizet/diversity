@@ -2,6 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='home')}"
 >
   <head>
@@ -35,12 +36,12 @@
         </div>
         <div class="swiper-container swiper-top">
           <div class="swiper-wrapper">
-            <div th:each="imageElement : *{carousel.images}" th:object="${imageElement.image}" class="swiper-slide swiper-top-slide">
+            <div th:each="imageElement : *{carousel.images}" th:object="${imageElement}" class="swiper-slide swiper-top-slide">
               <div class="legend-wrapper top-slide">
                 <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                <div class="legend-text" th:text="*{alt}">Chelonia mydas ©  B. Guichard</div>
+                <div class="legend-text" th:text="*{image.alt}">Chelonia mydas ©  B. Guichard</div>
               </div>
-              <img th:src="@{/images/{imageId}/image(imageId=*{imageId})}" loading="lazy" sizes="100vw" alt="*{alt}" class="img-full" />
+              <img biom:image="*{image}" loading="lazy" sizes="100vw" class="img-full" />
               <!-- TODO srcset -->
             </div>
           </div>
@@ -124,10 +125,9 @@
             <h3 class="section-title col-3" th:text="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h3>
             <div class="left-1">
               <img
-                th:src="@{/images/{imageId}/image(imageId=*{testimony.image.imageId})}"
+                biom:image="*{testimony.image}"
                 loading="lazy"
                 sizes="100vw"
-                alt="*{testimony.image.alt}"
                 class="img-full-width margin-bottom hide-desktop"
               />
               <!-- todo srcset -->
@@ -144,10 +144,9 @@
           </div>
           <div class="left-1">
             <img
-              th:src="@{/images/{imageId}/image(imageId=*{testimony.image.imageId})}"
+              biom:image="*{testimony.image}"
               loading="lazy"
               sizes="(max-width: 479px) 100vw, (max-width: 767px) 73vw, (max-width: 991px) 79vw, 45vw"
-              alt=""
               class="img-full-width only-desktop"
             />
             <!-- todo srcset -->
@@ -158,10 +157,9 @@
 
       <section class="section-full-img">
         <img
-          th:src="@{/images/{imageId}/image(imageId=*{science.image.imageId})}"
+          biom:image="*{science.image}"
           loading="lazy"
           sizes="100vw"
-          alt=""
           class="img-full anim-zoom dark"
         />
         <!-- todo srcset -->
