@@ -40,13 +40,15 @@
         <div class="timer"></div>
       </div>
       <div class="nav">
-        <a th:href="@{/}" aria-current="page" class="logo-link w-inline-block w--current"
-          ><img th:src="@{/assets/images/logo_blanc.svg}" loading="lazy" alt="" class="logo-white" /><img
+        <a th:href="@{/}" aria-current="page" class="logo-link w-inline-block w--current">
+          <span class="sr-only">Accueil</span>
+          <img th:src="@{/assets/images/logo_blanc.svg}" loading="lazy" alt="" class="logo-white" /><img
             th:src="@{/assets/images/logo_noir.svg}"
             loading="lazy"
             alt=""
             class="logo-dark"
-        /></a>
+          />
+        </a>
         <div class="nav-mobile" data-controller="">
           <div th:replace="~{layout/search-mobile::search}" />
           <div class="btn-menu w-embed">
@@ -104,9 +106,10 @@
     <footer class="footer">
       <div class="footer-wrapper">
         <div class="col-2">
-          <a href="index.html" aria-current="page" class="footer-logo-link w-inline-block w--current">
-            <img th:src="@{/assets/images/logo_noir.svg}" loading="lazy" alt=""
-          /></a>
+          <a th:href="@{/}" aria-current="page" class="footer-logo-link w-inline-block w--current">
+            <span class="sr-only">Accueil</span>
+            <img th:src="@{/assets/images/logo_noir.svg}" loading="lazy" alt="" />
+          </a>
         </div>
         <div class="footer-nav-wrapper">
           <div class="col-3">
@@ -144,13 +147,16 @@
           </div>
         </div>
         <div class="footer-img-list">
-          <a href="https://www.outre-mer.gouv.fr/" target="_blank" class="footer-img-link w-inline-block">
+          <a href="https://www.outre-mer.gouv.fr/" target="_blank" rel="noopener" class="footer-img-link w-inline-block">
+            <span class="sr-only">Ministère des Outre-Mer</span>
             <img th:src="@{/assets/images/1280px-Ministere_des_Outre-mer.svg}" loading="lazy" alt="" class="footer-img" />
           </a>
-          <a href="https://www.mnhn.fr/" target="_blank" class="footer-img-link w-inline-block">
+          <a href="https://www.mnhn.fr/" target="_blank" rel="noopener" class="footer-img-link w-inline-block">
+            <span class="sr-only">Museum National d'Histore Naturelle</span>
             <img th:src="@{/assets/images/museum-national-d-histoire-naturelle_2.png}" loading="lazy" alt="" class="footer-img" />
           </a>
-          <a href="https://ofb.gouv.fr/" target="_blank" class="footer-img-link w-inline-block">
+          <a href="https://ofb.gouv.fr/" target="_blank" rel="noopener" class="footer-img-link w-inline-block">
+            <span class="sr-only">Office français de la biodiversité</span>
             <img th:src="@{/assets/images/OFB_Logo_RVB.png}" loading="lazy" alt="" class="footer-img" />
           </a>
         </div>

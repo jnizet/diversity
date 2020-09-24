@@ -170,8 +170,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "carousel.territoriesButton", "Découvrir les territoires", null, null, null, false)
                 .values(TEXT, "presentation.title", "Le compteur de biodiversité Outre-Mer", null, null, null, false)
                 .values(TEXT, "presentation.text", "Les territoires d'outre-mer présentent une biodiversité particulièrement riche et variée, ...", null, null, null, false)
-                .values(IMAGE, "presentation.image", null, 4L, "À propos", null, false)
-                .values(TEXT, "presentation.more", "En savoir plus", null, null, null, false)
                 .values(TEXT, "testimony.title", "Une biodiversité unique et fragile, protégeons-la !", null, null, null, false)
                 .values(TEXT, "testimony.text", "La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l'impactent. Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son évolution.", null, null, null, false)
                 .values(TEXT, "testimony.quote", "Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l'eau, de l'air mais aussi de la qualité de vie.", null, null, null, false)

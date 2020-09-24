@@ -6,8 +6,20 @@ package fr.mnhn.diversity.model.meta;
  */
 public final class ImageElement extends PageElement {
 
+    /**
+     * If this is true, then when uploaded, the image will be resized and stored in several
+     * sizes, and when rendered the image will have an `srcset` attribute allowing the browser to
+     * download the optimal one.
+     */
+    private final boolean multiSize;
+
     public ImageElement(Builder builder) {
         super(builder.name, builder.description);
+        this.multiSize = builder.multiSize;
+    }
+
+    public boolean isMultiSize() {
+        return multiSize;
     }
 
     @Override
@@ -26,8 +38,15 @@ public final class ImageElement extends PageElement {
 
     public static class Builder extends BaseBuilder<Builder> implements PageElementBuilder {
 
+        private boolean multiSize = false;
+
         public Builder(String name) {
             super(name);
+        }
+
+        public Builder multiSize() {
+            this.multiSize = true;
+            return this;
         }
 
         @Override

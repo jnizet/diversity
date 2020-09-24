@@ -1,8 +1,11 @@
 package fr.mnhn.diversity.image.thymeleaf;
 
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import fr.mnhn.diversity.model.Image;
+import fr.mnhn.diversity.model.ImageSize;
 import org.thymeleaf.IEngineConfiguration;
 import org.thymeleaf.context.ITemplateContext;
 import org.thymeleaf.engine.AttributeName;
@@ -60,8 +63,23 @@ public class ImageAttributeTagProcessor extends AbstractAttributeTagProcessor {
         String srcUrl = context.buildLink("/images/{imageId}/image", Map.of("imageId", imageElement.getImageId()));
         String alt = imageElement.getAlt();
 
+        if (imageElement.isMultiSize()) {
+            String srcset =
+                Stream.of(ImageSize.values())
+                      .map(imageSize -> buildSrcsetElement(context, imageElement, imageSize))
+                      .collect(Collectors.joining(", "));
+            structureHandler.setAttribute("srcset", srcset);
+        }
+
         structureHandler.setAttribute("src", srcUrl);
         structureHandler.setAttribute("alt", alt);
     }
 
+    private String buildSrcsetElement(ITemplateContext context, Image imageElement, ImageSize imageSize) {
+        String url =
+            context.buildLink("/images/{imageId}/image/{size}",
+                              Map.of("imageId", imageElement.getImageId(),
+                                     "size", imageSize.name().toLowerCase()));
+        return url + " " + imageSize.getWidth() + "w";
+    }
 }

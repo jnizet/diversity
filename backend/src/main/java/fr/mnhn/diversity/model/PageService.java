@@ -171,7 +171,8 @@ public class PageService {
         public Void visitImage(ImageElement image) {
             String name = image.getName();
             String key = prefix + name;
-            result.put(name, getElement(key, ElementType.IMAGE));
+            Image element = ((Image) getElement(key, ElementType.IMAGE)).withMultiSize(image.isMultiSize());
+            result.put(name, element);
             return null;
         }
 

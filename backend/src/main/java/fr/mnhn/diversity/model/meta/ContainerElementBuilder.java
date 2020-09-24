@@ -38,6 +38,10 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
         return this.image(ImageElement.builder(name).describedAs(description));
     }
 
+    public B multiSizeImage(String name, String description) {
+        return this.image(ImageElement.builder(name).describedAs(description).multiSize());
+    }
+
     public B image(String name) {
         return this.image(name, null);
     }

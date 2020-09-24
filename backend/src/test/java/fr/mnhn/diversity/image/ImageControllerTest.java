@@ -78,7 +78,62 @@ class ImageControllerTest {
             Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
         );
 
-        mockMvc.perform(get("/images/{id}/image", 345678L))
+        mockMvc.perform(get("/images/{id}/image", id))
+               .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturnImageOfRequestedDimensionIfFound() throws Exception {
+        Long id = 42L;
+        when(mockImageRepository.findById(id)).thenReturn(
+            Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
+        );
+
+        byte[] bytes = "jpegImage".getBytes(StandardCharsets.UTF_8);
+        Files.write(mockImageProperties.getDirectory().resolve("42-sm.jpg"), bytes);
+
+        mockMvc.perform(get("/images/{id}/image/sm", id))
+               .andExpect(status().isOk())
+               .andExpect(content().contentType(MediaType.IMAGE_JPEG))
+               .andExpect(header().longValue(HttpHeaders.CONTENT_LENGTH, bytes.length))
+               .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"test.jpg\""))
+               .andExpect(header().exists(HttpHeaders.CACHE_CONTROL))
+               .andExpect(content().bytes(bytes));
+    }
+
+    @Test
+    void shouldReturnNotFoundIfImageWithDimensionDoesNotExistInDatabase() throws Exception {
+        mockMvc.perform(get("/images/{id}/image/sm", 345678L))
+               .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturnImageOfLargerDimensionIfFound() throws Exception {
+        Long id = 42L;
+        when(mockImageRepository.findById(id)).thenReturn(
+            Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
+        );
+
+        byte[] bytes = "jpegImage".getBytes(StandardCharsets.UTF_8);
+        Files.write(mockImageProperties.getDirectory().resolve("42.jpg"), bytes);
+
+        mockMvc.perform(get("/images/{id}/image/sm", id))
+               .andExpect(status().isOk())
+               .andExpect(content().contentType(MediaType.IMAGE_JPEG))
+               .andExpect(header().longValue(HttpHeaders.CONTENT_LENGTH, bytes.length))
+               .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"test.jpg\""))
+               .andExpect(header().exists(HttpHeaders.CACHE_CONTROL))
+               .andExpect(content().bytes(bytes));
+    }
+
+    @Test
+    void shouldReturnNotFoundIfNoDimensionOfImageExistInFileSystem() throws Exception {
+        Long id = 42L;
+        when(mockImageRepository.findById(id)).thenReturn(
+            Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
+        );
+
+        mockMvc.perform(get("/images/{id}/image/sm", id))
                .andExpect(status().isNotFound());
     }
 }

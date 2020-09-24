@@ -75,7 +75,7 @@ public class PageRepository {
                         elements.add(Element.text(elementId, key, rs.getString("text")));
                         break;
                     case IMAGE:
-                        elements.add(Element.image(elementId, key, rs.getLong("image_id"), rs.getString("alt")));
+                        elements.add(Element.image(elementId, key, rs.getLong("image_id"), rs.getString("alt"), false));
                         break;
                     case LINK:
                         elements.add(Element.link(elementId, key, rs.getString("text"), rs.getString("href")));

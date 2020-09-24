@@ -18,10 +18,16 @@ public final class Image extends Element {
      */
     private final String alt;
 
-    public Image(Long id, String key, Long imageId, String alt) {
+    /**
+     * Is the image multisize
+     */
+    private final boolean multiSize;
+
+    public Image(Long id, String key, Long imageId, String alt, boolean multiSize) {
         super(id, ElementType.IMAGE, key);
         this.imageId = imageId;
         this.alt = alt;
+        this.multiSize = multiSize;
     }
 
     public Long getImageId() {
@@ -30,6 +36,17 @@ public final class Image extends Element {
 
     public String getAlt() {
         return alt;
+    }
+
+    public boolean isMultiSize() {
+        return multiSize;
+    }
+
+    /**
+     * Creates a copy of this image with the given multiSize value
+     */
+    public Image withMultiSize(boolean multiSize) {
+        return new Image(this.getId(), this.getKey(), this.imageId, this.alt, multiSize);
     }
 
     @Override
@@ -44,20 +61,22 @@ public final class Image extends Element {
             return false;
         }
         Image image = (Image) o;
-        return Objects.equals(imageId, image.imageId) &&
+        return multiSize == image.multiSize &&
+            Objects.equals(imageId, image.imageId) &&
             Objects.equals(alt, image.alt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), imageId, alt);
+        return Objects.hash(super.hashCode(), imageId, alt, multiSize);
     }
 
     @Override
     public String toString() {
         return "Image{" +
-            "imageId='" + imageId + '\'' +
+            "imageId=" + imageId +
             ", alt='" + alt + '\'' +
+            ", multiSize=" + multiSize +
             "} " + super.toString();
     }
 }

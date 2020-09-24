@@ -18,6 +18,10 @@ public class ModelTestingUtil {
         return Element.image(0L, "image", imageId, "alt");
     }
 
+    public static Image multiSizeImage(Long imageId) {
+        return Element.image(0L, "image", imageId, "alt", true);
+    }
+
     public static Link link(String text) {
         return Element.link(0L, "link", text, "https://test.com");
     }

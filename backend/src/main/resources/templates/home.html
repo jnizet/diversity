@@ -9,6 +9,7 @@
     <title th:text="${page.title}">Accueil</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+    <meta th:ref="og" name="description" th:attr="content=${page.content.presentation.text.text}" />
     <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
     <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.text.text}" />
     <meta th:ref="og" property="og:image" th:attr="content=@{/assets/images/BIOM.jpg}" />
@@ -51,7 +52,7 @@
       <section class="section-apropos">
         <div class="section-label">à propos</div>
         <div class="section-content">
-          <h3 class="section-title col-3" th:text="*{presentation.title.text}">Le compteur de biodiversité Outre-Mer</h3>
+          <h2 class="section-title col-3" th:text="*{presentation.title.text}">Le compteur de biodiversité Outre-Mer</h2>
           <div class="col-5">
             <p class="apropos-paragraph" th:text="*{presentation.text.text}">
               Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités
@@ -122,15 +123,9 @@
         <div class="section-label">témoignages</div>
         <div class="text-img-wrapper">
           <div class="col-5">
-            <h3 class="section-title col-3" th:text="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h3>
+            <h2 class="section-title col-3" th:text="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h2>
             <div class="left-1">
-              <img
-                biom:image="*{testimony.image}"
-                loading="lazy"
-                sizes="100vw"
-                class="img-full-width margin-bottom hide-desktop"
-              />
-              <!-- todo srcset -->
+              <img biom:image="*{testimony.image}" loading="lazy" sizes="100vw" class="img-full-width margin-bottom hide-desktop" />
               <p th:text="*{testimony.text.text}">
                 La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l’impactent. Les
                 indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
@@ -149,20 +144,13 @@
               sizes="(max-width: 479px) 100vw, (max-width: 767px) 73vw, (max-width: 991px) 79vw, 45vw"
               class="img-full-width only-desktop"
             />
-            <!-- todo srcset -->
           </div>
         </div>
         <div class="section-decoration-text temoignage">témoignages</div>
       </section>
 
       <section class="section-full-img">
-        <img
-          biom:image="*{science.image}"
-          loading="lazy"
-          sizes="100vw"
-          class="img-full anim-zoom dark"
-        />
-        <!-- todo srcset -->
+        <img biom:image="*{science.image}" loading="lazy" sizes="100vw" class="img-full anim-zoom dark" />
         <div class="legend-wrapper">
           <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
           <div class="legend-text" th:text="*{science.image.alt}">Chelonia mydas ©  B. Guichard</div>

@@ -34,7 +34,11 @@ public abstract class Element {
     }
 
     public static Image image(Long id, String key, Long imageId, String alt) {
-        return new Image(id, key, imageId, alt);
+        return new Image(id, key, imageId, alt, false);
+    }
+
+    public static Image image(Long id, String key, Long imageId, String alt, boolean multiSize) {
+        return new Image(id, key, imageId, alt, multiSize);
     }
 
     public static Link link(Long id, String key, String text, String href) {

@@ -1,7 +1,6 @@
 package fr.mnhn.diversity.home;
 
-import static fr.mnhn.diversity.model.testing.ModelTestingUtil.image;
-import static fr.mnhn.diversity.model.testing.ModelTestingUtil.text;
+import static fr.mnhn.diversity.model.testing.ModelTestingUtil.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -53,27 +52,25 @@ class HomeControllerTest {
                     "carousel", Map.of(
                         "title", text("Hello"),
                         "images", List.of(
-                            Map.of("image", image(1L)),
-                            Map.of("image", image(2L))
+                            Map.of("image", multiSizeImage(1L)),
+                            Map.of("image", multiSizeImage(2L))
                         ),
                         "text", text("carousel text"),
                         "territoriesButton", text("carousel button")
                     ),
                     "presentation", Map.of(
                         "title", text("Presentation"),
-                        "image", image(3L),
-                        "text", text("presentation text"),
-                        "more", text("More")
+                        "text", text("presentation text")
                     ),
                     "testimony", Map.of(
                         "title", text("Testimony"),
-                        "image", image(4L),
+                        "image", multiSizeImage(4L),
                         "text", text("testimony text"),
                         "quote", text("testimony quote")
                     ),
                     "science", Map.of(
                         "title", text("Science"),
-                        "image", image(5L),
+                        "image", multiSizeImage(5L),
                         "text", text("science text")
                     )
                 )
@@ -90,6 +87,7 @@ class HomeControllerTest {
             .andExpect(content().string(containsString("Hello")))
             .andExpect(content().string(containsString("Presentation")))
             .andExpect(content().string(containsString("Testimony")))
-            .andExpect(content().string(containsString("Science")));
+            .andExpect(content().string(containsString("Science")))
+            .andExpect(content().string(containsString("</html>")));
     }
 }
