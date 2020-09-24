@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import fr.mnhn.diversity.common.exception.FunctionalException;
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller used to handle the categories of the indicators
  */
 @RestController
+@Transactional
 @RequestMapping("/api/indicator-categories")
-public class IndicatorCategoryController {
+public class IndicatorCategoryRestController {
 
     private final IndicatorCategoryRepository indicatorCategoryRepository;
 
-    public IndicatorCategoryController(IndicatorCategoryRepository indicatorCategoryDao) {
+    public IndicatorCategoryRestController(IndicatorCategoryRepository indicatorCategoryDao) {
         this.indicatorCategoryRepository = indicatorCategoryDao;
     }
 

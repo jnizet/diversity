@@ -5,7 +5,9 @@ package fr.mnhn.diversity.common.exception;
  */
 public class FunctionalException extends BadRequestException {
     public enum Code {
-        INDICATOR_CATEGORY_NAME_ALREADY_EXISTING("Une catégorie avec ce nom existe déjà");
+        INDICATOR_CATEGORY_NAME_ALREADY_EXISTING("Une catégorie avec ce nom existe déjà"),
+        INDICATOR_SLUG_ALREADY_EXISTING("Un indicateur avec ce slug existe déjà"),
+        INDICATOR_BIOM_ID_ALREADY_EXISTING("Un indicateur avec ce BIOM ID existe déjà");
 
         private final String message;
 

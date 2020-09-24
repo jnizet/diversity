@@ -14,7 +14,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.territory.Territory;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -53,6 +56,78 @@ public class IndicatorRepository {
         jdbcTemplate.update("delete from indicator_value" +
                                 " where indicator_id = :indicator_id and territory in (:territories)",
                             paramMap);
+    }
+
+    /**
+     * Creates a new {@link Indicator}
+     */
+    public Indicator create(Indicator indicator) {
+        // create the indicator
+        Map<String, Object> paramMap = Map.of(
+            "biomId", indicator.getBiomId(),
+            "slug", indicator.getSlug()
+        );
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into indicator (id, biom_id, slug) values (nextval('indicator_seq'), :biomId, :slug)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+
+        // add the categories
+        indicator.getCategories().forEach(category -> {
+            Map<String, Object> categoryParamMap = Map.of(
+                "id", id,
+                "category_id", category.getId()
+            );
+            jdbcTemplate.update("insert into indicator_category (indicator_id, category_id) values (:id, :category_id)", categoryParamMap);
+        });
+        return new Indicator(id, indicator.getBiomId(), indicator.getSlug(), indicator.getCategories());
+    }
+
+    /**
+     * Updates an {@link Indicator}
+     */
+    public Indicator update(Indicator indicator) {
+        // update the indicator
+        Map<String, Object> paramMap = Map.of(
+            "id", indicator.getId(),
+            "biomId", indicator.getBiomId(),
+            "slug", indicator.getSlug()
+        );
+        jdbcTemplate.update("update indicator set biom_id = :biomId, slug = :slug where id = :id", paramMap);
+
+        // update the categories
+        removeCategoriesFromIndicator(indicator.getId());
+        indicator.getCategories().forEach(category -> {
+            Map<String, Object> categoryParamMap = Map.of(
+                "id", indicator.getId(),
+                "category_id", category.getId()
+            );
+            jdbcTemplate.update("insert into indicator_category (indicator_id, category_id) values (:id, :category_id)", categoryParamMap);
+        });
+        return new Indicator(indicator.getId(), indicator.getBiomId(), indicator.getSlug(), indicator.getCategories());
+    }
+
+    /**
+     * Deletes the indicator and its values
+     */
+    public void delete(Indicator indicator) {
+        // delete values
+        deleteValues(indicator, Set.of(Territory.values()));
+        // delete from categories join table
+        removeCategoriesFromIndicator(indicator.getId());
+        // delete from eco-gestures join table
+        Map<String, Object> paramMap = Map.of(
+            "id", indicator.getId()
+        );
+        jdbcTemplate.update("delete from indicator_ecogesture where indicator_id = :id", paramMap);
+        // delete the indicator
+        jdbcTemplate.update("delete from indicator where id = :id", paramMap);
+    }
+
+    private void removeCategoriesFromIndicator(Long indicatorId) {
+        Map<String, Object> paramMap = Map.of(
+            "id", indicatorId
+        );
+        jdbcTemplate.update("delete from indicator_category where indicator_id = :id", paramMap);
     }
 
     /**
@@ -131,12 +206,30 @@ public class IndicatorRepository {
             });
     }
 
+    public Optional<Indicator> findById(Long id) {
+        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
+            " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
+            " left outer join category cat on cat.id = ind_cat.category_id" +
+            " where indicator.id = :id";
+        List<Indicator> indicators = jdbcTemplate.query(query, Map.of("id", id), this::extractIndicators);
+        return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
+    }
+
     public Optional<Indicator> findBySlug(String slug) {
         String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
             " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
             " left outer join category cat on cat.id = ind_cat.category_id" +
             " where indicator.slug = :slug";
         List<Indicator> indicators = jdbcTemplate.query(query, Map.of("slug", slug), this::extractIndicators);
+        return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
+    }
+
+    public Optional<Indicator> findByBiomId(String biomId) {
+        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
+            " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
+            " left outer join category cat on cat.id = ind_cat.category_id" +
+            " where indicator.biom_id = :biomId";
+        List<Indicator> indicators = jdbcTemplate.query(query, Map.of("biomId", biomId), this::extractIndicators);
         return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
     }
 

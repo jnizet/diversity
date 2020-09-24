@@ -25,11 +25,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Tests for {@link IndicatorCategoryController}
+ * Tests for {@link IndicatorCategoryRestController}
  */
-@WebMvcTest(IndicatorCategoryController.class)
+@WebMvcTest(IndicatorCategoryRestController.class)
 @ActiveProfiles("test")
-class IndicatorCategoryControllerTest {
+class IndicatorCategoryRestControllerTest {
     @MockBean
     private IndicatorCategoryRepository mockIndicatorCategoryRepository;
 
@@ -40,7 +40,7 @@ class IndicatorCategoryControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private IndicatorCategoryController controller;
+    private IndicatorCategoryRestController controller;
 
     @Captor
     private ArgumentCaptor<IndicatorCategory> categoryArgumentCaptor;

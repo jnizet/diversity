@@ -23,6 +23,10 @@ public final class Indicator {
         this(id, biomId, slug, List.of());
     }
 
+    public Indicator(String biomId, String slug, List<IndicatorCategory> categories) {
+        this(null, biomId, slug, categories);
+    }
+
     public Long getId() {
         return id;
     }

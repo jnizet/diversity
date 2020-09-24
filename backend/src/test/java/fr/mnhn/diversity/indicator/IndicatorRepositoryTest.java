@@ -31,6 +31,9 @@ class IndicatorRepositoryTest {
     @Autowired
     private IndicatorRepository repository;
 
+    IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
+    IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
+
     @BeforeEach
     void prepare() {
 
@@ -72,8 +75,6 @@ class IndicatorRepositoryTest {
     @Test
     void shouldListIndicators() {
         TRACKER.skipNextLaunch();
-        IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
-        IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
         assertThat(repository.list()).containsExactly(
                 new Indicator(2L, "indicator1", "slug1", List.of(category1, category2)),
                 new Indicator(1L, "indicator2", "slug2", List.of(category2)),
@@ -84,12 +85,62 @@ class IndicatorRepositoryTest {
     @Test
     void shouldFindBySlug() {
         TRACKER.skipNextLaunch();
-        IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
-        IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
         assertThat(repository.findBySlug("slug1")).contains(
             new Indicator(2L, "indicator1", "slug1", List.of(category1, category2))
         );
         assertThat(repository.findBySlug("unknown")).isEmpty();
+    }
+
+    @Test
+    void shouldFindById() {
+        TRACKER.skipNextLaunch();
+        assertThat(repository.findById(2L)).contains(
+            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2))
+        );
+        assertThat(repository.findById(423L)).isEmpty();
+    }
+
+    @Test
+    void shouldFindByBiomId() {
+        TRACKER.skipNextLaunch();
+        assertThat(repository.findByBiomId("indicator1")).contains(
+            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2))
+        );
+        assertThat(repository.findByBiomId("other")).isEmpty();
+    }
+
+    @Test
+    void shouldCreateIndicator() {
+        Indicator indicator = new Indicator( "indicator5", "slug5", List.of(category1, category2));
+
+        Indicator createdIndicator = repository.create(indicator);
+
+        assertThat(createdIndicator.getId()).isNotNull();
+
+        assertThat(repository.findById(createdIndicator.getId())).contains(
+            new Indicator(createdIndicator.getId(), "indicator5", "slug5", List.of(category1, category2))
+        );
+    }
+
+    @Test
+    void shouldDeleteIndicator() {
+        Indicator indicator = new Indicator(2L, "indicator2", "slug2", List.of(category1));
+
+        repository.delete(indicator);
+
+        assertThat(repository.findById(2L)).isEmpty();
+        assertThat(repository.getValues(indicator)).hasSize(0);
+    }
+
+    @Test
+    void shouldUpdateIndicator() {
+        Indicator indicator = new Indicator(2L, "indicator21", "slug21", List.of(category1));
+
+        Indicator updatedIndicator = repository.update(indicator);
+
+        assertThat(repository.findById(updatedIndicator.getId())).contains(
+            new Indicator(updatedIndicator.getId(), "indicator21", "slug21", List.of(category1))
+        );
     }
 
     @Test

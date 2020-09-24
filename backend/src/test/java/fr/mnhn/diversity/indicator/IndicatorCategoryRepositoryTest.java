@@ -54,7 +54,7 @@ class IndicatorCategoryRepositoryTest {
     }
 
     @Test
-    void shouldSave() {
+    void shouldCreate() {
         IndicatorCategory category3 = repository.create(new IndicatorCategory(null, "category3"));
         assertThat(category3.getId()).isNotNull();
 
