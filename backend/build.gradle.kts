@@ -50,10 +50,12 @@ tasks {
 
     bootJar {
         dependsOn(":frontend:assemble")
+        dependsOn(":admin:assemble")
         archiveFileName.set("diversity.jar")
         bootInf {
             into("classes/static") {
                 from(project(":frontend").file("build/dist"))
+                from(project(":admin").file("dist"))
             }
         }
     }
