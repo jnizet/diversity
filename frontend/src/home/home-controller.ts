@@ -4,7 +4,7 @@ import Swiper, { SwiperOptions } from 'swiper';
 export class HomeController extends Controller {
   connect() {
     new Swiper('.swiper-top', {
-      delay: 2000, // weird: this option is not recognized by the typing. Fixed by type assertion `as S``iperOptions
+      delay: 2000, // weird: this option is not recognized by the typing. Fixed by type assertion `as SwiperOptions`
       cssMode: true,
       loop: true,
       keyboard: true,
