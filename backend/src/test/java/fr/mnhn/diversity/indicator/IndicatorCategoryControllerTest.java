@@ -1,6 +1,7 @@
 package fr.mnhn.diversity.indicator;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -97,10 +98,13 @@ class IndicatorCategoryControllerTest {
             "Espèces menacées"
         );
 
+        when(mockIndicatorCategoryRepository.create(any())).thenReturn(new IndicatorCategory(256L, command.getName()));
+
         mockMvc.perform(post("/api/indicator-categories")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsBytes(command)))
-               .andExpect(status().isCreated());
+               .andExpect(status().isCreated())
+               .andExpect(jsonPath("$.id").value(256L));
 
         verify(mockIndicatorCategoryRepository).create(categoryArgumentCaptor.capture());
 

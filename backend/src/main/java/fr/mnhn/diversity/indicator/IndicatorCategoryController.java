@@ -60,8 +60,8 @@ public class IndicatorCategoryController {
 
         IndicatorCategory indicatorCategory = new IndicatorCategory(command.getName());
 
-        indicatorCategoryRepository.create(indicatorCategory);
-        return new IndicatorCategoryDTO(indicatorCategory);
+        IndicatorCategory createdIndicatorCategory = indicatorCategoryRepository.create(indicatorCategory);
+        return new IndicatorCategoryDTO(createdIndicatorCategory);
     }
 
     @PutMapping("/{indicatorCategoryId}")

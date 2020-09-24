@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,11 +29,14 @@ public class IndicatorCategoryRepository {
     /**
      * Creates a new {@link IndicatorCategory}
      */
-    public void create(IndicatorCategory category) {
+    public IndicatorCategory create(IndicatorCategory category) {
         Map<String, Object> paramMap = Map.of(
             "name", category.getName()
         );
-        jdbcTemplate.update("insert into category (id, name) values (nextval('category_seq'), :name)", paramMap);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into category (id, name) values (nextval('category_seq'), :name)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+        return new IndicatorCategory(id, category.getName());
     }
 
     /**

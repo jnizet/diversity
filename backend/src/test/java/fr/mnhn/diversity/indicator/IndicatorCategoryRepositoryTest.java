@@ -55,7 +55,8 @@ class IndicatorCategoryRepositoryTest {
 
     @Test
     void shouldSave() {
-        repository.create(new IndicatorCategory(null, "category3"));
+        IndicatorCategory category3 = repository.create(new IndicatorCategory(null, "category3"));
+        assertThat(category3.getId()).isNotNull();
 
         List<String> categoryNames = repository.list().stream().map(IndicatorCategory::getName).collect(Collectors.toList());
         assertThat(categoryNames).containsExactly(
