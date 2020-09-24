@@ -15,14 +15,14 @@ import org.thymeleaf.standard.expression.StandardExpressions;
 import org.thymeleaf.templatemode.TemplateMode;
 
 /**
- * An tag processor making it easier to insert uplodaded images in the templates.
+ * A tag processor making it easier to insert uploaded images in the templates.
  *
  * Usage:
  * <pre>
  *     <img biom:image="${page.content.presentation.image}" />
  * </pre>
  *
- * Result (assuming page.content.presentation.image is an instant of Image with imageId=42 and alt="foo":
+ * Result (assuming page.content.presentation.image is an instance of Image with imageId=42 and alt="foo"):
  * <pre>
  *     <img src="/images/42/image" alt="foo" />
  * </pre>
