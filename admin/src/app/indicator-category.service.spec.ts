@@ -42,7 +42,7 @@ describe('IndicatorCategoryService', () => {
     let actual: IndicatorCategory = null;
 
     const command = { name: 'foo' } as IndicatorCategoryCommand;
-    service.create(command).subscribe(categorie => (actual = categorie));
+    service.create(command).subscribe(category => (actual = category));
 
     const expected = { id: 42 } as IndicatorCategory;
     const testRequest = http.expectOne({ method: 'POST', url: '/api/indicator-categories' });

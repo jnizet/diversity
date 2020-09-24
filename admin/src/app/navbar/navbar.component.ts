@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faTags } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faTags } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'biom-navbar',
@@ -9,4 +9,5 @@ import { faTags } from '@fortawesome/free-solid-svg-icons';
 export class NavbarComponent {
   collapsed = true;
   indicatorCategoriesIcon = faTags;
+  indicatorsIcon = faChartLine;
 }

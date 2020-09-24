@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { IndicatorCategoriesComponent } from './indicator-categories/indicator-categories.component';
 import { EditIndicatorCategoryComponent } from './edit-indicator-category/edit-indicator-category.component';
+import { IndicatorsComponent } from './indicators/indicators.component';
 
 export const APP_ROUTES: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,20 @@ export const APP_ROUTES: Routes = [
         path: ':indicatorCategoryId/edit',
         component: EditIndicatorCategoryComponent
       }
+    ]
+  },
+  {
+    path: 'indicators',
+    children: [
+      { path: '', component: IndicatorsComponent }
+      /*{
+        path: 'new',
+        component: EditIndicatorComponent
+      },
+      {
+        path: ':indicatorId/edit',
+        component: EditIndicatorComponent
+      }*/
     ]
   }
 ];

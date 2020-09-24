@@ -53,7 +53,7 @@ describe('IndicatorCategoriesComponent', () => {
     tester = new IndicatorCategoriesComponentTester();
   });
 
-  it('should not display anything until accession holders are available', () => {
+  it('should not display anything until categories are available', () => {
     categoryService.list.and.returnValue(EMPTY);
     tester.detectChanges();
 
@@ -61,7 +61,7 @@ describe('IndicatorCategoriesComponent', () => {
     expect(tester.createLink).toBeNull();
   });
 
-  it('should display accession holders', () => {
+  it('should display categories', () => {
     const categories: Array<IndicatorCategory> = [
       {
         id: 1,

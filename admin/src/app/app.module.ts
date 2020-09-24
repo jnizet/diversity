@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { ValdemortModule } from 'ngx-valdemort';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -16,7 +17,7 @@ import { ErrorInterceptorService } from './error-interceptor.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EditIndicatorCategoryComponent } from './edit-indicator-category/edit-indicator-category.component';
 import { ValidationDefaultsComponent } from './validation-defaults/validation-defaults.component';
-import { ValdemortModule } from 'ngx-valdemort';
+import { IndicatorsComponent } from './indicators/indicators.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ValdemortModule } from 'ngx-valdemort';
     ToastsComponent,
     NavbarComponent,
     EditIndicatorCategoryComponent,
-    ValidationDefaultsComponent
+    ValidationDefaultsComponent,
+    IndicatorsComponent
   ],
   imports: [
     BrowserModule,

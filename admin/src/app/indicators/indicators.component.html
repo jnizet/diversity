@@ -1,0 +1,34 @@
+<h1>Indicateurs BIOM</h1>
+
+<div *ngIf="indicators">
+  <div class="content mt-5">
+    <div *ngFor="let indicator of indicators">
+      <div class="d-flex">
+        <div><fa-icon [icon]="indicatorIcon" class="mr-2"></fa-icon></div>
+        <div class="flex-grow-1 row indicator">
+          <div class="col-4">
+            <a [routerLink]="['/indicators', indicator.id, 'edit']">{{ indicator.slug }}</a>
+          </div>
+          <div class="col-4">{{ indicator.biomId }}</div>
+          <div class="col-4">
+            <span class="badge badge-secondary ml-2" *ngFor="let category of indicator.categories">{{ category.name }}</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <button (click)="deleteIndicator(indicator)" type="button" class="btn btn-outline-danger btn-sm delete-indicator-button">
+            <fa-icon [icon]="deleteIndicatorIcon"></fa-icon>
+            <span class="sr-only">Supprimer l'indicateur'</span>
+          </button>
+        </div>
+      </div>
+      <hr class="my-2" />
+    </div>
+  </div>
+
+  <div class="text-right mt-2">
+    <a class="btn btn-outline-secondary" id="create-indicator" routerLink="/indicators/new">
+      <fa-icon [icon]="createIndicatorIcon" class="mr-1"></fa-icon>
+      <span>Créer un nouvel indicateur</span>
+    </a>
+  </div>
+</div>

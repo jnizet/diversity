@@ -13,6 +13,12 @@
   </button>
   <div class="collapse navbar-collapse" [class.show]="!collapsed">
     <ul class="navbar-nav mr-auto">
+      <li class="nav-item" id="navbar-indicators">
+        <a class="nav-link" routerLink="/indicators" (click)="collapsed = true">
+          <fa-icon [icon]="indicatorsIcon" class="mr-1"></fa-icon>
+          <span>Indicateurs BIOM</span>
+        </a>
+      </li>
       <li class="nav-item" id="navbar-indicator-categories">
         <a class="nav-link" routerLink="/indicator-categories" (click)="collapsed = true">
           <fa-icon [icon]="indicatorCategoriesIcon" class="mr-1"></fa-icon>
