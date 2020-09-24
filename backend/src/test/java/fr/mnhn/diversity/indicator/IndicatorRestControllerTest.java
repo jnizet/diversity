@@ -1,18 +1,24 @@
 package fr.mnhn.diversity.indicator;
 
+import static fr.mnhn.diversity.territory.Territory.GUADELOUPE;
+import static fr.mnhn.diversity.territory.Territory.OUTRE_MER;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.mnhn.diversity.common.exception.FunctionalException;
+import fr.mnhn.diversity.indicator.api.IndicatorData;
+import fr.mnhn.diversity.indicator.api.IndicatorService;
+import fr.mnhn.diversity.territory.Territory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,6 +29,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import reactor.core.publisher.Mono;
 
 /**
  * Tests for {@link IndicatorRestController}
@@ -35,6 +42,9 @@ class IndicatorRestControllerTest {
 
     @MockBean
     private IndicatorCategoryRepository mockIndicatorCategoryRepository;
+
+    @MockBean
+    private IndicatorService mockIndicatorService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -109,11 +119,49 @@ class IndicatorRestControllerTest {
     }
 
     @Test
-    void shouldCreate() throws Exception {
+    void shouldGetValues() throws Exception {
+        when(mockIndicatorService.indicatorData("biom-42")).thenReturn(
+            Mono.just(new IndicatorData("biom-42", "i1", "r1"))
+        );
+        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
+            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                             GUADELOUPE, new IndicatorValue(20, "%")))
+        );
+
+        mockMvc.perform(get("/api/indicators/biom-42/values"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.length()").value(2))
+               .andExpect(jsonPath("$[0].territory").value(GUADELOUPE.getName()))
+               .andExpect(jsonPath("$[0].value").value(20))
+               .andExpect(jsonPath("$[0].unit").value("%"))
+               .andExpect(jsonPath("$[1].territory").value(OUTRE_MER.getName()))
+               .andExpect(jsonPath("$[1].value").value(10))
+               .andExpect(jsonPath("$[1].unit").value("%"));
+    }
+
+    @Test
+    void shouldThrowIfValuesDoNotExistForIndicator() throws Exception {
+        when(mockIndicatorService.indicatorData("biom-42")).thenThrow();
+
+        assertThatExceptionOfType(FunctionalException.class).isThrownBy(
+            () -> controller.getValues("biom-42")
+        ).matches(e -> e.getCode() == FunctionalException.Code.INDICATOR_VALUES_NOT_FOUND);
+    }
+
+    @Test
+    void shouldCreateAndFetchValues() throws Exception {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_67",
             "surface-forêts",
             List.of(category.getId())
+        );
+
+        when(mockIndicatorService.indicatorData(command.getBiomId())).thenReturn(
+            Mono.just(new IndicatorData(command.getBiomId(), "i1", "r1"))
+        );
+        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
+            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                             GUADELOUPE, new IndicatorValue(20, "%")))
         );
 
         when(mockIndicatorRepository.create(any())).thenReturn(new Indicator(256L, command.getBiomId(), command.getSlug(), List.of(category)));
@@ -130,6 +178,9 @@ class IndicatorRestControllerTest {
         assertThat(createdIndicator.getBiomId()).isEqualTo(command.getBiomId());
         assertThat(createdIndicator.getSlug()).isEqualTo(command.getSlug());
         assertThat(createdIndicator.getCategories()).containsExactly(category);
+
+        verify(mockIndicatorRepository).updateValue(createdIndicator, OUTRE_MER, new IndicatorValue(10, "%"));
+        verify(mockIndicatorRepository).updateValue(createdIndicator, GUADELOUPE, new IndicatorValue(20, "%"));
     }
 
     @Test
@@ -157,11 +208,19 @@ class IndicatorRestControllerTest {
     }
 
     @Test
-    void shouldUpdate() throws Exception {
+    void shouldUpdateTheIndicatorAndItsValues() throws Exception {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_92",
             "surface-forêts",
             List.of()
+        );
+
+        when(mockIndicatorService.indicatorData(command.getBiomId())).thenReturn(
+            Mono.just(new IndicatorData(command.getBiomId(), "i1", "r1"))
+        );
+        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
+            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                             GUADELOUPE, new IndicatorValue(20, "%")))
         );
 
         mockMvc.perform(put("/api/indicators/{id}", indicator.getId())
@@ -172,9 +231,17 @@ class IndicatorRestControllerTest {
         verify(mockIndicatorRepository).update(indicatorArgumentCaptor.capture());
 
         Indicator updatedIndicator = indicatorArgumentCaptor.getValue();
+        assertThat(updatedIndicator.getId()).isEqualTo(indicator.getId());
         assertThat(updatedIndicator.getBiomId()).isEqualTo(command.getBiomId());
         assertThat(updatedIndicator.getSlug()).isEqualTo(command.getSlug());
         assertThat(updatedIndicator.getCategories()).isEmpty();
+
+        // delete old values
+        verify(mockIndicatorRepository).deleteValues(updatedIndicator, Set.of(Territory.values()));
+
+        // create new ones
+        verify(mockIndicatorRepository).updateValue(updatedIndicator, OUTRE_MER, new IndicatorValue(10, "%"));
+        verify(mockIndicatorRepository).updateValue(updatedIndicator, GUADELOUPE, new IndicatorValue(20, "%"));
     }
 
     @Test
@@ -199,6 +266,11 @@ class IndicatorRestControllerTest {
             List.of()
         );
         assertThatCode(() -> controller.update(indicator.getId(), command)).doesNotThrowAnyException();
+
+        // it should not update the values as the BIOM ID is the same
+        verify(mockIndicatorRepository, never()).deleteValues(any(), anySet());
+        verify(mockIndicatorService, never()).indicatorData(anyString());
+        verify(mockIndicatorRepository, never()).insertValue(any(), any(), any());
     }
 
     @Test
@@ -222,6 +294,15 @@ class IndicatorRestControllerTest {
             indicator.getSlug(),
             List.of()
         );
+
+        when(mockIndicatorService.indicatorData(command.getBiomId())).thenReturn(
+            Mono.just(new IndicatorData(command.getBiomId(), "i1", "r1"))
+        );
+        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
+            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                             GUADELOUPE, new IndicatorValue(20, "%")))
+        );
+
         assertThatCode(() -> controller.update(indicator.getId(), command)).doesNotThrowAnyException();
     }
 }

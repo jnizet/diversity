@@ -18,6 +18,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { EditIndicatorCategoryComponent } from './edit-indicator-category/edit-indicator-category.component';
 import { ValidationDefaultsComponent } from './validation-defaults/validation-defaults.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
+import { EditIndicatorComponent } from './edit-indicator/edit-indicator.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { IndicatorsComponent } from './indicators/indicators.component';
     NavbarComponent,
     EditIndicatorCategoryComponent,
     ValidationDefaultsComponent,
-    IndicatorsComponent
+    IndicatorsComponent,
+    EditIndicatorComponent
   ],
   imports: [
     BrowserModule,

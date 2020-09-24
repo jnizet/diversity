@@ -1,0 +1,90 @@
+<h1>{{ mode === 'update' ? 'Modifier' : 'Créer' }} un indicateur</h1>
+
+<div class="content mt-2 row">
+  <div class="col-6">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <!-- Slug -->
+      <div class="form-group">
+        <label for="slug">Slug</label>
+        <input class="form-control" formControlName="slug" id="slug" />
+        <small id="slug-id-hint" class="form-text text-muted"
+          >Nom définissant l'adresse de l'indicateur dans le portail. Par ex: <code>especes-envahissantes</code></small
+        >
+        <val-errors controlName="slug" label="Le slug">
+          <ng-template valError="pattern"
+            >Le slug doit avoir la forme <code>mot-autre-mot</code>, avec autant de mots et tirets que nécessaires, et seulement des
+            minuscules ou des chiffres, sans accents ou caractères spéciaux.
+          </ng-template>
+        </val-errors>
+      </div>
+
+      <!-- BIOM identifier -->
+      <div class="form-group">
+        <label for="biom-id">Identifiant BIOM</label>
+        <input class="form-control" formControlName="biomId" id="biom-id" />
+        <small id="biom-id-hint" class="form-text text-muted"
+          >Identifiant permettant de récupérer l'indicateur dans l'entrepôt de données. Par ex:
+          <code>3e85ea5f-2c3c-452f-9684-33c029665c8e</code></small
+        >
+        <button type="button" class="btn btn-primary" id="fetch-values" [disabled]="isFetchingValues" (click)="getValues()">
+          Tester la récupération
+        </button>
+        <val-errors controlName="biomId" label="L'identifiant BIOM"></val-errors>
+      </div>
+
+      <!-- Categories (at least one, at most two) -->
+      <div class="form-group" formArrayName="categoryIds">
+        <label>Catégories de l'indicateur</label>
+        <div class="form-row" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
+          <select class="form-control custom-select col-11" [formControlName]="index" [id]="'category-' + index">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <div class="col-1">
+            <!-- Add a category if less than 2 -->
+            <button *ngIf="categoryIds.controls.length < 2" type="button" class="btn btn-link add-category-button" (click)="addCategory()">
+              <fa-icon [icon]="addIcon"><span class="sr-only">Ajouter une catégorie</span></fa-icon>
+            </button>
+            <!-- Remove a category if more than 1 -->
+            <button
+              *ngIf="categoryIds.controls.length > 1"
+              type="button"
+              class="btn btn-link remove-category-button"
+              (click)="removeCategory(index)"
+            >
+              <fa-icon [icon]="removeIcon"><span class="sr-only">Supprimer une catégorie</span></fa-icon>
+            </button>
+          </div>
+        </div>
+        <val-errors [control]="categoryIds" label="La catégorie">
+          <ng-template valError="required">Au moins une catégorie est nécessaire.</ng-template>
+        </val-errors>
+      </div>
+
+      <div>
+        <button class="btn btn-primary mr-2" id="save-button">Enregistrer</button>
+        <a routerLink="/indicators" class="btn btn-danger">Annuler</a>
+      </div>
+    </form>
+  </div>
+  <div class="col-6">
+    <fa-icon *ngIf="isFetchingValues" [icon]="spinnerIcon" [spin]="true" id="fetching-spinner"></fa-icon>
+    <table class="table table-hover" *ngIf="!isFetchingValues && !noData && indicatorValues">
+      <thead>
+        <tr>
+          <th scope="col">Territoire</th>
+          <th scope="col">Valeur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let indicatorValue of indicatorValues" class="value">
+          <td>{{ indicatorValue.territory }}</td>
+          <td>{{ indicatorValue.value | number: '.0-2' }}&nbsp;{{ indicatorValue.unit }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!isFetchingValues && noData" id="no-data">Cet indicateur n'existe pas</div>
+  </div>
+</div>
