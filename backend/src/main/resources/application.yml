@@ -6,6 +6,8 @@ diversity:
   contact:
     email: contact@mnhn.com
     subject: Message du portail diversité
+  security:
+    secret-key: 'tw/Nir/A8vY0yz4rU1Ea3KFzGTW5S6IrEkFLPYDf32E='
 
 server:
   compression:

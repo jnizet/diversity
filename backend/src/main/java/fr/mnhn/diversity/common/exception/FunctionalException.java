@@ -8,7 +8,8 @@ public class FunctionalException extends BadRequestException {
         INDICATOR_CATEGORY_NAME_ALREADY_EXISTING("Une catégorie avec ce nom existe déjà"),
         INDICATOR_SLUG_ALREADY_EXISTING("Un indicateur avec ce slug existe déjà"),
         INDICATOR_VALUES_NOT_FOUND("Cet identifiant BIOM ne retourne pas de valeurs"),
-        INDICATOR_BIOM_ID_ALREADY_EXISTING("Un indicateur avec ce BIOM ID existe déjà");
+        INDICATOR_BIOM_ID_ALREADY_EXISTING("Un indicateur avec ce BIOM ID existe déjà"),
+        AUTHENTICATION_FAILED("L'identification a échoué");
 
         private final String message;
 

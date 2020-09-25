@@ -89,3 +89,11 @@ create index page_element_text_idx
 
 create sequence page_element_seq start with 1000;
 
+create table app_user (
+    id              BIGINT primary key,
+    login           VARCHAR not null,
+    hashed_password VARCHAR not null,
+    constraint app_user_login_un unique (login)
+);
+
+create sequence app_user_seq start with 1000;

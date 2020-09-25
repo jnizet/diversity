@@ -22,6 +22,7 @@ public class RepositoryTests {
             "ecogesture",
             "page_element",
             "page",
-            "image"
+            "image",
+            "app_user"
         );
 }

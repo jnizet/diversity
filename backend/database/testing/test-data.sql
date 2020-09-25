@@ -7,6 +7,7 @@ delete from ecogesture;
 delete from page_element;
 delete from page;
 delete from image;
+delete from app_user;
 
 insert into indicator (id, biom_id, slug) values
     (1, 'i1', 'especes-envahissantes'),
@@ -236,5 +237,8 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 31, 'IMAGE', 'next.image', null, 104, 'Espèces envahissantes', null, false),
     (nextval('page_element_seq'), 31, 'LINK', 'next.link', 'Espèces envahissantes', null, null, '/indicateurs/especes-envahissantes', false);
 
+-- Users
+insert into app_user (id, login, hashed_password) values
+   (nextval('app_user_seq'), 'admin', 'x9KbDbdQrtgj+VSVZaeaugL+1ss0J9UeVeX3IjtZ6Qv0QT1s6r2HQw==');
 
 commit;

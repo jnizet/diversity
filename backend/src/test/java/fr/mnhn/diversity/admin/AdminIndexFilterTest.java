@@ -3,6 +3,8 @@ package fr.mnhn.diversity.admin;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -12,14 +14,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Tests for {@link AdminIndexFilter}
  * @author JB Nizet
  */
+@WebMvcTest(AdminWebConfig.class)
 class AdminIndexFilterTest {
+
+    @Autowired
+    private MockMvc mockMvc;
 
     private AdminIndexFilter filter;
 
@@ -78,5 +87,11 @@ class AdminIndexFilterTest {
 
         verify(chain, never()).doFilter(any(), any());
         assertThat(response.getForwardedUrl()).isEqualTo("/admin/index.html");
+    }
+
+    @Test
+    void shouldBeIntegratedInApplication() throws Exception {
+        mockMvc.perform(get("/admin/indicator-categories"))
+               .andExpect(forwardedUrl("/admin/index.html"));
     }
 }
