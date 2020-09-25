@@ -24,7 +24,7 @@ describe('IndicatorService', () => {
     service.list().subscribe(indicators => (actual = indicators));
 
     const expected = [] as Array<Indicator>;
-    http.expectOne({ method: 'GET', url: 'api/indicators' }).flush(expected);
+    http.expectOne({ method: 'GET', url: '/api/indicators' }).flush(expected);
     expect(actual).toBe(expected);
   });
 
@@ -34,7 +34,7 @@ describe('IndicatorService', () => {
     service.get(42).subscribe(indicator => (actual = indicator));
 
     const expected = { id: 42 } as Indicator;
-    http.expectOne({ method: 'GET', url: 'api/indicators/42' }).flush(expected);
+    http.expectOne({ method: 'GET', url: '/api/indicators/42' }).flush(expected);
     expect(actual).toBe(expected);
   });
 
@@ -45,7 +45,7 @@ describe('IndicatorService', () => {
     service.create(command).subscribe(indicator => (actual = indicator));
 
     const expected = { id: 42 } as Indicator;
-    const testRequest = http.expectOne({ method: 'POST', url: 'api/indicators' });
+    const testRequest = http.expectOne({ method: 'POST', url: '/api/indicators' });
     expect(testRequest.request.body).toBe(command);
     testRequest.flush(expected);
     expect(actual).toBe(expected);
@@ -57,7 +57,7 @@ describe('IndicatorService', () => {
     const command = { slug: 'foo' } as IndicatorCommand;
     service.update(42, command).subscribe(() => (done = true));
 
-    const testRequest = http.expectOne({ method: 'PUT', url: 'api/indicators/42' });
+    const testRequest = http.expectOne({ method: 'PUT', url: '/api/indicators/42' });
     expect(testRequest.request.body).toBe(command);
     testRequest.flush(null);
     expect(done).toBe(true);
@@ -68,7 +68,7 @@ describe('IndicatorService', () => {
 
     service.delete(42).subscribe(() => (done = true));
 
-    http.expectOne({ method: 'DELETE', url: 'api/indicators/42' }).flush(null);
+    http.expectOne({ method: 'DELETE', url: '/api/indicators/42' }).flush(null);
     expect(done).toBe(true);
   });
 });
