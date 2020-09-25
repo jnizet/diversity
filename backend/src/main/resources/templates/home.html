@@ -22,9 +22,9 @@
           <div class="col-4">
             <h1 class="section-top-title" th:text="*{carousel.title.text}">Découvrez la biodiversité des outre-mer</h1>
             <p th:text="*{carousel.text.text}">Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer</p>
-            <a th:href="@{/territoires}" th:text="*{carousel.territoriesButton.text}" class="cta-primary yellow"
-              >découvrir les territoires</a
-            >
+            <a th:href="@{/territoires}" th:text="*{carousel.territoriesButton.text}" class="cta-primary yellow">
+              découvrir les territoires
+            </a>
           </div>
         </div>
         <div class="swiper-pagination">
@@ -43,7 +43,6 @@
                 <div class="legend-text" th:text="*{image.alt}">Chelonia mydas ©  B. Guichard</div>
               </div>
               <img biom:image="*{image}" loading="lazy" sizes="100vw" class="img-full" />
-              <!-- TODO srcset -->
             </div>
           </div>
         </div>
@@ -56,9 +55,8 @@
           <div class="col-5">
             <p class="apropos-paragraph" th:text="*{presentation.text.text}">
               Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités
-              humaines.
-              <strong>La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer</strong>
-              afin que chacun, résident ou voyageur de passage, puisse s’informer et s’impliquer à son échelle pour la préservation de cette
+              humaines. La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer afin que
+              chacun, résident ou voyageur de passage, puisse s’informer et s’impliquer à son échelle pour la préservation de cette
               biodiversité exceptionnelle.
             </p>
             <div class="swiper-container swiper-apropos">
@@ -70,7 +68,9 @@
                       <div class="apropos-item-title">Indicateurs</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text">Des chiffres clefs pour surveiller l’activité des territoires</p>
+                    <p class="apropos-item-text" th:text="*{presentation.indicators.text}">
+                      Des chiffres clefs pour surveiller l’activité des territoires
+                    </p>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -80,7 +80,9 @@
                       <div class="apropos-item-title">Éco-gestes</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text">Des gestes simples à mettre en place dans notre quotidien</p>
+                    <p class="apropos-item-text" th:text="*{presentation.ecogestures.text}">
+                      Des gestes simples à mettre en place dans notre quotidien
+                    </p>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -90,7 +92,7 @@
                       <div class="apropos-item-title">Sciences participatives</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text">Contribuez à la mise à jour de la base de donnée</p>
+                    <p class="apropos-item-text" th:text="*{presentation.science.text}">Contribuez à la mise à jour de la base de donnée</p>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -100,7 +102,9 @@
                       <div class="apropos-item-title">Territoires</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text">Participer avec les acteurs locaux à la préservation des Outres-mer</p>
+                    <p class="apropos-item-text" th:text="*{presentation.territories.text}">
+                      Participer avec les acteurs locaux à la préservation des Outres-mer
+                    </p>
                   </a>
                 </li>
               </ul>

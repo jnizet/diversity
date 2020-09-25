@@ -60,7 +60,12 @@ class HomeControllerTest {
                     ),
                     "presentation", Map.of(
                         "title", text("Presentation"),
-                        "text", text("presentation text")
+                        "text", text("presentation text"),
+                        "indicators", text("indicators text"),
+                        "ecogestures", text("ecogestures text"),
+                        "science", text("science text"),
+                        "territories", text("territories text"),
+                        "quote", text("quote text")
                     ),
                     "testimony", Map.of(
                         "title", text("Testimony"),
