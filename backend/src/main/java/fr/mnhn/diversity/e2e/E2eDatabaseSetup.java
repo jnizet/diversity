@@ -11,6 +11,7 @@ import com.ninja_squad.dbsetup.generator.SequenceValueGenerator;
 import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import com.ninja_squad.dbsetup.operation.Operation;
 import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.admin.security.PasswordHasher;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
@@ -30,9 +31,11 @@ import org.springframework.stereotype.Component;
 public class E2eDatabaseSetup implements CommandLineRunner {
 
     private final DataSourceDestination destination;
+    private final PasswordHasher passwordHasher;
 
-    public E2eDatabaseSetup(DataSource dataSource) {
+    public E2eDatabaseSetup(DataSource dataSource, PasswordHasher passwordHasher) {
         this.destination = new DataSourceDestination(dataSource);
+        this.passwordHasher = passwordHasher;
     }
 
     @Override
@@ -47,7 +50,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 "ecogesture",
                 "page_element",
                 "page",
-                "image"
+                "image",
+                "app_user"
             );
 
         Operation categories =
@@ -342,6 +346,12 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(LINK, "next.link", "Espèces envahissantes", null, null, "/indicateurs/especes-envahissantes", false)
                 .build();
 
+        Operation users = insertInto("app_user")
+            .withGeneratedValue("id", ValueGenerators.sequence())
+            .columns("login", "hashed_password")
+            .values("admin", passwordHasher.hash("password"))
+            .build();
+
         new DbSetup(destination, sequenceOf(
             deleteAll,
             categories,
@@ -360,7 +370,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             stPierreEtMiquelonElements,
             indicatorHomeElements,
             especesEnvahissantesElements,
-            deforestationElements
+            deforestationElements,
+            users
         )).launch();
     }
 }
