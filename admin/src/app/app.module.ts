@@ -19,6 +19,8 @@ import { EditIndicatorCategoryComponent } from './edit-indicator-category/edit-i
 import { ValidationDefaultsComponent } from './validation-defaults/validation-defaults.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
 import { EditIndicatorComponent } from './edit-indicator/edit-indicator.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { AuthenticationInterceptorService } from './authentication-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { EditIndicatorComponent } from './edit-indicator/edit-indicator.componen
     EditIndicatorCategoryComponent,
     ValidationDefaultsComponent,
     IndicatorsComponent,
-    EditIndicatorComponent
+    EditIndicatorComponent,
+    AuthenticationComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,10 @@ import { EditIndicatorComponent } from './edit-indicator/edit-indicator.componen
     NgbToastModule,
     ValdemortModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

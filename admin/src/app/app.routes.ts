@@ -4,34 +4,43 @@ import { IndicatorCategoriesComponent } from './indicator-categories/indicator-c
 import { EditIndicatorCategoryComponent } from './edit-indicator-category/edit-indicator-category.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
 import { EditIndicatorComponent } from './edit-indicator/edit-indicator.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { AuthenticationGuard } from './authentication.guard';
 
 export const APP_ROUTES: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'login', component: AuthenticationComponent },
   {
-    path: 'indicator-categories',
+    path: '',
+    canActivate: [AuthenticationGuard],
     children: [
-      { path: '', component: IndicatorCategoriesComponent },
+      { path: '', component: HomeComponent },
       {
-        path: 'new',
-        component: EditIndicatorCategoryComponent
+        path: 'indicator-categories',
+        children: [
+          { path: '', component: IndicatorCategoriesComponent },
+          {
+            path: 'new',
+            component: EditIndicatorCategoryComponent
+          },
+          {
+            path: ':indicatorCategoryId/edit',
+            component: EditIndicatorCategoryComponent
+          }
+        ]
       },
       {
-        path: ':indicatorCategoryId/edit',
-        component: EditIndicatorCategoryComponent
-      }
-    ]
-  },
-  {
-    path: 'indicators',
-    children: [
-      { path: '', component: IndicatorsComponent },
-      {
-        path: 'new',
-        component: EditIndicatorComponent
-      },
-      {
-        path: ':indicatorId/edit',
-        component: EditIndicatorComponent
+        path: 'indicators',
+        children: [
+          { path: '', component: IndicatorsComponent },
+          {
+            path: 'new',
+            component: EditIndicatorComponent
+          },
+          {
+            path: ':indicatorId/edit',
+            component: EditIndicatorComponent
+          }
+        ]
       }
     ]
   }

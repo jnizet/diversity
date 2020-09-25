@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-center mt-5">
+  <form [formGroup]="form" (ngSubmit)="login()" class="p-5 border rounded">
+    <div class="text-center mb-4">
+      <img src="assets/logo_black.svg" alt="" />
+    </div>
+    <div class="form-group">
+      <label for="login">Identifiant</label>
+      <input formControlName="login" class="form-control" id="login" />
+      <val-errors controlName="login" label="L'identifiant"></val-errors>
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input formControlName="password" type="password" class="form-control" id="password" />
+      <val-errors controlName="password" label="Le mot de passe"></val-errors>
+    </div>
+    <button #authenticationButton class="btn btn-primary">Connexion</button>
+  </form>
+</div>

@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark py-0">
+<nav *ngIf="user$ | async as user" class="navbar navbar-expand-md navbar-dark bg-dark py-0">
   <span class="navbar-brand">
     <img src="assets/logo.png" alt="Logo" />
+    {{ user.login }}
   </span>
   <button
     class="navbar-toggler"
@@ -26,5 +27,14 @@
         </a>
       </li>
     </ul>
+    <div class="navbar-nav">
+      <li class="navbar-text">{{ user.login }}</li>
+      <li class="nav-item">
+        <a class="nav-link" role="button" (click)="logout($event)" id="nav-logout">
+          <span class="sr-only">Déconnexion</span>
+          <fa-icon [icon]="logoutIcon"></fa-icon>
+        </a>
+      </li>
+    </div>
   </div>
 </nav>
