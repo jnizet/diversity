@@ -26,6 +26,12 @@
           <span>Catégories des indicateurs</span>
         </a>
       </li>
+      <li class="nav-item" id="ecogestures">
+        <a class="nav-link" routerLink="/ecogestures" (click)="collapsed = true">
+          <fa-icon [icon]="ecogesturesIcon" class="mr-1"></fa-icon>
+          <span>Éco-gestes</span>
+        </a>
+      </li>
     </ul>
     <div class="navbar-nav">
       <li class="navbar-text">{{ user.login }}</li>

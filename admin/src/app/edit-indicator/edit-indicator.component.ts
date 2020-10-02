@@ -10,17 +10,13 @@ import { IndicatorCategory } from '../indicator-category.model';
 import { finalize } from 'rxjs/operators';
 import { faMinusCircle, faPlusCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { IndicatorCategoryService } from '../indicator-category.service';
+import { SLUG_REGEX } from '../validators';
 
 interface FormValue {
   slug: string;
   biomId: string;
   categoryIds: Array<number>;
 }
-
-// A slug has the form words-with-sometimes-numbers-like-2
-// So the regex is one or more repetition of [a-z0-9]
-// followed by zero or more (not captured) groups of hyphen plus [a-z0-9] repetition
-const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 @Component({
   selector: 'biom-edit-indicator',

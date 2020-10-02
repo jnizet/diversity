@@ -1,0 +1,24 @@
+<h1>{{ mode === 'update' ? 'Modifier' : 'Créer' }} un éco-geste</h1>
+
+<div class="content mt-2">
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="form-group">
+      <label for="slug">Slug</label>
+      <input class="form-control" formControlName="slug" id="slug" />
+      <small id="slug-id-hint" class="form-text text-muted"
+        >Nom définissant l'adresse de l'éco-geste dans le portail. Par ex: <code>proteger-les-coraux</code></small
+      >
+      <val-errors controlName="slug" label="Le slug">
+        <ng-template valError="pattern"
+          >Le slug doit avoir la forme <code>mot-autre-mot</code>, avec autant de mots et tirets que nécessaires, et seulement des
+          minuscules ou des chiffres, sans accents ou caractères spéciaux.
+        </ng-template>
+      </val-errors>
+    </div>
+
+    <div>
+      <button class="btn btn-primary mr-2" id="save-button">Enregistrer</button>
+      <a routerLink="/indicator-categories" class="btn btn-danger">Annuler</a>
+    </div>
+  </form>
+</div>

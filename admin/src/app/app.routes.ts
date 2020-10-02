@@ -6,6 +6,8 @@ import { IndicatorsComponent } from './indicators/indicators.component';
 import { EditIndicatorComponent } from './edit-indicator/edit-indicator.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthenticationGuard } from './authentication.guard';
+import { EcogesturesComponent } from './ecogestures/ecogestures.component';
+import { EditEcogestureComponent } from './edit-ecogesture/edit-ecogesture.component';
 
 export const APP_ROUTES: Routes = [
   { path: 'login', component: AuthenticationComponent },
@@ -25,6 +27,20 @@ export const APP_ROUTES: Routes = [
           {
             path: ':indicatorCategoryId/edit',
             component: EditIndicatorCategoryComponent
+          }
+        ]
+      },
+      {
+        path: 'ecogestures',
+        children: [
+          { path: '', component: EcogesturesComponent },
+          {
+            path: 'new',
+            component: EditEcogestureComponent
+          },
+          {
+            path: ':ecogestureId/edit',
+            component: EditEcogestureComponent
           }
         ]
       },
