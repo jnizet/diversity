@@ -30,8 +30,8 @@ public class IndicatorCategoryRestController {
 
     private final IndicatorCategoryRepository indicatorCategoryRepository;
 
-    public IndicatorCategoryRestController(IndicatorCategoryRepository indicatorCategoryDao) {
-        this.indicatorCategoryRepository = indicatorCategoryDao;
+    public IndicatorCategoryRestController(IndicatorCategoryRepository indicatorCategoryRepository) {
+        this.indicatorCategoryRepository = indicatorCategoryRepository;
     }
 
     @GetMapping

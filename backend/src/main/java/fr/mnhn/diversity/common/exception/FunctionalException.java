@@ -9,6 +9,7 @@ public class FunctionalException extends BadRequestException {
         INDICATOR_SLUG_ALREADY_EXISTING("Un indicateur avec ce slug existe déjà"),
         INDICATOR_VALUES_NOT_FOUND("Cet identifiant BIOM ne retourne pas de valeurs"),
         INDICATOR_BIOM_ID_ALREADY_EXISTING("Un indicateur avec ce BIOM ID existe déjà"),
+        ECOGESTURE_SLUG_ALREADY_EXISTING("Un éco-geste avec ce slug existe déjà"),
         AUTHENTICATION_FAILED("L'identification a échoué");
 
         private final String message;

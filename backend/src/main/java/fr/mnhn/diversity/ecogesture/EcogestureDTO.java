@@ -3,21 +3,19 @@ package fr.mnhn.diversity.ecogesture;
 import java.util.Objects;
 
 /**
- * An ecogesture, as stored in the database
- * @author JB Nizet
+ * DTO containing information about an ecogesture
  */
-public final class Ecogesture {
+public final class EcogestureDTO {
     private final Long id;
     private final String slug;
 
-    public Ecogesture(Long id, String slug) {
+    public EcogestureDTO(Long id, String slug) {
         this.id = id;
         this.slug = slug;
     }
 
-    public Ecogesture(String slug) {
-        this.id = null;
-        this.slug = slug;
+    public EcogestureDTO(Ecogesture ecogesture) {
+        this(ecogesture.getId(), ecogesture.getSlug());
     }
 
     public Long getId() {
@@ -30,13 +28,9 @@ public final class Ecogesture {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Ecogesture)) {
-            return false;
-        }
-        Ecogesture that = (Ecogesture) o;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EcogestureDTO that = (EcogestureDTO) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(slug, that.slug);
     }
@@ -48,16 +42,9 @@ public final class Ecogesture {
 
     @Override
     public String toString() {
-        return "Ecogesture{" +
+        return "EcogestureDTO{" +
             "id=" + id +
             ", slug='" + slug + '\'' +
             '}';
-    }
-
-    /**
-     * Creates a copy of the ecogesture with the specified slug.
-     */
-    public Ecogesture withSlug(String slug) {
-        return new Ecogesture(this.id, slug);
     }
 }
