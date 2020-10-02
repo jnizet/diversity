@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * Security-reletaed properties
+ * Security-related properties
  * @author JB Nizet
  */
 @ConfigurationProperties("diversity.security")

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 /**
- * Service used to delegate to the globa window object, but be easily mockable
+ * Service used to delegate to the global window object, but be easily mockable
  */
 @Injectable({
   providedIn: 'root'

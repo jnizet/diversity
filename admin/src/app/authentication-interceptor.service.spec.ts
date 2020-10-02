@@ -55,5 +55,6 @@ describe('AuthenticationInterceptorService', () => {
 
     http.expectOne('/api/indicators');
     http.verify();
+    expect().nothing();
   });
 });

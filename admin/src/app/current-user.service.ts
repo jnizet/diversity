@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticatedUser } from './authentication.service';
 import { WindowService } from './window.service';
 
-const USER_KEY = 'user';
+export const USER_KEY = 'user';
 
 @Injectable({
   providedIn: 'root'
