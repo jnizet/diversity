@@ -11,11 +11,14 @@ import { finalize } from 'rxjs/operators';
 import { faMinusCircle, faPlusCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { IndicatorCategoryService } from '../indicator-category.service';
 import { SLUG_REGEX } from '../validators';
+import { Ecogesture } from '../ecogesture.model';
+import { EcogestureService } from '../ecogesture.service';
 
 interface FormValue {
   slug: string;
   biomId: string;
   categoryIds: Array<number>;
+  ecogestureIds: Array<number>;
 }
 
 @Component({
@@ -28,12 +31,14 @@ export class EditIndicatorComponent implements OnInit {
   editedIndicator: Indicator;
   indicatorValues: Array<IndicatorValue>;
   categories: Array<IndicatorCategory>;
+  ecogestures: Array<Ecogesture>;
   isFetchingValues = false;
   noData = false;
   spinnerIcon = faSpinner;
   addIcon = faPlusCircle;
   removeIcon = faMinusCircle;
   categoryIds: FormArray;
+  ecogestureIds: FormArray;
   form: FormGroup;
 
   constructor(
@@ -41,6 +46,7 @@ export class EditIndicatorComponent implements OnInit {
     fb: FormBuilder,
     private indicatorService: IndicatorService,
     private indicatorCategoryService: IndicatorCategoryService,
+    private ecogestureService: EcogestureService,
     private router: Router,
     private toastService: ToastService
   ) {
@@ -49,15 +55,18 @@ export class EditIndicatorComponent implements OnInit {
       // we need at least one category
       array => (array.value.filter((id: number) => id).length === 0 ? { required: true } : null)
     );
+    this.ecogestureIds = fb.array([null]);
     this.form = fb.group({
       slug: ['', [Validators.required, Validators.pattern(SLUG_REGEX)]],
       biomId: ['', [Validators.required, Validators.pattern(SLUG_REGEX)]],
-      categoryIds: this.categoryIds
+      categoryIds: this.categoryIds,
+      ecogestureIds: this.ecogestureIds
     });
   }
 
   ngOnInit(): void {
     this.indicatorCategoryService.list().subscribe(categories => (this.categories = categories));
+    this.ecogestureService.list().subscribe(ecogestures => (this.ecogestures = ecogestures));
     const indicatorId = this.route.snapshot.paramMap.get('indicatorId');
     if (indicatorId) {
       this.mode = 'update';
@@ -70,6 +79,8 @@ export class EditIndicatorComponent implements OnInit {
         this.form.patchValue(formValue);
         this.categoryIds.clear();
         indicator.categories.forEach(category => this.categoryIds.push(new FormControl(category.id)));
+        this.ecogestureIds.clear();
+        indicator.ecogestures.forEach(ecogesture => this.ecogestureIds.push(new FormControl(ecogesture.id)));
       });
     }
   }
@@ -89,6 +100,21 @@ export class EditIndicatorComponent implements OnInit {
     this.categoryIds.removeAt(index);
   }
 
+  unselectedEcogestures(currentEcogesture: number) {
+    // keep the current ecogesture and the other unselected ones
+    return this.ecogestures
+      ? this.ecogestures.filter(eco => eco.id === currentEcogesture || !(this.form.value as FormValue).ecogestureIds.includes(eco.id))
+      : [];
+  }
+
+  addEcogesture() {
+    this.ecogestureIds.push(new FormControl(null));
+  }
+
+  removeEcogesture(index: number) {
+    this.ecogestureIds.removeAt(index);
+  }
+
   save() {
     if (this.form.invalid) {
       return;
@@ -98,7 +124,8 @@ export class EditIndicatorComponent implements OnInit {
     const command: IndicatorCommand = {
       slug: formValue.slug,
       biomId: formValue.biomId,
-      categoryIds: formValue.categoryIds.filter(id => id)
+      categoryIds: formValue.categoryIds.filter(id => id),
+      ecogestureIds: formValue.ecogestureIds.filter(id => id)
     };
 
     let obs: Observable<Indicator | void>;

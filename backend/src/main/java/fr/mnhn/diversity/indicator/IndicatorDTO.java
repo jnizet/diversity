@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import fr.mnhn.diversity.ecogesture.EcogestureDTO;
+
 /**
  * DTO containing information about an indicator
  */
@@ -12,12 +14,14 @@ public final class IndicatorDTO {
     private final String biomId;
     private final String slug;
     private final List<IndicatorCategoryDTO> categories;
+    private final List<EcogestureDTO> ecogestures;
 
-    public IndicatorDTO(Long id, String biomId, String slug, List<IndicatorCategoryDTO> categories) {
+    public IndicatorDTO(Long id, String biomId, String slug, List<IndicatorCategoryDTO> categories, List<EcogestureDTO> ecogestures) {
         this.id = id;
         this.biomId = biomId;
         this.slug = slug;
         this.categories = categories;
+        this.ecogestures = ecogestures;
     }
 
     public IndicatorDTO(Indicator indicator) {
@@ -25,7 +29,8 @@ public final class IndicatorDTO {
             indicator.getId(),
             indicator.getBiomId(),
             indicator.getSlug(),
-            indicator.getCategories().stream().map(IndicatorCategoryDTO::new).collect(Collectors.toList())
+            indicator.getCategories().stream().map(IndicatorCategoryDTO::new).collect(Collectors.toList()),
+            indicator.getEcogestures().stream().map(EcogestureDTO::new).collect(Collectors.toList())
         );
     }
 
@@ -45,6 +50,10 @@ public final class IndicatorDTO {
         return categories;
     }
 
+    public List<EcogestureDTO> getEcogestures() {
+        return ecogestures;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,12 +62,13 @@ public final class IndicatorDTO {
         return Objects.equals(id, that.id) &&
             Objects.equals(biomId, that.biomId) &&
             Objects.equals(slug, that.slug) &&
-            Objects.equals(categories, that.categories);
+            Objects.equals(categories, that.categories) &&
+            Objects.equals(ecogestures, that.ecogestures);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, biomId, slug, categories);
+        return Objects.hash(id, biomId, slug, categories, ecogestures);
     }
 
     @Override
@@ -68,6 +78,7 @@ public final class IndicatorDTO {
             ", biomId='" + biomId + '\'' +
             ", slug='" + slug + '\'' +
             ", categories=" + categories +
+            ", ecogestures=" + ecogestures +
             '}';
     }
 }

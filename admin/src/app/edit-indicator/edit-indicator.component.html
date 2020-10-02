@@ -36,16 +36,17 @@
       <div class="form-group" formArrayName="categoryIds">
         <label>Catégories de l'indicateur</label>
         <div class="form-row" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
-          <select class="form-control custom-select col-11" [formControlName]="index" [id]="'category-' + index">
+          <select class="form-control custom-select col-9" [formControlName]="index" [id]="'category-' + index">
             <option [ngValue]="null"></option>
             <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">
               {{ category.name }}
             </option>
           </select>
-          <div class="col-1">
+          <div class="col-3">
             <!-- Add a category if less than 2 -->
             <button *ngIf="categoryIds.controls.length < 2" type="button" class="btn btn-link add-category-button" (click)="addCategory()">
-              <fa-icon [icon]="addIcon"><span class="sr-only">Ajouter une catégorie</span></fa-icon>
+              <span class="sr-only">Ajouter une catégorie</span>
+              <fa-icon [icon]="addIcon"></fa-icon>
             </button>
             <!-- Remove a category if more than 1 -->
             <button
@@ -54,13 +55,44 @@
               class="btn btn-link remove-category-button"
               (click)="removeCategory(index)"
             >
-              <fa-icon [icon]="removeIcon"><span class="sr-only">Supprimer une catégorie</span></fa-icon>
+              <span class="sr-only">Supprimer une catégorie</span>
+              <fa-icon [icon]="removeIcon"></fa-icon>
             </button>
           </div>
         </div>
+        <small id="categories-hint" class="form-text text-muted">Au moins une catégorie, au maximum deux.</small>
         <val-errors [control]="categoryIds" label="La catégorie">
           <ng-template valError="required">Au moins une catégorie est nécessaire.</ng-template>
         </val-errors>
+      </div>
+
+      <!-- Ecogestures -->
+      <div class="form-group" formArrayName="ecogestureIds">
+        <label>Éco-gestes de l'indicateur</label>
+        <div
+          class="form-row"
+          [class.mt-2]="!first"
+          *ngFor="let ecogestureControl of ecogestureIds.controls; index as index; first as first"
+        >
+          <select class="form-control custom-select col-9" [formControlName]="index" [id]="'ecogesture-' + index">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let ecogesture of unselectedEcogestures(ecogestureControl.value)" [ngValue]="ecogesture.id">
+              {{ ecogesture.slug }}
+            </option>
+          </select>
+          <div class="col-3">
+            <!-- Add an ecogesture -->
+            <button type="button" class="btn btn-link add-ecogesture-button" (click)="addEcogesture()">
+              <span class="sr-only">Ajouter un éco-geste</span>
+              <fa-icon [icon]="addIcon"></fa-icon>
+            </button>
+            <!-- Remove an ecogesture -->
+            <button type="button" class="btn btn-link remove-ecogesture-button" (click)="removeEcogesture(index)">
+              <span class="sr-only">Supprimer un éco-geste</span>
+              <fa-icon [icon]="removeIcon"></fa-icon>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div>

@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.ecogesture.Ecogesture;
-import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -34,16 +33,14 @@ public class IndicatorController {
     private final PageRepository pageRepository;
     private final PageService pageService;
     private final IndicatorRepository indicatorRepository;
-    private final EcogestureRepository ecogestureRepository;
 
     public IndicatorController(PageRepository pageRepository,
                                PageService pageService,
-                               IndicatorRepository indicatorRepository,
-                               EcogestureRepository ecogestureRepository) {
+                               IndicatorRepository indicatorRepository
+    ) {
         this.pageRepository = pageRepository;
         this.pageService = pageService;
         this.indicatorRepository = indicatorRepository;
-        this.ecogestureRepository = ecogestureRepository;
     }
 
     @GetMapping()
@@ -102,16 +99,14 @@ public class IndicatorController {
         Map<Indicator, IndicatorValue> valuesByIndicator =
             indicatorRepository.getValuesForIndicatorsAndTerritory(indicatorsBySlug.values(), Territory.OUTRE_MER);
 
-        List<IndicatorCard> cards =
-            indicatorPages.stream()
-                          .filter(indicatorPage -> indicatorsBySlug.containsKey(indicatorPage.getName()))
-                          .filter(indicatorPage -> valuesByIndicator.containsKey(indicatorsBySlug.get(indicatorPage.getName())))
-                          .map(indicatorPage -> new IndicatorCard(indicatorsBySlug.get(indicatorPage.getName()),
-                                                                  pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL,
-                                                                                               indicatorPage),
-                                                                  valuesByIndicator.get(indicatorsBySlug.get(indicatorPage.getName()))))
-                          .collect(Collectors.toList());
-        return cards;
+        return indicatorPages.stream()
+                         .filter(indicatorPage -> indicatorsBySlug.containsKey(indicatorPage.getName()))
+                         .filter(indicatorPage -> valuesByIndicator.containsKey(indicatorsBySlug.get(indicatorPage.getName())))
+                         .map(indicatorPage -> new IndicatorCard(indicatorsBySlug.get(indicatorPage.getName()),
+                                                              pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL,
+                                                                                           indicatorPage),
+                                                              valuesByIndicator.get(indicatorsBySlug.get(indicatorPage.getName()))))
+                         .collect(Collectors.toList());
     }
 
     private List<IndicatorCategory> getCategories(List<IndicatorCard> cards) {
@@ -132,7 +127,7 @@ public class IndicatorController {
     }
 
     private List<EcogestureCard> getEcogestureCards(Indicator indicator) {
-        return ecogestureRepository.findByIndicator(indicator.getId())
+        return indicator.getEcogestures()
             .stream()
             .map(ecogesture ->
                     pageRepository.findByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())

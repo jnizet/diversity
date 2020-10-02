@@ -88,16 +88,6 @@ class EcogestureRepositoryTest {
     }
 
     @Test
-    void shouldFindByIndicator() {
-        TRACKER.skipNextLaunch();
-        assertThat(repository.findByIndicator(1L)).containsExactly(
-            new Ecogesture(1L, "slug2"),
-            new Ecogesture(3L, "slug3")
-        );
-        assertThat(repository.findByIndicator(3456L)).isEmpty();
-    }
-
-    @Test
     void shouldCreate() {
         Ecogesture ecogesture = repository.create(new Ecogesture(null, "slug4"));
         assertThat(ecogesture.getId()).isNotNull();

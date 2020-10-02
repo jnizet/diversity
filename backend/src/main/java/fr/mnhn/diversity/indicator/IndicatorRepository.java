@@ -2,10 +2,10 @@ package fr.mnhn.diversity.indicator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.territory.Territory;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -26,6 +27,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class IndicatorRepository {
 
+    private static final String INDICATOR_QUERY = "select indicator.id, indicator.biom_id, indicator.slug," +
+        " cat.id as category_id, cat.name as category_name," +
+        " eco.id as ecogesture_id, eco.slug as ecogesture_slug from indicator" +
+        " left outer join indicator_ecogesture ind_eco on indicator.id = ind_eco.indicator_id" +
+        " left outer join ecogesture eco on eco.id = ind_eco.ecogesture_id" +
+        " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
+        " left outer join category cat on cat.id = ind_cat.category_id";
+
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public IndicatorRepository(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -36,10 +45,7 @@ public class IndicatorRepository {
      * Lists all the indicators and their categories
      */
     public List<Indicator> list() {
-        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
-                " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
-                " left outer join category cat on cat.id = ind_cat.category_id";
-        return jdbcTemplate.query(query, this::extractIndicators);
+        return jdbcTemplate.query(INDICATOR_QUERY, this::extractIndicators);
     }
 
     /**
@@ -79,7 +85,17 @@ public class IndicatorRepository {
             );
             jdbcTemplate.update("insert into indicator_category (indicator_id, category_id) values (:id, :category_id)", categoryParamMap);
         });
-        return new Indicator(id, indicator.getBiomId(), indicator.getSlug(), indicator.getCategories());
+
+        // add the ecogestures
+        indicator.getEcogestures().forEach(ecogesture -> {
+            Map<String, Object> ecogestureParamMap = Map.of(
+                "id", id,
+                "ecogesture_id", ecogesture.getId()
+            );
+            jdbcTemplate.update("insert into indicator_ecogesture (indicator_id, ecogesture_id) values (:id, :ecogesture_id)", ecogestureParamMap);
+        });
+
+        return new Indicator(id, indicator.getBiomId(), indicator.getSlug(), indicator.getCategories(), indicator.getEcogestures());
     }
 
     /**
@@ -103,7 +119,18 @@ public class IndicatorRepository {
             );
             jdbcTemplate.update("insert into indicator_category (indicator_id, category_id) values (:id, :category_id)", categoryParamMap);
         });
-        return new Indicator(indicator.getId(), indicator.getBiomId(), indicator.getSlug(), indicator.getCategories());
+
+        // update the ecogestures
+        removeEcogesturesFromIndicator(indicator.getId());
+        indicator.getEcogestures().forEach(ecogesture -> {
+            Map<String, Object> ecogestureParamMap = Map.of(
+                "id", indicator.getId(),
+                "ecogesture_id", ecogesture.getId()
+            );
+            jdbcTemplate.update("insert into indicator_ecogesture (indicator_id, ecogesture_id) values (:id, :ecogesture_id)", ecogestureParamMap);
+        });
+
+        return new Indicator(indicator.getId(), indicator.getBiomId(), indicator.getSlug(), indicator.getCategories(), indicator.getEcogestures());
     }
 
     /**
@@ -114,11 +141,12 @@ public class IndicatorRepository {
         deleteValues(indicator, Set.of(Territory.values()));
         // delete from categories join table
         removeCategoriesFromIndicator(indicator.getId());
+        // delete from ecogestures join table
+        removeEcogesturesFromIndicator(indicator.getId());
         // delete from eco-gestures join table
         Map<String, Object> paramMap = Map.of(
             "id", indicator.getId()
         );
-        jdbcTemplate.update("delete from indicator_ecogesture where indicator_id = :id", paramMap);
         // delete the indicator
         jdbcTemplate.update("delete from indicator where id = :id", paramMap);
     }
@@ -128,6 +156,13 @@ public class IndicatorRepository {
             "id", indicatorId
         );
         jdbcTemplate.update("delete from indicator_category where indicator_id = :id", paramMap);
+    }
+
+    private void removeEcogesturesFromIndicator(Long indicatorId) {
+        Map<String, Object> paramMap = Map.of(
+            "id", indicatorId
+        );
+        jdbcTemplate.update("delete from indicator_ecogesture where indicator_id = :id", paramMap);
     }
 
     /**
@@ -153,10 +188,10 @@ public class IndicatorRepository {
      */
     public void insertValue(Indicator indicator, Territory territory, IndicatorValue indicatorValue) {
         Map<String, Object> paramMap = Map.of(
-                "indicator_id", indicator.getId(),
-                "territory", territory.name(),
-                "value", indicatorValue.getValue(),
-                "unit", indicatorValue.getUnit()
+            "indicator_id", indicator.getId(),
+            "territory", territory.name(),
+            "value", indicatorValue.getValue(),
+            "unit", indicatorValue.getUnit()
         );
         jdbcTemplate.update("insert into indicator_value (id, indicator_id, territory, value, unit) values (nextval('indicator_value_seq'), :indicator_id, :territory, :value, :unit)", paramMap);
     }
@@ -166,17 +201,17 @@ public class IndicatorRepository {
      */
     public Map<Territory, IndicatorValue> getValues(Indicator indicator) {
         return jdbcTemplate.query(
-                "select value, unit, territory from indicator_value where indicator_id = :indicator_id",
-                Map.of("indicator_id", indicator.getId()),
-                (rs) -> {
-                    Map<Territory, IndicatorValue> values = new HashMap<>();
-                    while (rs.next()) {
-                        String territoryKey = rs.getString("territory");
-                        IndicatorValue value = new IndicatorValue(rs.getDouble("value"), rs.getString("unit"));
-                        values.put(Territory.valueOf(territoryKey), value);
-                    }
-                    return values;
-                });
+            "select value, unit, territory from indicator_value where indicator_id = :indicator_id",
+            Map.of("indicator_id", indicator.getId()),
+            (rs) -> {
+                Map<Territory, IndicatorValue> values = new HashMap<>();
+                while (rs.next()) {
+                    String territoryKey = rs.getString("territory");
+                    IndicatorValue value = new IndicatorValue(rs.getDouble("value"), rs.getString("unit"));
+                    values.put(Territory.valueOf(territoryKey), value);
+                }
+                return values;
+            });
     }
 
     /**
@@ -207,46 +242,45 @@ public class IndicatorRepository {
     }
 
     public Optional<Indicator> findById(Long id) {
-        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
-            " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
-            " left outer join category cat on cat.id = ind_cat.category_id" +
-            " where indicator.id = :id";
+        String query = INDICATOR_QUERY + " where indicator.id = :id";
         List<Indicator> indicators = jdbcTemplate.query(query, Map.of("id", id), this::extractIndicators);
         return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
     }
 
     public Optional<Indicator> findBySlug(String slug) {
-        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
-            " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
-            " left outer join category cat on cat.id = ind_cat.category_id" +
-            " where indicator.slug = :slug";
+        String query = INDICATOR_QUERY + " where indicator.slug = :slug";
         List<Indicator> indicators = jdbcTemplate.query(query, Map.of("slug", slug), this::extractIndicators);
         return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
     }
 
     public Optional<Indicator> findByBiomId(String biomId) {
-        String query = "select indicator.id, indicator.biom_id, indicator.slug, cat.id as category_id, cat.name as category_name from indicator" +
-            " left outer join indicator_category ind_cat on indicator.id = ind_cat.indicator_id" +
-            " left outer join category cat on cat.id = ind_cat.category_id" +
-            " where indicator.biom_id = :biomId";
+        String query = INDICATOR_QUERY + " where indicator.biom_id = :biomId";
         List<Indicator> indicators = jdbcTemplate.query(query, Map.of("biomId", biomId), this::extractIndicators);
         return indicators.isEmpty() ? Optional.empty() : Optional.of(indicators.get(0));
     }
 
     private List<Indicator> extractIndicators(ResultSet rs) throws SQLException {
         Map<Long, Indicator> indicatorsById = new HashMap<>();
-        Map<Long, List<IndicatorCategory>> categoriesByIndicatorId = new HashMap<>();
-        while(rs.next()) {
+        Map<Long, HashSet<IndicatorCategory>> categoriesByIndicatorId = new HashMap<>();
+        Map<Long, HashSet<Ecogesture>> ecogesturesByIndicatorId = new HashMap<>();
+        while (rs.next()) {
             long indicatorId = rs.getLong("id");
             String biomId = rs.getString("biom_id");
             String slug = rs.getString("slug");
             indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId, slug));
-            List<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId,
-                                                                                                     id -> new ArrayList<>());
+            HashSet<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId,
+                                                                                                     id -> new HashSet<>());
             long categoryId = rs.getLong("category_id");
             if (!rs.wasNull()) { // if an indicator has a category
                 String categoryName = rs.getString("category_name");
                 categoriesForIndicator.add(new IndicatorCategory(categoryId, categoryName));
+            }
+            HashSet<Ecogesture> ecogesturesForIndicator = ecogesturesByIndicatorId.computeIfAbsent(indicatorId,
+                                                                                                id -> new HashSet<>());
+            long ecogestureId = rs.getLong("ecogesture_id");
+            if (!rs.wasNull()) { // if an indicator has an ecogesture
+                String ecogestureSlug = rs.getString("ecogesture_slug");
+                ecogesturesForIndicator.add(new Ecogesture(ecogestureId, ecogestureSlug));
             }
         }
 
@@ -259,7 +293,11 @@ public class IndicatorRepository {
                                                              categoriesByIndicatorId.get(indicator.getId())
                                                                                     .stream()
                                                                                     .sorted(Comparator.comparing(IndicatorCategory::getName))
-                                                                                    .collect(Collectors.toList())
+                                                                                    .collect(Collectors.toList()),
+                                                             ecogesturesByIndicatorId.get(indicator.getId())
+                                                                                     .stream()
+                                                                                     .sorted(Comparator.comparing(Ecogesture::getSlug))
+                                                                                     .collect(Collectors.toList())
                              ))
                              .collect(Collectors.toList());
     }

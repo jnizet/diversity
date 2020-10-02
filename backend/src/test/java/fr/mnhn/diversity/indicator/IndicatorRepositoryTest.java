@@ -1,6 +1,7 @@
 package fr.mnhn.diversity.indicator;
 
-import static com.ninja_squad.dbsetup.Operations.*;
+import static com.ninja_squad.dbsetup.Operations.insertInto;
+import static com.ninja_squad.dbsetup.Operations.sequenceOf;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.DELETE_ALL;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.TRACKER;
 import static fr.mnhn.diversity.territory.Territory.*;
@@ -17,6 +18,7 @@ import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import fr.mnhn.diversity.common.testing.RepositoryTest;
+import fr.mnhn.diversity.ecogesture.Ecogesture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ class IndicatorRepositoryTest {
     IndicatorCategory category1 = new IndicatorCategory(101L, "category1");
     IndicatorCategory category2 = new IndicatorCategory(102L, "category2");
 
+    Ecogesture ecogesture1 = new Ecogesture(301L, "ecogesture-1");
+    Ecogesture ecogesture2 = new Ecogesture(302L, "ecogesture-2");
+
     @BeforeEach
     void prepare() {
 
@@ -44,20 +49,31 @@ class IndicatorRepositoryTest {
                                 DELETE_ALL,
                                 insertInto("category")
                                         .columns("id", "name")
-                                        .values(101L, "category1")
-                                        .values(102L, "category2")
+                                        .values(category1.getId(), category1.getName())
+                                        .values(category2.getId(), category2.getName())
                                         .build(),
+                                insertInto("ecogesture")
+                                    .columns("id", "slug")
+                                    .values(ecogesture1.getId(), ecogesture1.getSlug())
+                                    .values(ecogesture2.getId(), ecogesture2.getSlug())
+                                    .build(),
                                 insertInto("indicator")
                                         .columns("id", "biom_id", "slug")
                                         .values(1L, "indicator2", "slug2")
                                         .values(2L, "indicator1", "slug1")
                                         .values(3L, "indicator3", "slug3")
                                         .build(),
+                                insertInto("indicator_ecogesture")
+                                    .columns("indicator_id", "ecogesture_id")
+                                    .values(2L, ecogesture2.getId())
+                                    .values(2L, ecogesture1.getId())
+                                    .values(1L, ecogesture2.getId())
+                                    .build(),
                                 insertInto("indicator_category")
                                         .columns("indicator_id", "category_id")
-                                        .values(2L, 102L)
-                                        .values(2L, 101L)
-                                        .values(1L, 102L)
+                                        .values(2L, category2.getId())
+                                        .values(2L, category1.getId())
+                                        .values(1L, category2.getId())
                                         .build(),
                                 insertInto("indicator_value")
                                         .withGeneratedValue("id", ValueGenerators.sequence())
@@ -76,9 +92,9 @@ class IndicatorRepositoryTest {
     void shouldListIndicators() {
         TRACKER.skipNextLaunch();
         assertThat(repository.list()).containsExactly(
-                new Indicator(2L, "indicator1", "slug1", List.of(category1, category2)),
-                new Indicator(1L, "indicator2", "slug2", List.of(category2)),
-                new Indicator(3L, "indicator3", "slug3", List.of())
+                new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2)),
+                new Indicator(1L, "indicator2", "slug2", List.of(category2), List.of(ecogesture2)),
+                new Indicator(3L, "indicator3", "slug3", List.of(), List.of())
         );
     }
 
@@ -86,7 +102,7 @@ class IndicatorRepositoryTest {
     void shouldFindBySlug() {
         TRACKER.skipNextLaunch();
         assertThat(repository.findBySlug("slug1")).contains(
-            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2))
+            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
         );
         assertThat(repository.findBySlug("unknown")).isEmpty();
     }
@@ -95,7 +111,7 @@ class IndicatorRepositoryTest {
     void shouldFindById() {
         TRACKER.skipNextLaunch();
         assertThat(repository.findById(2L)).contains(
-            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2))
+            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
         );
         assertThat(repository.findById(423L)).isEmpty();
     }
@@ -104,27 +120,27 @@ class IndicatorRepositoryTest {
     void shouldFindByBiomId() {
         TRACKER.skipNextLaunch();
         assertThat(repository.findByBiomId("indicator1")).contains(
-            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2))
+            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
         );
         assertThat(repository.findByBiomId("other")).isEmpty();
     }
 
     @Test
     void shouldCreateIndicator() {
-        Indicator indicator = new Indicator( "indicator5", "slug5", List.of(category1, category2));
+        Indicator indicator = new Indicator( "indicator5", "slug5", List.of(category1, category2), List.of(ecogesture1, ecogesture2));
 
         Indicator createdIndicator = repository.create(indicator);
 
         assertThat(createdIndicator.getId()).isNotNull();
 
         assertThat(repository.findById(createdIndicator.getId())).contains(
-            new Indicator(createdIndicator.getId(), "indicator5", "slug5", List.of(category1, category2))
+            new Indicator(createdIndicator.getId(), "indicator5", "slug5", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
         );
     }
 
     @Test
     void shouldDeleteIndicator() {
-        Indicator indicator = new Indicator(2L, "indicator2", "slug2", List.of(category1));
+        Indicator indicator = new Indicator(2L, "indicator2", "slug2", List.of(category1), List.of(ecogesture1));
 
         repository.delete(indicator);
 
@@ -134,12 +150,12 @@ class IndicatorRepositoryTest {
 
     @Test
     void shouldUpdateIndicator() {
-        Indicator indicator = new Indicator(2L, "indicator21", "slug21", List.of(category1));
+        Indicator indicator = new Indicator(2L, "indicator21", "slug21", List.of(category1), List.of(ecogesture1));
 
         Indicator updatedIndicator = repository.update(indicator);
 
         assertThat(repository.findById(updatedIndicator.getId())).contains(
-            new Indicator(updatedIndicator.getId(), "indicator21", "slug21", List.of(category1))
+            new Indicator(updatedIndicator.getId(), "indicator21", "slug21", List.of(category1), List.of(ecogesture1))
         );
     }
 

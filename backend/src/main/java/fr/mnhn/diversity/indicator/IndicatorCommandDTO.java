@@ -13,16 +13,19 @@ public final class IndicatorCommandDTO {
     private final String biomId;
     private final String slug;
     private final List<Long> categoryIds;
+    private final List<Long> ecogestureIds;
 
     @JsonCreator
     public IndicatorCommandDTO(
         @JsonProperty("biomId") String biomId,
         @JsonProperty("slug") String slug,
-        @JsonProperty("categoryIds") List<Long> categoryIds
+        @JsonProperty("categoryIds") List<Long> categoryIds,
+        @JsonProperty("ecogestureIds") List<Long> ecogestureIds
     ) {
         this.biomId = biomId;
         this.slug = slug;
         this.categoryIds = categoryIds;
+        this.ecogestureIds = ecogestureIds;
     }
 
     public String getBiomId() {
@@ -37,6 +40,10 @@ public final class IndicatorCommandDTO {
         return categoryIds;
     }
 
+    public List<Long> getEcogestureIds() {
+        return ecogestureIds;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,12 +51,13 @@ public final class IndicatorCommandDTO {
         IndicatorCommandDTO that = (IndicatorCommandDTO) o;
         return Objects.equals(biomId, that.biomId) &&
             Objects.equals(slug, that.slug) &&
-            Objects.equals(categoryIds, that.categoryIds);
+            Objects.equals(categoryIds, that.categoryIds) &&
+            Objects.equals(ecogestureIds, that.ecogestureIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(biomId, slug, categoryIds);
+        return Objects.hash(biomId, slug, categoryIds, ecogestureIds);
     }
 
     @Override
@@ -58,6 +66,7 @@ public final class IndicatorCommandDTO {
             "biomId='" + biomId + '\'' +
             ", slug='" + slug + '\'' +
             ", categoryIds=" + categoryIds +
+            ", ecogestureIds=" + ecogestureIds +
             '}';
     }
 }

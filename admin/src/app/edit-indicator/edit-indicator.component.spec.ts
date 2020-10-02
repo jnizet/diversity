@@ -12,6 +12,7 @@ import { ValidationDefaultsComponent } from '../validation-defaults/validation-d
 import { Indicator, IndicatorCommand, IndicatorValue } from '../indicator.model';
 import { IndicatorCategoryService } from '../indicator-category.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EcogestureService } from '../ecogesture.service';
 
 class EditIndicatorComponentTester extends ComponentTester<EditIndicatorComponent> {
   constructor() {
@@ -34,12 +35,32 @@ class EditIndicatorComponentTester extends ComponentTester<EditIndicatorComponen
     return this.select('#category-0');
   }
 
+  get secondCategory() {
+    return this.select('#category-1');
+  }
+
   get addCategoryButton() {
     return this.button('.add-category-button');
   }
 
   get removeCategoryButton() {
     return this.button('.remove-category-button');
+  }
+
+  get firstEcogesture() {
+    return this.select('#ecogesture-0');
+  }
+
+  get secondEcogesture() {
+    return this.select('#ecogesture-1');
+  }
+
+  get addEcogestureButton() {
+    return this.button('.add-ecogesture-button');
+  }
+
+  get removeEcogestureButton() {
+    return this.button('.remove-ecogesture-button');
   }
 
   get fetchValuesButton() {
@@ -58,10 +79,6 @@ class EditIndicatorComponentTester extends ComponentTester<EditIndicatorComponen
     return this.elements('.value');
   }
 
-  get secondCategory() {
-    return this.select('#category-1');
-  }
-
   get errors() {
     return this.elements('.invalid-feedback div');
   }
@@ -75,13 +92,16 @@ describe('EditIndicatorComponent', () => {
   let tester: EditIndicatorComponentTester;
   let indicatorService: jasmine.SpyObj<IndicatorService>;
   let indicatorCategoryService: jasmine.SpyObj<IndicatorCategoryService>;
+  let ecogestureService: jasmine.SpyObj<EcogestureService>;
   let router: Router;
   let toastService: jasmine.SpyObj<ToastService>;
   const vegetation = { id: 101, name: 'Végétation' };
+  const separateWaste = { id: 301, slug: 'trier-ses-dechets' };
 
   function prepare(route: ActivatedRoute) {
     indicatorService = jasmine.createSpyObj<IndicatorService>('IndicatorService', ['get', 'create', 'update', 'getValues']);
     indicatorCategoryService = jasmine.createSpyObj<IndicatorCategoryService>('IndicatorCategoryService', ['list']);
+    ecogestureService = jasmine.createSpyObj<EcogestureService>('EcogestureService', ['list']);
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
@@ -90,6 +110,7 @@ describe('EditIndicatorComponent', () => {
       providers: [
         { provide: IndicatorService, useValue: indicatorService },
         { provide: IndicatorCategoryService, useValue: indicatorCategoryService },
+        { provide: EcogestureService, useValue: ecogestureService },
         { provide: ActivatedRoute, useValue: route },
         { provide: ToastService, useValue: toastService }
       ]
@@ -101,6 +122,7 @@ describe('EditIndicatorComponent', () => {
     TestBed.createComponent(ValidationDefaultsComponent).detectChanges();
 
     indicatorCategoryService.list.and.returnValue(of([vegetation, { id: 102, name: 'Vie animale' }]));
+    ecogestureService.list.and.returnValue(of([separateWaste, { id: 302, slug: 'proteger-les-coraux' }]));
 
     tester = new EditIndicatorComponentTester();
   }
@@ -125,6 +147,8 @@ describe('EditIndicatorComponent', () => {
       expect(tester.biomId).toHaveValue('');
       expect(tester.firstCategory).toHaveSelectedLabel('');
       expect(tester.secondCategory).toBeNull();
+      expect(tester.firstEcogesture).toHaveSelectedLabel('');
+      expect(tester.secondEcogesture).toBeNull();
     });
 
     it('should not save if error', () => {
@@ -150,6 +174,7 @@ describe('EditIndicatorComponent', () => {
       tester.slug.fillWith('especes-envahissantes');
       tester.biomId.fillWith('biom-41');
       tester.firstCategory.selectLabel('Vie animale');
+      tester.firstEcogesture.selectLabel('proteger-les-coraux');
 
       indicatorService.create.and.returnValue(of({} as Indicator));
       tester.saveButton.click();
@@ -157,7 +182,8 @@ describe('EditIndicatorComponent', () => {
       const expectedCommand: IndicatorCommand = {
         slug: 'especes-envahissantes',
         biomId: 'biom-41',
-        categoryIds: [102]
+        categoryIds: [102],
+        ecogestureIds: [302]
       };
       expect(indicatorService.create).toHaveBeenCalledWith(expectedCommand);
       expect(router.navigate).toHaveBeenCalledWith(['/indicators']);
@@ -179,7 +205,8 @@ describe('EditIndicatorComponent', () => {
           id: 41,
           slug: 'especes-envahissantes',
           biomId: 'biom-41',
-          categories: [vegetation]
+          categories: [vegetation],
+          ecogestures: [separateWaste]
         })
       );
 
@@ -196,10 +223,11 @@ describe('EditIndicatorComponent', () => {
 
     it('should update the indicator', () => {
       tester.slug.fillWith('deforestation');
+
       // add a second category
       expect(tester.removeCategoryButton).toBeNull();
       tester.addCategoryButton.click();
-      // the available categories do not contain the already one
+      // the available categories do not contain the already selected one
       expect(tester.secondCategory.optionLabels).toEqual(['', 'Vie animale']);
       tester.secondCategory.selectLabel('Vie animale');
       // remove the first category
@@ -213,13 +241,31 @@ describe('EditIndicatorComponent', () => {
       expect(tester.secondCategory.optionLabels).toEqual(['', 'Végétation']);
       tester.secondCategory.selectLabel('Végétation');
 
+      // add a second ecogesture
+      expect(tester.removeEcogestureButton).not.toBeNull();
+      tester.addEcogestureButton.click();
+      // the available ecogestures do not contain the already selected one
+      expect(tester.secondEcogesture.optionLabels).toEqual(['', 'proteger-les-coraux']);
+      tester.secondEcogesture.selectLabel('proteger-les-coraux');
+      // remove the first ecogesture
+      expect(tester.addEcogestureButton).not.toBeNull();
+      tester.removeEcogestureButton.click();
+      expect(tester.secondEcogesture).toBeNull();
+      expect(tester.firstEcogesture).toHaveSelectedLabel('proteger-les-coraux');
+      expect(tester.removeEcogestureButton).not.toBeNull();
+      // add a second ecogesture again
+      tester.addEcogestureButton.click();
+      expect(tester.secondEcogesture.optionLabels).toEqual(['', 'trier-ses-dechets']);
+      tester.secondEcogesture.selectLabel('trier-ses-dechets');
+
       indicatorService.update.and.returnValue(of(undefined));
       tester.saveButton.click();
 
       const expectedCommand: IndicatorCommand = {
         slug: 'deforestation',
         biomId: 'biom-41',
-        categoryIds: [102, 101]
+        categoryIds: [102, 101],
+        ecogestureIds: [302, 301]
       };
       expect(indicatorService.update).toHaveBeenCalledWith(41, expectedCommand);
       expect(router.navigate).toHaveBeenCalledWith(['/indicators']);

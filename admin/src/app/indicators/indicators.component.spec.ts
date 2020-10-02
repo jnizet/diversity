@@ -72,13 +72,15 @@ describe('IndicatorsComponent', () => {
         id: 1,
         biomId: 'biom_1',
         slug: 'deforestation',
-        categories: [vegetation]
+        categories: [vegetation],
+        ecogestures: []
       },
       {
         id: 2,
         biomId: 'biom_2',
         slug: 'especes-menacees',
-        categories: []
+        categories: [],
+        ecogestures: []
       }
     ];
 
@@ -101,13 +103,15 @@ describe('IndicatorsComponent', () => {
         id: 1,
         biomId: 'biom_1',
         slug: 'deforestation',
-        categories: [vegetation]
+        categories: [vegetation],
+        ecogestures: []
       },
       {
         id: 2,
         biomId: 'biom_2',
         slug: 'especes-menacees',
-        categories: []
+        categories: [],
+        ecogestures: []
       }
     ];
 

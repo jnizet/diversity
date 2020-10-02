@@ -16,6 +16,8 @@ import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.mnhn.diversity.common.exception.FunctionalException;
+import fr.mnhn.diversity.ecogesture.Ecogesture;
+import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.api.IndicatorData;
 import fr.mnhn.diversity.indicator.api.IndicatorService;
 import fr.mnhn.diversity.territory.Territory;
@@ -44,6 +46,9 @@ class IndicatorRestControllerTest {
     private IndicatorCategoryRepository mockIndicatorCategoryRepository;
 
     @MockBean
+    private EcogestureRepository mockEcogestureRepository;
+
+    @MockBean
     private IndicatorService mockIndicatorService;
 
     @Autowired
@@ -59,6 +64,7 @@ class IndicatorRestControllerTest {
     private ArgumentCaptor<Indicator> indicatorArgumentCaptor;
 
     private IndicatorCategory category;
+    private Ecogesture ecogesture;
     private Indicator indicator;
 
     @BeforeEach
@@ -66,7 +72,10 @@ class IndicatorRestControllerTest {
         category = new IndicatorCategory(54L, "Végétation");
         when(mockIndicatorCategoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
 
-        indicator = new Indicator(43L, "biom_43", "deforestation", List.of(category));
+        ecogesture = new Ecogesture(43L, "trier-ses-dechets");
+        when(mockEcogestureRepository.findById(ecogesture.getId())).thenReturn(Optional.of(ecogesture));
+
+        indicator = new Indicator(43L, "biom_43", "deforestation", List.of(category), List.of(ecogesture));
         when(mockIndicatorRepository.findById(indicator.getId())).thenReturn(Optional.of(indicator));
         when(mockIndicatorRepository.findByBiomId(indicator.getBiomId())).thenReturn(Optional.of(indicator));
         when(mockIndicatorRepository.findBySlug(indicator.getSlug())).thenReturn(Optional.of(indicator));
@@ -83,7 +92,10 @@ class IndicatorRestControllerTest {
                .andExpect(jsonPath("$[0].slug").value(indicator.getSlug()))
                .andExpect(jsonPath("$[0].categories.length()").value(indicator.getCategories().size()))
                .andExpect(jsonPath("$[0].categories[0].id").value(indicator.getCategories().get(0).getId()))
-               .andExpect(jsonPath("$[0].categories[0].name").value(indicator.getCategories().get(0).getName()));
+               .andExpect(jsonPath("$[0].categories[0].name").value(indicator.getCategories().get(0).getName()))
+               .andExpect(jsonPath("$[0].ecogestures.length()").value(indicator.getEcogestures().size()))
+               .andExpect(jsonPath("$[0].ecogestures[0].id").value(indicator.getEcogestures().get(0).getId()))
+               .andExpect(jsonPath("$[0].ecogestures[0].slug").value(indicator.getEcogestures().get(0).getSlug()));
     }
 
     @Test
@@ -153,7 +165,8 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_67",
             "surface-forêts",
-            List.of(category.getId())
+            List.of(category.getId()),
+            List.of(ecogesture.getId())
         );
 
         when(mockIndicatorService.indicatorData(command.getBiomId())).thenReturn(
@@ -164,7 +177,7 @@ class IndicatorRestControllerTest {
                              GUADELOUPE, new IndicatorValue(20, "%")))
         );
 
-        when(mockIndicatorRepository.create(any())).thenReturn(new Indicator(256L, command.getBiomId(), command.getSlug(), List.of(category)));
+        when(mockIndicatorRepository.create(any())).thenReturn(new Indicator(256L, command.getBiomId(), command.getSlug(), List.of(category), List.of(ecogesture)));
 
         mockMvc.perform(post("/api/indicators")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -178,6 +191,7 @@ class IndicatorRestControllerTest {
         assertThat(createdIndicator.getBiomId()).isEqualTo(command.getBiomId());
         assertThat(createdIndicator.getSlug()).isEqualTo(command.getSlug());
         assertThat(createdIndicator.getCategories()).containsExactly(category);
+        assertThat(createdIndicator.getEcogestures()).containsExactly(ecogesture);
 
         verify(mockIndicatorRepository).updateValue(createdIndicator, OUTRE_MER, new IndicatorValue(10, "%"));
         verify(mockIndicatorRepository).updateValue(createdIndicator, GUADELOUPE, new IndicatorValue(20, "%"));
@@ -188,7 +202,8 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             indicator.getBiomId(),
             "surface-forêts",
-            List.of(category.getId())
+            List.of(category.getId()),
+            List.of(ecogesture.getId())
         );
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
             () -> controller.create(command)
@@ -200,7 +215,8 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_12",
             indicator.getSlug(),
-            List.of(category.getId())
+            List.of(category.getId()),
+            List.of(ecogesture.getId())
         );
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
             () -> controller.create(command)
@@ -212,6 +228,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_92",
             "surface-forêts",
+            List.of(),
             List.of()
         );
 
@@ -246,11 +263,12 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldThrowWhenUpdatingWithAlreadyExistingBiomId() {
-        Indicator otherIndicator = new Indicator(indicator.getBiomId(), "other", List.of());
+        Indicator otherIndicator = new Indicator(indicator.getBiomId(), "other", List.of(), List.of());
         when(mockIndicatorRepository.findByBiomId(otherIndicator.getBiomId())).thenReturn(Optional.of(otherIndicator));
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             indicator.getBiomId(),
             "surface-forets",
+            List.of(),
             List.of()
         );
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
@@ -263,6 +281,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             indicator.getBiomId(),
             "surface-forets",
+            List.of(),
             List.of()
         );
         assertThatCode(() -> controller.update(indicator.getId(), command)).doesNotThrowAnyException();
@@ -275,11 +294,12 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldThrowWhenUpdatingWithAlreadyExistingSlug() {
-        Indicator otherIndicator = new Indicator("other", indicator.getSlug(), List.of());
+        Indicator otherIndicator = new Indicator("other", indicator.getSlug(), List.of(), List.of());
         when(mockIndicatorRepository.findBySlug(otherIndicator.getSlug())).thenReturn(Optional.of(otherIndicator));
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_92",
             indicator.getSlug(),
+            List.of(),
             List.of()
         );
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
@@ -292,6 +312,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "other",
             indicator.getSlug(),
+            List.of(),
             List.of()
         );
 

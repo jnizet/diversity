@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import fr.mnhn.diversity.common.exception.BadRequestException;
 import fr.mnhn.diversity.common.exception.FunctionalException;
 import fr.mnhn.diversity.common.exception.NotFoundException;
+import fr.mnhn.diversity.ecogesture.Ecogesture;
+import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.api.IndicatorService;
 import fr.mnhn.diversity.territory.Territory;
 import org.springframework.http.HttpStatus;
@@ -37,15 +39,18 @@ public class IndicatorRestController {
 
     private final IndicatorRepository indicatorRepository;
     private final IndicatorCategoryRepository indicatorCategoryRepository;
+    private final EcogestureRepository ecogestureRepository;
     private final IndicatorService indicatorService;
 
     public IndicatorRestController(
         IndicatorRepository indicatorRepository,
         IndicatorCategoryRepository indicatorCategoryRepository,
+        EcogestureRepository ecogestureRepository,
         IndicatorService indicatorService
     ) {
         this.indicatorRepository = indicatorRepository;
         this.indicatorCategoryRepository = indicatorCategoryRepository;
+        this.ecogestureRepository = ecogestureRepository;
         this.indicatorService = indicatorService;
     }
 
@@ -116,7 +121,15 @@ public class IndicatorRestController {
             categories.add(indicatorCategory);
         });
 
-        return new Indicator(id, command.getBiomId(), command.getSlug(), categories);
+        List<Ecogesture> ecogestures = new ArrayList<>();
+        command.getEcogestureIds().forEach(ecogestureId -> {
+            Ecogesture ecogesture = ecogestureRepository
+                .findById(ecogestureId)
+                .orElseThrow(() -> new BadRequestException("Pas d'éco-geste avec l'identifiant " + ecogestureId));
+            ecogestures.add(ecogesture);
+        });
+
+        return new Indicator(id, command.getBiomId(), command.getSlug(), categories, ecogestures);
     }
 
     @PutMapping("/{indicatorId}")

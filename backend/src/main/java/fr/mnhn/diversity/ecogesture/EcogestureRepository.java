@@ -58,17 +58,6 @@ public class EcogestureRepository {
     }
 
     /**
-     * Finds the {@link Ecogesture ecogestures} for an indicator
-     */
-    public List<Ecogesture> findByIndicator(Long indicatorId) {
-        String query = "select eg.id, eg.slug from ecogesture eg" +
-            " inner join indicator_ecogesture ie on ie.ecogesture_id = eg.id" +
-            " where ie.indicator_id = :indicatorId" +
-            " order by eg.slug";
-        return jdbcTemplate.query(query, Map.of("indicatorId", indicatorId), EcogestureRepository::extractRow);
-    }
-
-    /**
      * Creates an {@link Ecogesture}
      */
     public Ecogesture create(Ecogesture ecogesture) {
