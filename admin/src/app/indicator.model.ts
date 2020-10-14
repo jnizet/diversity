@@ -15,6 +15,11 @@ export interface IndicatorValue {
   unit: string;
 }
 
+export interface ValuedIndicator {
+  shortLabel: string;
+  values: Array<IndicatorValue>;
+}
+
 export interface IndicatorCommand {
   biomId: string;
   slug: string;

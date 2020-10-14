@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { Indicator, IndicatorCommand, IndicatorValue } from '../indicator.model';
+import { Indicator, IndicatorCommand, ValuedIndicator } from '../indicator.model';
 import { IndicatorService } from '../indicator.service';
 import { ToastService } from '../toast.service';
 import { IndicatorCategory } from '../indicator-category.model';
@@ -29,7 +29,7 @@ interface FormValue {
 export class EditIndicatorComponent implements OnInit {
   mode: 'create' | 'update' = 'create';
   editedIndicator: Indicator;
-  indicatorValues: Array<IndicatorValue>;
+  valuedIndicator: ValuedIndicator;
   categories: Array<IndicatorCategory>;
   ecogestures: Array<Ecogesture>;
   isFetchingValues = false;
@@ -144,13 +144,13 @@ export class EditIndicatorComponent implements OnInit {
   getValues() {
     this.isFetchingValues = true;
     this.fetchingError = false;
-    this.indicatorValues = null;
+    this.valuedIndicator = null;
     const biomId = (this.form.value as FormValue).biomId;
     this.indicatorService
       .getValues(biomId)
       .pipe(finalize(() => (this.isFetchingValues = false)))
       .subscribe({
-        next: values => (this.indicatorValues = values),
+        next: indicator => (this.valuedIndicator = indicator),
         error: () => (this.fetchingError = true)
       });
   }

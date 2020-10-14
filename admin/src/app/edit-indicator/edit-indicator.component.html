@@ -105,22 +105,23 @@
     <div class="text-center my-5" *ngIf="isFetchingValues">
       <fa-icon [icon]="spinnerIcon" [spin]="true" id="fetching-spinner"></fa-icon>
     </div>
-    <table class="table table-hover" *ngIf="indicatorValues">
-      <thead>
-        <tr>
-          <th scope="col">Territoire</th>
-          <th scope="col">Valeur</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let indicatorValue of indicatorValues" class="value">
-          <td>{{ indicatorValue.territory }}</td>
-          <td>{{ indicatorValue.value | number: '.0-2' }}&nbsp;{{ indicatorValue.unit }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="!isFetchingValues && fetchingError" id="no-data" class="text-danger">
-      Les valeurs n'ont pas pu être récupérées pour cet indicateur
+    <div *ngIf="valuedIndicator" class="p-3 bg-light border rounded" id="valued-indicator">
+      <h2>{{ valuedIndicator.shortLabel }}</h2>
+      <table class="table table-hover" *ngIf="valuedIndicator">
+        <thead>
+          <tr>
+            <th scope="col">Territoire</th>
+            <th scope="col">Valeur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let indicatorValue of valuedIndicator.values" class="value">
+            <td>{{ indicatorValue.territory }}</td>
+            <td>{{ indicatorValue.value | number: '.0-2' }}&nbsp;{{ indicatorValue.unit }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <div *ngIf="fetchingError" id="no-data" class="text-danger">Les valeurs n'ont pas pu être récupérées pour cet indicateur</div>
   </div>
 </div>

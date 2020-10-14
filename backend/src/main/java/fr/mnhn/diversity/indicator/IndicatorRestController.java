@@ -3,7 +3,6 @@ package fr.mnhn.diversity.indicator;
 import static fr.mnhn.diversity.common.exception.FunctionalException.Code.*;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +14,7 @@ import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.api.IndicatorService;
+import fr.mnhn.diversity.indicator.api.ValuedIndicator;
 import fr.mnhn.diversity.territory.Territory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,21 +82,13 @@ public class IndicatorRestController {
     }
 
     @GetMapping("/{biomId}/values")
-    public List<IndicatorValueDTO> getValues(@PathVariable("biomId") String biomId) {
-        Map<Territory, IndicatorValue> indicatorValues = getValuesForIndicatorBiom(biomId);
-        return indicatorValues.entrySet()
-                              .stream()
-                              .map(e -> new IndicatorValueDTO(e.getKey(), e.getValue()))
-                              .sorted(Comparator.comparing(IndicatorValueDTO::getTerritory))
-                              .collect(Collectors.toList());
+    public ValuedIndicatorDTO getValues(@PathVariable("biomId") String biomId) {
+        return new ValuedIndicatorDTO(getValuedIndicatorForBiomId(biomId));
     }
 
-    private Map<Territory, IndicatorValue> getValuesForIndicatorBiom(String biomId) {
-        Map<Territory, IndicatorValue> indicatorValues;
+    private ValuedIndicator getValuedIndicatorForBiomId(String biomId) {
         try {
-            indicatorValues = indicatorService.indicatorData(biomId)
-                                              .flatMap(indicatorData -> indicatorService.indicatorValues(indicatorData.getCalculationReference()))
-                                              .block();
+            return indicatorService.indicator(biomId).block();
         } catch (WebClientResponseException.NotFound e) {
             throw new FunctionalException(INDICATOR_VALUES_NOT_FOUND);
         } catch (WebClientException e) {
@@ -106,7 +98,6 @@ public class IndicatorRestController {
             LOGGER.error("Unexpected error while fetching indicator values for indicator {}", biomId, e);
             throw new FunctionalException(UNEXPECTED_ERROR_WHILE_FETCHING_INDICATOR_VALUES);
         }
-        return indicatorValues;
     }
 
     @PostMapping
@@ -165,7 +156,7 @@ public class IndicatorRestController {
 
     private void fetchAndStoreIndicatorValues(Indicator indicator) {
         // fetch the new values for the indicator
-        Map<Territory, IndicatorValue> indicatorValues = getValuesForIndicatorBiom(indicator.getBiomId());
+        Map<Territory, IndicatorValue> indicatorValues = getValuedIndicatorForBiomId(indicator.getBiomId()).getValues();
         indicatorValues.forEach((territory, indicatorValue) -> {
             boolean updated = indicatorRepository.updateValue(indicator, territory, indicatorValue);
             if (!updated) {

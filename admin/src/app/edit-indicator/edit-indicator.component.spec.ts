@@ -9,7 +9,7 @@ import { EditIndicatorComponent } from './edit-indicator.component';
 import { IndicatorService } from '../indicator.service';
 import { ToastService } from '../toast.service';
 import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
-import { Indicator, IndicatorCommand, IndicatorValue } from '../indicator.model';
+import { Indicator, IndicatorCommand, ValuedIndicator } from '../indicator.model';
 import { IndicatorCategoryService } from '../indicator-category.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EcogestureService } from '../ecogesture.service';
@@ -73,6 +73,10 @@ class EditIndicatorComponentTester extends ComponentTester<EditIndicatorComponen
 
   get noData() {
     return this.element('#no-data');
+  }
+
+  get valuedIndicator() {
+    return this.element('#valued-indicator');
   }
 
   get values() {
@@ -273,25 +277,28 @@ describe('EditIndicatorComponent', () => {
     });
 
     describe('should fetch values', () => {
-      let valuesSubject: Subject<Array<IndicatorValue>>;
+      let valuedIndicatorSubject: Subject<ValuedIndicator>;
 
       beforeEach(() => {
-        valuesSubject = new Subject<Array<IndicatorValue>>();
-        indicatorService.getValues.and.returnValue(valuesSubject);
+        valuedIndicatorSubject = new Subject<ValuedIndicator>();
+        indicatorService.getValues.and.returnValue(valuedIndicatorSubject);
 
-        tester.componentInstance.indicatorValues = [
-          {
-            territory: 'Outre-mer',
-            value: 10,
-            unit: '%'
-          }
-        ];
+        tester.componentInstance.valuedIndicator = {
+          shortLabel: 'Something',
+          values: [
+            {
+              territory: 'Outre-mer',
+              value: 10,
+              unit: '%'
+            }
+          ]
+        };
         tester.detectChanges();
 
-        // nothing at first
+        // nothing at first except the old valued indicator
         expect(tester.noData).toBeNull();
         expect(tester.spinner).toBeNull();
-        expect(tester.values.length).toBe(1);
+        expect(tester.valuedIndicator).not.toBeNull();
 
         // fetch the values
         tester.fetchValuesButton.click();
@@ -300,14 +307,18 @@ describe('EditIndicatorComponent', () => {
 
       it('and display them', () => {
         // return values
-        valuesSubject.next([
-          { territory: 'OUTRE_MER', value: 28.7, unit: '%' },
-          { territory: 'REUNION', value: 13.2, unit: '%' }
-        ]);
-        valuesSubject.complete();
+        valuedIndicatorSubject.next({
+          shortLabel: 'Deforestation',
+          values: [
+            { territory: 'OUTRE_MER', value: 28.7, unit: '%' },
+            { territory: 'REUNION', value: 13.2, unit: '%' }
+          ]
+        });
+        valuedIndicatorSubject.complete();
         tester.detectChanges();
         expect(tester.noData).toBeNull();
         expect(tester.spinner).toBeNull();
+        expect(tester.valuedIndicator).toContainText('Deforestation');
         expect(tester.values.length).toEqual(2);
         expect(tester.values[0]).toContainText('OUTRE_MER');
         expect(tester.values[0]).toContainText('28.7\u00a0%');
@@ -317,7 +328,7 @@ describe('EditIndicatorComponent', () => {
 
       it('and display a message on error', () => {
         // error on fetch
-        valuesSubject.error('oops');
+        valuedIndicatorSubject.error('oops');
         tester.detectChanges();
 
         expect(tester.noData).toContainText(`Les valeurs n'ont pas pu être récupérées pour cet indicateur`);

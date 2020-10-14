@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Indicator, IndicatorCommand, IndicatorValue } from './indicator.model';
+import { Indicator, IndicatorCommand, ValuedIndicator } from './indicator.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class IndicatorService {
     return this.http.get<Indicator>(`/api/indicators/${indicatorId}`);
   }
 
-  getValues(biomId: string): Observable<Array<IndicatorValue>> {
-    return this.http.get<Array<IndicatorValue>>(`/api/indicators/${biomId}/values`);
+  getValues(biomId: string): Observable<ValuedIndicator> {
+    return this.http.get<ValuedIndicator>(`/api/indicators/${biomId}/values`);
   }
 
   create(command: IndicatorCommand): Observable<Indicator> {

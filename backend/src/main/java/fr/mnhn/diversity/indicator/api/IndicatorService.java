@@ -56,6 +56,11 @@ public class IndicatorService {
             .map(IndicatorValueBody::getIndicatorValues);
     }
 
+    public Mono<ValuedIndicator> indicator(String indicatorId) {
+        return indicatorData(indicatorId)
+            .flatMap(data -> indicatorValues(data.getCalculationReference()).map(values -> new ValuedIndicator(data, values)));
+    }
+
     private static final class IndicatorBody {
 
         private final String shortLabel;

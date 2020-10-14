@@ -20,6 +20,7 @@ import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.api.IndicatorData;
 import fr.mnhn.diversity.indicator.api.IndicatorService;
+import fr.mnhn.diversity.indicator.api.ValuedIndicator;
 import fr.mnhn.diversity.territory.Territory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -133,28 +134,31 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldGetValues() throws Exception {
-        when(mockIndicatorService.indicatorData("biom-42")).thenReturn(
-            Mono.just(new IndicatorData("biom-42", "i1", "r1"))
-        );
-        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
-            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
-                             GUADELOUPE, new IndicatorValue(20, "%")))
+        when(mockIndicatorService.indicator("biom-42")).thenReturn(
+            Mono.just(
+                new ValuedIndicator(
+                    new IndicatorData("biom-42", "i1", "r1"),
+                    Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                           GUADELOUPE, new IndicatorValue(20, "%"))
+                )
+            )
         );
 
         mockMvc.perform(get("/api/indicators/biom-42/values"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.length()").value(2))
-               .andExpect(jsonPath("$[0].territory").value(GUADELOUPE.getName()))
-               .andExpect(jsonPath("$[0].value").value(20))
-               .andExpect(jsonPath("$[0].unit").value("%"))
-               .andExpect(jsonPath("$[1].territory").value(OUTRE_MER.getName()))
-               .andExpect(jsonPath("$[1].value").value(10))
-               .andExpect(jsonPath("$[1].unit").value("%"));
+               .andExpect(jsonPath("$.shortLabel").value("i1"))
+               .andExpect(jsonPath("$.values.length()").value(2))
+               .andExpect(jsonPath("$.values[0].territory").value(OUTRE_MER.getName()))
+               .andExpect(jsonPath("$.values[0].value").value(10))
+               .andExpect(jsonPath("$.values[0].unit").value("%"))
+               .andExpect(jsonPath("$.values[1].territory").value(GUADELOUPE.getName()))
+               .andExpect(jsonPath("$.values[1].value").value(20))
+               .andExpect(jsonPath("$.values[1].unit").value("%"));
     }
 
     @Test
     void shouldThrowIfValuesDoNotExistForIndicator() throws Exception {
-        when(mockIndicatorService.indicatorData("biom-42")).thenThrow(WebClientResponseException.create(404, "Not found", null, null, null));
+        when(mockIndicatorService.indicator("biom-42")).thenThrow(WebClientResponseException.create(404, "Not found", null, null, null));
 
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
             () -> controller.getValues("biom-42")
@@ -163,7 +167,7 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldThrowIfUnexpectedExceptionForIndicator() throws Exception {
-        when(mockIndicatorService.indicatorData("biom-42")).thenThrow(new IllegalStateException());
+        when(mockIndicatorService.indicator("biom-42")).thenThrow(new IllegalStateException());
 
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
             () -> controller.getValues("biom-42")
@@ -172,7 +176,7 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldThrowIfWebCLientErrorForIndicator() throws Exception {
-        when(mockIndicatorService.indicatorData("biom-42")).thenThrow(WebClientResponseException.create(500, "Server error", null, null, null));
+        when(mockIndicatorService.indicator("biom-42")).thenThrow(WebClientResponseException.create(500, "Server error", null, null, null));
 
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
             () -> controller.getValues("biom-42")
@@ -188,12 +192,14 @@ class IndicatorRestControllerTest {
             List.of(ecogesture.getId())
         );
 
-        when(mockIndicatorService.indicatorData(command.getBiomId())).thenReturn(
-            Mono.just(new IndicatorData(command.getBiomId(), "i1", "r1"))
-        );
-        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
-            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
-                             GUADELOUPE, new IndicatorValue(20, "%")))
+        when(mockIndicatorService.indicator(command.getBiomId())).thenReturn(
+            Mono.just(
+                new ValuedIndicator(
+                    new IndicatorData(command.getBiomId(), "i1", "r1"),
+                    Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                           GUADELOUPE, new IndicatorValue(20, "%"))
+                )
+            )
         );
 
         Indicator createdIndicator = new Indicator(256L, command.getBiomId(), command.getSlug(), List.of(category), List.of(ecogesture));
@@ -252,12 +258,14 @@ class IndicatorRestControllerTest {
             List.of()
         );
 
-        when(mockIndicatorService.indicatorData(command.getBiomId())).thenReturn(
-            Mono.just(new IndicatorData(command.getBiomId(), "i1", "r1"))
-        );
-        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
-            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
-                             GUADELOUPE, new IndicatorValue(20, "%")))
+        when(mockIndicatorService.indicator(command.getBiomId())).thenReturn(
+            Mono.just(
+                new ValuedIndicator(
+                    new IndicatorData(command.getBiomId(), "i1", "r1"),
+                    Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                           GUADELOUPE, new IndicatorValue(20, "%"))
+                )
+            )
         );
 
         mockMvc.perform(put("/api/indicators/{id}", indicator.getId())
@@ -308,8 +316,7 @@ class IndicatorRestControllerTest {
 
         // it should not update the values as the BIOM ID is the same
         verify(mockIndicatorRepository, never()).deleteValues(any(), anySet());
-        verify(mockIndicatorService, never()).indicatorData(anyString());
-        verify(mockIndicatorRepository, never()).insertValue(any(), any(), any());
+        verify(mockIndicatorService, never()).indicator(anyString());
     }
 
     @Test
@@ -336,12 +343,14 @@ class IndicatorRestControllerTest {
             List.of()
         );
 
-        when(mockIndicatorService.indicatorData(command.getBiomId())).thenReturn(
-            Mono.just(new IndicatorData(command.getBiomId(), "i1", "r1"))
-        );
-        when(mockIndicatorService.indicatorValues("r1")).thenReturn(
-            Mono.just(Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
-                             GUADELOUPE, new IndicatorValue(20, "%")))
+        when(mockIndicatorService.indicator(command.getBiomId())).thenReturn(
+            Mono.just(
+                new ValuedIndicator(
+                    new IndicatorData(command.getBiomId(), "i1", "r1"),
+                    Map.of(OUTRE_MER, new IndicatorValue(10, "%"),
+                          GUADELOUPE, new IndicatorValue(20, "%"))
+                )
+            )
         );
 
         assertThatCode(() -> controller.update(indicator.getId(), command)).doesNotThrowAnyException();

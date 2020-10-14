@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { IndicatorService } from './indicator.service';
-import { Indicator, IndicatorCommand, IndicatorValue } from './indicator.model';
+import { Indicator, IndicatorCommand, ValuedIndicator } from './indicator.model';
 
 describe('IndicatorService', () => {
   let service: IndicatorService;
@@ -39,11 +39,11 @@ describe('IndicatorService', () => {
   });
 
   it('should get values', () => {
-    let actual: Array<IndicatorValue> = null;
+    let actual: ValuedIndicator = null;
 
     service.getValues('biom-42').subscribe(indicator => (actual = indicator));
 
-    const expected = [] as Array<IndicatorValue>;
+    const expected = {} as ValuedIndicator;
     http.expectOne({ method: 'GET', url: '/api/indicators/biom-42/values' }).flush(expected);
     expect(actual).toBe(expected);
   });
