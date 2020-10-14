@@ -120,7 +120,7 @@ public class IndicatorRestController {
         Indicator createdIndicator = indicatorRepository.create(indicator);
 
         // fetch the values for the indicator
-        fetchAndStoreIndicatorValues(indicator);
+        fetchAndStoreIndicatorValues(createdIndicator);
         return new IndicatorDTO(createdIndicator);
     }
 

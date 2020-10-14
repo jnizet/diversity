@@ -196,7 +196,8 @@ class IndicatorRestControllerTest {
                              GUADELOUPE, new IndicatorValue(20, "%")))
         );
 
-        when(mockIndicatorRepository.create(any())).thenReturn(new Indicator(256L, command.getBiomId(), command.getSlug(), List.of(category), List.of(ecogesture)));
+        Indicator createdIndicator = new Indicator(256L, command.getBiomId(), command.getSlug(), List.of(category), List.of(ecogesture));
+        when(mockIndicatorRepository.create(any())).thenReturn(createdIndicator);
 
         mockMvc.perform(post("/api/indicators")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -206,11 +207,11 @@ class IndicatorRestControllerTest {
 
         verify(mockIndicatorRepository).create(indicatorArgumentCaptor.capture());
 
-        Indicator createdIndicator = indicatorArgumentCaptor.getValue();
-        assertThat(createdIndicator.getBiomId()).isEqualTo(command.getBiomId());
-        assertThat(createdIndicator.getSlug()).isEqualTo(command.getSlug());
-        assertThat(createdIndicator.getCategories()).containsExactly(category);
-        assertThat(createdIndicator.getEcogestures()).containsExactly(ecogesture);
+        Indicator indicatorToCreate = indicatorArgumentCaptor.getValue();
+        assertThat(indicatorToCreate.getBiomId()).isEqualTo(command.getBiomId());
+        assertThat(indicatorToCreate.getSlug()).isEqualTo(command.getSlug());
+        assertThat(indicatorToCreate.getCategories()).containsExactly(category);
+        assertThat(indicatorToCreate.getEcogestures()).containsExactly(ecogesture);
 
         verify(mockIndicatorRepository).updateValue(createdIndicator, OUTRE_MER, new IndicatorValue(10, "%"));
         verify(mockIndicatorRepository).updateValue(createdIndicator, GUADELOUPE, new IndicatorValue(20, "%"));
