@@ -1,14 +1,21 @@
 package fr.mnhn.diversity.model.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.mnhn.diversity.model.Element;
 import fr.mnhn.diversity.model.Image;
 import fr.mnhn.diversity.model.Link;
 import fr.mnhn.diversity.model.Page;
@@ -19,9 +26,12 @@ import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -39,7 +49,13 @@ class PageRestControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     private PageRestController controller;
+
+    @Captor
+    private ArgumentCaptor<Page> pageArgumentCaptor;
 
     private Text title;
     private Text carouselTitle;
@@ -120,5 +136,29 @@ class PageRestControllerTest {
                .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].type").value(PageElementType.IMAGE.name()))
                .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].alt").value(secondCarouselImage.getAlt()))
                .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].imageId").value(secondCarouselImage.getImageId()));
+    }
+
+    @Test
+    void shouldUpdate() throws Exception {
+        TextCommandDTO carouselTitleCommand = new TextCommandDTO("carousel.title", "Vive la bio-diversité");
+        ImageCommandDTO firstCarouselImageCommand = new ImageCommandDTO("carousel.slides.0.image", 3L, "Image 1", true);
+        LinkCommandDTO firstCarouselLinkCommand = new LinkCommandDTO("carousel.slides.0.link", "Lien 1", "https://lien1.fr");
+        List<ElementCommandDTO> elements = List.of(carouselTitleCommand, firstCarouselImageCommand, firstCarouselLinkCommand);
+        PageCommandDTO command = new PageCommandDTO("Portail de la diversité !", elements);
+
+        mockMvc.perform(put("/api/pages/{id}", page.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsBytes(command)))
+               .andExpect(status().isNoContent());
+
+        verify(mockPageRepository).update(pageArgumentCaptor.capture());
+        Page pageToUpdate = pageArgumentCaptor.getValue();
+        assertThat(pageToUpdate.getTitle()).isEqualTo("Portail de la diversité !");
+        List<Element> elementsToUpdate = pageToUpdate.getElements().values().stream().sorted(Comparator.comparing(Element::getKey)).collect(Collectors.toList());
+        assertThat(elementsToUpdate).containsExactly(
+            new Image(null, "carousel.slides.0.image", 3L, "Image 1", true),
+            new Link(null, "carousel.slides.0.link", "Lien 1", "https://lien1.fr"),
+            new Text(null, "carousel.title", "Vive la bio-diversité")
+        );
     }
 }
