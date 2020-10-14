@@ -137,7 +137,7 @@ public class IndicatorService {
         public CalculationResult findMainCalculationResult() {
             return calculationResults
                 .stream()
-                .filter(r -> r.isMain())
+                .filter(CalculationResult::isMain)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("no main calculation result found"));
         }

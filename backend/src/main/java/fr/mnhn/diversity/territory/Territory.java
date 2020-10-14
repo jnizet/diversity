@@ -5,9 +5,12 @@ package fr.mnhn.diversity.territory;
  */
 public enum Territory {
     OUTRE_MER("Outre-mer", "Outre-mer", null),
-    REUNION("Réunion", "Réunion", "reunion"),
+    REUNION("Réunion", "La Réunion", "reunion"),
     GUADELOUPE("Guadeloupe", "Guadeloupe", "guadeloupe"),
-    SAINT_PIERRE_ET_MIQUELON("Saint-Pierre-Et-Miquelon", "Saint-Pierre-Et-Miquelon", "st-pierre-et-miquelon");
+    MARTINIQUE("Martinique", "Martinique", "martinique"),
+    NOUVELLE_CALEDONIE("Nouvelle Calédonie", "Nouvelle-Calédonie", "nouvelle-caledonie"),
+    GUYANE("Guyane", "Guyane", "guyane"),
+    SAINT_PIERRE_ET_MIQUELON("Saint-Pierre-Et-Miquelon", "Saint-Pierre-et-Miquelon", "st-pierre-et-miquelon");
 
     /**
      * Name of the territory

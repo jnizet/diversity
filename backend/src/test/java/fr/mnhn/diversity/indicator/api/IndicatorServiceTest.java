@@ -58,7 +58,7 @@ class IndicatorServiceTest {
                 "  \"shortLabel\": \"Évolution du taux de boisement dans les Outre-Mer\",\n" +
                 "  \"description\": \"L'indicateur fournit la part des territoires ultramarins couverts par la forêt. Sont considérées comme forêts « des terres occupant une superficie de plus de 0,5 hectare avec des arbres atteignant une hauteur supérieure à cinq mètres et un couvert arboré de plus de 10 %, ou avec des arbres capables d’atteindre ces seuils in situ ; la définition exclut les terres à vocation agricole ou urbaine prédominante » (définition de l’organisation des Nations unies pour l’alimentation et l’agriculture - FAO). Les taux de boisement sont donnés globalement et individuellement, pour 11 territoires ultramarins, d’après les inventaires successifs de l'Evaluation des ressources forestières mondiales ou Forest Ressource Assessement (FRA) de la FAO de 1990, 1995, 2000, 2005,2010 et 2015.\",\n" +
                 "  \"catcherPhrase\": \"La forêt occupe 85 % du territoire en Outre-mer.\",\n" +
-                "  \"creationDate\": \"2019-11-21\",\n" +
+                "  \"creationDate\": \"2020-10-07\",\n" +
                 "  \"status\": \"En cours\",\n" +
                 "  \"operator\": \"Non renseigné\",\n" +
                 "  \"backer\": \"ONB\",\n" +
@@ -146,10 +146,11 @@ class IndicatorServiceTest {
                 "  \"advantages\": \"\",\n" +
                 "  \"limits\": \"\",\n" +
                 "  \"improvements\": \"L’amélioration de la qualité des résultats sera graduelle, fonction de l'évolution des méthodes de suivi. En 2015, le ministère en charge de l’environnement a annoncé un projet visant à établir ou améliorer le suivi cartographique des territoires ultramarins (espaces naturels). A moyen terme, il devrait être possible de disposer de données de surface pour les principaux types forestiers dans une partie au moins des territoires ultramarins.\",\n" +
-                "  \"calculReference\": \"5fff928a-e730-4386-a786-8a7e012a6e42\",\n" +
+                "  \"calculReference\": \"6cd63757-73d1-4001-95ff-102951b0ed47\",\n" +
                 "  \"publiONB\": true,\n" +
                 "  \"publiINPN\": false,\n" +
                 "  \"publiSIE\": false,\n" +
+                "  \"publiBIOM\": false,\n" +
                 "  \"tags\": [\n" +
                 "    \"\"\n" +
                 "  ],\n" +
@@ -162,15 +163,15 @@ class IndicatorServiceTest {
                 "  ],\n" +
                 "  \"_links\": {\n" +
                 "    \"self\": {\n" +
-                "      \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6\"\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/8816092b-1ce3-4ae7-815d-019e99ecf545\"\n" +
                 "    },\n" +
                 "    \"calculationReference\": [\n" +
                 "      {\n" +
-                "        \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42{?embed}\",\n" +
+                "        \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/6cd63757-73d1-4001-95ff-102951b0ed47{?embed}\",\n" +
                 "        \"templated\": true\n" +
                 "      },\n" +
                 "      {\n" +
-                "        \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42{?embed}\",\n" +
+                "        \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/6cd63757-73d1-4001-95ff-102951b0ed47{?embed}\",\n" +
                 "        \"templated\": true\n" +
                 "      }\n" +
                 "    ]\n" +
@@ -183,14 +184,14 @@ class IndicatorServiceTest {
                 .setBody(body)
         );
 
-        String indicatorId = "b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6";
+        String indicatorId = "8816092b-1ce3-4ae7-815d-019e99ecf545";
         IndicatorData indicator = service.indicatorData(indicatorId).block();
 
         assertThat(indicator).isEqualTo(
             new IndicatorData(
                 indicatorId,
                 "Évolution du taux de boisement dans les Outre-Mer",
-                "5fff928a-e730-4386-a786-8a7e012a6e42"
+                "6cd63757-73d1-4001-95ff-102951b0ed47"
             )
         );
 
@@ -202,136 +203,31 @@ class IndicatorServiceTest {
         String body =
             // language=json
             "{\n" +
-                "  \"indicatorId\": \"b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6\",\n" +
+                "  \"indicatorId\": \"8816092b-1ce3-4ae7-815d-019e99ecf545\",\n" +
                 "  \"title\": \"Taux de boisement dans les Outre-Mer\",\n" +
                 "  \"date\": \"2016-05-19\",\n" +
                 "  \"vintage\": \"2015\",\n" +
-                "  \"analysisDate\": null,\n" +
+                "  \"analysisDate\": \"2018-07-23\",\n" +
                 "  \"comment\": \"Cet indicateur a fait l'objet d'une analyse en 2018, consultable ci-dessous, qui fait actuellement l'objet d'une expertise pour faire évoluer la fiche Indicateur si nécessaire.\",\n" +
                 "  \"_links\": {\n" +
                 "    \"self\": {\n" +
-                "      \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42\"\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/6cd63757-73d1-4001-95ff-102951b0ed47\"\n" +
                 "    },\n" +
                 "    \"resource\": {\n" +
-                "      \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/5fff928a-e730-4386-a786-8a7e012a6e42/resource\"\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/6cd63757-73d1-4001-95ff-102951b0ed47/resource\"\n" +
+                "    },\n" +
+                "    \"resourceAnalyze\": {\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/calculations/6cd63757-73d1-4001-95ff-102951b0ed47/resourceAnalyze\"\n" +
                 "    },\n" +
                 "    \"indicator\": {\n" +
-                "      \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6\"\n" +
+                "      \"href\": \"http://odata-indicateurs.mnhn.fr/indicators/8816092b-1ce3-4ae7-815d-019e99ecf545\"\n" +
                 "    }\n" +
                 "  },\n" +
                 "  \"_embedded\": {\n" +
                 "    \"calculationResults\": [\n" +
                 "      {\n" +
-                "        \"code\": \"R2\",\n" +
-                "        \"calculationId\": \"5fff928a-e730-4386-a786-8a7e012a6e42\",\n" +
-                "        \"title\": \"Évolution de la surface forestière et du taux de boisement dans les Outre-mer\",\n" +
-                "        \"main\": false,\n" +
-                "        \"description\": \"\",\n" +
-                "        \"source\": \"Rapportage FRA (Forest Ressources Assessment)\",\n" +
-                "        \"note\": \"\",\n" +
-                "        \"resourceFilename\": \"visuel1.jpg\",\n" +
-                "        \"resourceFormat\": \"image\",\n" +
-                "        \"resourceType\": \"diagramme\",\n" +
-                "        \"resourceTitle\": \"Évolution des surfaces forestières ultramarines (11 territoires) - Évolution des surfaces forestières ultramarines (zoom 9 territoires)\",\n" +
-                "        \"resourceSource\": \"\",\n" +
-                "        \"resourcesPath\": \"b7078fc3-bd3f-44c0-b3d0-7db78b9fbcc6/5fff928a-e730-4386-a786-8a7e012a6e42/visuel1.jpg\",\n" +
-                "        \"values\": [\n" +
-                "          {\n" +
-                "            \"hold\": \"Saint-Martin\",\n" +
-                "            \"period\": \"1990\",\n" +
-                "            \"thematic\": \"Caraibes\",\n" +
-                "            \"metric\": [\n" +
-                "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"20\",\n" +
-                "                \"unit\": \"%\"\n" +
-                "              }\n" +
-                "            ]\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"hold\": \"Mayotte\",\n" +
-                "            \"period\": \"2000\",\n" +
-                "            \"thematic\": \"Océan indien\",\n" +
-                "            \"metric\": [\n" +
-                "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"23,68421053\",\n" +
-                "                \"unit\": \"%\"\n" +
-                "              }\n" +
-                "            ]\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"hold\": \"Martinique\",\n" +
-                "            \"period\": \"2005\",\n" +
-                "            \"thematic\": \"Caraibes\",\n" +
-                "            \"metric\": [\n" +
-                "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"46,22641509\",\n" +
-                "                \"unit\": \"%\"\n" +
-                "              }\n" +
-                "            ]\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"hold\": \"Nouvelle-Calédonie\",\n" +
-                "            \"period\": \"2005\",\n" +
-                "            \"thematic\": \"Océan pacifique\",\n" +
-                "            \"metric\": [\n" +
-                "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"45,89715536\",\n" +
-                "                \"unit\": \"%\"\n" +
-                "              }\n" +
-                "            ]\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"hold\": \"Polynésie française\",\n" +
-                "            \"period\": \"2005\",\n" +
-                "            \"thematic\": \"Océan pacifique\",\n" +
-                "            \"metric\": [\n" +
-                "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"35,51912568\",\n" +
-                "                \"unit\": \"%\"\n" +
-                "              }\n" +
-                "            ]\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"hold\": \"Guadeloupe\",\n" +
-                "            \"period\": \"1990\",\n" +
-                "            \"thematic\": \"Caraibes\",\n" +
-                "            \"metric\": [\n" +
-                "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"43,45238095\",\n" +
-                "                \"unit\": \"%\"\n" +
-                "              }\n" +
-                "            ]\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"hold\": \"Guyane\",\n" +
-                "            \"period\": \"2015\",\n" +
-                "            \"thematic\": \"Amérique sud\",\n" +
-                "            \"metric\": [\n" +
-                "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"98,64110653\",\n" +
-                "                \"unit\": \"%\"\n" +
-                "              }\n" +
-                "            ]\n" +
-                "          }\n" +
-                "        ],\n" +
-                "        \"declination\": \"Outre-mer\",\n" +
-                "        \"identifiant\": \"1c8453c3-ab09-41c6-9490-05280239801a\",\n" +
-                "        \"_links\": {\n" +
-                "          \"resource\": {\n" +
-                "            \"href\": \"http://odata-indicateurs.mnhn.fr/calculationResults/1c8453c3-ab09-41c6-9490-05280239801a/resource\"\n" +
-                "          }\n" +
-                "        }\n" +
-                "      },\n" +
-                "      {\n" +
                 "        \"code\": \"R1\",\n" +
-                "        \"calculationId\": \"5fff928a-e730-4386-a786-8a7e012a6e42\",\n" +
+                "        \"calculationId\": \"6cd63757-73d1-4001-95ff-102951b0ed47\",\n" +
                 "        \"title\": \"Valeur de l'indicateur\",\n" +
                 "        \"main\": true,\n" +
                 "        \"description\": \"Pourcentage en 2015\",\n" +
@@ -347,18 +243,97 @@ class IndicatorServiceTest {
                 "          {\n" +
                 "            \"hold\": \"Outre-mer\",\n" +
                 "            \"period\": \"2015\",\n" +
-                "            \"thematic\": \"Total (11 territoires ultramarins) \",\n" +
+                "            \"thematic\": \"Taux de boisement\",\n" +
                 "            \"metric\": [\n" +
                 "              {\n" +
-                "                \"label\": \"Taux de boisement\",\n" +
-                "                \"value\": \"84,6404637\",\n" +
+                "                \"label\": \"\",\n" +
+                "                \"value\": \"84,64046368\",\n" +
                 "                \"unit\": \"%\"\n" +
                 "              }\n" +
                 "            ]\n" +
                 "          }\n" +
                 "        ],\n" +
                 "        \"declination\": \"\",\n" +
-                "        \"identifiant\": \"b29f7bc2-45cc-4de4-ae94-1a0adf2f364e\"\n" +
+                "        \"identifiant\": \"a236a792-e145-4bb1-9bc5-14ae09ff1373\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"code\": \"R2\",\n" +
+                "        \"calculationId\": \"6cd63757-73d1-4001-95ff-102951b0ed47\",\n" +
+                "        \"title\": \"Évolution de la surface forestière et du taux de boisement par territoire\",\n" +
+                "        \"main\": false,\n" +
+                "        \"description\": \"\",\n" +
+                "        \"source\": \"Rapportage FRA (Forest Ressources Assessment)\",\n" +
+                "        \"note\": \"\",\n" +
+                "        \"resourceFilename\": \"\",\n" +
+                "        \"resourceFormat\": \"\",\n" +
+                "        \"resourceType\": \"\",\n" +
+                "        \"resourceTitle\": \"\",\n" +
+                "        \"resourceSource\": \"\",\n" +
+                "        \"resourcesPath\": null,\n" +
+                "        \"values\": [\n" +
+                "          {\n" +
+                "            \"hold\": \"Nouvelle-Calédonie\",\n" +
+                "            \"period\": \"2015\",\n" +
+                "            \"thematic\": \"Taux de boisement\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"\",\n" +
+                "                \"value\": \"45,78774617\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Guadeloupe\",\n" +
+                "            \"period\": \"2015\",\n" +
+                "            \"thematic\": \"Taux de boisement\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"\",\n" +
+                "                \"value\": \"42,26190476\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"La Réunion\",\n" +
+                "            \"period\": \"2015\",\n" +
+                "            \"thematic\": \"Taux de boisement\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"\",\n" +
+                "                \"value\": \"35,2\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Martinique\",\n" +
+                "            \"period\": \"2015\",\n" +
+                "            \"thematic\": \"Taux de boisement\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"\",\n" +
+                "                \"value\": \"46,22641509\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"hold\": \"Saint-Pierre-et-Miquelon\",\n" +
+                "            \"period\": \"2015\",\n" +
+                "            \"thematic\": \"Taux de boisement\",\n" +
+                "            \"metric\": [\n" +
+                "              {\n" +
+                "                \"label\": \"\",\n" +
+                "                \"value\": \"13,04347826\",\n" +
+                "                \"unit\": \"%\"\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          }\n" +
+                "        ],\n" +
+                "        \"declination\": \"Territoires\",\n" +
+                "        \"identifiant\": \"115b8c99-feaf-4c2c-9de3-f674e70a3ee3\"\n" +
                 "      }\n" +
                 "    ]\n" +
                 "  }\n" +
@@ -370,23 +345,23 @@ class IndicatorServiceTest {
                 .setBody(body)
         );
 
-        Map<Territory, IndicatorValue> indicatorValues = service.indicatorValues("5fff928a-e730-4386-a786-8a7e012a6e42").block();
+        Map<Territory, IndicatorValue> indicatorValues = service.indicatorValues("6cd63757-73d1-4001-95ff-102951b0ed47").block();
 
         assertThat(indicatorValues.get(Territory.OUTRE_MER)).isEqualTo(
             new IndicatorValue(
-                84.6404637,
+                84.64046368,
                 "%"
             )
         );
 
-        assertThat(indicatorValues.get(Territory.REUNION)).isNull();
         assertThat(indicatorValues.get(Territory.GUADELOUPE)).isEqualTo(
             new IndicatorValue(
-                43.45238095,
+                42.26190476,
                 "%"
             )
         );
+        assertThat(indicatorValues.get(Territory.GUYANE)).isNull();
 
-        assertThat(server.takeRequest().getPath()).isEqualTo("/calculations/5fff928a-e730-4386-a786-8a7e012a6e42?embed=CALCULATIONRESULTS");
+        assertThat(server.takeRequest().getPath()).isEqualTo("/calculations/6cd63757-73d1-4001-95ff-102951b0ed47?embed=CALCULATIONRESULTS");
     }
 }
