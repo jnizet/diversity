@@ -121,7 +121,7 @@ public class PageService {
                 // entries of the map
                 String listKey = prefix + list.getName();
                 String keyPrefix = listKey + ".";
-                int maxListIndex = findMaxListIndex(keyPrefix);
+                int maxListIndex = PageUtils.findMaxListIndex(page, keyPrefix);
                 for (int i = 0; i <= maxListIndex; i++) {
                     String elementsPrefix = keyPrefix + i + ".";
                     PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix);
@@ -135,35 +135,11 @@ public class PageService {
             return null;
         }
 
-        private int findMaxListIndex(String keyPrefix) {
-            return page.getElements()
-                       .values()
-                       .stream()
-                       .map(Element::getKey)
-                       .filter(key -> key.startsWith(keyPrefix))
-                       .mapToInt(key -> {
-                           String end = key.substring(keyPrefix.length());
-                           int dotIndex = end.indexOf('.');
-                           if (dotIndex < 0) {
-                               return -1;
-                           }
-                           String indexAsString = end.substring(0, dotIndex);
-                           try {
-                               return Integer.parseInt(indexAsString);
-                           }
-                           catch (NumberFormatException e) {
-                               return -1;
-                           }
-                       })
-                       .max()
-                       .orElse(-1);
-        }
-
         @Override
         public Void visitText(TextElement text) {
             String name = text.getName();
             String key = prefix + name;
-            result.put(name, getElement(key, ElementType.TEXT));
+            result.put(name, PageUtils.getElement(page, key, ElementType.TEXT));
             return null;
         }
 
@@ -171,7 +147,7 @@ public class PageService {
         public Void visitImage(ImageElement image) {
             String name = image.getName();
             String key = prefix + name;
-            Image element = ((Image) getElement(key, ElementType.IMAGE)).withMultiSize(image.isMultiSize());
+            Image element = ((Image) PageUtils.getElement(page, key, ElementType.IMAGE)).withMultiSize(image.isMultiSize());
             result.put(name, element);
             return null;
         }
@@ -180,27 +156,12 @@ public class PageService {
         public Void visitLink(LinkElement link) {
             String name = link.getName();
             String key = prefix + name;
-            result.put(name, getElement(key, ElementType.LINK));
+            result.put(name, PageUtils.getElement(page, key, ElementType.LINK));
             return null;
         }
 
         public Map<String, Object> getResult() {
             return result;
-        }
-
-        private Element getElement(String key, ElementType elementType) {
-            Element element = this.page.getElements().get(key);
-            if (element == null) {
-                throw new IllegalStateException("No element with key " + key + " in page " + page.getId());
-            }
-            if (element.getType() != elementType) {
-                throw new IllegalStateException(
-                    "Element with key " + key +
-                        " in page " + page.getId() +
-                        " should be of type " + elementType +
-                        " but is of type " + element.getType());
-            }
-            return element;
         }
     }
 }
