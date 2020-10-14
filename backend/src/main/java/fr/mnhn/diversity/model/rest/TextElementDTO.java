@@ -12,14 +12,12 @@ public final class TextElementDTO extends PageElementDTO {
     private final String text;
     // model
     private final boolean multiLine;
-    private final boolean title;
 
     public TextElementDTO(TextElement textElement, Text textValue) {
         super(PageElementType.TEXT, textElement);
         this.id = textValue.getId();
         this.text = textValue.getText();
         this.multiLine = textElement.isMultiLine();
-        this.title = textElement.isTitle();
     }
 
     public Long getId() {
@@ -32,9 +30,5 @@ public final class TextElementDTO extends PageElementDTO {
 
     public boolean isMultiLine() {
         return multiLine;
-    }
-
-    public boolean isTitle() {
-        return title;
     }
 }

@@ -8,6 +8,7 @@ import { AuthenticationComponent } from './authentication/authentication.compone
 import { AuthenticationGuard } from './authentication.guard';
 import { EcogesturesComponent } from './ecogestures/ecogestures.component';
 import { EditEcogestureComponent } from './edit-ecogesture/edit-ecogesture.component';
+import { EditPageComponent } from './edit-page/edit-page.component';
 
 export const APP_ROUTES: Routes = [
   { path: 'login', component: AuthenticationComponent },
@@ -57,6 +58,10 @@ export const APP_ROUTES: Routes = [
             component: EditIndicatorComponent
           }
         ]
+      },
+      {
+        path: 'pages',
+        children: [{ path: ':pageId/edit', component: EditPageComponent }]
       }
     ]
   }

@@ -1,0 +1,21 @@
+<div *ngIf="editedPage">
+  <h1>{{ mode === 'update' ? 'Modifier' : 'Créer' }} une page</h1>
+
+  <form [formGroup]="pageForm" (ngSubmit)="savePage()">
+    <div class="form-group">
+      <label for="title">Titre de la page</label>
+      <input id="title" class="form-control" formControlName="title" />
+      <val-errors controlName="title" label="Le titre"></val-errors>
+    </div>
+    <div formGroupName="elements">
+      <div *ngFor="let element of editedPage.elements">
+        <biom-edit-page-element [formControlName]="element.name"></biom-edit-page-element>
+      </div>
+    </div>
+
+    <div class="mb-1">
+      <button type="submit" class="btn btn-primary mr-2" id="save-button">Enregistrer</button>
+      <button type="button" class="btn btn-danger">Annuler</button>
+    </div>
+  </form>
+</div>

@@ -23,6 +23,10 @@ import { AuthenticationComponent } from './authentication/authentication.compone
 import { AuthenticationInterceptorService } from './authentication-interceptor.service';
 import { EcogesturesComponent } from './ecogestures/ecogestures.component';
 import { EditEcogestureComponent } from './edit-ecogesture/edit-ecogesture.component';
+import { EditPageComponent } from './edit-page/edit-page.component';
+import { EditPageElementComponent } from './edit-page-element/edit-page-element.component';
+import { EditTextElementComponent } from './edit-text-element/edit-text-element.component';
+import { EditLinkElementComponent } from './edit-link-element/edit-link-element.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { EditEcogestureComponent } from './edit-ecogesture/edit-ecogesture.compo
     EditIndicatorComponent,
     AuthenticationComponent,
     EcogesturesComponent,
-    EditEcogestureComponent
+    EditEcogestureComponent,
+    EditPageComponent,
+    EditPageElementComponent,
+    EditTextElementComponent,
+    EditLinkElementComponent
   ],
   imports: [
     BrowserModule,

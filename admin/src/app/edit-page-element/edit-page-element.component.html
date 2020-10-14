@@ -1,0 +1,35 @@
+<div *ngIf="element" [formGroup]="elementGroup">
+  <!-- SectionElement -->
+  <div class="my-5" *ngIf="isSection(element)">
+    <strong>{{ element.description }}</strong>
+    <div *ngFor="let sectionElement of element.elements">
+      <biom-edit-page-element [formControlName]="sectionElement.name"></biom-edit-page-element>
+    </div>
+  </div>
+  <!-- ListUnitElement -->
+  <div *ngIf="isListUnit(element)" class="mb-2">
+    <label>{{ element.description }}</label>
+    <div *ngFor="let unitElement of element.elements">
+      <biom-edit-page-element [formControlName]="unitElement.name"></biom-edit-page-element>
+    </div>
+  </div>
+  <!-- ListElement -->
+  <div *ngIf="isList(element)" class="mb-2">
+    <div formArrayName="elements">
+      <biom-edit-page-element
+        *ngFor="let listElement of element.elements; index as listIndex"
+        [formControlName]="listIndex"
+      ></biom-edit-page-element>
+    </div>
+  </div>
+  <!-- TextElement -->
+  <div *ngIf="isText(element)" class="mb-2">
+    <biom-edit-text-element formControlName="text"></biom-edit-text-element>
+  </div>
+  <!-- LinkElement -->
+  <div *ngIf="isLink(element)" class="mb-2">
+    <biom-edit-link-element formControlName="link"></biom-edit-link-element>
+  </div>
+  <!-- ImageElement -->
+  <div *ngIf="isImage(element)" class="mb-2">Image {{ element | json }}</div>
+</div>

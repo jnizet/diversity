@@ -103,6 +103,7 @@ class PageRestControllerTest {
                .andExpect(jsonPath("$.elements[0].description").value("Titre"))
                .andExpect(jsonPath("$.elements[0].name").value(title.getKey()))
                .andExpect(jsonPath("$.elements[0].text").value(title.getText()))
+               .andExpect(jsonPath("$.elements[0].multiLine").value(false))
                // carousel
                .andExpect(jsonPath("$.elements[1].type").value(PageElementType.SECTION.name()))
                .andExpect(jsonPath("$.elements[1].elements.length()").value(2))
