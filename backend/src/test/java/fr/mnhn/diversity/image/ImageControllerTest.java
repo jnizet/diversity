@@ -1,23 +1,20 @@
 package fr.mnhn.diversity.image;
 
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
+import fr.mnhn.diversity.model.ImageSize;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,29 +29,21 @@ class ImageControllerTest {
     @MockBean
     private ImageRepository mockImageRepository;
 
-    @SpyBean
-    private ImageProperties mockImageProperties;
+    @MockBean
+    private ImageStorageService mockImageStorageService;
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ImageController imageController;
-
-    @BeforeEach
-    void prepare(@TempDir Path tempDirectory) {
-        doReturn(tempDirectory).when(mockImageProperties).getDirectory();
-    }
-
     @Test
     void shouldReturnImage() throws Exception {
         Long id = 42L;
-        when(mockImageRepository.findById(id)).thenReturn(
-            Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
-        );
+        Image image = new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg");
+        when(mockImageRepository.findById(id)).thenReturn(Optional.of(image));
 
         byte[] bytes = "jpegImage".getBytes(StandardCharsets.UTF_8);
-        Files.write(mockImageProperties.getDirectory().resolve("42.jpg"), bytes);
+        when(mockImageStorageService.imageExists(image)).thenReturn(true);
+        when(mockImageStorageService.imageResource(image)).thenReturn(new ByteArrayResource(bytes));
 
         mockMvc.perform(get("/images/{id}/image", id))
                .andExpect(status().isOk())
@@ -77,6 +66,7 @@ class ImageControllerTest {
         when(mockImageRepository.findById(id)).thenReturn(
             Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
         );
+        when(mockImageStorageService.imageExists(any())).thenReturn(false);
 
         mockMvc.perform(get("/images/{id}/image", id))
                .andExpect(status().isNotFound());
@@ -85,12 +75,12 @@ class ImageControllerTest {
     @Test
     void shouldReturnImageOfRequestedDimensionIfFound() throws Exception {
         Long id = 42L;
-        when(mockImageRepository.findById(id)).thenReturn(
-            Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
-        );
+        Image image = new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg");
+        when(mockImageRepository.findById(id)).thenReturn(Optional.of(image));
 
         byte[] bytes = "jpegImage".getBytes(StandardCharsets.UTF_8);
-        Files.write(mockImageProperties.getDirectory().resolve("42-sm.jpg"), bytes);
+        when(mockImageStorageService.multiSizeImageExists(image, ImageSize.SM)).thenReturn(true);
+        when(mockImageStorageService.multiSizeImageResource(image, ImageSize.SM)).thenReturn(new ByteArrayResource(bytes));
 
         mockMvc.perform(get("/images/{id}/image/sm", id))
                .andExpect(status().isOk())
@@ -110,12 +100,15 @@ class ImageControllerTest {
     @Test
     void shouldReturnImageOfLargerDimensionIfFound() throws Exception {
         Long id = 42L;
-        when(mockImageRepository.findById(id)).thenReturn(
-            Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
-        );
+        Image image = new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg");
+        when(mockImageRepository.findById(id)).thenReturn(Optional.of(image));
 
         byte[] bytes = "jpegImage".getBytes(StandardCharsets.UTF_8);
-        Files.write(mockImageProperties.getDirectory().resolve("42.jpg"), bytes);
+        when(mockImageStorageService.multiSizeImageExists(image, ImageSize.SM)).thenReturn(false);
+        when(mockImageStorageService.multiSizeImageExists(image, ImageSize.MD)).thenReturn(false);
+        when(mockImageStorageService.multiSizeImageExists(image, ImageSize.LG)).thenReturn(false);
+        when(mockImageStorageService.multiSizeImageExists(image, ImageSize.XL)).thenReturn(true);
+        when(mockImageStorageService.multiSizeImageResource(image, ImageSize.XL)).thenReturn(new ByteArrayResource(bytes));
 
         mockMvc.perform(get("/images/{id}/image/sm", id))
                .andExpect(status().isOk())
@@ -132,6 +125,7 @@ class ImageControllerTest {
         when(mockImageRepository.findById(id)).thenReturn(
             Optional.of(new Image(id, ImageType.JPG.getMediaType().toString(), "test.jpg"))
         );
+        when(mockImageStorageService.multiSizeImageExists(any(), any())).thenReturn(false);
 
         mockMvc.perform(get("/images/{id}/image/sm", id))
                .andExpect(status().isNotFound());

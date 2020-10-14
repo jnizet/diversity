@@ -10,7 +10,8 @@ public enum ImageType {
     JPG(MediaType.IMAGE_JPEG, "jpg"),
     PNG(MediaType.IMAGE_PNG, "png"),
     GIF(MediaType.IMAGE_GIF, "gif"),
-    SVG(MediaType.valueOf("image/svg+xml"), "svg");
+    SVG(MediaType.valueOf("image/svg+xml"), "svg"),
+    PDF(MediaType.APPLICATION_PDF, "pdf");
 
     private final MediaType mediaType;
     private final String extension;

@@ -3,18 +3,22 @@ package fr.mnhn.diversity.image;
 import java.util.Objects;
 
 /**
- * An image, as stored in the database
+ * The DTO returned after an image has been uploaded
  * @author JB Nizet
  */
-final class Image {
+public final class ImageDTO {
     private final Long id;
     private final String contentType;
     private final String originalFileName;
 
-    public Image(Long id, String contentType, String originalFileName) {
+    public ImageDTO(Long id, String contentType, String originalFileName) {
         this.id = id;
         this.contentType = contentType;
         this.originalFileName = originalFileName;
+    }
+
+    public ImageDTO(Image image) {
+        this(image.getId(), image.getContentType(), image.getOriginalFileName());
     }
 
     public Long getId() {
@@ -29,22 +33,18 @@ final class Image {
         return originalFileName;
     }
 
-    public Image withId(Long id) {
-        return new Image(id, this.contentType, this.originalFileName);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Image)) {
+        if (!(o instanceof ImageDTO)) {
             return false;
         }
-        Image image = (Image) o;
-        return Objects.equals(id, image.id) &&
-            Objects.equals(contentType, image.contentType) &&
-            Objects.equals(originalFileName, image.originalFileName);
+        ImageDTO imageDTO = (ImageDTO) o;
+        return Objects.equals(id, imageDTO.id) &&
+            Objects.equals(contentType, imageDTO.contentType) &&
+            Objects.equals(originalFileName, imageDTO.originalFileName);
     }
 
     @Override
@@ -54,7 +54,7 @@ final class Image {
 
     @Override
     public String toString() {
-        return "Image{" +
+        return "ImageDTO{" +
             "id=" + id +
             ", contentType='" + contentType + '\'' +
             ", originalFileName='" + originalFileName + '\'' +
