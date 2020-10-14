@@ -279,10 +279,19 @@ describe('EditIndicatorComponent', () => {
         valuesSubject = new Subject<Array<IndicatorValue>>();
         indicatorService.getValues.and.returnValue(valuesSubject);
 
+        tester.componentInstance.indicatorValues = [
+          {
+            territory: 'Outre-mer',
+            value: 10,
+            unit: '%'
+          }
+        ];
+        tester.detectChanges();
+
         // nothing at first
         expect(tester.noData).toBeNull();
         expect(tester.spinner).toBeNull();
-        expect(tester.values.length).toBe(0);
+        expect(tester.values.length).toBe(1);
 
         // fetch the values
         tester.fetchValuesButton.click();
@@ -310,7 +319,8 @@ describe('EditIndicatorComponent', () => {
         // error on fetch
         valuesSubject.error('oops');
         tester.detectChanges();
-        expect(tester.noData).toHaveText(`Cet indicateur n'existe pas`);
+
+        expect(tester.noData).toContainText(`Les valeurs n'ont pas pu être récupérées pour cet indicateur`);
         expect(tester.spinner).toBeNull();
         expect(tester.values.length).toBe(0);
       });

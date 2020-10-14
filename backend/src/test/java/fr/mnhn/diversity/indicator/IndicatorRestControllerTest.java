@@ -31,6 +31,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 /**
@@ -153,11 +154,29 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldThrowIfValuesDoNotExistForIndicator() throws Exception {
-        when(mockIndicatorService.indicatorData("biom-42")).thenThrow();
+        when(mockIndicatorService.indicatorData("biom-42")).thenThrow(WebClientResponseException.create(404, "Not found", null, null, null));
 
         assertThatExceptionOfType(FunctionalException.class).isThrownBy(
             () -> controller.getValues("biom-42")
         ).matches(e -> e.getCode() == FunctionalException.Code.INDICATOR_VALUES_NOT_FOUND);
+    }
+
+    @Test
+    void shouldThrowIfUnexpectedExceptionForIndicator() throws Exception {
+        when(mockIndicatorService.indicatorData("biom-42")).thenThrow(new IllegalStateException());
+
+        assertThatExceptionOfType(FunctionalException.class).isThrownBy(
+            () -> controller.getValues("biom-42")
+        ).matches(e -> e.getCode() == FunctionalException.Code.UNEXPECTED_ERROR_WHILE_FETCHING_INDICATOR_VALUES);
+    }
+
+    @Test
+    void shouldThrowIfWebCLientErrorForIndicator() throws Exception {
+        when(mockIndicatorService.indicatorData("biom-42")).thenThrow(WebClientResponseException.create(500, "Server error", null, null, null));
+
+        assertThatExceptionOfType(FunctionalException.class).isThrownBy(
+            () -> controller.getValues("biom-42")
+        ).matches(e -> e.getCode() == FunctionalException.Code.HTTP_ERROR_WHILE_FETCHING_INDICATOR_VALUES);
     }
 
     @Test

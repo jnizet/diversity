@@ -33,7 +33,7 @@ export class EditIndicatorComponent implements OnInit {
   categories: Array<IndicatorCategory>;
   ecogestures: Array<Ecogesture>;
   isFetchingValues = false;
-  noData = false;
+  fetchingError = false;
   spinnerIcon = faSpinner;
   addIcon = faPlusCircle;
   removeIcon = faMinusCircle;
@@ -143,14 +143,15 @@ export class EditIndicatorComponent implements OnInit {
 
   getValues() {
     this.isFetchingValues = true;
-    this.noData = false;
+    this.fetchingError = false;
+    this.indicatorValues = null;
     const biomId = (this.form.value as FormValue).biomId;
     this.indicatorService
       .getValues(biomId)
       .pipe(finalize(() => (this.isFetchingValues = false)))
       .subscribe({
         next: values => (this.indicatorValues = values),
-        error: () => (this.noData = true)
+        error: () => (this.fetchingError = true)
       });
   }
 }

@@ -16,6 +16,8 @@ import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.api.IndicatorService;
 import fr.mnhn.diversity.territory.Territory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 /**
  * Controller used to handle the indicators API
@@ -36,6 +40,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Transactional
 @RequestMapping("/api/indicators")
 public class IndicatorRestController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndicatorRestController.class);
 
     private final IndicatorRepository indicatorRepository;
     private final IndicatorCategoryRepository indicatorCategoryRepository;
@@ -91,8 +97,14 @@ public class IndicatorRestController {
             indicatorValues = indicatorService.indicatorData(biomId)
                                               .flatMap(indicatorData -> indicatorService.indicatorValues(indicatorData.getCalculationReference()))
                                               .block();
-        } catch (Exception e) {
+        } catch (WebClientResponseException.NotFound e) {
             throw new FunctionalException(INDICATOR_VALUES_NOT_FOUND);
+        } catch (WebClientException e) {
+            LOGGER.error("HTTP Error while fetching indicator values for indicator {}", biomId, e);
+            throw new FunctionalException(HTTP_ERROR_WHILE_FETCHING_INDICATOR_VALUES);
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while fetching indicator values for indicator {}", biomId, e);
+            throw new FunctionalException(UNEXPECTED_ERROR_WHILE_FETCHING_INDICATOR_VALUES);
         }
         return indicatorValues;
     }

@@ -24,9 +24,9 @@
         <input class="form-control" formControlName="biomId" id="biom-id" />
         <small id="biom-id-hint" class="form-text text-muted"
           >Identifiant permettant de récupérer l'indicateur dans l'entrepôt de données. Par ex:
-          <code>3e85ea5f-2c3c-452f-9684-33c029665c8e</code></small
+          <code>8816092b-1ce3-4ae7-815d-019e99ecf545</code></small
         >
-        <button type="button" class="btn btn-primary" id="fetch-values" [disabled]="isFetchingValues" (click)="getValues()">
+        <button type="button" class="btn btn-secondary btn-sm" id="fetch-values" [disabled]="isFetchingValues" (click)="getValues()">
           Tester la récupération
         </button>
         <val-errors controlName="biomId" label="L'identifiant BIOM"></val-errors>
@@ -102,8 +102,10 @@
     </form>
   </div>
   <div class="col-6">
-    <fa-icon *ngIf="isFetchingValues" [icon]="spinnerIcon" [spin]="true" id="fetching-spinner"></fa-icon>
-    <table class="table table-hover" *ngIf="!isFetchingValues && !noData && indicatorValues">
+    <div class="text-center my-5" *ngIf="isFetchingValues">
+      <fa-icon [icon]="spinnerIcon" [spin]="true" id="fetching-spinner"></fa-icon>
+    </div>
+    <table class="table table-hover" *ngIf="indicatorValues">
       <thead>
         <tr>
           <th scope="col">Territoire</th>
@@ -117,6 +119,8 @@
         </tr>
       </tbody>
     </table>
-    <div *ngIf="!isFetchingValues && noData" id="no-data">Cet indicateur n'existe pas</div>
+    <div *ngIf="!isFetchingValues && fetchingError" id="no-data" class="text-danger">
+      Les valeurs n'ont pas pu être récupérées pour cet indicateur
+    </div>
   </div>
 </div>
