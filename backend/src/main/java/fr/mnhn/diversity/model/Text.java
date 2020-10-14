@@ -22,6 +22,11 @@ public final class Text extends Element {
     }
 
     @Override
+    public <T> T accept(ElementVisitor<T> visitor) {
+        return visitor.visitText(this);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

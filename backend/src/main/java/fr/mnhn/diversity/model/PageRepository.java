@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -53,7 +56,82 @@ public class PageRepository {
         return jdbcTemplate.query(sql, Map.of("modelName", modelName), this::extractPages);
     }
 
+    /**
+     * Updates a page, its metadata and elements, by removing all the elements and re-creating them.
+     */
+    public boolean update(Page page) {
+        // remove previous elements
+        removeElementsFromPage(page.getId());
 
+        // visit all elements and create them
+        ElementCreatorVisitor elementCreatorVisitor = new ElementCreatorVisitor(page.getId());
+        page.getElements().forEach((elementKey, element) -> element.accept(elementCreatorVisitor));
+
+        // update page metadata (title)
+        Map<String, Object> paramMap = Map.of(
+            "id", page.getId(),
+            "title", page.getTitle()
+        );
+        int updatedRows = jdbcTemplate.update("update page set title = :title where id = :id", paramMap);
+        return updatedRows > 0;
+    }
+
+    private void removeElementsFromPage(Long pageId) {
+        Map<String, Object> paramMap = Map.of(
+            "id", pageId
+        );
+        jdbcTemplate.update("delete from page_element where page_id = :id", paramMap);
+    }
+
+    /**
+     * Creates a new {@link Text}
+     */
+    public Text createText(Long pageId, Text text) {
+        Map<String, Object> paramMap = Map.of(
+            "page_id", pageId,
+            "type", text.getType().name(),
+            "key", text.getKey(),
+            "text", text.getText()
+        );
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into page_element (id, page_id, type, key, text) values (nextval('page_element_seq'), :page_id, :type, :key, :text)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+        return new Text(id, text.getKey(), text.getText());
+    }
+
+    /**
+     * Creates a new {@link Link}
+     */
+    private Link createLink(Long pageId, Link link) {
+        Map<String, Object> paramMap = Map.of(
+            "page_id", pageId,
+            "type", link.getType().name(),
+            "key", link.getKey(),
+            "text", link.getText(),
+            "href", link.getHref()
+        );
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into page_element (id, page_id, type, key, text, href) values (nextval('page_element_seq'), :page_id, :type, :key, :text, :href)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+        return new Link(id, link.getKey(), link.getText(), link.getHref());
+    }
+
+    /**
+     * Creates a new {@link Image}
+     */
+    private Image createImage(Long pageId, Image image) {
+        Map<String, Object> paramMap = Map.of(
+            "page_id", pageId,
+            "type", image.getType().name(),
+            "key", image.getKey(),
+            "image_id", image.getImageId(),
+            "alt", image.getAlt()
+        );
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into page_element (id, page_id, type, key, image_id, alt) values (nextval('page_element_seq'), :page_id, :type, :key, :image_id, :alt)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+        return new Image(id, image.getKey(), image.getImageId(), image.getAlt(), image.isMultiSize());
+    }
 
     private List<Page> extractPages(ResultSet rs) throws SQLException {
         Map<Long, PageData> pageDataById = new HashMap<>();
@@ -113,6 +191,33 @@ public class PageRepository {
             this.name = name;
             this.modelName = modelName;
             this.title = title;
+        }
+    }
+
+    /**
+     * Visitor in charge of creating page elements
+     */
+    private class ElementCreatorVisitor implements ElementVisitor<Element> {
+
+        private final Long pageId;
+
+        public ElementCreatorVisitor(Long pageId) {
+            this.pageId = pageId;
+        }
+
+        @Override
+        public Text visitText(Text text) {
+            return createText(pageId, text);
+        }
+
+        @Override
+        public Image visitImage(Image image) {
+            return createImage(pageId, image);
+        }
+
+        @Override
+        public Link visitLink(Link link) {
+            return createLink(pageId, link);
         }
     }
 }

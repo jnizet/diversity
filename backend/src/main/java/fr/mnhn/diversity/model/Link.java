@@ -32,6 +32,11 @@ public final class Link extends Element {
     }
 
     @Override
+    public <T> T accept(ElementVisitor<T> visitor) {
+        return visitor.visitLink(this);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

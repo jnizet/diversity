@@ -57,6 +57,8 @@ public abstract class Element {
         return key;
     }
 
+    public abstract <T> T accept(ElementVisitor<T> visitor);
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

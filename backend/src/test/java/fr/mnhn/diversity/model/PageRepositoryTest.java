@@ -1,6 +1,7 @@
 package fr.mnhn.diversity.model;
 
-import static com.ninja_squad.dbsetup.Operations.*;
+import static com.ninja_squad.dbsetup.Operations.insertInto;
+import static com.ninja_squad.dbsetup.Operations.sequenceOf;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.DELETE_ALL;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.TRACKER;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +47,7 @@ class PageRepositoryTest {
                     insertInto("image")
                         .columns("id", "content_type", "original_file_name")
                         .values(1L, MediaType.IMAGE_JPEG_VALUE, "beautiful-landscape.jpg")
+                        .values(2L, MediaType.IMAGE_JPEG_VALUE, "beau-paysage.jpg")
                         .build(),
                     insertInto("page_element")
                         .columns("id", "page_id", "type", "key", "text", "image_id", "alt", "href")
@@ -122,5 +124,37 @@ class PageRepositoryTest {
         assertThat(pages.get(0).getElements()).hasSize(1);
         assertThat(pages.get(1).getId()).isEqualTo(3L);
         assertThat(pages.get(1).getElements()).hasSize(1);
+    }
+
+    @Test
+    void shouldUpdateAPage() {
+        Page page = repository.findByNameAndModel("Home", "home").get();
+
+        // update the text
+        Text title = (Text) page.getElements().get("title");
+        Text updatedTitle = new Text(title.getId(), title.getKey(), "Bienvenu sur le portail");
+
+        // update the link
+        Link link = (Link) page.getElements().get("tourism");
+        Link updatedLink = new Link(link.getId(), link.getKey(), "Office du tourisme", "https://office-tourisme.fr");
+
+        // update the image
+        Image image = (Image) page.getElements().get("landscape");
+        Image updatedImage = new Image(image.getId(), image.getKey(), 2L, "Beau paysage", true);
+
+        // update the page title
+        Page updatedPage = new Page(page.getId(), page.getName(), page.getModelName(), "Portail diversité", List.of(updatedImage, updatedTitle, updatedLink));
+        repository.update(updatedPage);
+
+        page = repository.findByNameAndModel("Home", "home").get();
+        assertThat(page.getId()).isEqualTo(1L);
+        assertThat(page.getTitle()).isEqualTo("Portail diversité");
+        assertThat(page.getElements()).hasSize(3);
+        assertThat(((Text) page.getElements().get("title")).getText()).isEqualTo(updatedTitle.getText());
+        assertThat(((Link) page.getElements().get("tourism")).getText()).isEqualTo(updatedLink.getText());
+        assertThat(((Link) page.getElements().get("tourism")).getHref()).isEqualTo(updatedLink.getHref());
+        assertThat(((Image) page.getElements().get("landscape")).getImageId()).isEqualTo(updatedImage.getImageId());
+        assertThat(((Image) page.getElements().get("landscape")).getAlt()).isEqualTo(updatedImage.getAlt());
+
     }
 }

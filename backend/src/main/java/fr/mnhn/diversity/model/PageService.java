@@ -191,7 +191,7 @@ public class PageService {
         private Element getElement(String key, ElementType elementType) {
             Element element = this.page.getElements().get(key);
             if (element == null) {
-                throw new IllegalStateException("No text element with key " + key + " in page " + page.getId());
+                throw new IllegalStateException("No element with key " + key + " in page " + page.getId());
             }
             if (element.getType() != elementType) {
                 throw new IllegalStateException(

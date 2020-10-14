@@ -42,6 +42,11 @@ public final class Image extends Element {
         return multiSize;
     }
 
+    @Override
+    public <T> T accept(ElementVisitor<T> visitor) {
+        return visitor.visitImage(this);
+    }
+
     /**
      * Creates a copy of this image with the given multiSize value
      */
