@@ -26,6 +26,10 @@ import { EditLinkElementComponent } from '../edit-link-element/edit-link-element
 import { RouterTestingModule } from '@angular/router/testing';
 import { ValdemortModule } from 'ngx-valdemort';
 import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EditImageElementComponent } from '../edit-image-element/edit-image-element.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   constructor() {
@@ -44,20 +48,28 @@ class EditPageComponentTester extends ComponentTester<EditPageComponent> {
     return this.elements('input')[1] as TestInput;
   }
 
-  get link1TextInput() {
+  get image1AltInput() {
     return this.elements('input')[2] as TestInput;
   }
 
-  get link1HrefInput() {
-    return this.elements('input')[3] as TestInput;
-  }
-
-  get link2TextInput() {
+  get link1TextInput() {
     return this.elements('input')[4] as TestInput;
   }
 
-  get link2HrefInput() {
+  get link1HrefInput() {
     return this.elements('input')[5] as TestInput;
+  }
+
+  get image2AltInput() {
+    return this.elements('input')[6] as TestInput;
+  }
+
+  get link2TextInput() {
+    return this.elements('input')[8] as TestInput;
+  }
+
+  get link2HrefInput() {
+    return this.elements('input')[9] as TestInput;
   }
 
   get errors() {
@@ -150,12 +162,13 @@ describe('EditPageComponent', () => {
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, ValdemortModule],
+      imports: [ReactiveFormsModule, RouterTestingModule, ValdemortModule, NgbModalModule, FontAwesomeModule, HttpClientTestingModule],
       declarations: [
         EditPageComponent,
         EditPageElementComponent,
         EditTextElementComponent,
         EditLinkElementComponent,
+        EditImageElementComponent,
         ValidationDefaultsComponent
       ],
       providers: [
@@ -191,11 +204,13 @@ describe('EditPageComponent', () => {
     });
 
     it('should display a filled form', () => {
-      expect(tester.elements('input').length).toBe(6); // title + 5 elements
+      expect(tester.elements('input').length).toBe(10); // title + 1 text + 2 links + 2 images
       expect(tester.pageTitleInput).toHaveValue('BIOM');
       expect(tester.presentationTitleInput).toHaveValue('Portail');
+      expect(tester.image1AltInput).toHaveValue('Image 1');
       expect(tester.link1TextInput).toHaveValue('Lien 1');
       expect(tester.link1HrefInput).toHaveValue('https://lien1.fr');
+      expect(tester.image2AltInput).toHaveValue('Image 2');
       expect(tester.link2TextInput).toHaveValue('Lien 2');
       expect(tester.link2HrefInput).toHaveValue('https://lien2.fr');
     });
@@ -215,12 +230,13 @@ describe('EditPageComponent', () => {
       tester.presentationTitleInput.fillWith('Portail de la bio-diversité');
       tester.link1TextInput.fillWith('Nouveau lien 1');
       tester.link2HrefInput.fillWith('https://lien2.org');
+      tester.image1AltInput.fillWith('New alt 1');
 
       pageService.update.and.returnValue(of(undefined));
       tester.saveButton.click();
 
       const titleCommand: TextCommand = { type: 'TEXT', key: 'presentation.title', text: 'Portail de la bio-diversité' };
-      const image1Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.0.image', imageId: 1, alt: 'Image 1' };
+      const image1Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.0.image', imageId: 1, alt: 'New alt 1' };
       const link1Command: LinkCommand = {
         type: 'LINK',
         key: 'presentation.slides.0.link',

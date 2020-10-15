@@ -1,0 +1,64 @@
+<div class="image" [formGroup]="imageGroup">
+  <label>{{ editedImageElement.description }}</label>
+  <div class="form-row">
+    <div class="col-4">
+      <label>Image</label>
+      <div class="border rounded p-2" [class.border-danger]="imageGroup.get('imageId').invalid && imageGroup.get('imageId').touched">
+        <div class="text-center thumbnail">
+          <div *ngIf="uploading" class="spinner-border text-primary mt-4 uploading" role="status">
+            <span class="sr-only">Téléchargement en cours...</span>
+          </div>
+          <div *ngIf="!uploading && !imageGroup.value.imageId" class="text-center text-muted no-image mt-2">
+            <fa-icon [icon]="imageIcon" size="2x"></fa-icon>
+            <br />
+            Aucune image sélectionnée
+          </div>
+          <div *ngIf="!uploading && imageGroup.value.imageId" class="image-div">
+            <a role="button" (click)="openImageModal(imageModalContent)">
+              <span class="sr-only">Cliquer pour agrandir l'image</span>
+              <img *ngIf="imageGroup.value.imageId" [alt]="imageGroup.value.alt" [src]="imageUrl" class="img-thumbnail" />
+            </a>
+          </div>
+        </div>
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn btn-link choose-image-button"
+            (click)="chooseImage(imageFileInput)"
+            (blur)="markImageAsTouched()"
+            [disabled]="uploading"
+          >
+            <span *ngIf="!imageGroup.value.imageId">Choisir une image</span>
+            <span *ngIf="imageGroup.value.imageId">Choisir une autre image</span>
+          </button>
+        </div>
+      </div>
+      <small class="form-text text-muted image-hint">
+        <span *ngIf="editedImageElement.multiSize">
+          L'image doit être une grande photo au format JPEG, et sera redimensionnée automatiquement.
+        </span>
+        <span *ngIf="!editedImageElement.multiSize"> L'image ne sera <strong>pas</strong> redimensionnée. </span>
+      </small>
+      <val-errors controlName="imageId" label="L'image"></val-errors>
+    </div>
+    <div class="col-8">
+      <label>Légende / Texte alternatif</label>
+      <input class="form-control image-alt" formControlName="alt" />
+      <val-errors controlName="alt" label="La légende"></val-errors>
+    </div>
+  </div>
+  <input type="file" [accept]="acceptedFiles" class="d-none" (change)="upload($event)" #imageFileInput />
+</div>
+
+<ng-template #imageModalContent let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Fermer" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <img [alt]="imageGroup.value.alt" [src]="largeImageUrl" [srcset]="sourceSet" class="img-fluid" />
+    </div>
+  </div>
+</ng-template>

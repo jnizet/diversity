@@ -18,6 +18,7 @@ server:
       - text/html
       - text/css
 
+
 spring:
   datasource:
     url: jdbc:postgresql:diversity
@@ -43,6 +44,9 @@ spring:
   mvc:
     locale: fr_FR
     locale-resolver: fixed
+  servlet:
+    multipart:
+      max-file-size: 5MB
 
 ---
 spring:

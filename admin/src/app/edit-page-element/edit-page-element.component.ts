@@ -73,7 +73,11 @@ export class EditPageElementComponent implements ControlValueAccessor {
         break;
       }
       case 'IMAGE': {
-        // TODO
+        const imageControl = this.fb.control(element, Validators.required);
+        this.elementGroup.addControl('image', imageControl);
+        imageControl.valueChanges.subscribe((value: PageElement) => {
+          this.onChange(value);
+        });
         break;
       }
       case 'SECTION':

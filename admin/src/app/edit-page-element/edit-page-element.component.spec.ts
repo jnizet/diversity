@@ -5,10 +5,14 @@ import { By } from '@angular/platform-browser';
 import { ComponentTester } from 'ngx-speculoos';
 
 import { EditPageElementComponent } from './edit-page-element.component';
-import { LinkElement, ListElement, ListUnitElement, PageElement, SectionElement, TextElement } from '../page.model';
+import { ImageElement, LinkElement, ListElement, ListUnitElement, PageElement, SectionElement, TextElement } from '../page.model';
 import { EditTextElementComponent } from '../edit-text-element/edit-text-element.component';
 import { EditLinkElementComponent } from '../edit-link-element/edit-link-element.component';
 import { ValdemortModule } from 'ngx-valdemort';
+import { EditImageElementComponent } from '../edit-image-element/edit-image-element.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   template: `
@@ -48,6 +52,10 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
     return this.debugElement.queryAll(By.directive(EditLinkElementComponent));
   }
 
+  get imageComponent() {
+    return this.debugElement.query(By.directive(EditImageElementComponent));
+  }
+
   get listLabel() {
     return this.element('label');
   }
@@ -62,8 +70,14 @@ describe('EditPageElementComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, ValdemortModule],
-      declarations: [DummyFormComponent, EditPageElementComponent, EditTextElementComponent, EditLinkElementComponent]
+      imports: [ReactiveFormsModule, ValdemortModule, NgbModalModule, FontAwesomeModule, HttpClientTestingModule],
+      declarations: [
+        DummyFormComponent,
+        EditPageElementComponent,
+        EditTextElementComponent,
+        EditLinkElementComponent,
+        EditImageElementComponent
+      ]
     });
     tester = new DummyFormComponentTester();
     tester.detectChanges();
@@ -90,6 +104,24 @@ describe('EditPageElementComponent', () => {
     expect(tester.linkComponent).not.toBeNull();
     const component = tester.linkComponent.componentInstance as EditLinkElementComponent;
     expect(component.editedLinkElement).toBe(link);
+  });
+
+  it('should display an EditImageElement for an image element', () => {
+    const image: ImageElement = {
+      id: 1,
+      type: 'IMAGE',
+      description: 'Image',
+      name: 'image',
+      alt: 'Image 1',
+      imageId: 42,
+      multiSize: true
+    };
+    tester.componentInstance.form.get('element').setValue(image);
+    tester.detectChanges();
+
+    expect(tester.imageComponent).not.toBeNull();
+    const component = tester.imageComponent.componentInstance as EditImageElementComponent;
+    expect(component.editedImageElement).toBe(image);
   });
 
   it('should display a list for a list element', () => {

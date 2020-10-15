@@ -31,5 +31,7 @@
     <biom-edit-link-element formControlName="link"></biom-edit-link-element>
   </div>
   <!-- ImageElement -->
-  <div *ngIf="isImage(element)" class="mb-2">Image {{ element | json }}</div>
+  <div *ngIf="isImage(element)" class="mb-2">
+    <biom-edit-image-element formControlName="image"></biom-edit-image-element>
+  </div>
 </div>

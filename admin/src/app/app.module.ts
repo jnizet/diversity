@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ValdemortModule } from 'ngx-valdemort';
 
 import { AppComponent } from './app.component';
@@ -27,6 +27,7 @@ import { EditPageComponent } from './edit-page/edit-page.component';
 import { EditPageElementComponent } from './edit-page-element/edit-page-element.component';
 import { EditTextElementComponent } from './edit-text-element/edit-text-element.component';
 import { EditLinkElementComponent } from './edit-link-element/edit-link-element.component';
+import { EditImageElementComponent } from './edit-image-element/edit-image-element.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { EditLinkElementComponent } from './edit-link-element/edit-link-element.
     EditPageComponent,
     EditPageElementComponent,
     EditTextElementComponent,
-    EditLinkElementComponent
+    EditLinkElementComponent,
+    EditImageElementComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import { EditLinkElementComponent } from './edit-link-element/edit-link-element.
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    NgbModalModule,
     NgbToastModule,
     ValdemortModule
   ],
