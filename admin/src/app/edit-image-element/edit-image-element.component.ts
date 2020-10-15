@@ -32,9 +32,13 @@ export class EditImageElementComponent {
       imageId: [null, Validators.required],
       alt: ['', Validators.required]
     });
-    this.imageGroup.valueChanges.subscribe((value: { imageId: number; alt: string }) =>
-      this.onChange({ ...this.editedImageElement, ...value })
-    );
+    this.imageGroup.valueChanges.subscribe((value: { imageId: number; alt: string }) => {
+      if (this.imageGroup.valid) {
+        this.onChange({ ...this.editedImageElement, ...value });
+      } else {
+        this.onChange(null);
+      }
+    });
     this.imageGroup.statusChanges.subscribe(() => this.onTouched());
   }
 

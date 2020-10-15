@@ -25,9 +25,13 @@ export class EditLinkElementComponent implements ControlValueAccessor {
       text: ['', Validators.required],
       href: ['', Validators.required]
     });
-    this.linkGroup.valueChanges.subscribe((value: { text: string; href: string }) =>
-      this.onChange({ ...this.editedLinkElement, ...value })
-    );
+    this.linkGroup.valueChanges.subscribe((value: { text: string; href: string }) => {
+      if (this.linkGroup.valid) {
+        this.onChange({ ...this.editedLinkElement, ...value });
+      } else {
+        this.onChange(null);
+      }
+    });
     this.linkGroup.statusChanges.subscribe(() => this.onTouched());
   }
 

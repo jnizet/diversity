@@ -30,6 +30,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EditImageElementComponent } from '../edit-image-element/edit-image-element.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Image } from '../image.model';
+import { By } from '@angular/platform-browser';
+import { ImageService } from '../image.service';
 
 class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   constructor() {
@@ -75,6 +78,9 @@ class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   get addUnitButton() {
     return this.button('#add-unit');
   }
+  get editImageComponents() {
+    return this.debugElement.queryAll(By.directive(EditImageElementComponent));
+  }
 
   get errors() {
     return this.elements('.invalid-feedback div');
@@ -88,6 +94,7 @@ class EditPageComponentTester extends ComponentTester<EditPageComponent> {
 describe('EditPageComponent', () => {
   let tester: EditPageComponentTester;
   let pageService: jasmine.SpyObj<PageService>;
+  let imageService: jasmine.SpyObj<ImageService>;
   let router: Router;
   let toastService: jasmine.SpyObj<ToastService>;
   const titleElement: TextElement = { id: 2, type: 'TEXT', name: 'title', description: 'Title', text: 'Portail', multiLine: false };
@@ -191,6 +198,7 @@ describe('EditPageComponent', () => {
 
   function prepare(route: ActivatedRoute) {
     pageService = jasmine.createSpyObj<PageService>('PageService', ['getValues', 'getModel', 'update', 'create']);
+    imageService = jasmine.createSpyObj<ImageService>('ImageService', ['createImage']);
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
@@ -206,7 +214,8 @@ describe('EditPageComponent', () => {
       providers: [
         { provide: PageService, useValue: pageService },
         { provide: ActivatedRoute, useValue: route },
-        { provide: ToastService, useValue: toastService }
+        { provide: ToastService, useValue: toastService },
+        { provide: ImageService, useValue: imageService }
       ]
     });
     router = TestBed.inject(Router);
@@ -268,12 +277,21 @@ describe('EditPageComponent', () => {
       tester.pageTitleInput.fillWith('BIOM!');
       tester.presentationTitleInput.fillWith('Portail de la bio-diversité');
       tester.image1AltInput.fillWith('Image 1');
+      imageService.createImage.and.returnValue(of({ id: 54 } as Image));
+      const file = {} as File;
+      const fakeFileEvent = ({
+        target: {
+          files: [file]
+        }
+      } as unknown) as Event;
+      tester.editImageComponents[0].componentInstance.upload(fakeFileEvent);
       tester.link1TextInput.fillWith('Nouveau lien 1');
       tester.link1HrefInput.fillWith('https://lien1.org');
       // add another unit
       tester.addUnitButton.click();
       expect(tester.elements('input').length).toBe(10); // title + 1 text + 2 links (2 inputs) + 2 images (2 inputs)
       tester.image2AltInput.fillWith('Image 2');
+      tester.editImageComponents[1].componentInstance.upload(fakeFileEvent);
       tester.link2TextInput.fillWith('Nouveau lien 2');
       tester.link2HrefInput.fillWith('https://lien2.org');
 
@@ -281,14 +299,14 @@ describe('EditPageComponent', () => {
       tester.saveButton.click();
 
       const titleCommand: TextCommand = { type: 'TEXT', key: 'presentation.title', text: 'Portail de la bio-diversité' };
-      const image1Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.0.image', imageId: null, alt: 'Image 1' };
+      const image1Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.0.image', imageId: 54, alt: 'Image 1' };
       const link1Command: LinkCommand = {
         type: 'LINK',
         key: 'presentation.slides.0.link',
         text: 'Nouveau lien 1',
         href: 'https://lien1.org'
       };
-      const image2Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.1.image', imageId: null, alt: 'Image 2' };
+      const image2Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.1.image', imageId: 54, alt: 'Image 2' };
       const link2Command: LinkCommand = {
         type: 'LINK',
         key: 'presentation.slides.1.link',

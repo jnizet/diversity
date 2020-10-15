@@ -19,8 +19,16 @@ export class EditTextElementComponent implements ControlValueAccessor {
 
   constructor(private fb: FormBuilder) {
     this.textControl = this.fb.control('', Validators.required);
-    this.textControl.valueChanges.subscribe((value: string) => this.onChange({ ...this.editedTextElement, text: value }));
-    this.textControl.statusChanges.subscribe(() => this.onTouched());
+    this.textControl.valueChanges.subscribe((value: string) => {
+      if (this.textControl.valid) {
+        this.onChange({ ...this.editedTextElement, text: value });
+      } else {
+        this.onChange(null);
+      }
+    });
+    this.textControl.statusChanges.subscribe(() => {
+      this.onTouched();
+    });
   }
 
   @Input()
