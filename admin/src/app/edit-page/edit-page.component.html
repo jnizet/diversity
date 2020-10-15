@@ -1,5 +1,10 @@
 <div *ngIf="editedPage">
-  <h1>{{ mode === 'update' ? 'Modifier' : 'Créer' }} une page</h1>
+  <h1>
+    {{ mode === 'update' ? 'Modifier' : 'Créer' }} la page
+    <small>
+      <code>{{ editedPage.name }}</code>
+    </small>
+  </h1>
 
   <form [formGroup]="pageForm" (ngSubmit)="savePage()">
     <div class="form-group">

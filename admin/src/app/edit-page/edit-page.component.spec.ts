@@ -221,7 +221,8 @@ describe('EditPageComponent', () => {
     beforeEach(() => {
       const route = fakeRoute({
         snapshot: fakeSnapshot({
-          params: { modelName: 'home' }
+          params: { modelName: 'home' },
+          queryParams: { name: 'accueil' }
         })
       });
       prepare(route);
@@ -232,7 +233,7 @@ describe('EditPageComponent', () => {
     });
 
     it('should have a title', () => {
-      expect(tester.title).toContainText(`Créer une page`);
+      expect(tester.title).toContainText(`Créer la page accueil`);
     });
 
     it('should display an empty form', () => {
@@ -291,7 +292,7 @@ describe('EditPageComponent', () => {
       };
       const expectedCommand: PageCommand = {
         title: 'BIOM!',
-        name: 'test',
+        name: 'accueil',
         elements: [titleCommand, image1Command, link1Command, image2Command, link2Command]
       };
       expect(pageService.create).toHaveBeenCalledWith('home', expectedCommand);
@@ -316,7 +317,7 @@ describe('EditPageComponent', () => {
     });
 
     it('should have a title', () => {
-      expect(tester.title).toContainText(`Modifier une page`);
+      expect(tester.title).toContainText(`Modifier la page Home`);
     });
 
     it('should display a filled form', () => {

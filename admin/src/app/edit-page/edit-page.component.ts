@@ -51,9 +51,11 @@ export class EditPageComponent implements OnInit {
         this.pageModel = model;
       });
     } else {
+      const pageName = this.route.snapshot.queryParamMap.get('name');
       // in creation mode, we only fetch the page model with empty values
       this.pageService.getModel(modelName).subscribe(model => {
         this.editedPage = JSON.parse(JSON.stringify(model));
+        this.editedPage.name = pageName;
         this.editedPage.elements.forEach(element => {
           this.elementsGroup.addControl(element.name, new FormControl(element));
         });
@@ -79,7 +81,7 @@ export class EditPageComponent implements OnInit {
 
     const command: PageCommand = {
       title: formValue.title,
-      name: this.editedPage.name ? this.editedPage.name : 'test', // TODO should be the proper slug
+      name: this.editedPage.name,
       elements: elementCommands
     };
     let obs: Observable<Page | void>;
