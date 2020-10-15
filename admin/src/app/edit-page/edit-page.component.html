@@ -14,7 +14,11 @@
     </div>
     <div formGroupName="elements">
       <div *ngFor="let element of editedPage.elements">
-        <biom-edit-page-element [formControlName]="element.name" [elementModel]="getElementModel(element.name)"></biom-edit-page-element>
+        <biom-edit-page-element
+          [formControlName]="element.name"
+          [submitted]="submitted"
+          [elementModel]="getElementModel(element.name)"
+        ></biom-edit-page-element>
       </div>
     </div>
 

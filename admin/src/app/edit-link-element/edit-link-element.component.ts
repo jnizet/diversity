@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { LinkElement } from '../page.model';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 
@@ -31,6 +31,13 @@ export class EditLinkElementComponent implements ControlValueAccessor {
     this.linkGroup.statusChanges.subscribe(() => this.onTouched());
   }
 
+  @Input()
+  set submitted(isSubmitted: boolean) {
+    if (isSubmitted) {
+      this.linkGroup.markAllAsTouched();
+    }
+  }
+
   registerOnChange(fn: any) {
     this.onChange = fn;
   }
@@ -41,9 +48,12 @@ export class EditLinkElementComponent implements ControlValueAccessor {
 
   writeValue(element: LinkElement): void {
     this.editedLinkElement = element;
-    this.linkGroup.setValue({
-      text: element.text,
-      href: element.href
-    });
+    this.linkGroup.setValue(
+      {
+        text: element.text,
+        href: element.href
+      },
+      { emitEvent: false }
+    );
   }
 }

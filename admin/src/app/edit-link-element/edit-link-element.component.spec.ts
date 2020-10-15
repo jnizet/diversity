@@ -11,11 +11,12 @@ import { ValidationDefaultsComponent } from '../validation-defaults/validation-d
 @Component({
   template: `
     <form [formGroup]="form">
-      <biom-edit-link-element formControlName="linkElement"></biom-edit-link-element>
+      <biom-edit-link-element formControlName="linkElement" [submitted]="submitted"></biom-edit-link-element>
     </form>
   `
 })
 class DummyFormComponent {
+  submitted = false;
   linkElement: LinkElement = {
     id: 1,
     type: 'LINK',
@@ -90,7 +91,8 @@ describe('EditLinkElementComponent', () => {
   it('should display an error if the text or href is missing', () => {
     tester.textInput.fillWith('');
     tester.hrefInput.fillWith('');
-    tester.element('.link').dispatchEventOfType('submit');
+    tester.componentInstance.submitted = true;
+    tester.detectChanges();
 
     expect(tester.errors.length).toBe(2);
     expect(tester.errors[0]).toHaveText('Le texte est obligatoire');

@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { TextElement } from '../page.model';
 import { ControlValueAccessor, FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 
@@ -21,6 +21,13 @@ export class EditTextElementComponent implements ControlValueAccessor {
     this.textControl = this.fb.control('', Validators.required);
     this.textControl.valueChanges.subscribe((value: string) => this.onChange({ ...this.editedTextElement, text: value }));
     this.textControl.statusChanges.subscribe(() => this.onTouched());
+  }
+
+  @Input()
+  set submitted(isSubmitted: boolean) {
+    if (isSubmitted) {
+      this.textControl.markAsTouched();
+    }
   }
 
   registerOnChange(fn: any) {

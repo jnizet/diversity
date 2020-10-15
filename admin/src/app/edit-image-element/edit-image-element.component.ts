@@ -1,4 +1,4 @@
-import { Component, forwardRef, TemplateRef } from '@angular/core';
+import { Component, forwardRef, Input, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { ImageElement } from '../page.model';
 import { ModalService } from '../modal.service';
@@ -36,6 +36,13 @@ export class EditImageElementComponent {
       this.onChange({ ...this.editedImageElement, ...value })
     );
     this.imageGroup.statusChanges.subscribe(() => this.onTouched());
+  }
+
+  @Input()
+  set submitted(isSubmitted: boolean) {
+    if (isSubmitted) {
+      this.imageGroup.markAllAsTouched();
+    }
   }
 
   registerOnChange(fn: any) {

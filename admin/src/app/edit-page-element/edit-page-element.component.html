@@ -5,6 +5,7 @@
     <div *ngFor="let sectionElement of element.elements">
       <biom-edit-page-element
         [formControlName]="sectionElement.name"
+        [submitted]="submitted"
         [elementModel]="getElementModel(sectionElement.name)"
       ></biom-edit-page-element>
     </div>
@@ -14,6 +15,7 @@
     <div *ngFor="let unitElement of element.elements">
       <biom-edit-page-element
         [formControlName]="unitElement.name"
+        [submitted]="submitted"
         [elementModel]="getElementModel(unitElement.name)"
       ></biom-edit-page-element>
     </div>
@@ -22,8 +24,12 @@
   <div *ngIf="isList(element)" class="mb-2">
     <label>{{ element.description }}</label>
     <div formArrayName="elements">
-      <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2">
-        <biom-edit-page-element [formControlName]="unitIndex" [elementModel]="getElementModel(listElement.name)"></biom-edit-page-element>
+      <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2 unit">
+        <biom-edit-page-element
+          [formControlName]="unitIndex"
+          [submitted]="submitted"
+          [elementModel]="getElementModel(listElement.name)"
+        ></biom-edit-page-element>
         <button type="button" class="btn btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
           Enlever l'élément de la liste
         </button>
@@ -35,14 +41,14 @@
   </div>
   <!-- TextElement -->
   <div *ngIf="isText(element)" class="mb-2">
-    <biom-edit-text-element formControlName="text"></biom-edit-text-element>
+    <biom-edit-text-element [submitted]="submitted" formControlName="text"></biom-edit-text-element>
   </div>
   <!-- LinkElement -->
   <div *ngIf="isLink(element)" class="mb-2">
-    <biom-edit-link-element formControlName="link"></biom-edit-link-element>
+    <biom-edit-link-element [submitted]="submitted" formControlName="link"></biom-edit-link-element>
   </div>
   <!-- ImageElement -->
   <div *ngIf="isImage(element)" class="mb-2">
-    <biom-edit-image-element formControlName="image"></biom-edit-image-element>
+    <biom-edit-image-element [submitted]="submitted" formControlName="image"></biom-edit-image-element>
   </div>
 </div>

@@ -253,8 +253,13 @@ describe('EditPageComponent', () => {
 
       tester.saveButton.click();
 
-      expect(tester.errors.length).toBe(1);
+      expect(tester.errors.length).toBe(6);
       expect(tester.errors[0]).toHaveText('Le titre est obligatoire');
+      expect(tester.errors[1]).toHaveText('Le texte est obligatoire');
+      expect(tester.errors[2]).toHaveText("L'image est obligatoire");
+      expect(tester.errors[3]).toHaveText('La légende est obligatoire');
+      expect(tester.errors[4]).toHaveText('Le texte est obligatoire');
+      expect(tester.errors[5]).toHaveText('Le lien est obligatoire');
 
       expect(pageService.create).not.toHaveBeenCalled();
     });

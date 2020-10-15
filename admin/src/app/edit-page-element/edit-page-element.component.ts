@@ -19,6 +19,7 @@ import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCES
 })
 export class EditPageElementComponent implements ControlValueAccessor {
   @Input() elementModel: PageElement;
+  @Input() submitted: boolean;
   element: PageElement;
   elementGroup: FormGroup;
   private onChange: (value: any) => void = () => {};
@@ -60,13 +61,13 @@ export class EditPageElementComponent implements ControlValueAccessor {
 
   writeValue(element: PageElement): void {
     this.element = element;
-    this.elementGroup = this.fb.group({});
+    this.elementGroup = this.fb.group({}, Validators.required);
     this.elementGroup.statusChanges.subscribe(() => this.onTouched());
 
     switch (element.type) {
       case 'TEXT': {
         // the element is a text: we want a simple form with a 'text' control
-        const textControl = this.fb.control(element);
+        const textControl = this.fb.control(element, Validators.required);
         this.elementGroup.addControl('text', textControl);
         textControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);
@@ -94,7 +95,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
       case 'LIST_UNIT': {
         // the element is a section or a list unit: we want a form control for each element of the section
         element.elements.forEach(sectionElement => {
-          (this.elementGroup as FormGroup).addControl(sectionElement.name, this.fb.control(sectionElement));
+          (this.elementGroup as FormGroup).addControl(sectionElement.name, this.fb.control(sectionElement, Validators.required));
         });
         this.elementGroup.valueChanges.subscribe((value: PageElement) => {
           this.onChange({ ...element, elements: Object.values(value) });
@@ -103,10 +104,10 @@ export class EditPageElementComponent implements ControlValueAccessor {
       }
       case 'LIST': {
         // the element is a list: we want a form array with a form control for each unit of the list
-        const elementsArray = this.fb.array([]);
+        const elementsArray = this.fb.array([], Validators.required);
         this.elementGroup.addControl('elements', elementsArray);
         element.elements.forEach(listUnit => {
-          elementsArray.push(this.fb.control(listUnit));
+          elementsArray.push(this.fb.control(listUnit, Validators.required));
         });
         elementsArray.valueChanges.subscribe((value: PageElement) => {
           this.onChange({ ...element, elements: Object.values(value) });
@@ -124,7 +125,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
     // get the pristine list unit from the model
     const listUnitElement = { ...(this.elementModel as ListElement).elements[0] };
     // push it to the list elements
-    this.elementsArray.push(this.fb.control(listUnitElement));
+    this.elementsArray.push(this.fb.control(listUnitElement, Validators.required));
     element.elements.push(listUnitElement);
   }
 

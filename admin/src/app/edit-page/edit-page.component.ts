@@ -22,9 +22,10 @@ export class EditPageComponent implements OnInit {
   pageForm: FormGroup;
   elementsGroup: FormGroup;
   pageModel: Page;
+  submitted = false;
 
   constructor(private route: ActivatedRoute, fb: FormBuilder, private pageService: PageService, private toastService: ToastService) {
-    this.elementsGroup = fb.group({});
+    this.elementsGroup = fb.group({}, Validators.required);
     this.pageForm = fb.group({
       title: ['', Validators.required],
       elements: this.elementsGroup
@@ -43,7 +44,7 @@ export class EditPageComponent implements OnInit {
       forkJoin([this.pageService.getValues(pageId), this.pageService.getModel(modelName)]).subscribe(([page, model]) => {
         this.editedPage = page;
         page.elements.forEach(element => {
-          this.elementsGroup.addControl(element.name, new FormControl(element));
+          this.elementsGroup.addControl(element.name, new FormControl(element, Validators.required));
         });
         this.pageForm.patchValue({
           title: page.title
@@ -57,7 +58,7 @@ export class EditPageComponent implements OnInit {
         this.editedPage = JSON.parse(JSON.stringify(model));
         this.editedPage.name = pageName;
         this.editedPage.elements.forEach(element => {
-          this.elementsGroup.addControl(element.name, new FormControl(element));
+          this.elementsGroup.addControl(element.name, new FormControl(element, Validators.required));
         });
         this.pageModel = model;
       });
@@ -65,6 +66,7 @@ export class EditPageComponent implements OnInit {
   }
 
   savePage() {
+    this.submitted = true;
     if (this.pageForm.invalid) {
       return;
     }

@@ -11,12 +11,12 @@ import { ValidationDefaultsComponent } from '../validation-defaults/validation-d
 @Component({
   template: `
     <form [formGroup]="form">
-      <biom-edit-text-element formControlName="textElement"></biom-edit-text-element>
-      <button id="save">Save</button>
+      <biom-edit-text-element formControlName="textElement" [submitted]="submitted"></biom-edit-text-element>
     </form>
   `
 })
 class DummyFormComponent {
+  submitted = false;
   textElement: TextElement = {
     id: 1,
     type: 'TEXT',
@@ -54,10 +54,6 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
   get errors() {
     return this.elements('.invalid-feedback div');
   }
-
-  get saveButton() {
-    return this.button('#save');
-  }
 }
 
 describe('EditTextElementComponent', () => {
@@ -89,7 +85,8 @@ describe('EditTextElementComponent', () => {
 
   it('should display an error if the text is missing', () => {
     tester.textInput.fillWith('');
-    tester.saveButton.click();
+    tester.componentInstance.submitted = true;
+    tester.detectChanges();
 
     expect(tester.errors.length).toBe(1);
     expect(tester.errors[0]).toHaveText('Le texte est obligatoire');
