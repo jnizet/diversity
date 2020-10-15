@@ -1,10 +1,10 @@
 package fr.mnhn.diversity.model.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -140,12 +140,50 @@ class PageRestControllerTest {
     }
 
     @Test
+    void shouldGetModel() throws Exception {
+        mockMvc.perform(get("/api/pages/models/home"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.id").doesNotExist())
+               .andExpect(jsonPath("$.title").value(""))
+               .andExpect(jsonPath("$.elements.length()").value(2))
+               // titre
+               .andExpect(jsonPath("$.elements[0].type").value(PageElementType.TEXT.name()))
+               .andExpect(jsonPath("$.elements[0].description").value("Titre"))
+               .andExpect(jsonPath("$.elements[0].name").value(title.getKey()))
+               .andExpect(jsonPath("$.elements[0].text").value(""))
+               .andExpect(jsonPath("$.elements[0].multiLine").value(false))
+               // carousel
+               .andExpect(jsonPath("$.elements[1].type").value(PageElementType.SECTION.name()))
+               .andExpect(jsonPath("$.elements[1].elements.length()").value(2))
+               // carousel title
+               .andExpect(jsonPath("$.elements[1].elements[0].type").value(PageElementType.TEXT.name()))
+               .andExpect(jsonPath("$.elements[1].elements[0].description").value("Titre du carousel"))
+               .andExpect(jsonPath("$.elements[1].elements[0].name").value("title"))
+               .andExpect(jsonPath("$.elements[1].elements[0].text").value(""))
+               .andExpect(jsonPath("$.elements[1].elements[0].type").value(PageElementType.TEXT.name()))
+               // only one slide here, as this is the model
+               .andExpect(jsonPath("$.elements[1].elements[1].type").value(PageElementType.LIST.name()))
+               .andExpect(jsonPath("$.elements[1].elements[1].description").value("Slides du carousel"))
+               .andExpect(jsonPath("$.elements[1].elements[1].name").value("slides"))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements.length()").value(1))
+               // slide
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].type").value(PageElementType.LIST_UNIT.name()))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements.length()").value(2))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[0].type").value(PageElementType.LINK.name()))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[0].href").value(""))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[0].text").value(""))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].type").value(PageElementType.IMAGE.name()))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].alt").value(""))
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].imageId").doesNotExist());
+    }
+
+    @Test
     void shouldUpdate() throws Exception {
         TextCommandDTO carouselTitleCommand = new TextCommandDTO("carousel.title", "Vive la bio-diversité");
         ImageCommandDTO firstCarouselImageCommand = new ImageCommandDTO("carousel.slides.0.image", 3L, "Image 1", true);
         LinkCommandDTO firstCarouselLinkCommand = new LinkCommandDTO("carousel.slides.0.link", "Lien 1", "https://lien1.fr");
         List<ElementCommandDTO> elements = List.of(carouselTitleCommand, firstCarouselImageCommand, firstCarouselLinkCommand);
-        PageCommandDTO command = new PageCommandDTO("Portail de la diversité !", elements);
+        PageCommandDTO command = new PageCommandDTO("Portail de la diversité !", "home", elements);
 
         mockMvc.perform(put("/api/pages/{id}", page.getId())
                             .contentType(MediaType.APPLICATION_JSON)
@@ -160,6 +198,40 @@ class PageRestControllerTest {
             new Image(null, "carousel.slides.0.image", 3L, "Image 1", true),
             new Link(null, "carousel.slides.0.link", "Lien 1", "https://lien1.fr"),
             new Text(null, "carousel.title", "Vive la bio-diversité")
+        );
+    }
+
+    @Test
+    void shouldCreate() throws Exception {
+        TextCommandDTO titleCommand = new TextCommandDTO("title", "Bienvenu");
+        TextCommandDTO carouselTitleCommand = new TextCommandDTO("carousel.title", "Vive la bio-diversité");
+        ImageCommandDTO firstCarouselImageCommand = new ImageCommandDTO("carousel.slides.0.image", 3L, "Image 1", true);
+        LinkCommandDTO firstCarouselLinkCommand = new LinkCommandDTO("carousel.slides.0.link", "Lien 1", "https://lien1.fr");
+        List<ElementCommandDTO> elements = List.of(titleCommand, carouselTitleCommand, firstCarouselImageCommand, firstCarouselLinkCommand);
+        PageCommandDTO command = new PageCommandDTO("Portail de la diversité !", "Home", elements);
+
+        Text title = new Text(257L, titleCommand.getKey(), titleCommand.getText());
+        Text carouselTitle = new Text(258L, carouselTitleCommand.getKey(), carouselTitleCommand.getText());
+        Image firstCarouselImage = new Image(259L, firstCarouselImageCommand.getKey(), firstCarouselImageCommand.getImageId(), firstCarouselImageCommand.getAlt(), firstCarouselImageCommand.isMultiSize());
+        Link firstCarouselLink = new Link(260L, firstCarouselLinkCommand.getKey(), firstCarouselLinkCommand.getText(), firstCarouselLinkCommand.getHref());
+        Page createdPage = new Page(256L, command.getName(), "home", command.getTitle(), List.of(title, carouselTitle, firstCarouselImage, firstCarouselLink));
+        when(mockPageRepository.create(any())).thenReturn(createdPage);
+
+        mockMvc.perform(post("/api/pages/models/home")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsBytes(command)))
+               .andExpect(status().isCreated())
+               .andExpect(jsonPath("$.id").value(256L));
+
+        verify(mockPageRepository).create(pageArgumentCaptor.capture());
+        Page pageToCreate = pageArgumentCaptor.getValue();
+        assertThat(pageToCreate.getTitle()).isEqualTo("Portail de la diversité !");
+        List<Element> elementsToCreate = pageToCreate.getElements().values().stream().sorted(Comparator.comparing(Element::getKey)).collect(Collectors.toList());
+        assertThat(elementsToCreate).containsExactly(
+            new Image(null, "carousel.slides.0.image", 3L, "Image 1", true),
+            new Link(null, "carousel.slides.0.link", "Lien 1", "https://lien1.fr"),
+            new Text(null, "carousel.title", "Vive la bio-diversité"),
+            new Text(null, "title", "Bienvenu")
         );
     }
 }

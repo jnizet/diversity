@@ -155,6 +155,26 @@ class PageRepositoryTest {
         assertThat(((Link) page.getElements().get("tourism")).getHref()).isEqualTo(updatedLink.getHref());
         assertThat(((Image) page.getElements().get("landscape")).getImageId()).isEqualTo(updatedImage.getImageId());
         assertThat(((Image) page.getElements().get("landscape")).getAlt()).isEqualTo(updatedImage.getAlt());
+    }
 
+    @Test
+    void shouldCreateAPage() {
+        Text title = new Text(null, "title", "Bienvenu sur le portail");
+        Link link = new Link(null, "tourism", "Office du tourisme", "https://office-tourisme.fr");
+        Image image = new Image(null, "landscape", 2L, "Beau paysage", true);
+        Page pageToCreate = new Page(null, "new-home", "home", "Nouvelle page d'accueil", List.of(title, link, image));
+
+        Page createdPage = repository.create(pageToCreate);
+        assertThat(createdPage.getId()).isNotNull();
+
+        Page page = repository.findByNameAndModel("new-home", "home").get();
+        assertThat(page.getId()).isEqualTo(createdPage.getId());
+        assertThat(page.getTitle()).isEqualTo("Nouvelle page d'accueil");
+        assertThat(page.getElements()).hasSize(3);
+        assertThat(((Text) page.getElements().get("title")).getText()).isEqualTo(title.getText());
+        assertThat(((Link) page.getElements().get("tourism")).getText()).isEqualTo(link.getText());
+        assertThat(((Link) page.getElements().get("tourism")).getHref()).isEqualTo(link.getHref());
+        assertThat(((Image) page.getElements().get("landscape")).getImageId()).isEqualTo(image.getImageId());
+        assertThat(((Image) page.getElements().get("landscape")).getAlt()).isEqualTo(image.getAlt());
     }
 }

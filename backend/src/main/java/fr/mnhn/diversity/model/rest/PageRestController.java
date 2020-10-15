@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -102,7 +103,23 @@ public class PageRestController {
         for (PageElement pageElement : model.getElements()) {
             pageElement.accept(visitor);
         }
-        return new PageValuesDTO(page.getId(), page.getTitle(), model.getName(), model.getDescription(), visitor.getElements());
+        return new PageValuesDTO(page.getId(), page.getTitle(), page.getName(), model.getName(), model.getDescription(), visitor.getElements());
+    }
+
+    /**
+     * Returns a DTO containing:
+     * - the metadata of the specified page
+     * - empty values of each element of the page
+     * - the meta-model associated to the page
+     */
+    @GetMapping("/models/{modelName}")
+    public PageValuesDTO getPageModel(@PathVariable("modelName") String modelName) {
+        PageModel model = modelsByName.get(modelName);
+        PageValuesPopulatorVisitor visitor = new PageValuesPopulatorVisitor(null, "");
+        for (PageElement pageElement : model.getElements()) {
+            pageElement.accept(visitor);
+        }
+        return new PageValuesDTO(null, "", "", modelName, model.getDescription(), visitor.getElements());
     }
 
     /**
@@ -143,7 +160,7 @@ public class PageRestController {
             // here we find what the max index is
             // then build a list unit for each index, and add the elements to the unit
             String listKey = prefix + list.getName();
-            int maxListIndex = PageUtils.findMaxListIndex(page, listKey + ".");
+            int maxListIndex = page != null ? PageUtils.findMaxListIndex(page, listKey + ".") : 0;
             for (int i = 0; i <= maxListIndex; i++) {
                 String elementsPrefix = listKey + "." + i + ".";
                 PageValuesPopulatorVisitor listVisitor = new PageValuesPopulatorVisitor(page, elementsPrefix);
@@ -160,9 +177,14 @@ public class PageRestController {
         public Void visitText(TextElement text) {
             String name = text.getName();
             String key = prefix + name;
-            Text value = (Text) PageUtils.getElement(page, key, ElementType.TEXT);
-            TextElementDTO textElementDTO = new TextElementDTO(text, value);
-            elements.add(textElementDTO);
+            if (page != null) {
+                Text value = (Text) PageUtils.getElement(page, key, ElementType.TEXT);
+                TextElementDTO textElementDTO = new TextElementDTO(text, value);
+                elements.add(textElementDTO);
+            }
+            else {
+                elements.add(new TextElementDTO(text, new Text(null, key, "")));
+            }
             return null;
         }
 
@@ -170,9 +192,14 @@ public class PageRestController {
         public Void visitImage(ImageElement image) {
             String name = image.getName();
             String key = prefix + name;
-            Image value = (Image) PageUtils.getElement(page, key, ElementType.IMAGE);
-            ImageElementDTO imageElementDTO = new ImageElementDTO(image, value);
-            elements.add(imageElementDTO);
+            if (page != null) {
+                Image value = (Image) PageUtils.getElement(page, key, ElementType.IMAGE);
+                ImageElementDTO imageElementDTO = new ImageElementDTO(image, value);
+                elements.add(imageElementDTO);
+            }
+            else {
+                elements.add(new ImageElementDTO(image, new Image(null, key, null, "", image.isMultiSize())));
+            }
             return null;
         }
 
@@ -180,9 +207,14 @@ public class PageRestController {
         public Void visitLink(LinkElement link) {
             String name = link.getName();
             String key = prefix + name;
-            Link value = (Link) PageUtils.getElement(page, key, ElementType.LINK);
-            LinkElementDTO linkElementDTO = new LinkElementDTO(link, value);
-            elements.add(linkElementDTO);
+            if (page != null) {
+                Link value = (Link) PageUtils.getElement(page, key, ElementType.LINK);
+                LinkElementDTO linkElementDTO = new LinkElementDTO(link, value);
+                elements.add(linkElementDTO);
+            }
+            else {
+                elements.add(new LinkElementDTO(link, new Link(null, key, "", "")));
+            }
             return null;
         }
 
@@ -196,25 +228,44 @@ public class PageRestController {
     public void update(@PathVariable("pageId") Long pageId,
                        @Validated @RequestBody PageCommandDTO command) {
         Page page = pageRepository.findById(pageId).orElseThrow(NotFoundException::new);
-        ElementCommandVisitor<Element> visitor = new ElementCommandVisitor<>() {
-            @Override
-            public Element visitText(TextCommandDTO text) {
-                return new Text(null, text.getKey(), text.getText());
-            }
-
-            @Override
-            public Element visitImage(ImageCommandDTO image) {
-                return new Image(null, image.getKey(), image.getImageId(), image.getAlt(), image.isMultiSize());
-            }
-
-            @Override
-            public Element visitLink(LinkCommandDTO link) {
-                return new Link(null, link.getKey(), link.getText(), link.getHref());
-            }
-        };
-        List<Element> updateElements = command.getElements().stream().map(element -> element.accept(visitor)).collect(Collectors.toList());
+        ElementCommandVisitor<Element> commandVisitor = new CommandVisitor();
+        List<Element> updateElements = command.getElements().stream().map(element -> element.accept(commandVisitor)).collect(Collectors.toList());
         Page updatedPage = new Page(pageId, page.getName(), page.getModelName(), command.getTitle(), updateElements);
         // TODO validate the page
         pageRepository.update(updatedPage);
+    }
+
+    @PostMapping("/models/{modelName}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PageValuesDTO create(@PathVariable("modelName") String modelName, @Validated @RequestBody PageCommandDTO command) {
+        ElementCommandVisitor<Element> commandVisitor = new CommandVisitor();
+        List<Element> elementsToCreate = command.getElements().stream().map(element -> element.accept(commandVisitor)).collect(Collectors.toList());
+        Page page = new Page(null, command.getName(), modelName, command.getTitle(), elementsToCreate);
+        // TODO validate the page
+        page = pageRepository.create(page);
+        // rebuild the DTO
+        PageModel model = modelsByName.get(modelName);
+        PageValuesPopulatorVisitor visitor = new PageValuesPopulatorVisitor(page, "");
+        for (PageElement pageElement : model.getElements()) {
+            pageElement.accept(visitor);
+        }
+        return new PageValuesDTO(page.getId(), page.getTitle(), page.getName(), model.getName(), model.getDescription(), visitor.getElements());
+    }
+
+    private static class CommandVisitor implements ElementCommandVisitor<Element> {
+        @Override
+        public Element visitText(TextCommandDTO text) {
+            return new Text(null, text.getKey(), text.getText());
+        }
+
+        @Override
+        public Element visitImage(ImageCommandDTO image) {
+            return new Image(null, image.getKey(), image.getImageId(), image.getAlt(), image.isMultiSize());
+        }
+
+        @Override
+        public Element visitLink(LinkCommandDTO link) {
+            return new Link(null, link.getKey(), link.getText(), link.getHref());
+        }
     }
 }

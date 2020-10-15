@@ -9,11 +9,25 @@ import { Page, PageCommand } from './page.model';
 export class PageService {
   constructor(private http: HttpClient) {}
 
-  get(pageId: number): Observable<Page> {
+  /**
+   * Gets a page with its metadata and element values.
+   */
+  getValues(pageId: number): Observable<Page> {
     return this.http.get<Page>(`/api/pages/${pageId}`);
+  }
+
+  /**
+   * Gets a page model, with empty values for each of its elements.
+   */
+  getModel(pageModelName: string): Observable<Page> {
+    return this.http.get<Page>(`/api/pages/models/${pageModelName}`);
   }
 
   update(pageId: number, command: PageCommand): Observable<void> {
     return this.http.put<void>(`/api/pages/${pageId}`, command);
+  }
+
+  create(pageModelName: string, command: PageCommand): Observable<Page> {
+    return this.http.post<Page>(`/api/pages/models/${pageModelName}`, command);
   }
 }

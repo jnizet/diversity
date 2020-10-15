@@ -72,6 +72,10 @@ class EditPageComponentTester extends ComponentTester<EditPageComponent> {
     return this.elements('input')[9] as TestInput;
   }
 
+  get addUnitButton() {
+    return this.button('#add-unit');
+  }
+
   get errors() {
     return this.elements('.invalid-feedback div');
   }
@@ -151,14 +155,42 @@ describe('EditPageComponent', () => {
   };
   const page: Page = {
     id: 12,
-    name: 'home',
+    name: 'Home',
+    modelName: 'home',
     title: 'BIOM',
     description: 'Home page',
     elements: [presentationSection]
   };
+  const model: Page = {
+    id: null,
+    name: '',
+    modelName: 'home',
+    title: '',
+    description: 'Home page',
+    elements: [
+      {
+        ...presentationSection,
+        elements: [
+          { ...titleElement, text: '' },
+          {
+            ...carouselSlides,
+            elements: [
+              {
+                ...slide1,
+                elements: [
+                  { ...image1, imageId: null, alt: '' },
+                  { ...link1, text: '', href: '' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
 
   function prepare(route: ActivatedRoute) {
-    pageService = jasmine.createSpyObj<PageService>('PageService', ['get', 'update']);
+    pageService = jasmine.createSpyObj<PageService>('PageService', ['getValues', 'getModel', 'update', 'create']);
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
@@ -185,6 +217,89 @@ describe('EditPageComponent', () => {
     tester = new EditPageComponentTester();
   }
 
+  describe('in create mode', () => {
+    beforeEach(() => {
+      const route = fakeRoute({
+        snapshot: fakeSnapshot({
+          params: { modelName: 'home' }
+        })
+      });
+      prepare(route);
+
+      pageService.getModel.and.returnValue(of(model));
+
+      tester.detectChanges();
+    });
+
+    it('should have a title', () => {
+      expect(tester.title).toContainText(`Créer une page`);
+    });
+
+    it('should display an empty form', () => {
+      expect(tester.elements('input').length).toBe(6); // title + 1 text + 1 link (2 inputs) + 1 image (2 inputs)
+      expect(tester.pageTitleInput).toHaveValue('');
+      expect(tester.presentationTitleInput).toHaveValue('');
+      expect(tester.image1AltInput).toHaveValue('');
+      expect(tester.link1TextInput).toHaveValue('');
+      expect(tester.link1HrefInput).toHaveValue('');
+      expect(tester.image2AltInput).toBeUndefined();
+      expect(tester.link2TextInput).toBeUndefined();
+      expect(tester.link2HrefInput).toBeUndefined();
+    });
+
+    it('should not save if error', () => {
+      expect(tester.errors.length).toBe(0);
+
+      tester.saveButton.click();
+
+      expect(tester.errors.length).toBe(1);
+      expect(tester.errors[0]).toHaveText('Le titre est obligatoire');
+
+      expect(pageService.create).not.toHaveBeenCalled();
+    });
+
+    it('should create a page', () => {
+      tester.pageTitleInput.fillWith('BIOM!');
+      tester.presentationTitleInput.fillWith('Portail de la bio-diversité');
+      tester.image1AltInput.fillWith('Image 1');
+      tester.link1TextInput.fillWith('Nouveau lien 1');
+      tester.link1HrefInput.fillWith('https://lien1.org');
+      // add another unit
+      tester.addUnitButton.click();
+      expect(tester.elements('input').length).toBe(10); // title + 1 text + 2 links (2 inputs) + 2 images (2 inputs)
+      tester.image2AltInput.fillWith('Image 2');
+      tester.link2TextInput.fillWith('Nouveau lien 2');
+      tester.link2HrefInput.fillWith('https://lien2.org');
+
+      pageService.create.and.returnValue(of(page));
+      tester.saveButton.click();
+
+      const titleCommand: TextCommand = { type: 'TEXT', key: 'presentation.title', text: 'Portail de la bio-diversité' };
+      const image1Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.0.image', imageId: null, alt: 'Image 1' };
+      const link1Command: LinkCommand = {
+        type: 'LINK',
+        key: 'presentation.slides.0.link',
+        text: 'Nouveau lien 1',
+        href: 'https://lien1.org'
+      };
+      const image2Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.1.image', imageId: null, alt: 'Image 2' };
+      const link2Command: LinkCommand = {
+        type: 'LINK',
+        key: 'presentation.slides.1.link',
+        text: 'Nouveau lien 2',
+        href: 'https://lien2.org'
+      };
+      const expectedCommand: PageCommand = {
+        title: 'BIOM!',
+        name: 'test',
+        elements: [titleCommand, image1Command, link1Command, image2Command, link2Command]
+      };
+      expect(pageService.create).toHaveBeenCalledWith('home', expectedCommand);
+      // TODO expect(router.navigate).toHaveBeenCalledWith(['/pages']);
+      expect(toastService.success).toHaveBeenCalledWith(`La page a été créée`);
+    });
+  });
+
   describe('in update mode', () => {
     beforeEach(() => {
       const route = fakeRoute({
@@ -194,7 +309,8 @@ describe('EditPageComponent', () => {
       });
       prepare(route);
 
-      pageService.get.and.returnValue(of(page));
+      pageService.getValues.and.returnValue(of(page));
+      pageService.getModel.and.returnValue(of(model));
 
       tester.detectChanges();
     });
@@ -204,7 +320,7 @@ describe('EditPageComponent', () => {
     });
 
     it('should display a filled form', () => {
-      expect(tester.elements('input').length).toBe(10); // title + 1 text + 2 links + 2 images
+      expect(tester.elements('input').length).toBe(10); // title + 1 text + 2 links (2 inputs) + 2 images (2 inputs)
       expect(tester.pageTitleInput).toHaveValue('BIOM');
       expect(tester.presentationTitleInput).toHaveValue('Portail');
       expect(tester.image1AltInput).toHaveValue('Image 1');
@@ -247,6 +363,7 @@ describe('EditPageComponent', () => {
       const link2Command: LinkCommand = { type: 'LINK', key: 'presentation.slides.1.link', text: 'Lien 2', href: 'https://lien2.org' };
       const expectedCommand: PageCommand = {
         title: 'BIOM!',
+        name: 'Home',
         elements: [titleCommand, image1Command, link1Command, image2Command, link2Command]
       };
       expect(pageService.update).toHaveBeenCalledWith(12, expectedCommand);

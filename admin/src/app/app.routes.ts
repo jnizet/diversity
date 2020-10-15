@@ -60,8 +60,11 @@ export const APP_ROUTES: Routes = [
         ]
       },
       {
-        path: 'pages',
-        children: [{ path: ':pageId/edit', component: EditPageComponent }]
+        path: 'page-models/:modelName/pages',
+        children: [
+          { path: 'create', component: EditPageComponent },
+          { path: ':pageId/edit', component: EditPageComponent }
+        ]
       }
     ]
   }

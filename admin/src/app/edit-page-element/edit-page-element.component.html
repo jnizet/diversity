@@ -3,24 +3,35 @@
   <div class="my-5" *ngIf="isSection(element)">
     <strong>{{ element.description }}</strong>
     <div *ngFor="let sectionElement of element.elements">
-      <biom-edit-page-element [formControlName]="sectionElement.name"></biom-edit-page-element>
+      <biom-edit-page-element
+        [formControlName]="sectionElement.name"
+        [elementModel]="getElementModel(sectionElement.name)"
+      ></biom-edit-page-element>
     </div>
   </div>
   <!-- ListUnitElement -->
-  <div *ngIf="isListUnit(element)" class="mb-2">
-    <label>{{ element.description }}</label>
+  <div *ngIf="isListUnit(element)" class="my-3">
     <div *ngFor="let unitElement of element.elements">
-      <biom-edit-page-element [formControlName]="unitElement.name"></biom-edit-page-element>
+      <biom-edit-page-element
+        [formControlName]="unitElement.name"
+        [elementModel]="getElementModel(unitElement.name)"
+      ></biom-edit-page-element>
     </div>
   </div>
   <!-- ListElement -->
   <div *ngIf="isList(element)" class="mb-2">
+    <label>{{ element.description }}</label>
     <div formArrayName="elements">
-      <biom-edit-page-element
-        *ngFor="let listElement of element.elements; index as listIndex"
-        [formControlName]="listIndex"
-      ></biom-edit-page-element>
+      <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2">
+        <biom-edit-page-element [formControlName]="unitIndex" [elementModel]="getElementModel(listElement.name)"></biom-edit-page-element>
+        <button type="button" class="btn btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
+          Enlever l'élément de la liste
+        </button>
+      </div>
     </div>
+    <button id="add-unit" type="button" class="btn btn-outline-primary" (click)="addListUnit(element)">
+      Ajouter un élément à la liste
+    </button>
   </div>
   <!-- TextElement -->
   <div *ngIf="isText(element)" class="mb-2">

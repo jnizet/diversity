@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -74,6 +75,31 @@ public class PageRepository {
         );
         int updatedRows = jdbcTemplate.update("update page set title = :title where id = :id", paramMap);
         return updatedRows > 0;
+    }
+
+    /**
+     * Creates a page with its metadata and elements.
+     */
+    public Page create(Page page) {
+
+        // update page metadata (title)
+        Map<String, Object> paramMap = Map.of(
+            "name", page.getName(),
+            "model_name", page.getModelName(),
+            "title", page.getTitle()
+        );
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into page (id, name, model_name, title) values (nextval('page_seq'), :name, :model_name, :title)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+
+        // visit all elements and create them
+        ElementCreatorVisitor elementCreatorVisitor = new ElementCreatorVisitor(id);
+        List<Element> elements = page.getElements().values().stream()
+                                     .map(element -> element.accept(elementCreatorVisitor))
+                                     .filter(Objects::nonNull)
+                                     .collect(Collectors.toList());
+
+        return new Page(id, page.getName(), page.getModelName(), page.getTitle(), elements);
     }
 
     private void removeElementsFromPage(Long pageId) {

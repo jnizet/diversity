@@ -18,13 +18,23 @@ describe('PageService', () => {
 
   afterEach(() => http.verify());
 
-  it('should get', () => {
+  it('should get a page with its values', () => {
     let actual: Page = null;
 
-    service.get(42).subscribe(category => (actual = category));
+    service.getValues(42).subscribe(page => (actual = page));
 
     const expected = { id: 42 } as Page;
     http.expectOne({ method: 'GET', url: '/api/pages/42' }).flush(expected);
+    expect(actual).toBe(expected);
+  });
+
+  it('should get a page model (with empty values)', () => {
+    let actual: Page = null;
+
+    service.getModel('home').subscribe(page => (actual = page));
+
+    const expected = { id: 42 } as Page;
+    http.expectOne({ method: 'GET', url: '/api/pages/models/home' }).flush(expected);
     expect(actual).toBe(expected);
   });
 

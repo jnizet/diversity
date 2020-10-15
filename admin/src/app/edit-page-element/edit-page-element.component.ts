@@ -1,6 +1,15 @@
-import { Component, forwardRef } from '@angular/core';
-import { ImageElement, LinkElement, ListElement, ListUnitElement, PageElement, SectionElement, TextElement } from '../page.model';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import {
+  ContainerElement,
+  ImageElement,
+  LinkElement,
+  ListElement,
+  ListUnitElement,
+  PageElement,
+  SectionElement,
+  TextElement
+} from '../page.model';
+import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 
 @Component({
   selector: 'biom-edit-page-element',
@@ -9,6 +18,7 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Valida
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EditPageElementComponent), multi: true }]
 })
 export class EditPageElementComponent implements ControlValueAccessor {
+  @Input() elementModel: PageElement;
   element: PageElement;
   elementGroup: FormGroup;
   private onChange: (value: any) => void = () => {};
@@ -104,5 +114,26 @@ export class EditPageElementComponent implements ControlValueAccessor {
         break;
       }
     }
+  }
+
+  getElementModel(name: string): PageElement {
+    return (this.elementModel as ContainerElement).elements.find(el => el.name === name);
+  }
+
+  addListUnit(element: ListElement) {
+    // get the pristine list unit from the model
+    const listUnitElement = { ...(this.elementModel as ListElement).elements[0] };
+    // push it to the list elements
+    this.elementsArray.push(this.fb.control(listUnitElement));
+    element.elements.push(listUnitElement);
+  }
+
+  removeListUnit(element: ListElement, unitIndex: number) {
+    element.elements.splice(unitIndex, 1);
+    this.elementsArray.removeAt(unitIndex);
+  }
+
+  get elementsArray() {
+    return this.elementGroup.get('elements') as FormArray;
   }
 }

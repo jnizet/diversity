@@ -26,19 +26,21 @@ export interface ImageElement extends BasePageElement {
   alt: string;
 }
 
-export interface ListUnitElement extends BasePageElement {
-  type: 'LIST_UNIT';
+export interface ContainerElement extends BasePageElement {
   elements: Array<PageElement>;
 }
 
-export interface ListElement extends BasePageElement {
+export interface ListUnitElement extends ContainerElement {
+  type: 'LIST_UNIT';
+}
+
+export interface ListElement extends ContainerElement {
   type: 'LIST';
   elements: Array<ListUnitElement>;
 }
 
-export interface SectionElement extends BasePageElement {
+export interface SectionElement extends ContainerElement {
   type: 'SECTION';
-  elements: Array<PageElement>;
 }
 
 export type PageElement = TextElement | LinkElement | ImageElement | ListElement | ListUnitElement | SectionElement;
@@ -46,6 +48,7 @@ export type PageElement = TextElement | LinkElement | ImageElement | ListElement
 export interface Page {
   id: number;
   name: string;
+  modelName: string;
   title: string;
   description: string;
   elements: Array<PageElement>;
@@ -72,6 +75,7 @@ export interface ImageCommand extends ElementCommand {
 
 export interface PageCommand {
   title: string;
+  name: string;
   elements: Array<ElementCommand>;
 }
 
