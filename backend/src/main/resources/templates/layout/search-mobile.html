@@ -1,34 +1,23 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-  <body th:fragment="search" data-controller="search">
-    <a id="search-toggler-mobile" role="button" href="#" data-action="search#toggle" aria-label="Rechercher">
-      <div class="btn-search w-embed">
-        <svg width="20px" height="20px" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="00-Mobile/Header/Light" transform="translate(-230.000000, -25.000000)">
-              <g class="color-change" transform="translate(18.000000, 16.000000)" fill="#FFFFFF">
-                <g id="Icons/20/Loupe" transform="translate(212.000000, 9.000000)">
-                  <path
-                    d="M8.63636364,0 C13.4060956,0 17.2727273,3.86663171 17.2727273,8.63636364 C17.2727273,10.660804 16.5761732,12.5225554 15.4096561,13.9950269 L19.7071068,18.2928932 C20.0976311,18.6834175 20.0976311,19.3165825 19.7071068,19.7071068 C19.3466228,20.0675907 18.7793918,20.0953203 18.3871006,19.7902954 L18.2928932,19.7071068 L13.9950269,15.4096561 C12.5225554,16.5761732 10.660804,17.2727273 8.63636364,17.2727273 C3.86663171,17.2727273 6.37712105e-13,13.4060956 6.37712105e-13,8.63636364 C6.37712105e-13,3.86663171 3.86663171,0 8.63636364,0 Z M8.63636364,2 C4.97120121,2 2,4.97120121 2,8.63636364 C2,12.3015261 4.97120121,15.2727273 8.63636364,15.2727273 C12.3015261,15.2727273 15.2727273,12.3015261 15.2727273,8.63636364 C15.2727273,4.97120121 12.3015261,2 8.63636364,2 Z"
-                    id="color"
-                  ></path>
-                </g>
+  <body th:fragment="search">
+    <div role="button" data-action="click->search#open" class="btn-search w-embed">
+      <span class="sr-only">Rechercher</span>
+      <svg width="20px" height="20px" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="00-Mobile/Header/Light" transform="translate(-230, -25)">
+            <g class="color-change" transform="translate(18, 16)" fill="#FFFFFF">
+              <g id="Icons/20/Loupe" transform="translate(212, 9)">
+                <path
+                  d="M8.63636364,0 C13.4060956,0 17.2727273,3.86663171 17.2727273,8.63636364 C17.2727273,10.660804 16.5761732,12.5225554 15.4096561,13.9950269 L19.7071068,18.2928932 C20.0976311,18.6834175 20.0976311,19.3165825 19.7071068,19.7071068 C19.3466228,20.0675907 18.7793918,20.0953203 18.3871006,19.7902954 L18.2928932,19.7071068 L13.9950269,15.4096561 C12.5225554,16.5761732 10.660804,17.2727273 8.63636364,17.2727273 C3.86663171,17.2727273 6.37712105e-13,13.4060956 6.37712105e-13,8.63636364 C6.37712105e-13,3.86663171 3.86663171,0 8.63636364,0 Z M8.63636364,2 C4.97120121,2 2,4.97120121 2,8.63636364 C2,12.3015261 4.97120121,15.2727273 8.63636364,15.2727273 C12.3015261,15.2727273 15.2727273,12.3015261 15.2727273,8.63636364 C15.2727273,4.97120121 12.3015261,2 8.63636364,2 Z"
+                  id="color"
+                ></path>
               </g>
             </g>
           </g>
-        </svg>
-      </div>
-    </a>
-    <form method="get" th:action="@{/recherche}" style="display: inline">
-      <input
-        name="texte"
-        id="search-mobile"
-        placeholder="Rechercher"
-        th:value="${#execInfo.processedTemplateName == 'search' ? param.texte : ''}"
-        th:classappend="${#execInfo.processedTemplateName != 'search'}? 'd-none'"
-        data-target="search.searchInput"
-      />
-    </form>
+        </g>
+      </svg>
+    </div>
   </body>
 </html>

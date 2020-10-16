@@ -156,8 +156,8 @@
               class="img-full-width only-desktop"
             />
             <div class="legend-wrapper">
-              <img src="images/Pin.svg" loading="lazy" alt="" />
-              <div class="legend-text">Legende photo © Numero quatre</div>
+              <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+              <div class="legend-text" th:text="*{testimony.image.alt}"></div>
             </div>
           </div>
         </div>

@@ -6,33 +6,37 @@ const MAX_CHARACTERS = 700;
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export class ContactController extends Controller {
-  static targets = ['form', 'from', 'invalidFrom', 'body', 'invalidBody', 'remainingCharacters', 'send', 'sendFailed'];
+  static targets = ['popin', 'from', 'invalidFrom', 'subject', 'body', 'invalidBody', 'remainingCharacters', 'send', 'sendFailed'];
 
-  formTarget: HTMLFormElement;
+  popinTarget: HTMLElement;
   fromTarget: HTMLInputElement;
   invalidFromTarget: HTMLDivElement;
+  subjectTarget: HTMLInputElement;
   bodyTarget: HTMLTextAreaElement;
   invalidBodyTarget: HTMLDivElement;
   remainingCharactersTarget: HTMLSpanElement;
   sendTarget: HTMLButtonElement;
   sendFailedTarget: HTMLDivElement;
 
-  private visible = false;
-
   connect() {
     this.remainingCharactersTarget.innerText = `${MAX_CHARACTERS}`;
   }
 
-  toggle(event: Event) {
+  open(event: Event) {
     event.stopPropagation();
     event.preventDefault();
-    this.setVisible(!this.visible);
+    this.setVisible(true);
+  }
+
+  close(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.setVisible(false);
   }
 
   private setVisible(visible: boolean) {
-    this.visible = visible;
-    setElementVisible(this.formTarget, visible);
-    if (this.visible) {
+    setElementVisible(this.popinTarget, visible);
+    if (visible) {
       this.fromTarget.focus();
     }
   }
@@ -44,7 +48,7 @@ export class ContactController extends Controller {
   async send(event: Event) {
     event.preventDefault();
     hideElement(this.sendFailedTarget);
-    const formElements = [this.fromTarget, this.bodyTarget, this.sendTarget];
+    const formElements = [this.fromTarget, this.subjectTarget, this.bodyTarget, this.sendTarget];
     if (this.validate()) {
       formElements.forEach(e => (e.disabled = true));
       try {
@@ -53,12 +57,17 @@ export class ContactController extends Controller {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ from: this.fromTarget.value, body: this.bodyTarget.value })
+          body: JSON.stringify({
+            from: this.fromTarget.value,
+            subject: this.subjectTarget.value,
+            body: this.bodyTarget.value
+          })
         });
         if (!response.ok) {
           throw new Error('Request failed.');
         }
         this.fromTarget.value = '';
+        this.subjectTarget.value = '';
         this.bodyTarget.value = '';
         this.setVisible(false);
       } catch (e) {

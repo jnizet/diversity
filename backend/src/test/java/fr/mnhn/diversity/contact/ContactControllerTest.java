@@ -36,20 +36,20 @@ class ContactControllerTest {
 
     @Test
     void shouldSendMessage() throws Exception {
-        MessageCommand command = new MessageCommand("john@mail.com", "Hello");
+        MessageCommand command = new MessageCommand("john@mail.com", "Test subject", "Hello");
         mockMvc.perform(post("/messages")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsBytes(command)))
                .andExpect(status().isCreated());
 
         verify(mockMailer).send(
-            new MailMessage("john@mail.com", contactProperties.getEmail(), contactProperties.getSubject(), "Hello")
+            new MailMessage("john@mail.com", contactProperties.getEmail(), contactProperties.getSubject() + " - Test subject", "Hello")
         );
     }
 
     @Test
     void shouldNotSendMessageIfInvalidFrom() throws Exception {
-        MessageCommand command = new MessageCommand("john", "Hello");
+        MessageCommand command = new MessageCommand("john", "Test subject", "Hello");
         mockMvc.perform(post("/messages")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsBytes(command)))
@@ -60,7 +60,7 @@ class ContactControllerTest {
 
     @Test
     void shouldNotSendMessageIfInvalidBody() throws Exception {
-        MessageCommand command = new MessageCommand("john@mail.com", "A".repeat(701));
+        MessageCommand command = new MessageCommand("john@mail.com", "Test subject", "A".repeat(701));
         mockMvc.perform(post("/messages")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsBytes(command)))

@@ -47,9 +47,9 @@
             class="logo-dark"
           />
         </a>
-        <div class="nav-mobile" data-controller="">
+        <div class="nav-mobile">
           <div th:replace="~{layout/search-mobile::search}" />
-          <div class="btn-menu w-embed">
+          <div class="btn-menu w-embed" role="button">
             <svg
               width="22px"
               height="22px"
@@ -101,7 +101,7 @@
       <p>Layout content</p>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" data-controller="contact">
       <div class="footer-wrapper">
         <div class="col-2">
           <a th:href="@{/}" aria-current="page" class="footer-logo-link w-inline-block w--current">
@@ -117,10 +117,8 @@
             <li><a th:href="@{/apropos}" class="footer-link-main">À propos</a></li>
             <!-- todo fix link -->
             <li><a href="#" class="footer-link-main">Mentions légales</a></li>
-            <!-- todo deal with contact -->
-            <li data-controller="contact">
-              <a href="#" class="footer-link-main" role="button" data-action="contact#toggle">Contact</a>
-              <div th:insert="~{layout/contact::contact}"></div>
+            <li>
+              <a href="#" class="footer-link-main" role="button" data-action="contact#open">Contact</a>
             </li>
             <!-- todo fix link -->
             <li><a href="#" class="footer-link-main">Partenaires</a></li>
@@ -142,6 +140,7 @@
         </div>
       </div>
       <div th:replace="~{layout/search-popin::search-popin}"></div>
+      <div th:replace="~{layout/contact-popin::contact-popin}"></div>
     </footer>
 
     <div th:replace="~{layout/cookies::cookies}"></div>

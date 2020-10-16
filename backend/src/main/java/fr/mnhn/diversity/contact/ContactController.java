@@ -26,6 +26,6 @@ public class ContactController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void sendMessage(@Validated @RequestBody MessageCommand command) {
-        mailer.send(new MailMessage(command.getFrom(), contactProperties.getEmail(), contactProperties.getSubject(), command.getBody()));
+        mailer.send(new MailMessage(command.getFrom(), contactProperties.getEmail(), contactProperties.getSubject() + " - " + command.getSubject(), command.getBody()));
     }
 }

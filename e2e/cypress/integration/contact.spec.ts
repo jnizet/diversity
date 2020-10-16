@@ -5,7 +5,7 @@ describe('Contact', () => {
     cy.get('#contact-form').should('not.be.visible');
     cy.get('footer').contains('Contact').click();
     cy.get('#contact-form').should('be.visible');
-    cy.get('footer').contains('Contact').click();
+    cy.get('#close-contact-button').click();
     cy.get('#contact-form').should('not.be.visible');
   });
 
@@ -45,6 +45,7 @@ describe('Contact', () => {
     cy.get('footer').contains('Contact').click();
 
     cy.get('#contact-from').type('test@mnhn.fr');
+    cy.get('#contact-subject').type('test subject');
     cy.get('#contact-body').type('test message');
     cy.get('#contact-send').click();
 
