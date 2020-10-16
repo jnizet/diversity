@@ -109,40 +109,22 @@
             <img th:src="@{/assets/images/logo_noir.svg}" loading="lazy" alt="" />
           </a>
         </div>
-        <div class="footer-nav-wrapper">
-          <div class="col-3">
-            <ul role="list" class="w-list-unstyled">
-              <li class="footer-item">
-                <a th:href="@{/territoires}" class="footer-link-main">Territoires</a>
-              </li>
-              <li class="footer-item">
-                <a th:href="@{/indicateurs}" class="footer-link-main">Indicateurs</a>
-              </li>
-              <li class="footer-item">
-                <a th:href="@{/agir-ensemble}" class="footer-link-main">Agir Ensemble</a>
-              </li>
-            </ul>
-          </div>
-          <div class="footer-nav">
-            <ul role="list" class="w-list-unstyled">
-              <li><a th:href="@{/apropos}" class="footer-link-main">À propos</a></li>
-              <li><a href="#" class="footer-link-main">Plan du site</a></li>
-              <!-- todo fix link -->
-              <li data-controller="contact">
-                <a href="#" class="footer-link-main" role="button" data-action="contact#toggle">Contact</a>
-                <div th:insert="~{layout/contact::contact}"></div>
-              </li>
-              <!-- todo deal with contact -->
-              <li><a href="#" class="footer-link-main">Ressources</a></li>
-              <!-- todo fix link -->
-              <li><a href="#" class="footer-link-main">Mentions légales</a></li>
-              <!-- todo fix link -->
-              <li><a href="#" class="footer-link-main">Accessibilité</a></li>
-              <!-- todo fix link -->
-              <li><a href="#" class="footer-link-main">Partenaires</a></li>
-              <!-- todo fix link -->
-            </ul>
-          </div>
+        <div class="footer-nav">
+          <ul role="list" class="w-list-unstyled">
+            <li><a th:href="@{/territoires}" class="footer-link-main">Territoires</a></li>
+            <li><a th:href="@{/indicateurs}" class="footer-link-main">indicateurs</a></li>
+            <li><a th:href="@{/agir-ensemble}" class="footer-link-main">Agir Ensemble</a></li>
+            <li><a th:href="@{/apropos}" class="footer-link-main">À propos</a></li>
+            <!-- todo fix link -->
+            <li><a href="#" class="footer-link-main">Mentions légales</a></li>
+            <!-- todo deal with contact -->
+            <li data-controller="contact">
+              <a href="#" class="footer-link-main" role="button" data-action="contact#toggle">Contact</a>
+              <div th:insert="~{layout/contact::contact}"></div>
+            </li>
+            <!-- todo fix link -->
+            <li><a href="#" class="footer-link-main">Partenaires</a></li>
+          </ul>
         </div>
         <div class="footer-img-list">
           <a href="https://www.outre-mer.gouv.fr/" target="_blank" rel="noopener" class="footer-img-link w-inline-block">
@@ -150,7 +132,7 @@
             <img th:src="@{/assets/images/1280px-Ministere_des_Outre-mer.svg}" loading="lazy" alt="" class="footer-img" />
           </a>
           <a href="https://www.mnhn.fr/" target="_blank" rel="noopener" class="footer-img-link w-inline-block">
-            <span class="sr-only">Museum National d'Histore Naturelle</span>
+            <span class="sr-only">Museum National d'Histoire Naturelle</span>
             <img th:src="@{/assets/images/museum-national-d-histoire-naturelle_2.png}" loading="lazy" alt="" class="footer-img" />
           </a>
           <a href="https://ofb.gouv.fr/" target="_blank" rel="noopener" class="footer-img-link w-inline-block">

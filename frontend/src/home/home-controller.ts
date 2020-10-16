@@ -1,9 +1,11 @@
 import { Controller } from 'stimulus';
-import Swiper from 'swiper';
+import Swiper, { Navigation, Pagination } from 'swiper';
 import $ from 'jquery';
 
 export class HomeController extends Controller {
   connect() {
+    // configure Swiper to use modules
+    Swiper.use([Navigation, Pagination]);
     new Swiper('.swiper-top', {
       speed: 1000,
       effect: 'fade',
@@ -37,7 +39,6 @@ export class HomeController extends Controller {
         }
       }
     });
-
     $('.img-full').eq(0).addClass('anim-zoom');
 
     new Swiper('.swiper-apropos', {
