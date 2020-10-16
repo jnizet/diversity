@@ -4,6 +4,10 @@
 @import '~swiper/swiper-bundle.css';
 @import 'global.css';
 
+.search-icon img {
+  vertical-align: baseline;
+}
+
 .d-none {
   display: none !important;
 }

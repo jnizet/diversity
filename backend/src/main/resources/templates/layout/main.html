@@ -29,7 +29,7 @@
     </script>
   </head>
 
-  <body th:class="${bodyClass}">
+  <body th:class="${bodyClass}" data-controller="search">
     <header class="header">
       <div class="top-bar">
         <span th:replace="~{layout/search::search}"></span>
@@ -141,6 +141,7 @@
           </a>
         </div>
       </div>
+      <div th:replace="~{layout/search-popin::search-popin}"></div>
     </footer>
 
     <div th:replace="~{layout/cookies::cookies}"></div>

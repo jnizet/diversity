@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="search-popin" data-target="search.popin" class="search-popin d-none">
+      <div
+        class="cta-close"
+        role="button"
+        id="close-search-button"
+        data-action="click->search#close
+"
+      >
+        <div class="cta-search-text">Fermer</div>
+        <img th:src="@{/assets/images/cta-close.svg}" loading="lazy" alt="Fermer" class="cta-close-img" />
+      </div>
+      <div class="search-popin-wrapper">
+        <div class="search-form-wrapper w-embed">
+          <form method="get" th:action="@{/recherche}" class="search-form">
+            <label class="sr-only">Rechercher</label>
+            <input
+              type="text"
+              class="search-field w-input"
+              name="texte"
+              placeholder="recherche"
+              id="search"
+              th:value="${#execInfo.processedTemplateName == 'search' ? param.texte : ''}"
+              data-target="search.searchInput"
+            />
+            <button class="search-input"><span class="sr-only">Rechercher</span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

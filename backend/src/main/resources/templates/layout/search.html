@@ -2,19 +2,11 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
-    <form th:fragment="search" method="get" th:action="@{/recherche}" data-controller="search" style="display: inline">
-      <a id="search-toggler" role="button" href="#" data-action="search#toggle" aria-label="Rechercher">
-        <img th:src="@{/assets/images/Search.svg}" loading="lazy" alt="" class="search-icon" />
-      </a>
-      <input
-        style="margin-left: 1rem"
-        name="texte"
-        id="search"
-        placeholder="Rechercher"
-        th:value="${#execInfo.processedTemplateName == 'search' ? param.texte : ''}"
-        th:classappend="${#execInfo.processedTemplateName != 'search'}? 'd-none'"
-        data-target="search.searchInput"
-      />
-    </form>
+    <div th:fragment="search" id="open-search-button" role="button" data-action="click->search#open" class="cta-search">
+      <div class="cta-search-text">Recherche</div>
+      <div class="search-icon w-embed">
+        <img th:src="@{/assets/images/Search.svg}" loading="lazy" alt="" />
+      </div>
+    </div>
   </body>
 </html>

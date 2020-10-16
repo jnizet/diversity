@@ -1,19 +1,20 @@
 import { Controller } from 'stimulus';
-import { isElementVisible, setElementVisible } from '../elements';
+import { hideElement, showElement } from '../elements';
 
 export class SearchController extends Controller {
-  static targets = ['searchInput'];
+  static targets = ['searchInput', 'popin'];
 
   searchInputTarget: HTMLInputElement;
+  popinTarget: HTMLDivElement;
 
-  toggle(event: Event) {
-    event.preventDefault();
+  open(event: Event) {
     event.stopPropagation();
-    const newVisible = !isElementVisible(this.searchInputTarget);
-    setElementVisible(this.searchInputTarget, newVisible);
-    if (newVisible) {
-      this.searchInputTarget.focus();
-      this.searchInputTarget.select();
-    }
+    showElement(this.popinTarget);
+    this.searchInputTarget.focus();
+  }
+
+  close(event: Event) {
+    event.stopPropagation();
+    hideElement(this.popinTarget);
   }
 }

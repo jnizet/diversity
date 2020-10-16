@@ -126,21 +126,6 @@ export function initialize() {
       $(this).addClass('active');
     });
 
-    $('.cta-search,.btn-search').on('click', function () {
-      $('.search-popin').removeClass('closed');
-      $('.search-field').focus();
-    });
-
-    $('.cta-contact').on('click', function (e) {
-      e.preventDefault();
-      $('.contact-popin').removeClass('closed');
-    });
-
-    $('.cta-close').on('click', function () {
-      $('.search-popin').addClass('closed');
-      $('.contact-popin').addClass('closed');
-    });
-
     $('.rgpd-popin .cta-primary-small').on('click', function () {
       $('.rgpd-popin').addClass('closed');
       sessionStorage.setItem('rgpd', 'accepted');
