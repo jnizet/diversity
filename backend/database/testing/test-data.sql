@@ -10,8 +10,14 @@ delete from image;
 delete from app_user;
 
 insert into indicator (id, biom_id, slug) values
-    (1, 'i1', 'especes-envahissantes'),
-    (2, 'i2', 'deforestation');
+    (1, '7be2a5a6-f226-4fa9-a383-79ca56ca8046', 'especes-menacees'),
+    (2, 'f2a14850-23a9-43fc-b8d2-56aebb3562f8', 'especes-envahissantes'),
+    (3, 'd99e52c9-7c71-47b4-a720-c0878d2993f7', 'especes-endemiques'),
+    (4, '8816092b-1ce3-4ae7-815d-019e99ecf545', 'deforestation'),
+    (5, 'e1c91e2e-418e-4bd2-bdfe-7e1025f0b907', 'surfaces-mangroves'),
+    (6, '10fe181c-e2b5-4267-b587-5f8c21501947', 'nouvelles-especes'),
+    (7, '298a3804-bcb0-4fdb-b3b3-31e14be2cac8', 'especes-inventoriees'),
+    (8, '0a494ee4-1c21-415e-be5d-b71e8f4b0519', 'evolution-recifs');
 
 insert into indicator_value (id, indicator_id, territory, value, unit) values
     (11, 1, 'OUTRE_MER', 64, null),
@@ -55,7 +61,7 @@ insert into image (id, content_type, original_file_name) values
     (32, 'image/png', 'comprendre.png'),
     (33, 'image/png', 'vignette1.png'),
     (34, 'image/png', 'vignette2.png'),
-    (40, 'image/png', 'indicateurs.png'),
+    (40, 'image/jpeg', 'indicateurs.jpg'),
     (91, 'image/png', 'ecogestes.png'),
     (101, 'image/png', 'interest1.png'),
     (102, 'image/png', 'interest2.png'),
@@ -200,8 +206,21 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
 
 --     Indicator home
     (nextval('page_element_seq'), 29, 'TEXT', 'title', 'Compter la biodiversité, oui mais comment ?', null, null, null, true),
-    (nextval('page_element_seq'), 29, 'TEXT', 'presentation', 'Lorem ipsum dolor', null, null, null, false),
-    (nextval('page_element_seq'), 29, 'IMAGE', 'image', null, 40, 'Indicateurs', null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'presentation', 'Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son évolution. De nombreux paramètres sont étudiés : effectifs des populations, état de santé des écosystèmes, taux de pollutions, etc. Ils renseignent ainsi l’état de la biodiversité à un instant précis, mais également l’état des connaissances et des moyens scientifiques actuels.', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'IMAGE', 'image', null, 40, 'Chelonia mydas ©  B. Guichard', null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'understand.title', 'Les indicateurs, des outils pour évaluer la biodiversité', null, null, null, true),
+    (nextval('page_element_seq'), 29, 'TEXT', 'understand.description', 'La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l’impactent. Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son évolution. De nombreux paramètres sont étudiés : effectifs des populations, état de santé des écosystèmes, taux de pollutions, etc. Cependant, ils connaissent des limites par manque de données disponibles, manque de moyens de recherche ou parce que certains paramètres sont très complexes à évaluer. Ils renseignent ainsi l’état de la biodiversité à un instant précis, mais également l’état des connaissances et des moyens scientifiques actuels.', null, null, null, true),
+    (nextval('page_element_seq'), 29, 'IMAGE', 'understand.image', null, 5, 'Chelonia mydas ©  B. Guichard', null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'onb.title', 'L''observatoire national de la biodiversité', null, null, null, true),
+    (nextval('page_element_seq'), 29, 'TEXT', 'onb.description', 'Depuis 2012, l''Observatoire national de la biodiversité, actuellement piloté par l''Office français pour la biodiversité (OFB), publie des indicateurs sur l''état de la biodiversité française, avec la contribution de nombreux partenaires. Ils sont régulièrement actualisés et enrichis. Le Compteur met en lumière les indicateurs de l''ONB qui concernent les outre-mer et contribue à la création de nouveaux indicateurs pour ces territoires.', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'LINK', 'onb.link', 'Retrouvez les indicateurs sur le site de l''ONB', null, null, 'http://indicateurs-biodiversite.naturefrance.fr/fr/indicateurs/nombre-despeces-enoutremer- parmi-les-plus-envahissantes-au-monde', false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'quote', 'Documenter et présenter l''évolution de la biodiversité, c''est permettre à chacun de prendre conscience des enjeux et des menaces.', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'questions.0.question', 'Qu''est-ce que la biodiversité ?', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'questions.0.answer', 'La majorité des territoires d''outre-mer français sont situés dans des régions particulièrement riches en espèces, notamment en espèces endémiques, ce qu''on appelle des points chauds de la biodiversité (« Hotspots » en anglais) (Nouvelle-Calédonie, Antilles, Mayotte, La Réunion, Wallis et Futuna, Polynésie française). Avec la Guyane, la France possède une partie du plus grand massif forestier de la planète, l''Amazonie, et les territoires français réunissent 10 % des récifs coralliens répartis dans trois océans. Certains territoires isolés comme les îles des Terres australes et antarctiques abritent une faune et une flore adaptés à des climats extrêmes.', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'questions.0.quote', 'Avec ses territoires d''outre-mer, la France a donc une responsabilité forte dans la conservation de la biodiversité mondiale.', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'questions.1.question', 'Les outre-mer, des points chauds de biodiversité', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'questions.1.answer', 'Réponse 2', null, null, null, false),
+    (nextval('page_element_seq'), 29, 'TEXT', 'questions.1.quote', 'Citation 2', null, null, null, false),
 
 --     Indicator
 --     Espèces envahissantes

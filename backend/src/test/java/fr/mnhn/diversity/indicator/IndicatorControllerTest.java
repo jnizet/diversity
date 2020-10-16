@@ -69,60 +69,60 @@ class IndicatorControllerTest {
             new PageContent(
                 invasiveSpeciesPage,
                 Map.of(
-                        "name", text("Les espèces envahissantes"),
-                        "indicator", Map.of(
-                                Territory.OUTRE_MER.name(), Map.of ("value", text("60")),
-                                Territory.REUNION.name(), Map.of ("value", text("6")),
-                                Territory.GUADELOUPE.name(), Map.of ("value", text("14")),
-                                Territory.SAINT_PIERRE_ET_MIQUELON.name(), Map.of ("value", text("23"))
-                        ),
-                        "presentation", Map.of(
-                                "category", text("Espèces"),
-                                "description", text("espèces sur les 100..."),
-                                "image", image(1L)
-                        ),
-                        "understand", Map.of(
-                                "title", text("Comprendre"),
-                                "image", image(2L),
-                                "sections", List.of(
-                                        Map.of(
-                                                "title", text("Raison 1"),
-                                                "description", text("Explication raison 1")
-                                        )
-                                )
-                        ),
-                        "indicators", Map.of(
-                                "title", text("Indicateurs"),
-                                "indicators", List.of(
-                                        Map.of(
-                                                "name", text("Réunion"),
-                                                "value", text("12"),
-                                                "image", image(3L)
-                                        ),
-                                        Map.of(
-                                                "name", text("Martinique"),
-                                                "value", text("31"),
-                                                "image", image(4L)
-                                        )
-                                )
-                        ),
-                        "ecogestures", Map.of(
-                                "title", text("Ecogestes"),
-                                "ecogestures", List.of(
-                                        Map.of(
-                                                "name", text("Ecogesture1"),
-                                                "category", text("loisirs"),
-                                                "description", text("Description ecogesture1"),
-                                                "image", image(6L),
-                                                "link", link("/indicateurs/ecogesture1")
-                                        )
-                                )
-                        ),
-                        "next", Map.of(
-                                "name", text("Surface des forêts"),
-                                "image", image(8L),
-                                "link", link("other")
+                    "name", text("Les espèces envahissantes"),
+                    "indicator", Map.of(
+                        Territory.OUTRE_MER.name(), Map.of("value", text("60")),
+                        Territory.REUNION.name(), Map.of("value", text("6")),
+                        Territory.GUADELOUPE.name(), Map.of("value", text("14")),
+                        Territory.SAINT_PIERRE_ET_MIQUELON.name(), Map.of("value", text("23"))
+                    ),
+                    "presentation", Map.of(
+                        "category", text("Espèces"),
+                        "description", text("espèces sur les 100..."),
+                        "image", image(1L)
+                    ),
+                    "understand", Map.of(
+                        "title", text("Comprendre"),
+                        "image", image(2L),
+                        "sections", List.of(
+                            Map.of(
+                                "title", text("Raison 1"),
+                                "description", text("Explication raison 1")
+                            )
                         )
+                    ),
+                    "indicators", Map.of(
+                        "title", text("Indicateurs"),
+                        "indicators", List.of(
+                            Map.of(
+                                "name", text("Réunion"),
+                                "value", text("12"),
+                                "image", image(3L)
+                            ),
+                            Map.of(
+                                "name", text("Martinique"),
+                                "value", text("31"),
+                                "image", image(4L)
+                            )
+                        )
+                    ),
+                    "ecogestures", Map.of(
+                        "title", text("Ecogestes"),
+                        "ecogestures", List.of(
+                            Map.of(
+                                "name", text("Ecogesture1"),
+                                "category", text("loisirs"),
+                                "description", text("Description ecogesture1"),
+                                "image", image(6L),
+                                "link", link("/indicateurs/ecogesture1")
+                            )
+                        )
+                    ),
+                    "next", Map.of(
+                        "name", text("Surface des forêts"),
+                        "image", image(8L),
+                        "link", link("other")
+                    )
                 )
             )
         );
@@ -162,7 +162,31 @@ class IndicatorControllerTest {
         Map<String, Object> homeContent = Map.of(
             "title", text("Tous les indicateurs"),
             "presentation", text("Presentation"),
-            "image", image(1L)
+            "image", image(1L),
+            "understand", Map.of(
+                "title", text("Comprendre"),
+                "description", text("Comprendre description"),
+                "image", image(1L)
+            ),
+            "onb", Map.of(
+                "title", text("ONB"),
+                "description", text("ONB description"),
+                "image", image(1L),
+                "link", link("lien")
+            ),
+            "quote", text("Citation"),
+            "questions", List.of(
+                Map.of(
+                    "question", text("Question 1"),
+                    "answer", text("Réponse 1"),
+                    "quote", text("Citation 1")
+                ),
+                Map.of(
+                    "question", text("Question 2"),
+                    "answer", text("Réponse 2"),
+                    "quote", text("Citation 2")
+                )
+            )
         );
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_HOME_PAGE_MODEL, homePage))
             .thenReturn(new PageContent(homePage, homeContent));
@@ -225,14 +249,21 @@ class IndicatorControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Indicateurs</title>")))
-               .andExpect(content().string(containsString("<h1>Tous les indicateurs</h1>")))
                .andExpect(content().string(containsString("category1")))
                .andExpect(content().string(containsString("category2")))
                .andExpect(content().string(containsString("category3")))
                .andExpect(content().string(not(containsString("category4"))))
+               .andExpect(content().string(containsString("Comprendre")))
+               .andExpect(content().string(containsString("ONB")))
                .andExpect(content().string(containsString("10\u00a0%")))
                .andExpect(content().string(containsString("espèces sur les 100")))
                .andExpect(content().string(containsString("2\u00a0000\u00a0km2")))
-               .andExpect(content().string(containsString("de forêt")));
+               .andExpect(content().string(containsString("de forêt")))
+               .andExpect(content().string(containsString("Question 1")))
+               .andExpect(content().string(containsString("Réponse 1")))
+               .andExpect(content().string(containsString("Citation 1")))
+               .andExpect(content().string(containsString("Question 2")))
+               .andExpect(content().string(containsString("Réponse 2")))
+               .andExpect(content().string(containsString("Citation 2")));
     }
 }

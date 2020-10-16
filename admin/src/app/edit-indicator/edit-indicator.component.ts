@@ -79,8 +79,16 @@ export class EditIndicatorComponent implements OnInit {
         this.form.patchValue(formValue);
         this.categoryIds.clear();
         indicator.categories.forEach(category => this.categoryIds.push(new FormControl(category.id)));
+        // if the indicator has no category or ecogesture  (in case of manually created data)
+        // add an empty one to fill
+        if (!indicator.categories.length) {
+          this.categoryIds.push(new FormControl(null));
+        }
         this.ecogestureIds.clear();
         indicator.ecogestures.forEach(ecogesture => this.ecogestureIds.push(new FormControl(ecogesture.id)));
+        if (!indicator.ecogestures.length) {
+          this.ecogestureIds.push(new FormControl(null));
+        }
       });
     }
   }

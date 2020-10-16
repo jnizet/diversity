@@ -106,24 +106,5 @@ export function initialize() {
         TweenMax.to($('.l3'), 0.5, { xPercent: 0, delay: 0.5 });
       }
     }
-
-    $('.apprendre-top').on('click', function () {
-      if (!$(this).parent().hasClass('closed')) {
-        $(this).parent().addClass('closed');
-        $(this).parent().find('.apprendre-bottom').removeAttr('style');
-      } else {
-        $(this).parent().removeClass('closed');
-
-        $(this)
-          .parent()
-          .find('.apprendre-bottom')
-          .css('height', $(this).parent().find('.apprendre-bottom').prop('scrollHeight') + 20);
-      }
-    });
-
-    $('body').on('click', '.filter-link', function () {
-      $('.filter-link').removeClass('active');
-      $(this).addClass('active');
-    });
   });
 }

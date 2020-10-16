@@ -19,11 +19,16 @@ export class IndicatorsController extends Controller {
   }
 
   categoryClicked(event: Event) {
+    event.preventDefault();
     const categoryTarget = event.target as HTMLElement;
     this.setCategorySelected(categoryTarget, !this.isCategorySelected(categoryTarget));
 
+    // if no category is selected, select "all"
+    if (!this.categoryTargets.find(c => this.isCategorySelected(c))) {
+      this.setCategorySelected(this.allTarget, true);
+    }
     // if all categories are selected, deselect them and select "all"
-    if (this.categoryTargets.every(c => this.isCategorySelected(c))) {
+    else if (this.categoryTargets.every(c => this.isCategorySelected(c))) {
       this.categoryTargets.forEach(c => this.setCategorySelected(c, false));
       this.setCategorySelected(this.allTarget, true);
     } else {
@@ -42,14 +47,14 @@ export class IndicatorsController extends Controller {
   }
 
   private isCategorySelected(categoryTarget: HTMLElement): boolean {
-    return categoryTarget.classList.contains('selected');
+    return categoryTarget.classList.contains('active');
   }
 
   private setCategorySelected(categoryTarget: HTMLElement, selected: boolean): void {
     if (selected) {
-      categoryTarget.classList.add('selected');
+      categoryTarget.classList.add('active');
     } else {
-      categoryTarget.classList.remove('selected');
+      categoryTarget.classList.remove('active');
     }
   }
 

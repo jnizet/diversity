@@ -2,6 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
 >
   <head>
@@ -14,36 +15,133 @@
   </head>
 
   <body>
-    <main th:object="${page.content}">
-      <h1 th:text="*{title.text}">Title</h1>
-      <p th:text="*{presentation.text}">Presentation</p>
-      <img th:src="@{/images/{imageId}/image(imageId=*{image.imageId})}" th:alt="*{image.alt}" />
-
-      <div style="display: flex" data-controller="indicators">
-        <div id="categories">
-          <div class="category selected" data-target="indicators.all" data-action="click->indicators#allClicked">Tout</div>
-          <div
-            class="category"
-            th:each="category: ${categories}"
-            th:text="${category.name}"
-            data-target="indicators.category"
-            data-action="click->indicators#categoryClicked"
-            th:attr="data-id=${category.id}"
-          ></div>
-        </div>
-
-        <div id="indicators" style="flex-grow: 1">
-          <div th:each="card: ${cards}" data-target="indicators.indicator" th:attr="data-categories=${card.categoryIdsAsJsonArray}">
-            <p th:text="${#indicators.formatValue(card.indicatorValue)}"></p>
-            <p th:text="${card.page.content.presentation.description.text}">Description de l'indicateur</p>
-            <img
-              th:src="@{/images/{imageId}/image(imageId=${card.page.content.presentation.image.imageId})}"
-              th:alt="${card.page.content.presentation.image.alt}"
-            />
-            <a th:href="@{/indicateurs/{slug}(slug=${card.indicator.slug})}">En savoir plus</a>
+    <main th:object="${page.content}" class="main">
+      <section class="section-top">
+        <div class="section-top-wrapper">
+          <div class="section-top-content">
+            <h1 class="section-top-title" th:text="*{title.text}">Compter la biodiversité, oui mais comment ?</h1>
+            <p class="section-top-text" th:text="*{presentation.text}">
+              Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
+              évolution. De nombreux paramètres sont étudiés : effectifs des populations, état de santé des écosystèmes, taux de pollutions,
+              etc. Ils renseignent ainsi l’état de la biodiversité à un instant précis, mais également l’état des connaissances et des
+              moyens scientifiques actuels.
+            </p>
           </div>
         </div>
-      </div>
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" th:text="*{image.alt}"></div>
+        </div>
+        <img biom:image="*{image}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
+      </section>
+      <section class="section-indicateur-list" data-controller="indicators">
+        <div class="indicateur-list-wrapper">
+          <aside class="filter-wrapper categories">
+            <h3 class="filter-title">filtrer par thématique</h3>
+            <ul role="list" class="filter-list w-list-unstyled" id="categories">
+              <li class="filter-item category">
+                <button type="button" data-target="indicators.all" data-action="click->indicators#allClicked" class="filter-link active">
+                  TOUT
+                </button>
+              </li>
+              <li class="filter-item category" th:each="category: ${categories}">
+                <button
+                  type="button"
+                  class="filter-link"
+                  data-target="indicators.category"
+                  data-action="click->indicators#categoryClicked"
+                  th:attr="data-id=${category.id}"
+                  th:text="${category.name}"
+                ></button>
+              </li>
+            </ul>
+          </aside>
+          <div class="col-7">
+            <ul role="list" class="indicateur-list w-list-unstyled" id="indicators">
+              <li
+                class="indicateur-item"
+                th:each="card: ${cards}"
+                data-target="indicators.indicator"
+                th:attr="data-categories=${card.categoryIdsAsJsonArray}"
+              >
+                <a th:href="@{/indicateurs/{slug}(slug=${card.indicator.slug})}" class="indicateur-link w-inline-block">
+                  <div class="indicateur-text-effect">
+                    <h2 class="indicateur-item-title">
+                      <span class="indicateur-number" th:text="${#indicators.formatValue(card.indicatorValue)}">60 </span>
+                      <span class="indicateur-description" th:text="${card.page.content.presentation.description.text}"
+                        >espèces sur les 100 considérées comme les plus envahissantes au monde se trouvent en outre-mer.</span
+                      >
+                    </h2>
+                  </div>
+                  <div class="indicateur-thematique-wrapper">
+                    <div class="indicateur-thematique" th:each="category: ${card.indicator.categories}" th:text="${category.name}">
+                      espèces menacées
+                    </div>
+                  </div>
+                  <img biom:image="${card.page.content.presentation.image}" class="indicateur-item-bkg"
+                /></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="section-decoration-text indicateurs">indicateurs</div>
+      </section>
+      <section class="section-text-img">
+        <div class="section-label">COMPRENDRE</div>
+        <div class="section-content">
+          <div class="col-5">
+            <h3 class="section-title" th:text="*{understand.title.text}"></h3>
+            <div class="left-1">
+              <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="img-full-width margin-bottom hide-desktop" />
+              <p th:text="*{understand.description.text}"></p>
+            </div>
+          </div>
+          <div class="col-5 left-1">
+            <img
+              biom:image="*{understand.image}"
+              loading="lazy"
+              sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 42vw"
+              class="img-full-width only-desktop"
+            />
+          </div>
+          <div class="section-decoration-text temoignage">comprendre</div>
+        </div>
+      </section>
+      <section class="section-onb" id="onb">
+        <div class="col-5 onb-img">
+          <img th:src="@{/assets/images/logo_ONB.jpg}" loading="lazy" width="320" alt="" class="img-multiply logo-onb" />
+        </div>
+        <div class="col-4 onb-text">
+          <h2 class="heading" th:text="*{onb.title.text}">L’observatoire national de la biodiversité</h2>
+          <p th:text="*{onb.description.text}"></p>
+          <a th:href="*{onb.link.href}" th:text="*{onb.link.text}" class="cta-secondary"></a>
+        </div>
+      </section>
+      <section class="section-citation" id="quote">
+        <img th:src="@{/assets/images/quote.svg}" loading="lazy" alt="" class="image" />
+        <p th:text="*{quote.text}"></p>
+      </section>
+      <section class="section-apprendre" id="learn">
+        <div class="section-decoration-text apprendre">apprendre</div>
+        <div class="apprendre-wrapper">
+          <ul role="list" class="w-list-unstyled">
+            <li
+              class="apprendre-item closed"
+              th:each="question: *{questions}"
+              data-controller="question-item"
+              data-target="question-item.item"
+            >
+              <div class="apprendre-top" data-action="click->question-item#questionClicked" data-target="question-item.question">
+                <div class="apprendre-title" th:text="${question.question.text}"></div>
+              </div>
+              <div class="apprendre-bottom" data-target="question-item.answer">
+                <p th:text="${question.answer.text}"></p>
+                <blockquote th:text="${question.quote.text}"></blockquote>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
     </main>
   </body>
 </html>

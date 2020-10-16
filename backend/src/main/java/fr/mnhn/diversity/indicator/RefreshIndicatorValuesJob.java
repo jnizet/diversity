@@ -9,6 +9,8 @@ import fr.mnhn.diversity.indicator.api.IndicatorService;
 import fr.mnhn.diversity.territory.Territory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author JB Nizet
  */
 @Component
-public class RefreshIndicatorValuesJob {
+public class RefreshIndicatorValuesJob implements ApplicationRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RefreshIndicatorValuesJob.class);
 
@@ -60,5 +62,10 @@ public class RefreshIndicatorValuesJob {
         } catch (Exception e) {
             LOGGER.error("Failure to refresh values for indicator " + indicator.getBiomId());
         }
+    }
+
+    @Override
+    public void run(ApplicationArguments args) {
+        refreshIndicatorValues();
     }
 }
