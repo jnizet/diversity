@@ -16,7 +16,7 @@
   </head>
 
   <body>
-    <main class="page" th:object="${page.content}" data-controller="home">
+    <main class="main" th:object="${page.content}" data-controller="home">
       <section class="section-top">
         <div class="section-top-wrapper">
           <div class="col-4">
@@ -108,6 +108,14 @@
                   </a>
                 </li>
               </ul>
+              <div class="swiper-apropos-wrapper">
+                <div class="swiper-pagination-black">
+                  <div class="bullet-black active"></div>
+                  <div class="bullet-black"></div>
+                  <div class="bullet-black"></div>
+                </div>
+                <img th:src="@{/assets/images/Circle.svg}" loading="lazy" alt="" class="swiper-next-black" />
+              </div>
             </div>
           </div>
         </div>
@@ -129,13 +137,12 @@
           <div class="col-5">
             <h2 class="section-title col-3" th:text="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h2>
             <div class="left-1">
-              <img biom:image="*{testimony.image}" loading="lazy" sizes="100vw" class="img-full-width margin-bottom hide-desktop" />
               <p th:text="*{testimony.text.text}">
                 La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l’impactent. Les
                 indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
                 évolution.
               </p>
-              <blockquote class="block-quote-4" th:text="*{testimony.quote.text}">
+              <blockquote th:text="*{testimony.quote.text}">
                 Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l’eau, de l’air
                 mais aussi de la qualité de vie.
               </blockquote>
@@ -148,6 +155,9 @@
               sizes="(max-width: 479px) 100vw, (max-width: 767px) 73vw, (max-width: 991px) 79vw, 45vw"
               class="img-full-width only-desktop"
             />
+            <div class="legend-wrapper"><img src="images/Pin.svg" loading="lazy" alt="">
+              <div class="legend-text">Legende photo ©  Numero quatre</div>
+            </div>
           </div>
         </div>
         <div class="section-decoration-text temoignage">témoignages</div>

@@ -1,19 +1,19 @@
 import { Controller } from 'stimulus';
-import Swiper, { SwiperOptions } from 'swiper';
+import Swiper from 'swiper';
 import $ from 'jquery';
 
 export class HomeController extends Controller {
   connect() {
     new Swiper('.swiper-top', {
-      delay: 2000, // weird: this option is not recognized by the typing. Fixed by type assertion `as SwiperOptions`
-      cssMode: true,
+      speed: 1000,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
       loop: true,
       keyboard: true,
-      grabCursor: true,
-      effect: 'fade',
       navigation: {
-        nextEl: '.section-top .swiper-next',
-        prevEl: '.section-top .swiper-prev'
+        nextEl: '.section-top .swiper-next'
       },
       pagination: {
         el: '.section-top .swiper-pagination',
@@ -36,8 +36,40 @@ export class HomeController extends Controller {
           $('.swiper-top .img-full').eq(this.previousIndex).addClass('anim-paused');
         }
       }
-    } as SwiperOptions);
+    });
 
     $('.img-full').eq(0).addClass('anim-zoom');
+
+    new Swiper('.swiper-apropos', {
+      navigation: {
+        nextEl: '.section-apropos .swiper-next-black'
+      },
+      pagination: {
+        el: '.section-apropos .swiper-pagination-black',
+        type: 'bullets',
+        clickable: true,
+        bulletClass: 'bullet-black',
+        bulletActiveClass: 'active'
+      },
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 1,
+          slidesOffsetAfter: 120,
+          touchRatio: 2,
+          allowTouchMove: true,
+          loop: true
+        },
+        // when window width is >= 480px
+        600: {
+          spaceBetween: 60,
+          slidesPerColumnFill: 'row',
+          slidesPerView: 2,
+          slidesPerColumn: 2,
+          allowTouchMove: false,
+          loop: false
+        }
+      }
+    });
   }
 }

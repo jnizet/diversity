@@ -12,7 +12,7 @@
   },
   "author": "",
   "dependencies": {
-    "gsap": "3.3.3",
+    "gsap": "3.5.1",
     "jquery": "3.5.1",
     "stimulus": "1.1.1",
     "swiper": "4.5.0"
