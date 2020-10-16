@@ -154,3 +154,17 @@ export function elementToCommand(prefix: string, element: PageElement): Array<El
     }
   }
 }
+
+export interface PageLink {
+  id: number | null;
+  name: string;
+  modelName: string;
+  title: string | null;
+}
+
+export interface PageLinks {
+  staticPageLinks: Array<PageLink>;
+  indicatorPageLinks: Array<PageLink>;
+  territoryPageLinks: Array<PageLink>;
+  ecogesturePageLinks: Array<PageLink>;
+}

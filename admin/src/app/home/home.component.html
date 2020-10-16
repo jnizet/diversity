@@ -1,3 +1,36 @@
-<div class="text-center">
-  <h1>Administration du portail</h1>
+<h1>Administration des pages</h1>
+
+<div class="row" *ngIf="pageLinks$ | async as pageLinks">
+  <div class="col-md-3">
+    <h2>Pages statiques</h2>
+    <ul class="list-unstyled">
+      <li *ngFor="let pageLink of pageLinks.staticPageLinks">
+        <biom-page-link [pageLink]="pageLink"></biom-page-link>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-3">
+    <h2>Indicateurs</h2>
+    <ul class="list-unstyled">
+      <li *ngFor="let pageLink of pageLinks.indicatorPageLinks">
+        <biom-page-link [pageLink]="pageLink"></biom-page-link>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-3">
+    <h2>Territoires</h2>
+    <ul class="list-unstyled">
+      <li *ngFor="let pageLink of pageLinks.territoryPageLinks">
+        <biom-page-link [pageLink]="pageLink"></biom-page-link>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-3">
+    <h2>Éco-gestes</h2>
+    <ul class="list-unstyled">
+      <li *ngFor="let pageLink of pageLinks.ecogesturePageLinks">
+        <biom-page-link [pageLink]="pageLink"></biom-page-link>
+      </li>
+    </ul>
+  </div>
 </div>

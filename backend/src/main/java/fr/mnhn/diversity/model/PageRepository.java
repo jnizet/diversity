@@ -57,6 +57,23 @@ public class PageRepository {
         return jdbcTemplate.query(sql, Map.of("modelName", modelName), this::extractPages);
     }
 
+    public Optional<BasicPage> findBasicByNameAndModel(String name, String modelName) {
+        String sql =
+            "select page.id, page.name, page.model_name, page.title" +
+                " from page" +
+                " where page.name = :name and page.model_name = :modelName";
+        return jdbcTemplate.query(sql, Map.of("name", name, "modelName", modelName), this::extractBasicPage);
+    }
+
+    public List<BasicPage> findBasicByModel(String modelName) {
+        String sql =
+            "select page.id, page.name, page.model_name, page.title" +
+                " from page" +
+                " where page.model_name = :modelName" +
+                " order by page.id";
+        return jdbcTemplate.query(sql, Map.of("modelName", modelName), this::extractBasicPages);
+    }
+
     /**
      * Updates a page, its metadata and elements, by removing all the elements and re-creating them.
      */
@@ -160,14 +177,14 @@ public class PageRepository {
     }
 
     private List<Page> extractPages(ResultSet rs) throws SQLException {
-        Map<Long, PageData> pageDataById = new HashMap<>();
+        Map<Long, BasicPage> basicPagesById = new HashMap<>();
         Map<Long, List<Element>> elementsById = new HashMap<>();
         while (rs.next()) {
             Long pageId = rs.getLong("id");
             String name = rs.getString("name");
             String modelName = rs.getString("model_name");
             String title = rs.getString("title");
-            pageDataById.computeIfAbsent(pageId, id -> new PageData(id, name, modelName, title));
+            basicPagesById.computeIfAbsent(pageId, id -> new BasicPage(id, name, modelName, title));
             List<Element> elements = elementsById.computeIfAbsent(pageId, id -> new ArrayList<>());
 
             long elementId = rs.getLong("element_id");
@@ -190,14 +207,14 @@ public class PageRepository {
             }
         }
 
-        return pageDataById.values()
+        return basicPagesById.values()
                            .stream()
-                           .sorted(Comparator.comparing(pageData -> pageData.id))
-                           .map(pageData -> new Page(pageData.id,
-                                                     pageData.name,
-                                                     pageData.modelName,
-                                                     pageData.title,
-                                                     elementsById.get(pageData.id)))
+                           .sorted(Comparator.comparing(BasicPage::getId))
+                           .map(basicPage -> new Page(basicPage.getId(),
+                                                      basicPage.getName(),
+                                                      basicPage.getModelName(),
+                                                      basicPage.getTitle(),
+                                                      elementsById.get(basicPage.getId())))
                            .collect(Collectors.toList());
     }
 
@@ -206,18 +223,22 @@ public class PageRepository {
         return pages.isEmpty() ? Optional.empty() : Optional.of(pages.get(0));
     }
 
-    private static class PageData {
-        private final Long id;
-        private final String name;
-        private final String modelName;
-        private final String title;
-
-        public PageData(Long id, String name, String modelName, String title) {
-            this.id = id;
-            this.name = name;
-            this.modelName = modelName;
-            this.title = title;
+    private List<BasicPage> extractBasicPages(ResultSet rs) throws SQLException {
+        List<BasicPage> result = new ArrayList<>();
+        while (rs.next()) {
+            Long pageId = rs.getLong("id");
+            String name = rs.getString("name");
+            String modelName = rs.getString("model_name");
+            String title = rs.getString("title");
+            result.add(new BasicPage(pageId, name, modelName, title));
         }
+
+        return result;
+    }
+
+    private Optional<BasicPage> extractBasicPage(ResultSet rs) throws SQLException {
+        List<BasicPage> pages = extractBasicPages(rs);
+        return pages.isEmpty() ? Optional.empty() : Optional.of(pages.get(0));
     }
 
     /**

@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import fr.mnhn.diversity.common.testing.RepositoryTest;
+import fr.mnhn.diversity.home.HomeModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +109,8 @@ class PageRepositoryTest {
 
         assertThat(page.getId()).isEqualTo(1L);
         assertThat(page.getName()).isEqualTo("Home");
+        assertThat(page.getModelName()).isEqualTo(HomeModel.HOME_PAGE_MODEL.getName());
+        assertThat(page.getTitle()).isEqualTo("Accueil");
         assertThat(page.getElements()).hasSize(3);
     }
 
@@ -124,6 +127,30 @@ class PageRepositoryTest {
         assertThat(pages.get(0).getElements()).hasSize(1);
         assertThat(pages.get(1).getId()).isEqualTo(3L);
         assertThat(pages.get(1).getElements()).hasSize(1);
+    }
+
+    @Test
+    void shouldFindBasicByNameAndModel() {
+        TRACKER.skipNextLaunch();
+        BasicPage page = repository.findBasicByNameAndModel("Home", "home").get();
+
+        assertThat(page.getId()).isEqualTo(1L);
+        assertThat(page.getName()).isEqualTo("Home");
+        assertThat(page.getModelName()).isEqualTo(HomeModel.HOME_PAGE_MODEL.getName());
+        assertThat(page.getTitle()).isEqualTo("Accueil");
+    }
+
+    @Test
+    void shouldFindBasicByModel() {
+        TRACKER.skipNextLaunch();
+        List<BasicPage> pages = repository.findBasicByModel("unknown");
+        assertThat(pages.isEmpty());
+
+        pages = repository.findBasicByModel("gesture");
+        assertThat(pages).hasSize(2);
+
+        assertThat(pages.get(0).getId()).isEqualTo(2L);
+        assertThat(pages.get(1).getId()).isEqualTo(3L);
     }
 
     @Test

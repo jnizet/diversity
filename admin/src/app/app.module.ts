@@ -28,6 +28,7 @@ import { EditPageElementComponent } from './edit-page-element/edit-page-element.
 import { EditTextElementComponent } from './edit-text-element/edit-text-element.component';
 import { EditLinkElementComponent } from './edit-link-element/edit-link-element.component';
 import { EditImageElementComponent } from './edit-image-element/edit-image-element.component';
+import { PageLinkComponent } from './home/page-link/page-link.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { EditImageElementComponent } from './edit-image-element/edit-image-eleme
     EditPageElementComponent,
     EditTextElementComponent,
     EditLinkElementComponent,
-    EditImageElementComponent
+    EditImageElementComponent,
+    PageLinkComponent
   ],
   imports: [
     BrowserModule,
