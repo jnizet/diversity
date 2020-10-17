@@ -125,14 +125,5 @@ export function initialize() {
       $('.filter-link').removeClass('active');
       $(this).addClass('active');
     });
-
-    $('.rgpd-popin .cta-primary-small').on('click', function () {
-      $('.rgpd-popin').addClass('closed');
-      sessionStorage.setItem('rgpd', 'accepted');
-    });
-
-    if (!sessionStorage.getItem('rgpd')) {
-      $('.rgpd-popin').removeClass('closed');
-    }
   });
 }
