@@ -113,10 +113,7 @@ class EcogestureRepositoryTest {
 
     @Test
     void shouldDelete() {
-        assertThat(repository.findBySlug("slug1")).contains(
-            new Ecogesture(2L, "slug1")
-        );
-        repository.delete(new Ecogesture(2L, "category1"));
-        assertThat(repository.findBySlug("slug1")).isEmpty();
+        repository.delete(new Ecogesture(3L, "slug3"));
+        assertThat(repository.findById(3L)).isEmpty();
     }
 }

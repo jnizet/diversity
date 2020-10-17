@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.common.exception.FunctionalException;
 import fr.mnhn.diversity.common.exception.NotFoundException;
+import fr.mnhn.diversity.model.PageRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -29,9 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class EcogestureRestController {
 
     private final EcogestureRepository ecogestureRepository;
+    private final PageRepository pageRepository;
 
-    public EcogestureRestController(EcogestureRepository ecogestureRepository) {
+    public EcogestureRestController(EcogestureRepository ecogestureRepository,
+                                    PageRepository pageRepository) {
         this.ecogestureRepository = ecogestureRepository;
+        this.pageRepository = pageRepository;
     }
 
     @GetMapping
@@ -47,6 +51,7 @@ public class EcogestureRestController {
     public void delete(@PathVariable("ecogestureId") Long ecogestureId) {
         // TODO delete the related page if there is one, or prevent the deletion?
         Ecogesture ecogesture = ecogestureRepository.findById(ecogestureId).orElseThrow(NotFoundException::new);
+        pageRepository.deleteByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName());
         ecogestureRepository.delete(ecogesture);
     }
 
@@ -78,6 +83,10 @@ public class EcogestureRestController {
         Ecogesture updatedEcogesture = ecogesture.withSlug(command.getSlug());
 
         ecogestureRepository.update(updatedEcogesture);
+
+        if (!ecogesture.getSlug().equals(updatedEcogesture.getSlug())) {
+            pageRepository.updateName(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), updatedEcogesture.getSlug());
+        }
     }
 
     private void validateEcogestureSlug(String slug, Ecogesture ecogesture) {

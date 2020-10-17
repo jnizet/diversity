@@ -31,7 +31,7 @@ export class IndicatorsComponent implements OnInit {
 
   deleteIndicator(indicator: Indicator) {
     this.confirmationService
-      .confirm({ message: 'Voulez-vous vraiment supprimer cet indicateur\u00a0?' })
+      .confirm({ message: 'Voulez-vous vraiment supprimer cet indicateur et sa page\u00a0?' })
       .pipe(
         switchMap(() => this.indicatorService.delete(indicator.id)),
         tap(() => this.toastService.success(`L'indicateur ${indicator.slug} a été supprimée`)),

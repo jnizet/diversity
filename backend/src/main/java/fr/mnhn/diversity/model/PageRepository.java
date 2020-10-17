@@ -133,6 +133,34 @@ public class PageRepository {
         return updatedRows > 0;
     }
 
+    public void deleteByNameAndModel(String name, String modelName) {
+        String deleteElementsSql = "delete from page_element pe where pe.page_id = ("+
+            " select p.id from page p" +
+            " where p.name = :name and p.model_name = :modelName"
+            + ")";
+        String deletePageSql = "delete from page p" +
+            " where p.name = :name and p.model_name = :modelName";
+
+        Map<String, Object> paramMap = Map.of(
+            "name", name,
+            "modelName", modelName
+        );
+        jdbcTemplate.update(deleteElementsSql, paramMap);
+        jdbcTemplate.update(deletePageSql, paramMap);
+    }
+
+    public void updateName(String currentName, String modelName, String newName) {
+        String sql = "update page set name = :newName" +
+            " where name = :currentName and model_name = :modelName";
+
+        Map<String, Object> paramMap = Map.of(
+            "currentName", currentName,
+            "modelName", modelName,
+            "newName", newName
+        );
+        jdbcTemplate.update(sql, paramMap);
+    }
+
     /**
      * Creates a page with its metadata and elements.
      */
@@ -168,7 +196,7 @@ public class PageRepository {
     /**
      * Creates a new {@link Text}
      */
-    public Text createText(Long pageId, Text text) {
+    private Text createText(Long pageId, Text text) {
         Map<String, Object> paramMap = Map.of(
             "page_id", pageId,
             "type", text.getType().name(),

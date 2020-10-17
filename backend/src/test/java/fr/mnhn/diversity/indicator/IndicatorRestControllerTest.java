@@ -21,6 +21,7 @@ import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.api.IndicatorData;
 import fr.mnhn.diversity.indicator.api.IndicatorService;
 import fr.mnhn.diversity.indicator.api.ValuedIndicator;
+import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.territory.Territory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,9 @@ class IndicatorRestControllerTest {
 
     @MockBean
     private EcogestureRepository mockEcogestureRepository;
+
+    @MockBean
+    private PageRepository mockPageRepository;
 
     @MockBean
     private IndicatorService mockIndicatorService;
@@ -108,6 +112,7 @@ class IndicatorRestControllerTest {
                .andExpect(status().isNoContent());
 
         verify(mockIndicatorRepository).delete(indicator);
+        verify(mockPageRepository).deleteByNameAndModel(indicator.getSlug(), IndicatorModel.INDICATOR_PAGE_MODEL.getName());
     }
 
     @Test
@@ -287,6 +292,9 @@ class IndicatorRestControllerTest {
         // create new ones
         verify(mockIndicatorRepository).updateValue(updatedIndicator, OUTRE_MER, new IndicatorValue(10, "%"));
         verify(mockIndicatorRepository).updateValue(updatedIndicator, GUADELOUPE, new IndicatorValue(20, "%"));
+
+        // update page name
+        verify(mockPageRepository).updateName("deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "surface-forêts");
     }
 
     @Test

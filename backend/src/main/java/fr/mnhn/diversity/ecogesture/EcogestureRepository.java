@@ -84,7 +84,13 @@ public class EcogestureRepository {
     }
 
     public void delete(Ecogesture ecogesture) {
+        String removeFromIndicatorsSql =
+            "delete from indicator_ecogesture where ecogesture_id = :id";
         String sql = "delete from ecogesture where ecogesture.id = :id";
-        jdbcTemplate.update(sql, Map.of("id", ecogesture.getId()));
+
+        Map<String, Long> params = Map.of("id", ecogesture.getId());
+        
+        jdbcTemplate.update(removeFromIndicatorsSql, params);
+        jdbcTemplate.update(sql, params);
     }
 }

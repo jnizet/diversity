@@ -30,7 +30,7 @@ export class EcogesturesComponent implements OnInit {
 
   deleteEcogesture(ecogesture: Ecogesture) {
     this.confirmationService
-      .confirm({ message: 'Voulez-vous vraiment supprimer cet éco-geste\u00a0?' })
+      .confirm({ message: 'Voulez-vous vraiment supprimer cet éco-geste et sa page\u00a0?' })
       .pipe(
         switchMap(() => this.ecogestureService.delete(ecogesture.id)),
         tap(() => this.toastService.success(`L'éco-geste ${ecogesture.slug} a été supprimé`)),

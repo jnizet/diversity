@@ -201,6 +201,18 @@ class PageRepositoryTest {
     }
 
     @Test
+    void shouldUpdateName() {
+        repository.updateName("gesture1", "gesture", "newgesture1");
+        assertThat(repository.findByNameAndModel("newgesture1", "gesture")).isNotEmpty();
+    }
+
+    @Test
+    void shouldDeleteByNameAndModelName() {
+        repository.deleteByNameAndModel("gesture1", "gesture");
+        assertThat(repository.findByNameAndModel("gesture1", "gesture")).isEmpty();
+    }
+
+    @Test
     void shouldCreateAPage() {
         Text title = new Text(null, "title", "Bienvenu sur le portail");
         Link link = new Link(null, "tourism", "Office du tourisme", "https://office-tourisme.fr");

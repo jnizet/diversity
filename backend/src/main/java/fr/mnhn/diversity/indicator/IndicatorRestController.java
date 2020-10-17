@@ -15,6 +15,7 @@ import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.indicator.api.IndicatorService;
 import fr.mnhn.diversity.indicator.api.ValuedIndicator;
+import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.territory.Territory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,17 +47,19 @@ public class IndicatorRestController {
     private final IndicatorRepository indicatorRepository;
     private final IndicatorCategoryRepository indicatorCategoryRepository;
     private final EcogestureRepository ecogestureRepository;
+    private final PageRepository pageRepository;
     private final IndicatorService indicatorService;
 
     public IndicatorRestController(
         IndicatorRepository indicatorRepository,
         IndicatorCategoryRepository indicatorCategoryRepository,
         EcogestureRepository ecogestureRepository,
-        IndicatorService indicatorService
+        PageRepository pageRepository, IndicatorService indicatorService
     ) {
         this.indicatorRepository = indicatorRepository;
         this.indicatorCategoryRepository = indicatorCategoryRepository;
         this.ecogestureRepository = ecogestureRepository;
+        this.pageRepository = pageRepository;
         this.indicatorService = indicatorService;
     }
 
@@ -72,6 +75,7 @@ public class IndicatorRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("indicatorId") Long indicatorId) {
         Indicator indicator = indicatorRepository.findById(indicatorId).orElseThrow(NotFoundException::new);
+        pageRepository.deleteByNameAndModel(indicator.getSlug(), IndicatorModel.INDICATOR_PAGE_MODEL.getName());
         indicatorRepository.delete(indicator);
     }
 
@@ -151,6 +155,12 @@ public class IndicatorRestController {
         if (!indicator.getBiomId().equals(updatedIndicator.getBiomId())) {
             indicatorRepository.deleteValues(updatedIndicator, Set.of(Territory.values()));
             fetchAndStoreIndicatorValues(updatedIndicator);
+        }
+
+        if (!indicator.getSlug().equals(updatedIndicator.getSlug())) {
+            pageRepository.updateName(indicator.getSlug(),
+                                      IndicatorModel.INDICATOR_PAGE_MODEL.getName(),
+                                      updatedIndicator.getSlug());
         }
     }
 

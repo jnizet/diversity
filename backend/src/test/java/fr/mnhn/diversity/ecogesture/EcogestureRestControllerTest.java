@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.mnhn.diversity.common.exception.FunctionalException;
+import fr.mnhn.diversity.model.PageRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -32,6 +33,9 @@ import org.springframework.test.web.servlet.MockMvc;
 class EcogestureRestControllerTest {
     @MockBean
     private EcogestureRepository mockEcogestureRepository;
+
+    @MockBean
+    private PageRepository mockPageRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -72,6 +76,7 @@ class EcogestureRestControllerTest {
                .andExpect(status().isNoContent());
 
         verify(mockEcogestureRepository).delete(ecogesture);
+        verify(mockPageRepository).deleteByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName());
     }
 
     @Test
@@ -133,10 +138,8 @@ class EcogestureRestControllerTest {
                             .content(objectMapper.writeValueAsBytes(command)))
                .andExpect(status().isNoContent());
 
-        verify(mockEcogestureRepository).update(categoryArgumentCaptor.capture());
-
-        Ecogesture updatedEcogesture = categoryArgumentCaptor.getValue();
-        assertThat(updatedEcogesture.getSlug()).isEqualTo(command.getSlug());
+        verify(mockEcogestureRepository).update(ecogesture.withSlug(command.getSlug()));
+        verify(mockPageRepository).updateName(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), command.getSlug());
     }
 
     @Test
