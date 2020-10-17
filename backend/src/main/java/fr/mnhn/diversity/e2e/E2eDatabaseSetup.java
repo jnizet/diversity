@@ -333,9 +333,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.sections.0.description", "Comprendre raison 1", null, null, null, false)
                 .values(TEXT, "indicators.title", "Indicateurs", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
-                .values(TEXT, "next.name", "Surfaces des forêts", null, null, null, false)
-                .values(IMAGE, "next.image", null, 105L, "Surfaces des forêts", null, false)
-                .values(LINK, "next.link", "Surfaces des forêts", null, null, "/indicateurs/surfaces-forets", false)
                 .build();
 
         Operation deforestationElements =
@@ -354,9 +351,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.sections.1.description",  "Explication raison 2", null, null, null, false)
                 .values(TEXT, "indicators.title",  "Déforestation par territoire", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
-                .values(TEXT, "next.name", "Espèces envahissantes", null, null, null, false)
-                .values(IMAGE, "next.image", null, 104, "Espèces envahissantes", null, false)
-                .values(LINK, "next.link", "Espèces envahissantes", null, null, "/indicateurs/especes-envahissantes", false)
                 .build();
 
         Operation users = insertInto("app_user")

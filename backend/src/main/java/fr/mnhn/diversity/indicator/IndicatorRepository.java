@@ -241,6 +241,12 @@ public class IndicatorRepository {
             });
     }
 
+    public Optional<IndicatorValue> getValueForIndicatorAndTerritory(Indicator indicator, Territory territory) {
+        return Optional.ofNullable(
+            getValuesForIndicatorsAndTerritory(Set.of(indicator), territory).get(indicator)
+        );
+    }
+
     public Optional<Indicator> findById(Long id) {
         String query = INDICATOR_QUERY + " where indicator.id = :id";
         List<Indicator> indicators = jdbcTemplate.query(query, Map.of("id", id), this::extractIndicators);

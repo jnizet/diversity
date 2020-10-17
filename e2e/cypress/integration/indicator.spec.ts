@@ -9,6 +9,10 @@ describe('Indicator', () => {
     cy.get('.indicators h3').should('contain', 'Guadeloupe');
     cy.get('.indicators p').should('contain', '14');
     cy.get('.ecogestures h3').should('contain', 'Protégeons les récifs coralliens');
+    cy.get('.next-indicator').should('contain', '5\u00a0%').should('contain', 'de la forêt disparaît');
     cy.get('footer').should('contain', 'Territoires');
+
+    cy.get('.next-indicator a').click();
+    cy.get('h1').should('contain', 'Déforestation');
   });
 });

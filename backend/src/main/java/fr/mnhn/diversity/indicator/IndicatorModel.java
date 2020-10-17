@@ -35,12 +35,6 @@ public final class IndicatorModel {
                  .section(SectionElement.builder("ecogestures").describedAs("Écogestes")
                                         .text("title", "Titre de la section écogestes")
                  )
-                 // Bandeau indicateur suivant
-                 .section(SectionElement.builder("next").describedAs("Bandeau indicateur suivant")
-                                        .text("name", "Nom de l'indicateur suivant")
-                                        .image("image", "Image illustrant l'indicateur suivant")
-                                        .link("link", "Lien vers l'indicateur suivant")
-                 )
                  .build();
 
     /**

@@ -69,10 +69,14 @@
       </div>
 
       <!-- Bandeau indicateur suivant -->
-      <div class="next-indicator">
-        <h2 th:text="*{next.name.text}">Nom de l'indicateur suivant</h2>
-        <img th:src="@{/images/{imageId}/image(imageId=*{next.image.imageId})}" th:alt="*{next.image.alt}" />
-        <a th:href="@{*{next.link.href}}" th:text="*{next.link.text}">Lien vers l'indicateur</a>
+      <div class="next-indicator" th:if="${nextIndicatorCard}">
+        <p th:text="${#indicators.formatValue(nextIndicatorCard.indicatorValue)}"></p>
+        <p th:text="${nextIndicatorCard.page.content.presentation.description.text}">Description de l'indicateur</p>
+        <img
+          th:src="@{/images/{imageId}/image/sm(imageId=${nextIndicatorCard.page.content.presentation.image.imageId})}"
+          th:alt="${nextIndicatorCard.page.content.presentation.image.alt}"
+        />
+        <a th:href="@{/indicateurs/{slug}(slug=${nextIndicatorCard.indicator.slug})}">En savoir plus</a>
       </div>
     </main>
   </body>

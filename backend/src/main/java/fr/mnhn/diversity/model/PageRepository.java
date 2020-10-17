@@ -75,6 +75,45 @@ public class PageRepository {
     }
 
     /**
+     * Finds the next page which has the given model, when ordering these pages by ID.
+     * If no page has an ID greater than the given one, returns the first one.
+     * If the given current page ID is unique, then the page with that ID will be returned.
+     * If there is no page at all with the given model name, then empty is returned.
+     */
+    public Optional<Page> findNextOrFirstByModel(String modelName, Long currentPageId) {
+        String sql =
+            "with next_id as (\n"
+                + "    select min(p.id) as id\n"
+                + "    from page p\n"
+                + "    where p.model_name = :modelName\n"
+                + "      and p.id > :currentPageId\n"
+                + "),\n"
+                + "     first_id as (\n"
+                + "         select min(id) as id\n"
+                + "         from page p\n"
+                + "         where p.model_name = :modelName\n"
+                + "     ),\n"
+                + "     searched_id as (\n"
+                + "         select max(u.id) as id from (select id from next_id union select id from first_id) as u\n"
+                + "     )\n"
+                + "select page.id,\n"
+                + "       page.name,\n"
+                + "       page.model_name,\n"
+                + "       page.title,\n"
+                + "       el.id as element_id,\n"
+                + "       el.type,\n"
+                + "       el.key,\n"
+                + "       el.text,\n"
+                + "       el.image_id,\n"
+                + "       el.alt,\n"
+                + "       el.href\n"
+                + "from page\n"
+                + "         left outer join page_element el on page.id = el.page_id\n"
+                + "where page.id = (select id from searched_id)";
+        return jdbcTemplate.query(sql, Map.of("modelName", modelName, "currentPageId", currentPageId), this::extractPage);
+    }
+
+    /**
      * Updates a page, its metadata and elements, by removing all the elements and re-creating them.
      */
     public boolean update(Page page) {

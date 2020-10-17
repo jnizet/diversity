@@ -235,9 +235,6 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 30, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null, false),
     (nextval('page_element_seq'), 30, 'TEXT', 'indicators.title',  'Espèces envahissantes par territoire', null, null, null, false),
     (nextval('page_element_seq'), 30, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
-    (nextval('page_element_seq'), 30, 'TEXT', 'next.name', 'Surfaces des forêts', null, null, null, false),
-    (nextval('page_element_seq'), 30, 'IMAGE', 'next.image', null, 105, 'Surfaces des forêts', null, false),
-    (nextval('page_element_seq'), 30, 'LINK', 'next.link', 'Déforestation', null, null, '/indicateurs/deforestation', false),
 
 --     Indicator
 --     Déforestation
@@ -252,10 +249,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 31, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'indicators.title',  'Déforestation par territoire', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
-    (nextval('page_element_seq'), 31, 'TEXT', 'next.name', 'Espèces envahissantes', null, null, null, false),
-    (nextval('page_element_seq'), 31, 'IMAGE', 'next.image', null, 104, 'Espèces envahissantes', null, false),
-    (nextval('page_element_seq'), 31, 'LINK', 'next.link', 'Espèces envahissantes', null, null, '/indicateurs/especes-envahissantes', false);
-
+    
 -- Users
 insert into app_user (id, login, hashed_password) values
    (nextval('app_user_seq'), 'admin', 'x9KbDbdQrtgj+VSVZaeaugL+1ss0J9UeVeX3IjtZ6Qv0QT1s6r2HQw==');

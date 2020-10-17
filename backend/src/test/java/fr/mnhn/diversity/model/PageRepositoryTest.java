@@ -42,8 +42,8 @@ class PageRepositoryTest {
                     insertInto("page")
                         .columns("id", "name", "model_name", "title")
                         .values(1L, "Home", "home", "Accueil")
-                        .values(2L, "gesture1", "gesture", "Ecogeste")
-                        .values(3L, "gesture2", "gesture", "Ecogestes")
+                        .values(2L, "gesture1", "gesture", "Ecogeste 1")
+                        .values(3L, "gesture2", "gesture", "Ecogeste 2")
                         .build(),
                     insertInto("image")
                         .columns("id", "content_type", "original_file_name")
@@ -151,6 +151,22 @@ class PageRepositoryTest {
 
         assertThat(pages.get(0).getId()).isEqualTo(2L);
         assertThat(pages.get(1).getId()).isEqualTo(3L);
+    }
+
+    @Test
+    void shouldFindNextOfFirstByModel() {
+        TRACKER.skipNextLaunch();
+        assertThat(repository.findNextOrFirstByModel("unknown", 42L)).isEmpty();
+
+        assertThat(repository.findNextOrFirstByModel("gesture", 2L)
+                             .get()
+                             .getId()).isEqualTo(3L);
+        assertThat(repository.findNextOrFirstByModel("gesture", 3L)
+                             .get()
+                             .getId()).isEqualTo(2L);
+        assertThat(repository.findNextOrFirstByModel("home", 1L)
+                             .get()
+                             .getId()).isEqualTo(1L);
     }
 
     @Test

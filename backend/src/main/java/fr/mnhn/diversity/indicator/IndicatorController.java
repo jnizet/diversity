@@ -79,12 +79,15 @@ public class IndicatorController {
 
         List<EcogestureCard> ecogestureCards = getEcogestureCards(indicator);
 
+        IndicatorCard nextIndicatorCard = getNextIndicatorCard(page.getId()).orElse(null);
+
         return new ModelAndView("indicator/indicator",
                                 Map.of(
                                     "page", pageContent,
                                     "outremerIndicatorValue", outremerIndicatorValue,
                                     "territoryCards", territoryCards,
-                                    "ecogestureCards", ecogestureCards
+                                    "ecogestureCards", ecogestureCards,
+                                    "nextIndicatorCard", nextIndicatorCard == null ? false : nextIndicatorCard
                                 ));
     }
 
@@ -107,6 +110,20 @@ public class IndicatorController {
                                                                                            indicatorPage),
                                                               valuesByIndicator.get(indicatorsBySlug.get(indicatorPage.getName()))))
                          .collect(Collectors.toList());
+    }
+
+    private Optional<IndicatorCard> getNextIndicatorCard(Long currentIndicatorPageId) {
+        return pageRepository
+            .findNextOrFirstByModel(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), currentIndicatorPageId)
+            .flatMap(nextOrFirstIndicatorPage ->
+                         indicatorRepository
+                             .findBySlug(nextOrFirstIndicatorPage.getName())
+                             .flatMap(indicator -> indicatorRepository
+                                 .getValueForIndicatorAndTerritory(indicator, Territory.OUTRE_MER)
+                                 .map(indicatorValue -> new IndicatorCard(indicator,
+                                                                          pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL,
+                                                                                                       nextOrFirstIndicatorPage),
+                                                                          indicatorValue))));
     }
 
     private List<IndicatorCategory> getCategories(List<IndicatorCard> cards) {

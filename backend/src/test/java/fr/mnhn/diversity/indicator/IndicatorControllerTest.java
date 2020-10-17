@@ -206,6 +206,14 @@ class IndicatorControllerTest {
             List.of(invasiveSpeciesPage, deforestationPage)
         );
 
+        // next indicator for invasive species
+        when(mockPageRepository.findNextOrFirstByModel(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), invasiveSpeciesPage.getId())).thenReturn(
+            Optional.of(deforestationPage)
+        );
+        when(mockIndicatorRepository.findBySlug(deforestationPage.getName())).thenReturn(Optional.of(deforestation));
+        when(mockIndicatorRepository.getValueForIndicatorAndTerritory(deforestation, Territory.OUTRE_MER))
+            .thenReturn(Optional.of(new IndicatorValue(2000, "km2")));
+
         Page ecogesturePage = new Page(435L, ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Corals", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
             .thenReturn(Optional.of(ecogesturePage));
@@ -240,7 +248,10 @@ class IndicatorControllerTest {
                .andExpect(content().string(containsString("<h3>Guadeloupe</h3>")))
                .andExpect(content().string(containsString("<p>14</p>")))
                .andExpect(content().string(containsString("<h2>Ecogestes</h2>")))
-               .andExpect(content().string(containsString("<h3>Protect the corals</h3>")));
+               .andExpect(content().string(containsString("<h3>Protect the corals</h3>")))
+               .andExpect(content().string(containsString("<p>2\u00a0000\u00a0km2</p>")))
+               .andExpect(content().string(containsString("<p>de forêt...</p>")))
+               .andExpect(content().string(containsString("</html>")));
     }
 
     @Test
