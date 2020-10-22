@@ -20,5 +20,9 @@ describe('Act together', () => {
     cy.title().should('eq', 'Écogestes');
   });
 
-  // TODO test navigation to science
+  it('should navigate to science page', () => {
+    cy.visit('/agir-ensemble');
+    cy.contains('voir toutes les sciences participatives').click();
+    cy.title().should('eq', 'Sciences participatives');
+  });
 });

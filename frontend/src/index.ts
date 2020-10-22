@@ -7,6 +7,7 @@ import { IndicatorsController } from './indicators/indicators-controller';
 import { HomeController } from './home/home-controller';
 import { QuestionItemController } from './indicators/question-item-controller';
 import { AboutController } from './about/about-controller';
+import { ScienceController } from './science/science-controller';
 import { EcogesturesController } from './ecogestures/ecogestures-controller';
 
 const application = Application.start();
@@ -17,6 +18,7 @@ application.register('indicators', IndicatorsController);
 application.register('home', HomeController);
 application.register('question-item', QuestionItemController);
 application.register('about', AboutController);
+application.register('science', ScienceController);
 application.register('ecogestures', EcogesturesController);
 
 initialize();

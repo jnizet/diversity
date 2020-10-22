@@ -1,6 +1,5 @@
 package fr.mnhn.diversity.model.rest;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,8 @@ public class PageLinkRestController {
             getStaticLink(AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL),
             getStaticLink(IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL),
             getStaticLink(EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL),
-            getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL)
+            getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL),
+            getStaticLink(ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL)
         );
     }
 

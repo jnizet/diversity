@@ -140,6 +140,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long ecogesture1 = 100L;
         Long ecogestureHome = 4L;
         Long act = 5L;
+        Long science = 7L;
         Long reunion = 10L;
         Long stPierreEtMiquelon = 11L;
         Long indicatorHome = 29L;
@@ -151,6 +152,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(home, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName(), "Accueil")
                 .values(about, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName(), "À propos")
                 .values(act, ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL.getName(), "Agir ensemble")
+                .values(science, ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL.getName(), "Sciences participatives")
                 .values(ecogesture1, "recifs", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
                 .values(101L, "recifs1", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
                 .values(102L, "recifs2", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
@@ -212,6 +214,11 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(109L, png, "ressources-naturelles.png")
                 .values(201L, jpg, "act-background.jpg")
                 .values(202L, jpg, "science-project.jpg")
+                .values(401, jpg, "science.jpg")
+                .values(402, jpg, "r1.jpg")
+                .values(403, jpg, "r2.jpg")
+                .values(404, jpg, "oiseaux.jpg")
+                .values(405, jpg, "oiseau.jpg")
                 .build();
 
         SequenceValueGenerator elementIdGenerator = ValueGenerators.sequence();
@@ -287,6 +294,44 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "science.project.title", "Un projet original en Nouvelle-Calédonie", null, null, null, false)
                 .values(TEXT, "science.project.description", "Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.", null, null, null, false)
                 .values(IMAGE, "science.project.image", null, 202, "Légende", null, false)
+                .build();
+
+        Operation scienceElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", science)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "header.title", "Que sont les sciences participatives ?", null, null, null, true)
+                .values(TEXT, "header.subtitle", "Les sciences participatives permettent à tous les curieux de la nature, du débutant à l’expérimenté, de contribuer à la recherche sur la biodiversité en fournissant aux scientifiques un grand nombre de données de terrain.", null, null, null, false)
+                .values(IMAGE, "header.background", null, 401, "Légende", null, false)
+                .values(TEXT, "presentation.title", "Sciences faites par des non-professionnels", null, null, null, false)
+                .values(TEXT, "presentation.description", "Au-delà de la simple définition « sciences faites par des non-professionnels », l’Institut de formation et de recherche en éducation à l’environnement (Ifrée) distingue 3 catégories de programmes participatifs selon leurs objectifs, permettant de mieux comprendre ce que sont réellement les Sciences Participatives.", null, null, null, false)
+                .values(TEXT, "paragraphs.0.title", "Les bases de données collaboratives", null, null, null, false)
+                .values(TEXT, "paragraphs.0.text", "Il s’agit de projet d’inventaires et de signalements destinés aux amateurs sachant identifier les taxons observés. Les débutants y sont les bienvenus. L’objet principal est de partager de la connaissance, éventuellement mobilisable a posteriori dans unprojet de recherche ou dans un objectif de conservation.", null, null, null, false)
+                .values(TEXT, "paragraphs.1.title", "Les projets adossés à des programmes de recherche", null, null, null, false)
+                .values(TEXT, "paragraphs.1.text", "L’objet et les conditions de collecte des données sont alors très précisément définis, garantissant ainsi l’exploitabilité de ces dernières. La nature du protocole va contraindre le type de public participant, mais cela peut souvent inclure des débutants. Les données collectées peuvent être ensuite versées dans lesprojets de bases de données collaboratives.", null, null, null, false)
+                .values(TEXT, "paragraphs.2.title", "Les programmes à visée éducative ou de gestion/conservation", null, null, null, false)
+                .values(TEXT, "paragraphs.2.text", "On trouve là divers programmes de sensibilisation à la démarche scientifique ou aux enjeux de conservation. Certains d’entre eux n’impliquent pas de collecte d’information centralisée, leur objectif étant d’abord de permettre aux participants d’acquérir des connaissances.", null, null, null, false)
+                .values(IMAGE, "images.0.image", null, 402, "Légende", null, false)
+                .values(IMAGE, "images.1.image", null, 403, "Légende", null, false)
+                .values(TEXT, "examples.title", "Deux exemples de programmes participatifs en Outre-mer", null, null, null, false)
+                .values(TEXT, "examples.projects.0.title", "Un projet original en Nouvelle-Calédonie", null, null, null, false)
+                .values(TEXT, "examples.projects.0.description", "Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.", null, null, null, false)
+                .values(LINK, "examples.projects.0.more", "En savoir plus", null, null, "https://google.com", false)
+                .values(TEXT, "examples.projects.0.subject", "Suivi des populations d’oiseaux communs par échantillonnages ponctuels simples le long de parcours prédéfinis", null, null, null, false)
+                .values(TEXT, "examples.projects.0.actor", "Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)", null, null, null, false)
+                .values(TEXT, "examples.projects.0.target", "Ornithologues à titre bénévole ou dans un cadre professionnels (Agents de zones protégées)", null, null, null, false)
+                .values(IMAGE, "examples.projects.0.image", null, 404, "Légende", null, false)
+                .values(TEXT, "examples.projects.1.title", "Autre titre", null, null, null, false)
+                .values(TEXT, "examples.projects.1.description", "Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.", null, null, null, false)
+                .values(LINK, "examples.projects.1.more", "En savoir plus", null, null, "https://google.com", false)
+                .values(TEXT, "examples.projects.1.subject", "Suivi des populations d’oiseaux communs par échantillonnages ponctuels simples le long de parcours prédéfinis", null, null, null, false)
+                .values(TEXT, "examples.projects.1.actor", "Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)", null, null, null, false)
+                .values(TEXT, "examples.projects.1.target", "Ornithologues à titre bénévole ou dans un cadre professionnels (Agents de zones protégées)", null, null, null, false)
+                .values(IMAGE, "examples.projects.1.image", null, 405, "Légende", null, false)
+                .values(TEXT, "application.title", "Agir pour la science depuis son smartphone, c'est possible !", null, null, null, false)
+                .values(TEXT, "application.subtitle", "J’agis en ligne", null, null, null, false)
+                .values(LINK, "application.downloadLink", "Je télécharge l'application INPN Espaces", null, null, "https://google.com", false)
                 .build();
 
         Operation ecogestureHomeElements =
@@ -439,6 +484,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             homeElements,
             aboutElements,
             actElements,
+            scienceElements,
             ecogestureHomeElements,
             reunionElements,
             stPierreEtMiquelonElements,

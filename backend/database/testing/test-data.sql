@@ -80,7 +80,12 @@ insert into image (id, content_type, original_file_name) values
     (108, 'image/png', 'tourbieres.png'),
     (109, 'image/png', 'ressources-naturelles.png'),
     (201, 'image/jpeg', 'act-background.jpg'),
-    (202, 'image/jpeg', 'science-project.jpg');
+    (202, 'image/jpeg', 'science-project.jpg'),
+    (401, 'image/jpeg', 'science.jpg'),
+    (402, 'image/jpeg', 'r1.jpg'),
+    (403, 'image/jpeg', 'r2.jpg'),
+    (404, 'image/jpeg', 'oiseaux.jpg'),
+    (405, 'image/jpeg', 'oiseau.jpg');
 
 insert into page (id, name, model_name, title) values
    (1, 'Home', 'home', 'Accueil'),
@@ -89,6 +94,7 @@ insert into page (id, name, model_name, title) values
    (4, 'especes-exotiques-envahissantes', 'ecogesture', 'Écogeste : lutter contre l’introduction d’espèces exotiques envahissantes'),
    (5, 'EcoGestureHome', 'ecogestures', 'Écogestes'),
    (6, 'Act', 'act', 'Agir ensemble'),
+   (7, 'Science', 'science', 'Sciences participatives'),
    (10, 'reunion', 'territory', 'La Réunion'),
    (11, 'st-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
    (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
@@ -194,6 +200,39 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 6, 'TEXT', 'science.project.title', 'Un projet original en Nouvelle-Calédonie', null, null, null, false),
     (nextval('page_element_seq'), 6, 'TEXT', 'science.project.description', 'Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.', null, null, null, false),
     (nextval('page_element_seq'), 6, 'IMAGE', 'science.project.image', null, 202, 'Légende', null, false),
+
+--     Science
+    (nextval('page_element_seq'), 7, 'TEXT', 'header.title', 'Que sont les sciences participatives ?', null, null, null, true),
+    (nextval('page_element_seq'), 7, 'TEXT', 'header.subtitle', 'Les sciences participatives permettent à tous les curieux de la nature, du débutant à l’expérimenté, de contribuer à la recherche sur la biodiversité en fournissant aux scientifiques un grand nombre de données de terrain.', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'IMAGE', 'header.background', null, 401, 'Légende', null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'presentation.title', 'Sciences faites par des non-professionnels', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'presentation.description', 'Au-delà de la simple définition « sciences faites par des non-professionnels », l’Institut de formation et de recherche en éducation à l’environnement (Ifrée) distingue 3 catégories de programmes participatifs selon leurs objectifs, permettant de mieux comprendre ce que sont réellement les Sciences Participatives.', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'paragraphs.0.title', 'Les bases de données collaboratives', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'paragraphs.0.text', 'Il s’agit de projet d’inventaires et de signalements destinés aux amateurs sachant identifier les taxons observés. Les débutants y sont les bienvenus. L’objet principal est de partager de la connaissance, éventuellement mobilisable a posteriori dans unprojet de recherche ou dans un objectif de conservation.', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'paragraphs.1.title', 'Les projets adossés à des programmes de recherche', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'paragraphs.1.text', 'L’objet et les conditions de collecte des données sont alors très précisément définis, garantissant ainsi l’exploitabilité de ces dernières. La nature du protocole va contraindre le type de public participant, mais cela peut souvent inclure des débutants. Les données collectées peuvent être ensuite versées dans lesprojets de bases de données collaboratives.', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'paragraphs.2.title', 'Les programmes à visée éducative ou de gestion/conservation', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'paragraphs.2.text', 'On trouve là divers programmes de sensibilisation à la démarche scientifique ou aux enjeux de conservation. Certains d’entre eux n’impliquent pas de collecte d’information centralisée, leur objectif étant d’abord de permettre aux participants d’acquérir des connaissances.', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'IMAGE', 'images.0.image', null, 402, 'Légende', null, false),
+    (nextval('page_element_seq'), 7, 'IMAGE', 'images.1.image', null, 403, 'Légende', null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.title', 'Deux exemples de programmes participatifs en Outre-mer', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.0.title', 'Un projet original en Nouvelle-Calédonie', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.0.description', 'Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'LINK', 'examples.projects.0.more', 'En savoir plus', null, null, 'https://google.com', false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.0.subject', 'Suivi des populations d’oiseaux communs par échantillonnages ponctuels simples le long de parcours prédéfinis', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.0.actor', 'Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.0.target', 'Ornithologues à titre bénévole ou dans un cadre professionnels (Agents de zones protégées)', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'IMAGE', 'examples.projects.0.image', null, 404, 'Légende', null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.1.title', 'Autre titre', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.1.description', 'Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'LINK', 'examples.projects.1.more', 'En savoir plus', null, null, 'https://google.com', false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.1.subject', 'Suivi des populations d’oiseaux communs par échantillonnages ponctuels simples le long de parcours prédéfinis', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.1.actor', 'Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'examples.projects.1.target', 'Ornithologues à titre bénévole ou dans un cadre professionnels (Agents de zones protégées)', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'IMAGE', 'examples.projects.1.image', null, 405, 'Légende', null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'application.title', 'Agir pour la science depuis son smartphone, c''est possible !', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'TEXT', 'application.subtitle', 'J’agis en ligne', null, null, null, false),
+    (nextval('page_element_seq'), 7, 'LINK', 'application.downloadLink', 'Je télécharge l''application INPN Espaces', null, null, 'https://google.com', false),
 
 --     Territory
 --     Reunion

@@ -14,7 +14,7 @@ public final class AboutModel {
     public static final PageModel ABOUT_PAGE_MODEL =
         PageModel.builder("about")
                  .section(SectionElement.builder("header").describedAs("En-tête")
-                                        .image("background", "Image de fond de l'en-tête")
+                                        .multiSizeImage("background", "Image de fond de l'en-tête")
                                         .titleText("title", "Titre de la page")
                                         .multiLineText("subtitle", "Sous-titre de la page")
                  )

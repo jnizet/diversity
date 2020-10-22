@@ -57,6 +57,7 @@ public class PageRestController {
         modelsByName.put(HomeModel.HOME_PAGE_MODEL.getName(), HomeModel.HOME_PAGE_MODEL);
         modelsByName.put(AboutModel.ABOUT_PAGE_MODEL.getName(), AboutModel.ABOUT_PAGE_MODEL);
         modelsByName.put(ActModel.ACT_PAGE_MODEL.getName(), ActModel.ACT_PAGE_MODEL);
+        modelsByName.put(ActModel.SCIENCE_PAGE_MODEL.getName(), ActModel.SCIENCE_PAGE_MODEL);
         modelsByName.put(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL);
         modelsByName.put(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL);
         modelsByName.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), TerritoryModel.TERRITORY_PAGE_MODEL);

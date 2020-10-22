@@ -42,6 +42,7 @@ public class SearchController {
         urlFactories.put(IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), r -> "/indicateurs");
         urlFactories.put(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), r -> "/indicateurs/" + r.getName());
         urlFactories.put(ActModel.ACT_PAGE_MODEL.getName(), r -> "/agir-ensemble");
+        urlFactories.put(ActModel.SCIENCE_PAGE_MODEL.getName(), r -> "/sciences-participatives");
     }
 
     @GetMapping

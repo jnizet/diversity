@@ -76,7 +76,13 @@ public class SearchControllerTest {
             new PageSearchResult(7L,
                                  ActModel.ACT_PAGE_NAME,
                                  ActModel.ACT_PAGE_MODEL.getName(),
-                                 "Agire ensemble",
+                                 "Agir ensemble",
+                                 "<b>compteurs</b",
+                                 null),
+            new PageSearchResult(8L,
+                                 ActModel.SCIENCE_PAGE_NAME,
+                                 ActModel.SCIENCE_PAGE_MODEL.getName(),
+                                 "Sciences participatives",
                                  "<b>compteurs</b",
                                  null)
         );
@@ -99,6 +105,7 @@ public class SearchControllerTest {
                      .andExpect(content().string(containsString("href=\"/ecogestes/coral\"")))
                      .andExpect(content().string(containsString("href=\"/territoires/reunion\"")))
                      .andExpect(content().string(containsString("href=\"/indicateurs/especes-envahissantes\"")))
-                     .andExpect(content().string(containsString("href=\"/agir-ensemble\"")));
+                     .andExpect(content().string(containsString("href=\"/agir-ensemble\"")))
+                     .andExpect(content().string(containsString("href=\"/sciences-participatives\"")));
     }
 }
