@@ -2,6 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
 >
   <head>
@@ -14,21 +15,86 @@
   </head>
 
   <body>
-    <main th:object="${page.content}">
-      <h1 th:text="*{title.text}">Title</h1>
-      <p th:text="*{presentation.text}">Presentation</p>
-      <img th:src="@{/images/{imageId}/image(imageId=*{image.imageId})}" th:alt="*{image.alt}" />
+    <main class="main" th:object="${page.content}">
+      <!-- Top -->
+      <section class="section-top">
+        <div class="section-top-wrapper">
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{image.alt}">Légende photo</div>
+          </div>
+          <div class="section-top-content">
+            <h1 class="section-top-title" th:text="*{title.text}"></h1>
+            <p class="section-top-text" th:text="*{presentation.text}"></p>
+          </div>
+        </div>
+        <img biom:image="*{image}" sizes="100vw" class="img-full anim-zoom" />
+      </section>
 
-      <!-- TODO categories -->
-      <div th:each="gesturePage : ${gesturePages}">
-        <a th:href="@{/ecogestes/{gesture}(gesture=${gesturePage.name})}" class="ecogesture-link">
-          <img
-            th:src="@{/images/{imageId}/image(imageId=${gesturePage.content.presentation.image.imageId})}"
-            th:alt="${gesturePage.content.presentation.image.alt}"
-          />
-        </a>
-        <p th:text="${gesturePage.content.presentation.name.text}"></p>
-      </div>
+      <!-- Intro -->
+      <section class="section-ecogeste-intro">
+        <div class="section-content">
+          <h2 class="section-title top-title" th:text="*{question.text}"></h2>
+          <div class="col-5">
+            <p th:text="*{answer.text}"></p>
+          </div>
+        </div>
+        <div class="section-decoration-text ecogeste">ecogeste</div>
+      </section>
+
+      <!-- Ecogestures -->
+      <section class="section-ecogeste-liste" data-controller="ecogestures">
+        <ul role="list" class="ecogeste-list w-list-unstyled">
+          <li class="ecogeste-item" th:each="gesturePage : ${gesturePages}" data-target="ecogestures.ecogesture">
+            <a th:href="@{/ecogestes/{gesture}(gesture=${gesturePage.name})}" class="ecogeste-link w-inline-block">
+              <div class="ecogeste-bkg-wrapper">
+                <img
+                  th:src="@{/images/{imageId}/image/sm(imageId=${gesturePage.content.presentation.image.imageId})}"
+                  th:alt="${gesturePage.content.presentation.image.alt}"
+                  loading="lazy"
+                  sizes="(max-width: 479px) 100vw, (max-width: 767px) 45vw, (max-width: 991px) 46vw, 47vw"
+                  class="ecogeste-bkg"
+                />
+              </div>
+              <div class="ecogeste-wrapper">
+                <h3 class="ecogeste-link-title" th:text="${gesturePage.content.presentation.name.text}"></h3>
+                <div class="ecogeste-thematique" th:text="${gesturePage.content.presentation.category.text}">biodiversité</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <div class="list-more-wrapper">
+          <button
+            id="see-more"
+            class="cta-primary blue cta-more-ecogeste"
+            data-action="click->ecogestures#seeMore"
+            data-target="ecogestures.more"
+          >
+            voir plus d&#x27;écogestes
+          </button>
+        </div>
+      </section>
+
+      <!-- Quote -->
+      <section class="section-citation">
+        <img th:src="@{assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote" />
+        <p th:text="*{quote.text}"></p>
+        <div class="section-decoration-text agir">agir</div>
+      </section>
+
+      <!-- Link to other ecogestures -->
+      <a href="https://agir.biodiversitetousvivants.fr/les-gestes/" target="_blank" class="section-push-next w-inline-block">
+        <div class="push-next-img">
+          <img biom:image="*{other.image}" loading="lazy" sizes="40vw" alt="" class="next-img" />
+        </div>
+        <div class="push-next-wrapper">
+          <div class="push-next-before" th:text="*{other.title.text}"></div>
+          <div class="push-next-title-wrapper">
+            <div class="push-next-title col-4" th:text="*{other.text.text}"></div>
+            <img th:src="@{assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
+          </div>
+        </div>
+      </a>
     </main>
   </body>
 </html>

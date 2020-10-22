@@ -38,7 +38,8 @@ insert into indicator_category (indicator_id, category_id) values
     (2, 3);
 
 insert into ecogesture (id, slug) values
-    (1, 'recifs');
+    (1, 'recifs'),
+    (2, 'especes-exotiques-envahissantes');
 
 insert into indicator_ecogesture (indicator_id, ecogesture_id) values
     (1, 1),
@@ -60,13 +61,15 @@ insert into image (id, content_type, original_file_name) values
     (12, 'image/jpeg', 'apropos2.jpg'),
     (13, 'image/jpeg', 'apropos3.jpg'),
     (14, 'image/jpeg', 'apropos-quote.jpg'),
-    (30, 'image/jpeg', 'ecogeste.jpg'),
+    (29, 'image/jpeg', 'ecogeste_especes_exotiques.jpg'),
+    (30, 'image/jpeg', 'ecogeste_corail.jpg'),
     (31, 'image/png', 'fiche-technique.png'),
     (32, 'image/png', 'comprendre.png'),
     (33, 'image/png', 'vignette1.png'),
     (34, 'image/png', 'vignette2.png'),
     (40, 'image/jpeg', 'indicateurs.jpg'),
-    (91, 'image/png', 'ecogestes.png'),
+    (91, 'image/jpeg', 'ecogeste_intro_all.jpg'),
+    (92, 'image/png', 'tous_vivants.png'),
     (101, 'image/png', 'interest1.png'),
     (102, 'image/png', 'interest2.png'),
     (103, 'image/png', 'indicators1.png'),
@@ -83,8 +86,9 @@ insert into page (id, name, model_name, title) values
    (1, 'Home', 'home', 'Accueil'),
    (2, 'About', 'about', 'À propos'),
    (3, 'recifs', 'ecogesture', 'Écogeste : protéger les récifs'),
-   (4, 'EcoGestureHome', 'ecogestures', 'Écogestes'),
-   (5, 'Act', 'act', 'Agir ensemble'),
+   (4, 'especes-exotiques-envahissantes', 'ecogesture', 'Écogeste : lutter contre l’introduction d’espèces exotiques envahissantes'),
+   (5, 'EcoGestureHome', 'ecogestures', 'Écogestes'),
+   (6, 'Act', 'act', 'Agir ensemble'),
    (10, 'reunion', 'territory', 'La Réunion'),
    (11, 'st-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
    (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
@@ -138,7 +142,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 2, 'IMAGE', 'partners.partners.2.logo', null, 10, 'Logo3', null, false),
     (nextval('page_element_seq'), 2, 'TEXT', 'partners.partners.2.url', 'http://google.com', null, null, null, false),
 
---     Ecogesture 1
+--     Ecogesture "Recifs coralliens"
     (nextval('page_element_seq'), 3, 'TEXT', 'presentation.name', 'Protégeons les récifs coralliens', null, null, null, true),
     (nextval('page_element_seq'), 3, 'TEXT', 'presentation.category', 'Loisirs', null, null, null, false),
     (nextval('page_element_seq'), 3, 'TEXT', 'presentation.description', 'Sinon ils vont mourir', null, null, null, false),
@@ -153,22 +157,43 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 3, 'IMAGE', 'action.cards.1.icon', null, 34, 'Bateau', null, false),
     (nextval('page_element_seq'), 3, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null, false),
 
+--     Ecogesture "Especes exotiques envahissantes"
+    (nextval('page_element_seq'), 4, 'TEXT', 'presentation.name', 'Lutter contre l’introduction d’espèces exotiques envahissantes', null, null, null, true),
+    (nextval('page_element_seq'), 4, 'TEXT', 'presentation.category', 'Biodiversité', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'presentation.description', 'Sinon elles sont pas gentilles avec les autres espèces', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'IMAGE', 'presentation.image', null, 29, 'Espèce envahissante', null, false),
+    (nextval('page_element_seq'), 4, 'IMAGE', 'presentation.file', null, 31, 'Fiche technique', null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'understand.title', 'Comprendre : un écosystème très riche', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'understand.text', 'Les récifs coralliens affichent plus d''un tiers des espèces marines connues...', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'IMAGE', 'understand.image', null, 32, 'Comprendre', null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'action.title', 'Les bons gestes pour protéger les récifs', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'IMAGE', 'action.cards.0.icon', null, 33, 'Crème solaire', null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'action.cards.0.description', 'Je choisis une crème solaire non nocive pour l''environnement', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'IMAGE', 'action.cards.1.icon', null, 33, 'Bateau', null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null, false),
+
 --     Ecogestures home
-    (nextval('page_element_seq'), 4, 'TEXT', 'title', 'Réinventons notre façon de vivre et de voyager grâce aux écogestes', null, null, null, true),
-    (nextval('page_element_seq'), 4, 'TEXT', 'presentation', 'Lorem ipsum dolor', null, null, null, false),
-    (nextval('page_element_seq'), 4, 'IMAGE', 'image', null, 91, 'Ecogestes', null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'title', 'Adaptons notre comportement pour préserver la biodiversité', null, null, null, true),
+    (nextval('page_element_seq'), 5, 'TEXT', 'presentation', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum ipsum sed viverra faucibus. Cras eu hendrerit mi. Proin efficitur arcu a metus consectetur, ac fermentum', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'IMAGE', 'image', null, 91, 'Ecogestes', null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'question', 'Qu''est-ce qu''un écogeste ?', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'answer', 'Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines. Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines. Les territoires d''outre-mer présentent une biodiversité particulièrement riche.', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'quote', 'Des actions concrètes pour agir dès maintenant et nous donner la possibilité de préserver cette biodiversité riche et fragile', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'IMAGE', 'other.image', null, 92, 'Biodiversité. Tous vivants !', null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'other.title', 'Retrouvez d’autres écogestes sur', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'other.text', 'Biodiversité. Tous vivants !', null, null, null, false),
 
 --     Act together
-    (nextval('page_element_seq'), 5, 'TEXT', 'header.title', 'Agir ensemble pour une biodiversité unique mais fragile', null, null, null, true),
-    (nextval('page_element_seq'), 5, 'TEXT', 'header.subtitle', 'Les outre-mer abritent une biodiversité unique mais fragile : protégeons-là !', null, null, null, false),
-    (nextval('page_element_seq'), 5, 'IMAGE', 'header.background', null, 201, 'Légende', null, false),
-    (nextval('page_element_seq'), 5, 'TEXT', 'ecogestures.title', 'Découvrez les écogestes', null, null, null, true),
-    (nextval('page_element_seq'), 5, 'TEXT', 'ecogestures.subtitle', 'Découvrez les bons gestes recommandés par le Ministère de l’outre-mer pour une expérience responsable', null, null, null, false),
-    (nextval('page_element_seq'), 5, 'TEXT', 'science.title', 'Les sciences participatives', null, null, null, true),
-    (nextval('page_element_seq'), 5, 'TEXT', 'science.subtitle', 'Protégez la biodiversité ultra-marine à travers les ciences participatives', null, null, null, false),
-    (nextval('page_element_seq'), 5, 'TEXT', 'science.project.title', 'Un projet original en Nouvelle-Calédonie', null, null, null, false),
-    (nextval('page_element_seq'), 5, 'TEXT', 'science.project.description', 'Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.', null, null, null, false),
-    (nextval('page_element_seq'), 5, 'IMAGE', 'science.project.image', null, 202, 'Légende', null, false),
+    (nextval('page_element_seq'), 6, 'TEXT', 'header.title', 'Agir ensemble pour une biodiversité unique mais fragile', null, null, null, true),
+    (nextval('page_element_seq'), 6, 'TEXT', 'header.subtitle', 'Les outre-mer abritent une biodiversité unique mais fragile : protégeons-là !', null, null, null, false),
+    (nextval('page_element_seq'), 6, 'IMAGE', 'header.background', null, 201, 'Légende', null, false),
+    (nextval('page_element_seq'), 6, 'TEXT', 'ecogestures.title', 'Découvrez les écogestes', null, null, null, true),
+    (nextval('page_element_seq'), 6, 'TEXT', 'ecogestures.subtitle', 'Découvrez les bons gestes recommandés par le Ministère de l’outre-mer pour une expérience responsable', null, null, null, false),
+    (nextval('page_element_seq'), 6, 'TEXT', 'science.title', 'Les sciences participatives', null, null, null, true),
+    (nextval('page_element_seq'), 6, 'TEXT', 'science.subtitle', 'Protégez la biodiversité ultra-marine à travers les ciences participatives', null, null, null, false),
+    (nextval('page_element_seq'), 6, 'TEXT', 'science.project.title', 'Un projet original en Nouvelle-Calédonie', null, null, null, false),
+    (nextval('page_element_seq'), 6, 'TEXT', 'science.project.description', 'Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.', null, null, null, false),
+    (nextval('page_element_seq'), 6, 'IMAGE', 'science.project.image', null, 202, 'Légende', null, false),
 
 --     Territory
 --     Reunion

@@ -93,7 +93,15 @@ class EcoGestureControllerTest {
         Map<String, Object> homeContent = Map.of(
             "title", text("Ecogestures"),
             "presentation", text("Presentation"),
-            "image", image(1L)
+            "image", image(1L),
+            "question", text("Qu'est-ce qu'un écogeste ?"),
+            "answer", text("Les territoires d'outre-mer"),
+            "quote", text("Des actions concrètes"),
+            "other", Map.of(
+                "title", text("Retrouvez d’autres écogestes sur"),
+                "text", text("Biodiversité. Tous vivants !"),
+                "image", image(1L)
+            )
         );
 
         when(mockPageService.buildPageContent(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL, homePage))
@@ -108,8 +116,12 @@ class EcoGestureControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Écogestes</title>")))
-               .andExpect(content().string(containsString("<h1>Ecogestures</h1>")))
-               .andExpect(content().string(containsString("<p>Corals</p>")));
+               .andExpect(content().string(containsString("Ecogestures</h1>")))
+               .andExpect(content().string(containsString("Corals</h3>")))
+               .andExpect(content().string(containsString("un écogeste ?</h2>")))
+               .andExpect(content().string(containsString("Des actions concrètes</p>")))
+               .andExpect(content().string(containsString("Retrouvez d’autres écogestes sur</div>")))
+               .andExpect(content().string(containsString("</html>")));
     }
 
     @Test
@@ -120,6 +132,7 @@ class EcoGestureControllerTest {
                .andExpect(content().string(containsString("<title>Protect corals</title>")))
                .andExpect(content().string(containsString("<h1>Corals</h1>")))
                .andExpect(content().string(containsString("<h2>Understand</h2>")))
-               .andExpect(content().string(containsString("<h2>Action</h2>")));
+               .andExpect(content().string(containsString("<h2>Action</h2>")))
+               .andExpect(content().string(containsString("</html>")));
     }
 }

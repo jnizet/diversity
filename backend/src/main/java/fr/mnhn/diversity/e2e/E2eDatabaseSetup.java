@@ -3,11 +3,16 @@ package fr.mnhn.diversity.e2e;
 import static com.ninja_squad.dbsetup.Operations.*;
 import static fr.mnhn.diversity.model.ElementType.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.sql.DataSource;
 
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.generator.SequenceValueGenerator;
+import com.ninja_squad.dbsetup.generator.ValueGenerator;
 import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import com.ninja_squad.dbsetup.operation.Operation;
 import fr.mnhn.diversity.about.AboutModel;
@@ -37,6 +42,34 @@ public class E2eDatabaseSetup implements CommandLineRunner {
     public E2eDatabaseSetup(DataSource dataSource, PasswordHasher passwordHasher) {
         this.destination = new DataSourceDestination(dataSource);
         this.passwordHasher = passwordHasher;
+    }
+
+    /**
+     * Generates 13 ecogestures
+     */
+    public List<Operation> generateEcogestures(Long firstEcogestureId, ValueGenerator<?> elementIdGenerator) {
+        return IntStream.range(0, 13)
+                 .mapToObj(
+                     (index) ->
+                         insertInto("page_element")
+                             .withDefaultValue("page_id", firstEcogestureId + index)
+                             .withGeneratedValue("id", elementIdGenerator)
+                             .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                             .values(TEXT, "presentation.name", "Protégeons les récifs coralliens", null, null, null, true)
+                             .values(TEXT, "presentation.category", "Loisirs", null, null, null, false)
+                             .values(TEXT, "presentation.description", "Sinon ils vont mourir", null, null, null, false)
+                             .values(IMAGE, "presentation.image", null, 30L, "Jolis coraux", null, false)
+                             .values(IMAGE, "presentation.file", null, 31L, "Fiche technique", null, false)
+                             .values(TEXT, "understand.title", "Comprendre : un écosystème très riche", null, null, null, false)
+                             .values(TEXT, "understand.text", "Les récifs coralliens affichent plus d'un tiers des espèces marines connues...", null, null, null, false)
+                             .values(IMAGE, "understand.image", null, 32L, "Comprendre", null, false)
+                             .values(TEXT, "action.title", "Les bons gestes pour protéger les récifs", null, null, null, false)
+                             .values(IMAGE, "action.cards.0.icon", null, 33L, "Crème solaire", null, false)
+                             .values(TEXT, "action.cards.0.description", "Je choisis une crème solaire non nocive pour l'environnement", null, null, null, false)
+                             .values(IMAGE, "action.cards.1.icon", null, 34L, "Bateau", null, false)
+                             .values(TEXT, "action.cards.1.description", "En bateau, je ne jette pas l'ancre à proximité de récifs", null, null, null, false)
+                             .build()
+                 ).collect(Collectors.toList());
     }
 
     @Override
@@ -104,7 +137,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
         Long home = 1L;
         Long about = 2L;
-        Long ecogesture1 = 3L;
+        Long ecogesture1 = 100L;
         Long ecogestureHome = 4L;
         Long act = 5L;
         Long reunion = 10L;
@@ -119,6 +152,18 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(about, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName(), "À propos")
                 .values(act, ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL.getName(), "Agir ensemble")
                 .values(ecogesture1, "recifs", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(101L, "recifs1", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(102L, "recifs2", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(103L, "recifs3", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(104L, "recifs4", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(105L, "recifs5", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(106L, "recifs6", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(107L, "recifs7", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(108L, "recifs8", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(109L, "recifs9", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(110L, "recifs10", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(111L, "recifs11", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(112L, "recifs12", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
                 .values(ecogestureHome, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), "Écogestes")
                 .values(reunion, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "La Réunion")
                 .values(stPierreEtMiquelon, "st-pierre-et-miquelon", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Saint Pierre et Miquelon")
@@ -148,13 +193,14 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(12L, jpg, "apropos2.jpg")
                 .values(13L, jpg, "apropos3.jpg")
                 .values(14L, jpg, "apropos-quote.jpg")
-                .values(30L, jpg, "ecogeste.jpg")
+                .values(30L, jpg, "ecogeste_corail.jpg")
                 .values(31L, png, "fiche-technique.png")
                 .values(32L, png, "comprendre.png")
                 .values(33L, png, "vignette1.png")
                 .values(34L, png, "vignette2.png")
                 .values(40L, jpg, "indicateurs.jpg")
-                .values(91L, png, "ecogestes.png")
+                .values(91L, jpg, "ecogeste_intro_all.jpg")
+                .values(92L, png, "tous_vivants.png")
                 .values(101L, png, "interest1.png")
                 .values(102L, png, "interest2.png")
                 .values(103L, png, "indicators1.png")
@@ -243,26 +289,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(IMAGE, "science.project.image", null, 202, "Légende", null, false)
                 .build();
 
-        Operation ecogesture1Elements =
-            insertInto("page_element")
-                .withDefaultValue("page_id", ecogesture1)
-                .withGeneratedValue("id", elementIdGenerator)
-                .columns("type", "key", "text", "image_id", "alt", "href", "title")
-                .values(TEXT, "presentation.name", "Protégeons les récifs coralliens", null, null, null, true)
-                .values(TEXT, "presentation.category", "Loisirs", null, null, null, false)
-                .values(TEXT, "presentation.description", "Sinon ils vont mourir", null, null, null, false)
-                .values(IMAGE, "presentation.image", null, 30L, "Jolis coraux", null, false)
-                .values(IMAGE, "presentation.file", null, 31L, "Fiche technique", null, false)
-                .values(TEXT, "understand.title", "Comprendre : un écosystème très riche", null, null, null, false)
-                .values(TEXT, "understand.text", "Les récifs coralliens affichent plus d'un tiers des espèces marines connues...", null, null, null, false)
-                .values(IMAGE, "understand.image", null, 32L, "Comprendre", null, false)
-                .values(TEXT, "action.title", "Les bons gestes pour protéger les récifs", null, null, null, false)
-                .values(IMAGE, "action.cards.0.icon", null, 33L, "Crème solaire", null, false)
-                .values(TEXT, "action.cards.0.description", "Je choisis une crème solaire non nocive pour l'environnement", null, null, null, false)
-                .values(IMAGE, "action.cards.1.icon", null, 34L, "Bateau", null, false)
-                .values(TEXT, "action.cards.1.description", "En bâteau, je ne jette pas l'ancre à proximité de récifs", null, null, null, false)
-                .build();
-
         Operation ecogestureHomeElements =
             insertInto("page_element")
                 .withDefaultValue("page_id", ecogestureHome)
@@ -271,6 +297,12 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "title", "Réinventons notre façon de vivre et de voyager grâce aux écogestes", null, null, null, true)
                 .values(TEXT, "presentation", "Lorem ipsum dolor", null, null, null, false)
                 .values(IMAGE, "image", null, 91L, "Ecogestes", null, false)
+                .values(TEXT, "question", "Qu'est-ce qu'un écogeste ?", null, null, null, false)
+                .values(TEXT, "answer", "Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines. Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines. Les territoires d'outre-mer présentent une biodiversité particulièrement riche.", null, null, null, false)
+                .values(TEXT, "quote", "Des actions concrètes pour agir dès maintenant et nous donner la possibilité de préserver cette biodiversité riche et fragile", null, null, null, false)
+                .values(IMAGE, "other.image", null, 92L, "Biodiversité. Tous vivants !", null, false)
+                .values(TEXT, "other.title", "Retrouvez d’autres écogestes sur", null, null, null, false)
+                .values(TEXT, "other.text", "Biodiversité. Tous vivants !", null, null, null, false)
                 .build();
 
         Operation reunionElements =
@@ -394,7 +426,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             .values("admin", passwordHasher.hash("password"))
             .build();
 
-        new DbSetup(destination, sequenceOf(
+        List<Operation> operations = new ArrayList<>(List.of(
             deleteAll,
             categories,
             indicators,
@@ -407,7 +439,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             homeElements,
             aboutElements,
             actElements,
-            ecogesture1Elements,
             ecogestureHomeElements,
             reunionElements,
             stPierreEtMiquelonElements,
@@ -415,6 +446,9 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             especesEnvahissantesElements,
             deforestationElements,
             users
-        )).launch();
+        ));
+        // 13 ecogestures
+        operations.addAll(generateEcogestures(ecogesture1, elementIdGenerator));
+        new DbSetup(destination, sequenceOf(operations)).launch();
     }
 }

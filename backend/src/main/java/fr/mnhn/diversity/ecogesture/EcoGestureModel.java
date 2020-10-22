@@ -60,6 +60,15 @@ public final class EcoGestureModel {
                  .text("title", "Titre de la page")
                  .multiLineText("presentation", "Présentation des écogestes")
                  .image("image", "Illustration")
+                 .text("question", "Question de présentation")
+                 .text("answer", "Réponse")
+                 .text("quote", "Citation pour agir")
+                 .section(
+                     SectionElement.builder("other").describedAs("Autres gestes")
+                                   .text("title", "Titre")
+                                   .text("text", "Description")
+                                   .image("image", "Illustration")
+                 )
                  .build();
     public static final String ECO_GESTURE_HOME_PAGE_NAME = "EcoGestureHome";
 
