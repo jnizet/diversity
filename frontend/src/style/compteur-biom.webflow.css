@@ -4378,7 +4378,7 @@ blockquote {
   color: #122c33;
 }
 
-.search-label {
+.search-result-text b {
   padding-right: 5px;
   padding-left: 5px;
   background-color: #ffcf3f;

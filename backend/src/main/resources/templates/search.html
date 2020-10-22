@@ -2,7 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=_, content=~{::main}, bodyClass=null)}"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=_, content=~{::main}, bodyClass='dark-nav')}"
 >
   <head>
     <title>Résultats de la recherche</title>
@@ -10,16 +10,25 @@
   </head>
 
   <body>
-    <main>
-      <h1 style="margin-top: 500px">Résultats de la recherche</h1>
+    <main class="main simple-page">
+      <h1 class="page-title">Recherche&nbsp;: <span th:text="${query}"></span></h1>
+      <div class="section-decoration-text recherche">recherche</div>
+      <ul role="list" class="search-result-list w-list-unstyled" th:if="${#lists.size(results) > 0}">
+        <li class="search-result-item" th:each="result : ${results}">
+          <a th:href="@{${result.url}}" class="search-result-link w-inline-block">
+            <h2 class="search-result-title" th:text="${result.title}">Titre de la page contenant le résultat</h2>
+            <p class="search-result-text" th:utext="${result.highlight}">bla bla</p>
+            <div class="cta-secondary">voir la page</div>
+          </a>
+        </li>
+      </ul>
 
-      <p th:if="${#lists.isEmpty(results)}">Aucun résultat</p>
-      <p th:if="${#lists.size(results) == 1}">Un seul résultat trouvé</p>
-      <p th:if="${#lists.size(results) > 1}"><span th:text="${#lists.size(results)}">5</span> résultats trouvés</p>
-
-      <div th:each="result : ${results}">
-        <h2><a th:href="@{${result.url}}" th:text="${result.title}">Titre</a></h2>
-        <p th:utext="${result.highlight}">highlight</p>
+      <div class="search-no-result" th:if="${#lists.isEmpty(results)}">
+        <h2 class="text-big">Nous n&#x27;avons aucun résultat pour le terme recherché.</h2>
+        <p class="search-result-text">
+          Nous vous invitons à effectuer une nouvelle recherche ou à poursuivre votre navigation sur notre site.
+        </p>
+        <a th:href="@{/}" class="cta-secondary">retour à l&#x27;accueil</a>
       </div>
     </main>
   </body>

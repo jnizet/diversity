@@ -48,7 +48,10 @@ public class SearchController {
         List<PageSearchResult> results = resultsWithourUrl.stream()
                                                           .map(result -> withUrl(result))
                                                           .collect(Collectors.toList());
-        return new ModelAndView("search", "results", results);
+        return new ModelAndView("search", Map.of(
+            "results", results,
+            "query", text
+        ));
     }
 
     private PageSearchResult withUrl(PageSearchResult result) {

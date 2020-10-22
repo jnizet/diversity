@@ -78,7 +78,8 @@ public class SearchControllerTest {
         ResultActions resultActions =
             mockMvc.perform(get("/recherche?texte=compteur"))
                    .andExpect(status().isOk())
-                   .andExpect(content().string(containsString("<span>6</span> résultats trouvés")));
+                   .andExpect(content().string(containsString("Recherche&nbsp;: <span>compteur</span>")))
+                   .andExpect(content().string(containsString("</html>")));
 
         for (PageSearchResult searchResult : searchResults) {
             resultActions.andExpect(content().string(containsString(searchResult.getTitle())))
