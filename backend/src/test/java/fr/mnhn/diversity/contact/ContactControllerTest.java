@@ -59,6 +59,17 @@ class ContactControllerTest {
     }
 
     @Test
+    void shouldNotSendMessageIfInvalidSubject() throws Exception {
+        MessageCommand command = new MessageCommand("john@mail.com", "  ", "test");
+        mockMvc.perform(post("/messages")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsBytes(command)))
+               .andExpect(status().isBadRequest());
+
+        verify(mockMailer, never()).send(any());
+    }
+
+    @Test
     void shouldNotSendMessageIfInvalidBody() throws Exception {
         MessageCommand command = new MessageCommand("john@mail.com", "Test subject", "A".repeat(701));
         mockMvc.perform(post("/messages")

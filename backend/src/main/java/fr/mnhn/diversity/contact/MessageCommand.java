@@ -16,6 +16,8 @@ public final class MessageCommand {
     @Email
     private final String from;
 
+    @NotBlank
+    @Length(max = 100)
     private final String subject;
 
     @NotBlank

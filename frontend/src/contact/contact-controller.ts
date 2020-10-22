@@ -6,12 +6,24 @@ const MAX_CHARACTERS = 700;
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export class ContactController extends Controller {
-  static targets = ['popin', 'from', 'invalidFrom', 'subject', 'body', 'invalidBody', 'remainingCharacters', 'send', 'sendFailed'];
+  static targets = [
+    'popin',
+    'from',
+    'invalidFrom',
+    'subject',
+    'invalidSubject',
+    'body',
+    'invalidBody',
+    'remainingCharacters',
+    'send',
+    'sendFailed'
+  ];
 
   popinTarget: HTMLElement;
   fromTarget: HTMLInputElement;
   invalidFromTarget: HTMLDivElement;
   subjectTarget: HTMLInputElement;
+  invalidSubjectTarget: HTMLDivElement;
   bodyTarget: HTMLTextAreaElement;
   invalidBodyTarget: HTMLDivElement;
   remainingCharactersTarget: HTMLSpanElement;
@@ -80,9 +92,11 @@ export class ContactController extends Controller {
 
   private validate(): boolean {
     const fromValid = EMAIL_REGEXP.test(this.fromTarget.value);
+    const subjectValid = this.subjectTarget.value.trim().length > 0;
     const bodyValid = this.bodyTarget.value.trim().length > 0;
 
     setElementVisible(this.invalidFromTarget, !fromValid);
+    setElementVisible(this.invalidSubjectTarget, !subjectValid);
     setElementVisible(this.invalidBodyTarget, !bodyValid);
     return fromValid && bodyValid;
   }

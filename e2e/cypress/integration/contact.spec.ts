@@ -15,12 +15,14 @@ describe('Contact', () => {
     cy.get('footer').contains('Contact').click();
 
     cy.get('footer').contains('Veuillez saisir une adresse email valide').should('not.be.visible');
+    cy.get('footer').contains('Veuillez saisir un sujet').should('not.be.visible');
     cy.get('footer').contains('Veuillez saisir un message').should('not.be.visible');
 
     cy.get('#contact-from').type('hello');
     cy.get('footer').contains('Envoyer').click();
 
     cy.get('footer').contains('Veuillez saisir une adresse email valide').should('be.visible');
+    cy.get('footer').contains('Veuillez saisir un sujet').should('be.visible');
     cy.get('footer').contains('Veuillez saisir un message').should('be.visible');
 
     cy.get('#contact-body').type('Hi there!');
@@ -56,6 +58,7 @@ describe('Contact', () => {
     cy.get('footer').contains('Contact').click();
 
     cy.get('#contact-from').should('be.enabled');
+    cy.get('#contact-subject').should('be.enabled');
     cy.get('#contact-body').should('be.enabled');
     cy.get('#contact-send').should('be.enabled');
   });
@@ -66,6 +69,7 @@ describe('Contact', () => {
     cy.get('footer').contains('Contact').click();
 
     cy.get('#contact-from').type('test@mnhn.fr');
+    cy.get('#contact-subject').type('test subject');
     cy.get('#contact-body').type('test message');
     cy.get('#contact-send').click();
 
@@ -84,6 +88,7 @@ describe('Contact', () => {
     cy.get('footer').contains('Contact').click();
 
     cy.get('#contact-from').type('test@mnhn.fr');
+    cy.get('#contact-subject').type('test subject');
     cy.get('#contact-body').type('test message');
     cy.get('#contact-send').click();
 
@@ -103,6 +108,7 @@ describe('Contact', () => {
     cy.get('footer').contains('Contact').click();
 
     cy.get('#contact-from').type('test@mnhn.fr');
+    cy.get('#contact-subject').type('test subject');
     cy.get('#contact-body').type('test message');
     cy.get('#contact-send').click();
 
