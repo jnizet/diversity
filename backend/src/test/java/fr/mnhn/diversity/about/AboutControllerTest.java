@@ -56,24 +56,30 @@ class AboutControllerTest {
                     "header", Map.of(
                         "title", text("About"),
                         "subtitle", text("Hello"),
-                        "background", image(1L),
-                        "paragraphs", List.of(
-                            Map.of("text", text("paragraph1")),
-                            Map.of("text", text("paragraph2"))
-                        )
+                        "background", image(1L)
                     ),
-                    "carousel", List.of(
-                        Map.of(
-                            "title", text("Slide1"),
-                            "text", text("Text1"),
-                            "link", link("Link1"),
-                            "image", image(2L)
-                        )
+                    "goal1", Map.of(
+                        "title", text("Indicateurs"),
+                        "description", text("Bla bla"),
+                        "image", image(11L)
+                    ),
+                    "goal2", Map.of(
+                        "title", text("Territoires"),
+                        "description", text("Bla bla"),
+                        "image", image(12L),
+                        "quote", text("Quote text"),
+                    "quoteImage", image(14L)
+                    ),
+                    "goal3", Map.of(
+                        "title", text("Agir ensemble"),
+                        "description", text("Bla bla"),
+                        "image", image(13L)
                     ),
                     "partners", Map.of(
                         "title", text("Partners"),
                         "partners", List.of(
-                            Map.of("logo", image(3L))
+                            Map.of("logo", image(3L),
+                                   "url", text("https://google.com"))
                         )
                     )
                 )
@@ -87,8 +93,11 @@ class AboutControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
             .andExpect(content().string(containsString("<title>About diversity</title>")))
-            .andExpect(content().string(containsString("<h1>About</h1>")))
-            .andExpect(content().string(containsString("<h2>Slide1</h2>")))
-            .andExpect(content().string(containsString("<h2>Partners</h2>")));
+            .andExpect(content().string(containsString("About</h1>")))
+            .andExpect(content().string(containsString("Indicateurs</h2>")))
+            .andExpect(content().string(containsString("Territoires</h2>")))
+            .andExpect(content().string(containsString("Agir ensemble</h2>")))
+            .andExpect(content().string(containsString("Partners</h2>")))
+            .andExpect(content().string(containsString("</html>")));
     }
 }

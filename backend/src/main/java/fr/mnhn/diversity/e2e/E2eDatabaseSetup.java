@@ -14,6 +14,7 @@ import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.admin.security.PasswordHasher;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
+import fr.mnhn.diversity.image.ImageType;
 import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.boot.CommandLineRunner;
@@ -124,8 +125,9 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(deforestation, "deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation")
                 .build();
 
-        String png = MediaType.IMAGE_PNG_VALUE;
-        String jpg = MediaType.IMAGE_JPEG_VALUE;
+        String png = ImageType.PNG.getMediaType().toString();
+        String jpg = ImageType.JPG.getMediaType().toString();
+        String svg = ImageType.SVG.getMediaType().toString();
         Operation images =
             insertInto("image")
                 .columns("id", "content_type", "original_file_name")
@@ -136,10 +138,14 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(4L, png, "apropos.png")
                 .values(5L, jpg, "temoignage.png")
                 .values(6L, jpg, "science-participative.png")
-                .values(7L, png, "fond.png")
-                .values(8L, png, "logo1.png")
-                .values(9L, png, "logo2.png")
-                .values(10L, png, "logo3.png")
+                .values(7L, jpg, "fond.png")
+                .values(8L, svg, "outre-mer.svg")
+                .values(9L, jpg, "onb.jpg")
+                .values(10L, png, "mnhn.png")
+                .values(11L, jpg, "apropos1.jpg")
+                .values(12L, jpg, "apropos2.jpg")
+                .values(13L, jpg, "apropos3.jpg")
+                .values(14L, jpg, "apropos-quote.jpg")
                 .values(30L, png, "ecogeste.png")
                 .values(31L, png, "fiche-technique.png")
                 .values(32L, png, "comprendre.png")
@@ -194,18 +200,26 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .withGeneratedValue("id", elementIdGenerator)
                 .columns("type", "key", "text", "image_id", "alt", "href", "title")
                 .values(TEXT, "header.title", "Pourquoi un compteur de la biodiversité en outre-mer ?", null, null, null, true)
-                .values(TEXT, "header.subtitle", "Partager la connaissance et encourager chacun...", null, null, null, false)
-                .values(IMAGE, "header.background", null, 7L, "Fond", null, false)
-                .values(TEXT, "header.paragraphs.0.text", "Les territoires d'outre-mer présentent...", null, null, null, false)
-                .values(TEXT, "header.paragraphs.1.text", "La mission du compteur est de...", null, null, null, false)
-                .values(TEXT, "carousel.0.title", "Partager la connaissance scientifique", null, null, null, false)
-                .values(TEXT, "carousel.0.text", "Quelles sont les espèces présentes sur ce territoire...", null, null, null, false)
-                .values(IMAGE, "carousel.0.image", null, 1L, "1", null, false)
-                .values(LINK, "carousel.0.link", "Voir tous les indicateurs", null, null, "/indicators", false)
+                .values(TEXT, "header.subtitle", "La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer, et s’articule autour de trois objectifs : ", null, null, null, false)
+                .values(IMAGE, "header.background", null, 7, "Légende", null, false)
+                .values(TEXT, "goal1.title", "Partager la connaissance scientifique", null, null, null, true)
+                .values(TEXT, "goal1.description", "Quelles sont les espèces présentes dans ce territoire ? Comment évoluent leurs populations ? Quel est l’état de santé des récifs coralliens ? Pour répondre à ces questions et bien d’autres, différents paramètres, appelés « indicateurs », sont mesurés par les scientifiques pour suivre l’évolution de l’état de la biodiversité. Le compteur a pour mission de rendre compte de l’état de ces connaissances dans tous les territoires.", null, null, null, false)
+                .values(IMAGE, "goal1.image", null, 11, "Légende", null, false)
+                .values(TEXT, "goal2.title", "Valoriser les actions des territoires", null, null, null, true)
+                .values(TEXT, "goal2.description", "De nombreuses actions locales sont mises en place afin de tenter de préserver les écosystèmes et les espèces. Donner de la visibilité aux acteurs locaux, partager les expériences et les réussites, au bénéfice de tous, c’est également l’un des objectifs du compteur.", null, null, null, false)
+                .values(IMAGE, "goal2.image", null, 12, "Légende", null, false)
+                .values(TEXT, "goal2.quote", "Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines.", null, null, null, false)
+                .values(IMAGE, "goal2.quoteImage", null, 14, "Légende", null, false)
+                .values(TEXT, "goal3.title", "Encourager chacun à agir", null, null, null, true)
+                .values(TEXT, "goal3.description", "Chacun, à son échelle, peut agir pour préserver la biodiversité. Connaitre et appliquer des gestes simples, modifier ses habitudes et son comportement ou encore s’investir dans desprogrammes de sciences participatives, tout le monde est concerné par la préservation de la biodiversité. Le rôle du compteur est d’accompagner les citoyens en partageant desinformations claires et adaptées à tous les territoires, et en encourageant à se mobiliser.", null, null, null, false)
+                .values(IMAGE, "goal3.image", null, 13, "Légende", null, false)
                 .values(TEXT, "partners.title", "Ils contribuent au compteur de la biodiversité", null, null, null, false)
-                .values(IMAGE, "partners.partners.0.logo", null, 8L, "Logo1", null, false)
-                .values(IMAGE, "partners.partners.1.logo", null, 9L, "Logo2", null, false)
-                .values(IMAGE, "partners.partners.2.logo", null, 10L, "Logo3", null, false)
+                .values(IMAGE, "partners.partners.0.logo", null, 8, "Logo1", null, false)
+                .values(TEXT, "partners.partners.0.url", "http://google.com", null, null, null, false)
+                .values(IMAGE, "partners.partners.1.logo", null, 9, "Logo2", null, false)
+                .values(TEXT, "partners.partners.1.url", "http://google.com", null, null, null, false)
+                .values(IMAGE, "partners.partners.2.logo", null, 10, "Logo3", null, false)
+                .values(TEXT, "partners.partners.2.url", "http://google.com", null, null, null, false)
                 .build();
 
         Operation ecogesture1Elements =

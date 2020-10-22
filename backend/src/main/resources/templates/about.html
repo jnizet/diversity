@@ -2,6 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
 >
   <head>
@@ -14,36 +15,140 @@
   </head>
 
   <body>
-    <main th:object="${page.content}">
-      <div
-        style="width: 600px; height: 400px"
-        th:attr="aria-label=*{header.background.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{header.background.imageId})} + ')'"
-      >
-        <h1 th:text="*{header.title.text}"></h1>
-        <p th:text="*{header.subtitle.text}"></p>
-      </div>
-
-      <p th:each="paragraph : *{header.paragraphs}" th.text="*{paragraph.text}"></p>
-
-      <div
-        th:each="carouselElement : *{carousel}"
-        th:object="${carouselElement}"
-        style="width: 600px; height: 400px"
-        th:attr="aria-label=*{image.alt}"
-        th:styleappend="'background-image: url(' + @{/images/{imageId}/image(imageId=*{image.imageId})} + ')'"
-      >
-        <h2 th:text="*{title.text}">Title</h2>
-        <p th:text="*{text.text}">Title</p>
-        <a th:href="@{*{link.href}}" th:text="*{link.text}">Link</a>
-      </div>
-
-      <div>
-        <h2 th:text="*{partners.title.text}"></h2>
-        <div th:each="partner : *{partners.partners}" th:object="${partner}">
-          <img th:src="@{/images/{imageId}/image(imageId=*{logo.imageId})}" th:alt="*{logo.alt}" />
+    <main class="main" th:object="${page.content}" data-controller="about">
+      <section class="section-top">
+        <div class="section-top-wrapper">
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{header.background.alt}"></div>
+          </div>
+          <div class="section-top-content">
+            <h1 class="section-top-title" th:text="*{header.title.text}">Pourquoi un compteur de la biodiversité en outre-mer ?</h1>
+            <p class="section-top-text" th:text="*{header.subtitle.text}">
+              La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer, et s’articule
+              autour de trois objectifs :
+            </p>
+          </div>
         </div>
-      </div>
+        <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
+      </section>
+
+      <section class="section-apropos-left">
+        <div class="col-4 apropos">
+          <div class="objectif-label">Objectif n°1</div>
+          <h2 class="section-title" th:text="*{goal1.title.text}">Partager la connaissance scientifique</h2>
+          <p th:text="*{goal1.description.text}">
+            Quelles sont les espèces présentes dans ce territoire ? Comment évoluent leurs populations ? Quel est l’état de santé des récifs
+            coralliens ? Pour répondre à ces questions et bien d’autres, différents paramètres, appelés « indicateurs », sont mesurés par
+            les scientifiques pour suivre l’évolution de l’état de la biodiversité. Le compteur a pour mission de rendre compte de l’état de
+            ces connaissances dans tous les territoires.
+          </p>
+          <a th:href="@{/indicateurs}" class="cta-secondary">Voir tous les indicateurs</a>
+        </div>
+        <div class="col-4 apropos left-1">
+          <img
+            biom:image="*{goal1.image}"
+            loading="lazy"
+            sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 40vw"
+          />
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{goal1.image.alt}">legende photo</div>
+          </div>
+        </div>
+      </section>
+      <section class="sextion-apropos-right">
+        <div class="col-6">
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{goal2.image.alt}">legende photo</div>
+          </div>
+          <img biom:image="*{goal2.image}" loading="lazy" sizes="(max-width: 479px) 87vw, (max-width: 991px) 92vw, 50vw" />
+        </div>
+        <div class="col-4 apropos left-1">
+          <div class="objectif-label">Objectif n°2</div>
+          <h2 class="section-title" th:text="*{goal2.title.text}">Valoriser les actions des territoires</h2>
+          <p th:text="*{goal2.description.text}">
+            De nombreuses actions locales sont mises en place afin de tenter de préserver les écosystèmes et les espèces. Donner de la
+            visibilité aux acteurs locaux, partager les expériences et les réussites, au bénéfice de tous, c’est également l’un des
+            objectifs du compteur.
+          </p>
+          <a th:href="@{/territoires}" class="cta-secondary">voir les territoires</a>
+        </div>
+      </section>
+      <section class="section-apropos-left">
+        <div class="apropos-quote">
+          <img th:src="@{/assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote-apropos" />
+          <div class="apropos-citation" th:text="*{goal2.quote.text}">
+            Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités
+            humaines.
+          </div>
+        </div>
+        <div class="col-5 left-1">
+          <img
+            biom:image="*{goal2.quoteImage}"
+            loading="lazy"
+            sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 50vw"
+          />
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{goal2.quoteImage.alt}">legende photo</div>
+          </div>
+        </div>
+        <div class="section-decoration-text mission">mission</div>
+      </section>
+      <section class="section-apropos-left">
+        <div class="objectif-content">
+          <div class="objectif-label">Objectif n°3</div>
+          <h2 class="section-title" th:text="*{goal3.title.text}">Encourager chacun à agir</h2>
+          <p th:text="*{goal3.description.text}">
+            Chacun, à son échelle, peut agir pour préserver la biodiversité. Connaitre et appliquer des gestes simples, modifier ses
+            habitudes et son comportement ou encore s’investir dans desprogrammes de sciences participatives, tout le monde est concerné par
+            la préservation de la biodiversité. Le rôle du compteur est d’accompagner les citoyens en partageant desinformations claires et
+            adaptées à tous les territoires, et en encourageant à se mobiliser.
+          </p>
+          <a th:href="@{/agir-ensemble}" class="cta-secondary">agir ensemble</a>
+        </div>
+        <div class="col-4 left-1">
+          <img
+            biom:image="*{goal3.image}"
+            loading="lazy"
+            sizes="(max-width: 479px) 87vw, (max-width: 767px) 88vw, (max-width: 991px) 480px, 40vw"
+          />
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{goal3.image.alt}">legende photo</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="partenaires" class="section-partenaires">
+        <div class="partner-content">
+          <h2 class="section-swiper-title" th:text="*{partners.title.text}">Nos partenaires pour le Compteur de la Biodiversité</h2>
+          <div class="swiper-container swiper-partner">
+            <div class="swiper-wrapper partner-wrapper">
+              <a th:each="partner : *{partners.partners}" th:href="${partner.url.text}" class="swiper-slide partner-slide w-inline-block">
+                <img biom:image="${partner.logo}" loading="lazy" class="partner-img" />
+              </a>
+            </div>
+          </div>
+          <div class="swiper-layout">
+            <div class="swiper-pagination-partner">
+              <div class="bullet-white active-white"></div>
+              <div class="bullet-white"></div>
+              <div class="bullet-white"></div>
+            </div>
+            <div class="swiper-navigation-small">
+              <div class="cta-swiper-nav">
+                <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-prev" />
+              </div>
+              <div class="cta-swiper-nav">
+                <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-next" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>
