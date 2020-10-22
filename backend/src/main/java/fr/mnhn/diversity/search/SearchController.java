@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
@@ -40,6 +41,7 @@ public class SearchController {
         urlFactories.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), r -> "/territoires/" + r.getName());
         urlFactories.put(IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), r -> "/indicateurs");
         urlFactories.put(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), r -> "/indicateurs/" + r.getName());
+        urlFactories.put(ActModel.ACT_PAGE_MODEL.getName(), r -> "/agir-ensemble");
     }
 
     @GetMapping

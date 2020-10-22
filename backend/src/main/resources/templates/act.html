@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
+>
+  <head>
+    <title th:text="${page.title}">Agir ensemble</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
+    <meta th:ref="og" property="og:description" th:attr="content=${page.content.header.subtitle.text}" />
+    <meta th:ref="og" property="og:image" th:attr="content=@{/images/{imageId}/image(imageId=${page.content.header.background.imageId})}" />
+  </head>
+
+  <body>
+    <main class="main" th:object="${page.content}">
+      <section class="section-top">
+        <div class="section-top-wrapper">
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{header.background.alt}">Légende de la photo</div>
+          </div>
+          <div class="section-top-content">
+            <h1 class="section-top-title" th:text="*{header.title.text}">Agir ensemble pour une biodiversité unique mais fragile</h1>
+            <p class="section-top-text" th:text="*{header.subtitle.text}">
+              Les outre-mer abritent une biodiversité unique mais fragile : protégeons-là ! Lorem ipsum sit dolor habet sumus erat sunt
+              domine lorem.
+            </p>
+          </div>
+        </div>
+        <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
+      </section>
+
+      <section class="section-agir-intro">
+        <div class="section-content align">
+          <h2 class="section-title col-3" th:text="*{ecogestures.title.text}">Découvrez les écogestes</h2>
+          <div class="col-6 left-1">
+            <p th:text="*{ecogestures.subtitle.text}">
+              Découvrez les bons gestes recommandés par le Ministère de l’outre-mer pour une expérience responsable et lorem ipsum sit dolor
+              habet sumus erat domine sunt.
+            </p>
+          </div>
+          <img th:src="@{/assets/images/icon-ecogeste.svg}" loading="lazy" alt="" class="agir-icon" />
+        </div>
+      </section>
+
+      <section class="section-agir-ecogeste">
+        <div class="ecogeste-push-wrapper">
+          <a
+            th:each="card,iterStat: ${ecogestureCards}"
+            th:href="@{/ecogestes/{gesture}(gesture=${card.name})}"
+            class="ecogeste-link left-1 w-inline-block"
+            th:classappend="${iterStat.odd ? 'first-push' : ''}"
+          >
+            <div class="ecogeste-bkg-wrapper">
+              <img
+                th:src="@{/images/{imageId}/image/sm(imageId=${card.content.presentation.image.imageId})}"
+                th:alt="${card.content.presentation.image.alt}"
+                loading="lazy"
+                sizes="(max-width: 479px) 100vw, 480px"
+                class="ecogeste-bkg"
+              />
+            </div>
+            <div class="ecogeste-wrapper">
+              <h3 class="ecogeste-link-title" th:text="${card.content.presentation.name.text}">Protégeons les recifs coralliens</h3>
+              <div class="ecogeste-thematique" th:text="${card.content.presentation.category.text}">biodiversité</div>
+            </div>
+          </a>
+        </div>
+        <div class="list-more-wrapper">
+          <a th:href="@{/ecogestes}" class="cta-primary-big blue">
+            <strong>voir tous les écogestes</strong>
+          </a>
+        </div>
+      </section>
+      <section class="saction-agir-science">
+        <div class="section-content align">
+          <h2 class="section-title col-3" th:text="*{science.title.text}">Les sciences participatives</h2>
+          <div class="col-6 left-1">
+            <p th:text="*{science.subtitle.text}">Protégez la biodiversité ultra-marine à travers les ciences participatives.</p>
+          </div>
+          <img th:src="@{/assets/images/icon-science.svg}" loading="lazy" width="141" height="146" alt="" class="agir-icon" />
+        </div>
+        <div class="science-push-wrapper">
+          <div class="science-push-content">
+            <h3 class="text-big" th:text="*{science.project.title.text}">Un projet original en Nouvelle-Calédonie</h3>
+            <p th:text="*{science.project.description.text}">
+              Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour
+              étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.
+            </p>
+          </div>
+          <div class="col-7 left-1">
+            <img
+              biom:image="*{science.project.image}"
+              loading="lazy"
+              sizes="(max-width: 479px) 87vw, (max-width: 767px) 84vw, (max-width: 991px) 88vw, 52vw"
+            />
+            <div class="legend-wrapper">
+              <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+              <div class="legend-text" th:text="*{science.project.image.alt}">Légende de la photo</div>
+            </div>
+          </div>
+        </div>
+        <div class="list-more-wrapper">
+          <a th:href="@{/sciences-participatives}" class="cta-primary-big">voir toutes les sciences participatives</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

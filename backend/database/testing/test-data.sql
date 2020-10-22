@@ -60,7 +60,7 @@ insert into image (id, content_type, original_file_name) values
     (12, 'image/jpeg', 'apropos2.jpg'),
     (13, 'image/jpeg', 'apropos3.jpg'),
     (14, 'image/jpeg', 'apropos-quote.jpg'),
-    (30, 'image/png', 'ecogeste.png'),
+    (30, 'image/jpeg', 'ecogeste.jpg'),
     (31, 'image/png', 'fiche-technique.png'),
     (32, 'image/png', 'comprendre.png'),
     (33, 'image/png', 'vignette1.png'),
@@ -75,13 +75,16 @@ insert into image (id, content_type, original_file_name) values
     (106, 'image/png', 'reunion.png'),
     (107, 'image/png', 'st-pierre-et-miquelon.png.png'),
     (108, 'image/png', 'tourbieres.png'),
-    (109, 'image/png', 'ressources-naturelles.png');
+    (109, 'image/png', 'ressources-naturelles.png'),
+    (201, 'image/jpeg', 'act-background.jpg'),
+    (202, 'image/jpeg', 'science-project.jpg');
 
 insert into page (id, name, model_name, title) values
    (1, 'Home', 'home', 'Accueil'),
    (2, 'About', 'about', 'À propos'),
    (3, 'recifs', 'ecogesture', 'Écogeste : protéger les récifs'),
    (4, 'EcoGestureHome', 'ecogestures', 'Écogestes'),
+   (5, 'Act', 'act', 'Agir ensemble'),
    (10, 'reunion', 'territory', 'La Réunion'),
    (11, 'st-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
    (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
@@ -154,6 +157,18 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 4, 'TEXT', 'title', 'Réinventons notre façon de vivre et de voyager grâce aux écogestes', null, null, null, true),
     (nextval('page_element_seq'), 4, 'TEXT', 'presentation', 'Lorem ipsum dolor', null, null, null, false),
     (nextval('page_element_seq'), 4, 'IMAGE', 'image', null, 91, 'Ecogestes', null, false),
+
+--     Act together
+    (nextval('page_element_seq'), 5, 'TEXT', 'header.title', 'Agir ensemble pour une biodiversité unique mais fragile', null, null, null, true),
+    (nextval('page_element_seq'), 5, 'TEXT', 'header.subtitle', 'Les outre-mer abritent une biodiversité unique mais fragile : protégeons-là !', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'IMAGE', 'header.background', null, 201, 'Légende', null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'ecogestures.title', 'Découvrez les écogestes', null, null, null, true),
+    (nextval('page_element_seq'), 5, 'TEXT', 'ecogestures.subtitle', 'Découvrez les bons gestes recommandés par le Ministère de l’outre-mer pour une expérience responsable', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'science.title', 'Les sciences participatives', null, null, null, true),
+    (nextval('page_element_seq'), 5, 'TEXT', 'science.subtitle', 'Protégez la biodiversité ultra-marine à travers les ciences participatives', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'science.project.title', 'Un projet original en Nouvelle-Calédonie', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'TEXT', 'science.project.description', 'Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.', null, null, null, false),
+    (nextval('page_element_seq'), 5, 'IMAGE', 'science.project.image', null, 202, 'Légende', null, false),
 
 --     Territory
 --     Reunion
@@ -260,7 +275,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 31, 'TEXT', 'understand.sections.1.title',  'Raison 2', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'understand.sections.1.description',  'Explication raison 2', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'indicators.title',  'Déforestation par territoire', null, null, null, false),
-    (nextval('page_element_seq'), 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
+    (nextval('page_element_seq'), 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false);
 
 -- Users
 insert into app_user (id, login, hashed_password) values

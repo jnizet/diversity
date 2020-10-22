@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
@@ -55,6 +56,7 @@ public class PageRestController {
         this.pageRepository = pageRepository;
         modelsByName.put(HomeModel.HOME_PAGE_MODEL.getName(), HomeModel.HOME_PAGE_MODEL);
         modelsByName.put(AboutModel.ABOUT_PAGE_MODEL.getName(), AboutModel.ABOUT_PAGE_MODEL);
+        modelsByName.put(ActModel.ACT_PAGE_MODEL.getName(), ActModel.ACT_PAGE_MODEL);
         modelsByName.put(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL);
         modelsByName.put(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL);
         modelsByName.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), TerritoryModel.TERRITORY_PAGE_MODEL);

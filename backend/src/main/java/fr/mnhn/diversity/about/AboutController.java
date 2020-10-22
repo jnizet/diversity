@@ -27,7 +27,7 @@ public class AboutController {
     }
 
     @GetMapping
-    public ModelAndView home() {
+    public ModelAndView about() {
         Page page = pageRepository.findByNameAndModel(AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
         return new ModelAndView("about", "page", pageService.buildPageContent(AboutModel.ABOUT_PAGE_MODEL, page));

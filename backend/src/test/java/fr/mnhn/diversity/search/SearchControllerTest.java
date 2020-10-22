@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
@@ -71,6 +72,12 @@ public class SearchControllerTest {
                                  IndicatorModel.INDICATOR_PAGE_MODEL.getName(),
                                  "Espèces envahissantes",
                                  "<b>compteurs</b",
+                                 null),
+            new PageSearchResult(7L,
+                                 ActModel.ACT_PAGE_NAME,
+                                 ActModel.ACT_PAGE_MODEL.getName(),
+                                 "Agire ensemble",
+                                 "<b>compteurs</b",
                                  null)
         );
         when(mockSearchRepository.search("compteur")).thenReturn(searchResults);
@@ -91,6 +98,7 @@ public class SearchControllerTest {
                      .andExpect(content().string(containsString("href=\"/ecogestes\"")))
                      .andExpect(content().string(containsString("href=\"/ecogestes/coral\"")))
                      .andExpect(content().string(containsString("href=\"/territoires/reunion\"")))
-                     .andExpect(content().string(containsString("href=\"/indicateurs/especes-envahissantes\"")));
+                     .andExpect(content().string(containsString("href=\"/indicateurs/especes-envahissantes\"")))
+                     .andExpect(content().string(containsString("href=\"/agir-ensemble\"")));
     }
 }

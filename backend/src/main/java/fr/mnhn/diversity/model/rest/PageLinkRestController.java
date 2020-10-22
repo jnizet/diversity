@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.home.HomeModel;
@@ -55,7 +56,8 @@ public class PageLinkRestController {
             getStaticLink(HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL),
             getStaticLink(AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL),
             getStaticLink(IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL),
-            getStaticLink(EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL)
+            getStaticLink(EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL),
+            getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL)
         );
     }
 

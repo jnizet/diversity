@@ -77,7 +77,7 @@ class PageLinkRestControllerTest {
     void shouldGetPageLinks() throws Exception {
         mockMvc.perform(get("/api/pages/links"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.staticPageLinks.length()").value(4))
+               .andExpect(jsonPath("$.staticPageLinks.length()").value(5))
                .andExpect(jsonPath("$.staticPageLinks[0].id").value(1L))
                .andExpect(jsonPath("$.staticPageLinks[0].name").value(HomeModel.HOME_PAGE_NAME))
                .andExpect(jsonPath("$.staticPageLinks[0].modelName").value(HomeModel.HOME_PAGE_MODEL.getName()))

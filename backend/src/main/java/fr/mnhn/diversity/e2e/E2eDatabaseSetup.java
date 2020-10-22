@@ -11,6 +11,7 @@ import com.ninja_squad.dbsetup.generator.SequenceValueGenerator;
 import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import com.ninja_squad.dbsetup.operation.Operation;
 import fr.mnhn.diversity.about.AboutModel;
+import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.admin.security.PasswordHasher;
 import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
@@ -19,7 +20,6 @@ import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -106,6 +106,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long about = 2L;
         Long ecogesture1 = 3L;
         Long ecogestureHome = 4L;
+        Long act = 5L;
         Long reunion = 10L;
         Long stPierreEtMiquelon = 11L;
         Long indicatorHome = 29L;
@@ -116,6 +117,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .columns("id", "name", "model_name", "title")
                 .values(home, HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName(), "Accueil")
                 .values(about, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName(), "À propos")
+                .values(act, ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL.getName(), "Agir ensemble")
                 .values(ecogesture1, "recifs", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
                 .values(ecogestureHome, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), "Écogestes")
                 .values(reunion, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "La Réunion")
@@ -146,7 +148,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(12L, jpg, "apropos2.jpg")
                 .values(13L, jpg, "apropos3.jpg")
                 .values(14L, jpg, "apropos-quote.jpg")
-                .values(30L, png, "ecogeste.png")
+                .values(30L, jpg, "ecogeste.jpg")
                 .values(31L, png, "fiche-technique.png")
                 .values(32L, png, "comprendre.png")
                 .values(33L, png, "vignette1.png")
@@ -162,6 +164,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(107L, png, "st-pierre-et-miquelon.png")
                 .values(108L, png, "tourbieres.png")
                 .values(109L, png, "ressources-naturelles.png")
+                .values(201L, jpg, "act-background.jpg")
+                .values(202L, jpg, "science-project.jpg")
                 .build();
 
         SequenceValueGenerator elementIdGenerator = ValueGenerators.sequence();
@@ -220,6 +224,23 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "partners.partners.1.url", "http://google.com", null, null, null, false)
                 .values(IMAGE, "partners.partners.2.logo", null, 10, "Logo3", null, false)
                 .values(TEXT, "partners.partners.2.url", "http://google.com", null, null, null, false)
+                .build();
+
+        Operation actElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", act)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "header.title", "Agir ensemble pour une biodiversité unique mais fragile", null, null, null, true)
+                .values(TEXT, "header.subtitle", "Les outre-mer abritent une biodiversité unique mais fragile : protégeons-là !", null, null, null, false)
+                .values(IMAGE, "header.background", null, 201, "Légende", null, false)
+                .values(TEXT, "ecogestures.title", "Découvrez les écogestes", null, null, null, true)
+                .values(TEXT, "ecogestures.subtitle", "Découvrez les bons gestes recommandés par le Ministère de l’outre-mer pour une expérience responsable", null, null, null, false)
+                .values(TEXT, "science.title", "Les sciences participatives", null, null, null, true)
+                .values(TEXT, "science.subtitle", "Protégez la biodiversité ultra-marine à travers les ciences participatives", null, null, null, false)
+                .values(TEXT, "science.project.title", "Un projet original en Nouvelle-Calédonie", null, null, null, false)
+                .values(TEXT, "science.project.description", "Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.", null, null, null, false)
+                .values(IMAGE, "science.project.image", null, 202, "Légende", null, false)
                 .build();
 
         Operation ecogesture1Elements =
@@ -385,6 +406,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             pages,
             homeElements,
             aboutElements,
+            actElements,
             ecogesture1Elements,
             ecogestureHomeElements,
             reunionElements,

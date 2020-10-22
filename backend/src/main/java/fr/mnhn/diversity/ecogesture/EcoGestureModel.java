@@ -19,7 +19,7 @@ public final class EcoGestureModel {
         PageModel.builder("ecogesture")
                  .section(SectionElement
                               .builder("presentation")
-                              .describedAs("Présentation de l'écogeste, et informations affichées sur sa vignette dans la page d'accueil des écogests")
+                              .describedAs("Présentation de l'écogeste, et informations affichées sur sa vignette dans la page d'accueil des écogestes")
                               .titleText("name", "Nom de l'écogeste")
                               // TODO add some information to the model, or use a different element type, because it should be edited as a select box
                               .text("category", "Catégorie de l'écogeste")
