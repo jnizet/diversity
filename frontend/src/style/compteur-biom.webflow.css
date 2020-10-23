@@ -2594,7 +2594,7 @@ blockquote {
   line-height: 20px;
 }
 
-.saction-agir-science {
+.section-agir-science {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -4959,7 +4959,7 @@ blockquote {
     -ms-flex-align: center;
     align-items: center;
   }
-  .saction-agir-science {
+  .section-agir-science {
     padding-right: 30px;
     padding-left: 30px;
   }
@@ -5848,7 +5848,7 @@ blockquote {
   .cta-primary-big.blue {
     padding: 11px 25px;
   }
-  .saction-agir-science {
+  .section-agir-science {
     padding-top: 60px;
     padding-bottom: 60px;
   }
