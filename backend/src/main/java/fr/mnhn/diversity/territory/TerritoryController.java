@@ -27,10 +27,15 @@ public class TerritoryController {
         this.pageService = pageService;
     }
 
+    @GetMapping()
+    public ModelAndView home() {
+        Page page = pageRepository.findByNameAndModel(TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName()).orElseThrow(NotFoundException::new);
+        return new ModelAndView("territory/territory-home", "page", pageService.buildPageContent(TerritoryModel.TERRITORY_HOME_PAGE_MODEL, page));
+    }
+
     @GetMapping("/{territorySlug}")
     public ModelAndView territory(@PathVariable("territorySlug") String territorySlug) {
         Page page = pageRepository.findByNameAndModel(territorySlug, TerritoryModel.TERRITORY_PAGE_MODEL.getName()).orElseThrow(NotFoundException::new);
-        return new ModelAndView("territory", "page", pageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page));
+        return new ModelAndView("territory/territory", "page", pageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page));
     }
-
 }

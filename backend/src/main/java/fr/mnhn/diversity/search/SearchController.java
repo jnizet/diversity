@@ -38,6 +38,7 @@ public class SearchController {
         urlFactories.put(AboutModel.ABOUT_PAGE_MODEL.getName(), r -> "/apropos");
         urlFactories.put(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), r -> "/ecogestes");
         urlFactories.put(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), r -> "/ecogestes/" + r.getName());
+        urlFactories.put(TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), r -> "/territoires");
         urlFactories.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), r -> "/territoires/" + r.getName());
         urlFactories.put(IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), r -> "/indicateurs");
         urlFactories.put(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), r -> "/indicateurs/" + r.getName());

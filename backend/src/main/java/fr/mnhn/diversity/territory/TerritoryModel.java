@@ -77,6 +77,18 @@ public final class TerritoryModel {
                      )
                      .build();
 
+    public static final String TERRITORY_HOME_PAGE_NAME = "Territories";
+    public static final PageModel TERRITORY_HOME_PAGE_MODEL =
+        PageModel.builder("territories").describedAs("Territoires")
+                 .section(SectionElement
+                              .builder("header").describedAs("En-tête")
+                              .titleText("title", "Titre de la page")
+                              .text("text", "Texte de l'en-tête")
+                              .text("population", "Nombre d'habitants")
+                              .text("species", "Nombre d'espèces indigènes")
+                 )
+                 .build();
+
     private TerritoryModel() {
     }
 }

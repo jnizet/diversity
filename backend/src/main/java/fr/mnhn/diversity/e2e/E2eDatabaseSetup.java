@@ -22,6 +22,7 @@ import fr.mnhn.diversity.ecogesture.EcoGestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.image.ImageType;
 import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -141,6 +142,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long ecogestureHome = 4L;
         Long act = 5L;
         Long science = 7L;
+        Long territoryHome = 8L;
         Long reunion = 10L;
         Long stPierreEtMiquelon = 11L;
         Long indicatorHome = 29L;
@@ -167,8 +169,10 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(111L, "recifs11", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
                 .values(112L, "recifs12", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
                 .values(ecogestureHome, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), "Écogestes")
-                .values(reunion, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "La Réunion")
-                .values(stPierreEtMiquelon, "st-pierre-et-miquelon", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Saint Pierre et Miquelon")
+                .values(territoryHome, TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), "Territoires")
+                .values(reunion, Territory.REUNION.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "La Réunion")
+                .values(stPierreEtMiquelon,
+                        Territory.SAINT_PIERRE_ET_MIQUELON.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Saint Pierre et Miquelon")
                 .values(indicatorHome, IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), "Indicateurs")
                 .values(especesEnvahissantes, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes")
                 .values(deforestation, "deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation")
@@ -351,6 +355,17 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "other.text", "Biodiversité. Tous vivants !", null, null, null, false)
                 .build();
 
+        Operation territoryHomeElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", territoryHome)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "header.title", "A la découverte des Outre-mer", null, null, null, true)
+                .values(TEXT, "header.text", "Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines. Naviguez parmi les portraits biodiversité des différents territoires et découvrez l’histoire des espèces et des écosystèmes qui les peuplent, les enjeux de chaque territoire et les initiatives des acteurs locaux pour les préserver.", null, null, null, false)
+                .values(TEXT, "header.population", "6 274", null, null, null, false)
+                .values(TEXT, "header.species", "85 117", null, null, null, false)
+                .build();
+
         Operation reunionElements =
             insertInto("page_element")
                 .withDefaultValue("page_id", reunion)
@@ -491,6 +506,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             actElements,
             scienceElements,
             ecogestureHomeElements,
+            territoryHomeElements,
             reunionElements,
             stPierreEtMiquelonElements,
             indicatorHomeElements,

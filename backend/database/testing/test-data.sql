@@ -96,8 +96,9 @@ insert into page (id, name, model_name, title) values
    (5, 'EcoGestureHome', 'ecogestures', 'Écogestes'),
    (6, 'Act', 'act', 'Agir ensemble'),
    (7, 'Science', 'science', 'Sciences participatives'),
+   (8, 'Territories', 'territories', 'Territoires'),
    (10, 'reunion', 'territory', 'La Réunion'),
-   (11, 'st-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
+   (11, 'saint-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
    (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
    (30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes'),
    (31, 'deforestation', 'indicator', 'Déforestation');
@@ -234,6 +235,12 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 7, 'TEXT', 'application.title', 'Agir pour la science depuis son smartphone, c''est possible !', null, null, null, false),
     (nextval('page_element_seq'), 7, 'TEXT', 'application.subtitle', 'J’agis en ligne', null, null, null, false),
     (nextval('page_element_seq'), 7, 'LINK', 'application.downloadLink', 'Je télécharge l''application INPN Espaces', null, null, 'https://google.com', false),
+
+--     Territories
+    (nextval('page_element_seq'), 8, 'TEXT', 'header.title', 'A la découverte des Outre-mer', null, null, null, true),
+    (nextval('page_element_seq'), 8, 'TEXT', 'header.text', 'Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines. Naviguez parmi les portraits biodiversité des différents territoires et découvrez l’histoire des espèces et des écosystèmes qui les peuplent, les enjeux de chaque territoire et les initiatives des acteurs locaux pour les préserver.', null, null, null, false),
+    (nextval('page_element_seq'), 8, 'TEXT', 'header.population', '6 274', null, null, null, false),
+    (nextval('page_element_seq'), 8, 'TEXT', 'header.species', '85 117', null, null, null, false),
 
 --     Territory
 --     Reunion

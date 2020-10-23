@@ -8,7 +8,7 @@ describe('Indicator home', () => {
     cy.get('#categories').should('contain', 'TOUT');
     cy.get('#categories').should('contain', 'Écosystèmes');
     cy.get('#indicators').should('contain', '64');
-    cy.get('#indicators').should('contain', 'espèces sur les 100');
+    cy.get('#indicators').should('contain', 'des espèces considérées');
     cy.get('#onb').should('contain', "L'observatoire national de la biodiversité");
     cy.get('#quote').should('contain', 'Documenter et présenter');
     cy.get('#learn').should('contain', "Qu'est-ce que la biodiversité ?");
@@ -19,7 +19,7 @@ describe('Indicator home', () => {
     cy.visit('/indicateurs');
 
     cy.get('.indicateur-number').should('contain', '64');
-    cy.get('.indicateur-description').should('contain', 'espèces sur les 100');
+    cy.get('.indicateur-description').should('contain', 'des espèces considérées');
     cy.get('.indicateur-link').should('have.attr', 'href', '/indicateurs/especes-envahissantes');
   });
 
@@ -30,7 +30,7 @@ describe('Indicator home', () => {
     cy.contains('TOUT').should('have.class', 'active');
     cy.contains('Écosystèmes').should('not.have.class', 'active');
     cy.contains('Végétation').should('not.have.class', 'active');
-    cy.contains('espèces sur les 100').should('be.visible');
+    cy.contains('des espèces considérées').should('be.visible');
     cy.contains('de la forêt disparaît').should('be.visible');
 
     // click "Végétation": it becomes selected
@@ -38,7 +38,7 @@ describe('Indicator home', () => {
     cy.contains('TOUT').should('not.have.class', 'active');
     cy.contains('Écosystèmes').should('not.have.class', 'active');
     cy.contains('Végétation').should('have.class', 'active');
-    cy.contains('espèces sur les 100').should('not.be.visible');
+    cy.contains('des espèces considérées').should('not.be.visible');
     cy.contains('de la forêt disparaît').should('be.visible');
 
     // click "Végétation" again: it becomes not selected
@@ -47,7 +47,7 @@ describe('Indicator home', () => {
     cy.contains('TOUT').should('have.class', 'active');
     cy.contains('Écosystèmes').should('not.have.class', 'active');
     cy.contains('Végétation').should('not.have.class', 'active');
-    cy.contains('espèces sur les 100').should('be.visible');
+    cy.contains('des espèces considérées').should('be.visible');
     cy.contains('de la forêt disparaît').should('be.visible');
 
     // click "Végétation" and "Écosystèmes": since all categories are selected, "All" should become selected
@@ -56,7 +56,7 @@ describe('Indicator home', () => {
     cy.contains('TOUT').should('have.class', 'active');
     cy.contains('Écosystèmes').should('not.have.class', 'active');
     cy.contains('Végétation').should('not.have.class', 'active');
-    cy.contains('espèces sur les 100').should('be.visible');
+    cy.contains('des espèces considérées').should('be.visible');
     cy.contains('de la forêt disparaît').should('be.visible');
   });
 

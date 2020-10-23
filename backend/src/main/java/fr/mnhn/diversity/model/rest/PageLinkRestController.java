@@ -54,6 +54,7 @@ public class PageLinkRestController {
         return List.of(
             getStaticLink(HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL),
             getStaticLink(AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL),
+            getStaticLink(TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL),
             getStaticLink(IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL),
             getStaticLink(EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL),
             getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL),

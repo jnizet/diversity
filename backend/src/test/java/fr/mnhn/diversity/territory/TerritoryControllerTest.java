@@ -40,8 +40,8 @@ class TerritoryControllerTest {
 
     @BeforeEach
     void prepare() {
-        Page page = new Page(1L, "reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Territoire - La Réunion", Collections.emptyList());
-        when(mockPageRepository.findByNameAndModel("reunion", TerritoryModel.TERRITORY_PAGE_MODEL.getName())).thenReturn(Optional.of(page));
+        Page page = new Page(1L, Territory.REUNION.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Territoire - La Réunion", Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(page.getName(), TerritoryModel.TERRITORY_PAGE_MODEL.getName())).thenReturn(Optional.of(page));
         when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page)).thenReturn(
             new PageContent(
                 page,
@@ -116,11 +116,27 @@ class TerritoryControllerTest {
                 )
             )
         );
+
+        Page homePage = new Page(2L, "Territories", TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), "Territoires", Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(homePage.getName(), TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName())).thenReturn(Optional.of(homePage));
+        when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_HOME_PAGE_MODEL, homePage)).thenReturn(
+            new PageContent(
+                homePage,
+                Map.of(
+                    "header", Map.of(
+                        "title", text("Découvrez les territoires"),
+                        "text", text("Bla bla"),
+                        "population", text("100000"),
+                        "species", text("65432")
+                    )
+                )
+            )
+        );
     }
 
     @Test
     void shouldDisplayTerritoryPageForLaReunion() throws Exception {
-        mockMvc.perform(get("/territoires/reunion"))
+        mockMvc.perform(get("/territoires/{slug}", Territory.REUNION.getSlug()))
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Territoire - La Réunion</title>")))
@@ -135,6 +151,17 @@ class TerritoryControllerTest {
                .andExpect(content().string(containsString("<h2>Timeline</h2>")))
                .andExpect(content().string(containsString("<h3>1535</h3>")))
                .andExpect(content().string(containsString("<h2>Risks</h2>")))
-               .andExpect(content().string(containsString("<h3>Risk1</h3>")));
+               .andExpect(content().string(containsString("<h3>Risk1</h3>")))
+               .andExpect(content().string(containsString("</html>")));
+    }
+
+    @Test
+    void shouldDisplayTerritoryHome() throws Exception {
+        mockMvc.perform(get("/territoires"))
+               .andExpect(status().isOk())
+               .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+               .andExpect(content().string(containsString("<title>Territoires</title>")))
+               .andExpect(content().string(containsString("Découvrez les territoires</h1>")))
+               .andExpect(content().string(containsString("</html>")));
     }
 }

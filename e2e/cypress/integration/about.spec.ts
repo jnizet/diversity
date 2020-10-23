@@ -15,5 +15,17 @@ describe('About', () => {
     cy.title().should('eq', 'Indicateurs');
   });
 
-  // TODO test links to territories and act together
+  it('should navigate to territories', () => {
+    cy.visit('/');
+    cy.contains('À propos').click();
+    cy.contains('Voir les territoires').click();
+    cy.title().should('eq', 'Territoires');
+  });
+
+  it('should navigate to territories', () => {
+    cy.visit('/');
+    cy.contains('À propos').click();
+    cy.contains('Agir ensemble').click();
+    cy.title().should('eq', 'Agir ensemble');
+  });
 });
