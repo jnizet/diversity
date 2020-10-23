@@ -9,12 +9,14 @@ import { QuestionItemController } from './indicators/question-item-controller';
 import { AboutController } from './about/about-controller';
 import { ScienceController } from './science/science-controller';
 import { EcogesturesController } from './ecogestures/ecogestures-controller';
+import { IndicatorController } from './indicator/indicator-controller';
 
 const application = Application.start();
 application.register('contact', ContactController);
 application.register('search', SearchController);
 application.register('cookies', CookiesController);
 application.register('indicators', IndicatorsController);
+application.register('indicator', IndicatorController);
 application.register('home', HomeController);
 application.register('question-item', QuestionItemController);
 application.register('about', AboutController);

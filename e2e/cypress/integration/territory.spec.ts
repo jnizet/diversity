@@ -30,7 +30,7 @@ describe('Territory', () => {
   });
 
   it('should have a page for Saint-Pierre-Et-Miquelon', () => {
-    cy.visit('/territoires/st-pierre-et-miquelon');
+    cy.visit('/territoires/saint-pierre-et-miquelon');
 
     // title
     cy.get('h1').should('contain', 'Saint-Pierre-Et-Miquelon');

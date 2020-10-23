@@ -69,59 +69,30 @@ class IndicatorControllerTest {
             new PageContent(
                 invasiveSpeciesPage,
                 Map.of(
-                    "name", text("Les espèces envahissantes"),
-                    "indicator", Map.of(
-                        Territory.OUTRE_MER.name(), Map.of("value", text("60")),
-                        Territory.REUNION.name(), Map.of("value", text("6")),
-                        Territory.GUADELOUPE.name(), Map.of("value", text("14")),
-                        Territory.SAINT_PIERRE_ET_MIQUELON.name(), Map.of("value", text("23"))
-                    ),
                     "presentation", Map.of(
-                        "category", text("Espèces"),
                         "description", text("espèces sur les 100..."),
-                        "image", image(1L)
+                        "image", image(1L),
+                        "onbUrl", text("https://google.com")
                     ),
                     "understand", Map.of(
-                        "title", text("Comprendre"),
                         "image", image(2L),
-                        "sections", List.of(
+                        "title1", text("Raison 1"),
+                        "text1", text("Explication raison 1"),
+                        "title2", text("Raison 1"),
+                        "text2", text("Explication raison 1"),
+                        "keyword", text("Espèces"),
+                        "paragraphs", List.of(
                             Map.of(
-                                "title", text("Raison 1"),
-                                "description", text("Explication raison 1")
+                                "title", text("Raison 3"),
+                                "text", text("Explication raison 3")
                             )
                         )
                     ),
-                    "indicators", Map.of(
-                        "title", text("Indicateurs"),
-                        "indicators", List.of(
-                            Map.of(
-                                "name", text("Réunion"),
-                                "value", text("12"),
-                                "image", image(3L)
-                            ),
-                            Map.of(
-                                "name", text("Martinique"),
-                                "value", text("31"),
-                                "image", image(4L)
-                            )
-                        )
+                    "territories", Map.of(
+                        "title", text("Espèces envahissantes par territoire")
                     ),
                     "ecogestures", Map.of(
-                        "title", text("Ecogestes"),
-                        "ecogestures", List.of(
-                            Map.of(
-                                "name", text("Ecogesture1"),
-                                "category", text("loisirs"),
-                                "description", text("Description ecogesture1"),
-                                "image", image(6L),
-                                "link", link("/indicateurs/ecogesture1")
-                            )
-                        )
-                    ),
-                    "next", Map.of(
-                        "name", text("Surface des forêts"),
-                        "image", image(8L),
-                        "link", link("other")
+                        "title", text("Eviter les espèces envahissantes")
                     )
                 )
             )
@@ -143,7 +114,6 @@ class IndicatorControllerTest {
                 invasiveSpeciesPage,
                 Map.of(
                     "presentation", Map.of(
-                        "category", text("Espèces"),
                         "description", text("de forêt..."),
                         "image", image(1L)
                     )
@@ -239,18 +209,17 @@ class IndicatorControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Espèces envahissantes</title>")))
-               .andExpect(content().string(containsString("<h1>Les espèces envahissantes</h1>")))
-               .andExpect(content().string(containsString("<p>60</p>")))
-               .andExpect(content().string(containsString("<h2>Comprendre</h2>")))
-               .andExpect(content().string(containsString("<h2>Indicateurs</h2>")))
-               .andExpect(content().string(containsString("<h3>Réunion</h3>")))
-               .andExpect(content().string(containsString("<p>40</p>")))
-               .andExpect(content().string(containsString("<h3>Guadeloupe</h3>")))
-               .andExpect(content().string(containsString("<p>14</p>")))
-               .andExpect(content().string(containsString("<h2>Ecogestes</h2>")))
-               .andExpect(content().string(containsString("<h3>Protect the corals</h3>")))
-               .andExpect(content().string(containsString("<p>2\u00a0000\u00a0km2</p>")))
-               .andExpect(content().string(containsString("<p>de forêt...</p>")))
+               .andExpect(content().string(containsString("espèces sur les 100")))
+               .andExpect(content().string(containsString("60")))
+               .andExpect(content().string(containsString("Raison 1")))
+               .andExpect(content().string(containsString("Raison 3")))
+               .andExpect(content().string(containsString("40")))
+               .andExpect(content().string(containsString("Guadeloupe")))
+               .andExpect(content().string(containsString("14")))
+               .andExpect(content().string(containsString("Eviter les espèces envahissantes")))
+               .andExpect(content().string(containsString("Protect the corals")))
+               .andExpect(content().string(containsString("2\u00a0000\u00a0km2")))
+               .andExpect(content().string(containsString("de forêt...")))
                .andExpect(content().string(containsString("</html>")));
     }
 

@@ -84,6 +84,7 @@ public class IndicatorController {
         return new ModelAndView("indicator/indicator",
                                 Map.of(
                                     "page", pageContent,
+                                    "indicator", indicator,
                                     "outremerIndicatorValue", outremerIndicatorValue,
                                     "territoryCards", territoryCards,
                                     "ecogestureCards", ecogestureCards,

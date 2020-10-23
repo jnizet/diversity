@@ -22,16 +22,23 @@ public class Indicators {
      * Formats an indicator value as a number with 0 to 2 decimal digits and, if any, the unit of the value
      */
     public String formatValue(IndicatorValue indicatorValue) {
-        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
-        decimalFormat.setMinimumIntegerDigits(1);
-        decimalFormat.setMinimumFractionDigits(0);
-        decimalFormat.setMaximumFractionDigits(2);
-        String formattedNumber = decimalFormat.format(indicatorValue.getValue());
+        String formattedNumber = formatValueWithoutUnit(indicatorValue);
         if (StringUtils.hasText(indicatorValue.getUnit())) {
             return formattedNumber + "\u00a0" + indicatorValue.getUnit();
         }
         else {
             return formattedNumber;
         }
+    }
+
+    /**
+     * Formats an indicator value as a number with 0 to 2 decimal digits and, if any, the unit of the value
+     */
+    public String formatValueWithoutUnit(IndicatorValue indicatorValue) {
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+        decimalFormat.setMinimumIntegerDigits(1);
+        decimalFormat.setMinimumFractionDigits(0);
+        decimalFormat.setMaximumFractionDigits(2);
+        return decimalFormat.format(indicatorValue.getValue());
     }
 }

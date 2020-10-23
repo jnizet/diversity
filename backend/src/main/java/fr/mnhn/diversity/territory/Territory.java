@@ -10,7 +10,7 @@ public enum Territory {
     MARTINIQUE("Martinique", "Martinique", "martinique"),
     NOUVELLE_CALEDONIE("Nouvelle Calédonie", "Nouvelle-Calédonie", "nouvelle-caledonie"),
     GUYANE("Guyane", "Guyane", "guyane"),
-    SAINT_PIERRE_ET_MIQUELON("Saint-Pierre-Et-Miquelon", "Saint-Pierre-et-Miquelon", "st-pierre-et-miquelon");
+    SAINT_PIERRE_ET_MIQUELON("Saint-Pierre-Et-Miquelon", "Saint-Pierre-et-Miquelon", "saint-pierre-et-miquelon");
 
     /**
      * Name of the territory
