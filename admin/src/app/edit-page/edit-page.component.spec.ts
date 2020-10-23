@@ -271,6 +271,7 @@ describe('EditPageComponent', () => {
       expect(tester.errors[5]).toHaveText('Le lien est obligatoire');
 
       expect(pageService.create).not.toHaveBeenCalled();
+      expect(router.navigate).not.toHaveBeenCalled();
     });
 
     it('should create a page', () => {
@@ -319,7 +320,7 @@ describe('EditPageComponent', () => {
         elements: [titleCommand, image1Command, link1Command, image2Command, link2Command]
       };
       expect(pageService.create).toHaveBeenCalledWith('home', expectedCommand);
-      // TODO expect(router.navigate).toHaveBeenCalledWith(['/pages']);
+      expect(router.navigate).toHaveBeenCalledWith(['/']);
       expect(toastService.success).toHaveBeenCalledWith(`La page a été créée`);
     });
   });
@@ -363,6 +364,7 @@ describe('EditPageComponent', () => {
       expect(tester.errors[0]).toHaveText('Le titre est obligatoire');
 
       expect(pageService.update).not.toHaveBeenCalled();
+      expect(router.navigate).not.toHaveBeenCalled();
     });
 
     it('should update the page', () => {
@@ -391,7 +393,7 @@ describe('EditPageComponent', () => {
         elements: [titleCommand, image1Command, link1Command, image2Command, link2Command]
       };
       expect(pageService.update).toHaveBeenCalledWith(12, expectedCommand);
-      // TODO expect(router.navigate).toHaveBeenCalledWith(['/pages']);
+      expect(router.navigate).toHaveBeenCalledWith(['/']);
       expect(toastService.success).toHaveBeenCalledWith(`La page a été modifiée`);
     });
   });

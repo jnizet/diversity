@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../page.service';
 import { ElementCommand, elementToCommand, Page, PageCommand, PageElement } from '../page.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../toast.service';
 import { forkJoin, Observable } from 'rxjs';
@@ -24,7 +24,13 @@ export class EditPageComponent implements OnInit {
   pageModel: Page;
   submitted = false;
 
-  constructor(private route: ActivatedRoute, fb: FormBuilder, private pageService: PageService, private toastService: ToastService) {
+  constructor(
+    private route: ActivatedRoute,
+    fb: FormBuilder,
+    private pageService: PageService,
+    private toastService: ToastService,
+    private router: Router
+  ) {
     this.elementsGroup = fb.group({}, Validators.required);
     this.pageForm = fb.group({
       title: ['', Validators.required],
@@ -95,6 +101,7 @@ export class EditPageComponent implements OnInit {
 
     obs.subscribe(() => {
       this.toastService.success(`La page a été ${this.mode === 'update' ? 'modifiée' : 'créée'}`);
+      this.router.navigate(['/']);
     });
   }
 
