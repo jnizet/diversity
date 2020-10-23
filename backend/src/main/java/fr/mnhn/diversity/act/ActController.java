@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.model.Page;
@@ -53,11 +53,11 @@ public class ActController {
             randomEcogestures
                 .stream()
                 .map(ecogesture -> pageRepository.findByNameAndModel(ecogesture.getSlug(),
-                                                                     EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
+                                                                     EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
                 .filter(Optional::isPresent)
                 .limit(2)
                 .map(Optional::orElseThrow)
-                .map(ecogesturePage -> pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, ecogesturePage))
+                .map(ecogesturePage -> pageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, ecogesturePage))
                 .collect(Collectors.toList());
 
         return new ModelAndView("act", Map.of(

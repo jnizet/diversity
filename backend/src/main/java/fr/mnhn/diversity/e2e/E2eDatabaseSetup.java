@@ -18,7 +18,7 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.admin.security.PasswordHasher;
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.image.ImageType;
 import fr.mnhn.diversity.indicator.IndicatorModel;
@@ -61,9 +61,11 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                              .values(TEXT, "presentation.description", "Sinon ils vont mourir", null, null, null, false)
                              .values(IMAGE, "presentation.image", null, 30L, "Jolis coraux", null, false)
                              .values(IMAGE, "presentation.file", null, 31L, "Fiche technique", null, false)
+                             .values(LINK, "presentation.twitter", "Twitter", null, null, "https://twitter.com", false)
+                             .values(LINK, "presentation.facebook", "Facebook", null, null, "https://facebook.com", false)
                              .values(TEXT, "understand.title", "Comprendre : un écosystème très riche", null, null, null, false)
                              .values(TEXT, "understand.text", "Les récifs coralliens affichent plus d'un tiers des espèces marines connues...", null, null, null, false)
-                             .values(IMAGE, "understand.image", null, 32L, "Comprendre", null, false)
+                             .values(TEXT, "understand.quote", "Ces actions conjuguées entraînent un accroissement de la biodiversité...", null, null, null, false)
                              .values(TEXT, "action.title", "Les bons gestes pour protéger les récifs", null, null, null, false)
                              .values(IMAGE, "action.cards.0.icon", null, 33L, "Crème solaire", null, false)
                              .values(TEXT, "action.cards.0.description", "Je choisis une crème solaire non nocive pour l'environnement", null, null, null, false)
@@ -115,7 +117,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Operation indicatorValues =
             insertInto("indicator_value")
                 .columns("id", "indicator_id", "territory", "value", "unit")
-                .values(11, 1, "OUTRE_MER", 64, null)
+                .values(11, 1, "OUTRE_MER", 65, null)
                 .values(12, 1, "REUNION", 40, null)
                 .values(13, 1, "GUADELOUPE", 14, null)
                 .values(21, 2, "OUTRE_MER", 5, "%")
@@ -127,6 +129,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             insertInto("ecogesture")
                 .columns("id", "slug")
                 .values(1, "recifs")
+                .values(2, "recifs1")
                 .build();
 
         Operation indicatorEcogestures =
@@ -155,20 +158,20 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(about, AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL.getName(), "À propos")
                 .values(act, ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL.getName(), "Agir ensemble")
                 .values(science, ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL.getName(), "Sciences participatives")
-                .values(ecogesture1, "recifs", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(101L, "recifs1", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(102L, "recifs2", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(103L, "recifs3", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(104L, "recifs4", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(105L, "recifs5", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(106L, "recifs6", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(107L, "recifs7", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(108L, "recifs8", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(109L, "recifs9", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(110L, "recifs10", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(111L, "recifs11", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(112L, "recifs12", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
-                .values(ecogestureHome, EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), "Écogestes")
+                .values(ecogesture1, "recifs", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(101L, "recifs1", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(102L, "recifs2", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(103L, "recifs3", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(104L, "recifs4", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(105L, "recifs5", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(106L, "recifs6", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(107L, "recifs7", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(108L, "recifs8", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(109L, "recifs9", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(110L, "recifs10", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(111L, "recifs11", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(112L, "recifs12", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Écogeste: protéger les récifs")
+                .values(ecogestureHome, EcogestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), "Écogestes")
                 .values(territoryHome, TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), "Territoires")
                 .values(reunion, Territory.REUNION.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "La Réunion")
                 .values(stPierreEtMiquelon,

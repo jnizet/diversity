@@ -76,7 +76,7 @@ class EcogestureRestControllerTest {
                .andExpect(status().isNoContent());
 
         verify(mockEcogestureRepository).delete(ecogesture);
-        verify(mockPageRepository).deleteByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName());
+        verify(mockPageRepository).deleteByNameAndModel(ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName());
     }
 
     @Test
@@ -139,7 +139,7 @@ class EcogestureRestControllerTest {
                .andExpect(status().isNoContent());
 
         verify(mockEcogestureRepository).update(ecogesture.withSlug(command.getSlug()));
-        verify(mockPageRepository).updateName(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), command.getSlug());
+        verify(mockPageRepository).updateName(ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), command.getSlug());
     }
 
     @Test

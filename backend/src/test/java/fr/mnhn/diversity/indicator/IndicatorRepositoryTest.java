@@ -12,6 +12,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
 import com.ninja_squad.dbsetup.DbSetup;
@@ -39,8 +40,15 @@ class IndicatorRepositoryTest {
     Ecogesture ecogesture1 = new Ecogesture(301L, "ecogesture-1");
     Ecogesture ecogesture2 = new Ecogesture(302L, "ecogesture-2");
 
+    Indicator indicator1;
+    Indicator indicator2;
+    Indicator indicator3;
+
     @BeforeEach
     void prepare() {
+        indicator1 = new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2));
+        indicator2 = new Indicator(1L, "indicator2", "slug2", List.of(category2), List.of(ecogesture2));
+        indicator3 = new Indicator(3L, "indicator3", "slug3", List.of(), List.of());
 
         DbSetup dbSetup =
                 new DbSetup(
@@ -92,36 +100,30 @@ class IndicatorRepositoryTest {
     void shouldListIndicators() {
         TRACKER.skipNextLaunch();
         assertThat(repository.list()).containsExactly(
-                new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2)),
-                new Indicator(1L, "indicator2", "slug2", List.of(category2), List.of(ecogesture2)),
-                new Indicator(3L, "indicator3", "slug3", List.of(), List.of())
+            indicator1,
+            indicator2,
+            indicator3
         );
     }
 
     @Test
     void shouldFindBySlug() {
         TRACKER.skipNextLaunch();
-        assertThat(repository.findBySlug("slug1")).contains(
-            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
-        );
+        assertThat(repository.findBySlug("slug1")).contains(indicator1);
         assertThat(repository.findBySlug("unknown")).isEmpty();
     }
 
     @Test
     void shouldFindById() {
         TRACKER.skipNextLaunch();
-        assertThat(repository.findById(2L)).contains(
-            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
-        );
+        assertThat(repository.findById(2L)).contains(indicator1);
         assertThat(repository.findById(423L)).isEmpty();
     }
 
     @Test
     void shouldFindByBiomId() {
         TRACKER.skipNextLaunch();
-        assertThat(repository.findByBiomId("indicator1")).contains(
-            new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
-        );
+        assertThat(repository.findByBiomId("indicator1")).contains(indicator1);
         assertThat(repository.findByBiomId("other")).isEmpty();
     }
 
@@ -140,12 +142,10 @@ class IndicatorRepositoryTest {
 
     @Test
     void shouldDeleteIndicator() {
-        Indicator indicator = new Indicator(2L, "indicator2", "slug2", List.of(category1), List.of(ecogesture1));
-
-        repository.delete(indicator);
+        repository.delete(indicator1);
 
         assertThat(repository.findById(2L)).isEmpty();
-        assertThat(repository.getValues(indicator)).hasSize(0);
+        assertThat(repository.getValues(indicator1)).hasSize(0);
     }
 
     @Test
@@ -181,22 +181,20 @@ class IndicatorRepositoryTest {
 
     @Test
     void shouldDeleteValues() {
-        Indicator indicator = new Indicator(3L, "indicator3", "slug3");
-        assertThat(repository.getValues(indicator)).hasSize(4);
+        assertThat(repository.getValues(indicator3)).hasSize(4);
 
-        repository.deleteValues(indicator, EnumSet.of(REUNION, SAINT_PIERRE_ET_MIQUELON));
-        assertThat(repository.getValues(indicator)).hasSize(2);
+        repository.deleteValues(indicator3, EnumSet.of(REUNION, SAINT_PIERRE_ET_MIQUELON));
+        assertThat(repository.getValues(indicator3)).hasSize(2);
     }
 
     @Test
     void shouldUpdateValue() {
-        Indicator indicator = new Indicator(3L, "indicator3", "slug3");
         IndicatorValue newValue = new IndicatorValue(50, "patates");
-        assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isTrue();
+        assertThat(repository.updateValue(indicator3, OUTRE_MER, newValue)).isTrue();
 
-        assertThat(repository.getValues(indicator).get(OUTRE_MER)).isEqualTo(newValue);
+        assertThat(repository.getValues(indicator3).get(OUTRE_MER)).isEqualTo(newValue);
 
-        indicator = new Indicator(1L, "indicator2", "slug2");
+        Indicator indicator = new Indicator(1L, "indicator2", "slug2");
         assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isFalse();
     }
 
@@ -211,5 +209,21 @@ class IndicatorRepositoryTest {
         assertThat(result).containsOnly(
             entry(indicator3, new IndicatorValue(10, "%"))
         );
+    }
+
+    @Test
+    void shouldFindIndicatorsReferencingAnEcogesture() {
+        TRACKER.skipNextLaunch();
+        List<Long> indicatorsForEcogesture1 = repository.findIndicatorsForEcogesture(ecogesture1.getSlug())
+            .stream().map(Indicator::getId).collect(Collectors.toList());
+        assertThat(indicatorsForEcogesture1).containsExactly(indicator1.getId());
+
+        List<Long> indicatorsForEcogesture2 = repository.findIndicatorsForEcogesture(ecogesture2.getSlug())
+                                                        .stream().map(Indicator::getId).collect(Collectors.toList());
+        assertThat(indicatorsForEcogesture2).containsExactly(indicator1.getId(), indicator2.getId());
+
+        List<Long> indicatorsForEcogesture3 = repository.findIndicatorsForEcogesture("ecogesture-3")
+                                                        .stream().map(Indicator::getId).collect(Collectors.toList());
+        assertThat(indicatorsForEcogesture3).isEmpty();
     }
 }

@@ -165,6 +165,11 @@ public class IndicatorRepository {
         jdbcTemplate.update("delete from indicator_ecogesture where indicator_id = :id", paramMap);
     }
 
+    public List<Indicator> findIndicatorsForEcogesture(String ecogestureSlug) {
+        String query = INDICATOR_QUERY + " where eco.slug = :slug";
+        return jdbcTemplate.query(query, Map.of("slug", ecogestureSlug), this::extractIndicators);
+    }
+
     /**
      * Updates the indicator value for the given indicator and territory
      * @return true if the value was updated, false if not, because the value didn't exist yet.

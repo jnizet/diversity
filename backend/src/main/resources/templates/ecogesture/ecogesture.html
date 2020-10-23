@@ -2,6 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
 >
   <head>
@@ -18,24 +19,130 @@
   </head>
 
   <body>
-    <main th:object="${page.content}">
-      <h1 th:text="*{presentation.name.text}">Title</h1>
-      <p th:text="*{presentation.category.text}">Category</p>
-      <p th:text="*{presentation.description.text}">Description</p>
-      <img th:src="@{/images/{imageId}/image(imageId=*{presentation.image.imageId})}" th:alt="*{presentation.image.alt}" />
-      <p>
-        <a th:href="@{/images/{imageId}/image(imageId=*{presentation.file.imageId})}">Télécharger la fiche technique</a>
-      </p>
+    <main class="main" th:object="${page.content}">
+      <!-- Top -->
+      <section class="section-top">
+        <div class="section-top-wrapper">
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{presentation.image.alt}"></div>
+          </div>
+          <div class="ecogeste-top-content">
+            <h1 class="section-top-title" th:text="*{presentation.name.text}"></h1>
+            <p class="col-3" th:text="*{presentation.description.text}"></p>
+            <div class="ecogeste-thematique" th:text="*{presentation.category.text}"></div>
+          </div>
+        </div>
+        <img biom:image="*{presentation.image}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
+        <div class="section-top-side">
+          <a th:href="@{/images/{imageId}/image(imageId=*{presentation.file.imageId})}" class="share-link file w-inline-block">
+            <img th:src="@{/assets/images/pdf.svg}" loading="lazy" width="18" alt="" />
+          </a>
+          <a th:href="*{presentation.twitter.href}" class="share-link twitter w-inline-block">
+            <img th:src="@{/assets/images/twitter.svg}" loading="lazy" alt="" />
+          </a>
+          <a th:href="*{presentation.facebook.href}" class="share-link facebook w-inline-block">
+            <img th:src="@{/assets/images/facebook.svg}" loading="lazy" alt="" />
+          </a>
+        </div>
+      </section>
 
-      <h2 th:text="*{understand.title.text}"></h2>
-      <img th:src="@{/images/{imageId}/image(imageId=*{understand.image.imageId})}" th:alt="*{understand.image.alt}" />
-      <p th:text="*{understand.text.text}"></p>
+      <!-- Understand -->
+      <section class="section-ecogeste-intro">
+        <div class="section-content">
+          <h2 class="section-title col-3" th:text="*{understand.title.text}"></h2>
+          <div class="col-5">
+            <p th:text="*{understand.text.text}"></p>
+            <blockquote th:text="*{understand.quote.text}"></blockquote>
+          </div>
+        </div>
+        <div class="section-decoration-text ecogeste">agir</div>
+      </section>
 
-      <h2 th:text="*{action.title.text}"></h2>
-      <div th:each="card : *{action.cards}" th:object="${card}">
-        <img th:src="@{/images/{imageId}/image(imageId=*{icon.imageId})}" th:alt="*{icon.alt}" />
-        <p th:text="*{description.text}"></p>
-      </div>
+      <!-- Indicator -->
+      <section class="indicateur-push" th:if="${indicator}">
+        <div class="indicateur-push-content">
+          <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicator.indicatorValue)}"></div>
+          <div class="text-big" th:text="${indicator.page.content.presentation.description.text}"></div>
+          <a th:href="@{/indicateurs/{slug}(slug=${indicator.indicator.slug})}" class="cta-secondary">en savoir plus</a>
+        </div>
+        <img
+          th:src="@{/images/{imageId}/image/sm(imageId=${indicator.page.content.presentation.image.imageId})}"
+          th:alt="${indicator.page.content.presentation.image.alt}"
+          loading="lazy"
+          sizes="(max-width: 479px) 94vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 840px"
+          class="col-7 left-1"
+        />
+      </section>
+
+      <!-- Actions -->
+      <section class="section-action">
+        <div class="section-action-wrapper">
+          <h2 class="section-title col-4" th:text="*{action.title.text}"></h2>
+          <ul role="list" class="action-list w-list-unstyled">
+            <li class="action-item" th:each="card : *{action.cards}" th:object="${card}">
+              <div class="action-img-wrapper">
+                <img th:src="@{/images/{imageId}/image(imageId=*{icon.imageId})}" th:alt="*{icon.alt}" />
+              </div>
+              <p class="text-big" th:text="*{description.text}"></p>
+            </li>
+          </ul>
+        </div>
+        <div class="section-decoration-text action">action</div>
+      </section>
+
+      <!-- Act for science -->
+      <!-- TODO extract in a subpage, so it can be configured only once -->
+      <section class="section-agir">
+        <h2 class="section-title col-3">Agir pour la science</h2>
+        <div class="col-5">
+          <p>
+            La majorité des territoires d’outre-mer français sont situés dans des régions particulièrement riches en espèces, notamment en
+            espèces endémiques, ce qu’on appelle des points chauds de la biodiversité
+          </p>
+          <div class="agir-divider"></div>
+          <div class="agir-block">
+            <div class="col-1">
+              <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
+            </div>
+            <div class="text-big col-2">J’agis en ligne</div>
+            <a href="#" class="cta-secondary yellow">Je télécharge <br />l’application INPN Espaces</a>
+          </div>
+          <div class="agir-divider"></div>
+          <div class="agir-block">
+            <div class="col-1">
+              <img th:src="@{/assets/images/icon-agir-2.svg}" loading="lazy" alt="" />
+            </div>
+            <div class="text-big col-2">Je donne de<br />mon temps</div>
+            <a th:href="@{/sciences-participatives}" class="cta-secondary yellow">Tous les programmes de<br />sciences participatives</a>
+          </div>
+          <div class="agir-divider"></div>
+        </div>
+      </section>
+
+      <!-- next ecogesture -->
+      <a
+        th:if="${nextEcogestureCard}"
+        th:href="@{/ecogestes/{slug}(slug=${nextEcogestureCard.ecogesture.slug})}"
+        class="section-push-next w-inline-block"
+      >
+        <div class="push-next-img">
+          <img
+            th:src="@{/images/{imageId}/image/sm(imageId=${nextEcogestureCard.page.content.presentation.image.imageId})}"
+            th:alt="${nextEcogestureCard.page.content.presentation.image.alt}"
+            loading="lazy"
+            sizes="40vw"
+            class="next-img"
+          />
+        </div>
+        <div class="push-next-wrapper">
+          <div class="push-next-before">écogeste suivant</div>
+          <div class="push-next-title-wrapper">
+            <div class="push-next-title col-4" th:text="${nextEcogestureCard.page.content.presentation.name.text}"></div>
+            <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
+          </div>
+        </div>
+      </a>
     </main>
   </body>
 </html>

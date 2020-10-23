@@ -4,7 +4,7 @@ describe('Indicator', () => {
 
     cy.get('header').should('contain', 'Territoires');
 
-    cy.get('h1').should('contain', '64');
+    cy.get('h1').should('contain', '65');
     cy.get('.indicateur-slide .indicateur-slide-tiytle').should('contain', 'Réunion');
     cy.get('.indicateur-slide .indicateur-slide-number').should('contain', '40');
     cy.get('.indicateur-slide .indicateur-slide-tiytle').should('contain', 'Guadeloupe');

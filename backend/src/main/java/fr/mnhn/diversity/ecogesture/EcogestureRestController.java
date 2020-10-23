@@ -51,7 +51,7 @@ public class EcogestureRestController {
     public void delete(@PathVariable("ecogestureId") Long ecogestureId) {
         // TODO delete the related page if there is one, or prevent the deletion?
         Ecogesture ecogesture = ecogestureRepository.findById(ecogestureId).orElseThrow(NotFoundException::new);
-        pageRepository.deleteByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName());
+        pageRepository.deleteByNameAndModel(ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName());
         ecogestureRepository.delete(ecogesture);
     }
 
@@ -85,7 +85,7 @@ public class EcogestureRestController {
         ecogestureRepository.update(updatedEcogesture);
 
         if (!ecogesture.getSlug().equals(updatedEcogesture.getSlug())) {
-            pageRepository.updateName(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), updatedEcogesture.getSlug());
+            pageRepository.updateName(ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), updatedEcogesture.getSlug());
         }
     }
 

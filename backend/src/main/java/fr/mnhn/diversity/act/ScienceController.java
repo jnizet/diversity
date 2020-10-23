@@ -1,18 +1,9 @@
 package fr.mnhn.diversity.act;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
-import fr.mnhn.diversity.ecogesture.Ecogesture;
-import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.model.Page;
-import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
 import org.springframework.stereotype.Controller;

@@ -2,7 +2,6 @@ package fr.mnhn.diversity.act;
 
 import static fr.mnhn.diversity.model.testing.ModelTestingUtil.*;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -15,9 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
-import fr.mnhn.diversity.ecogesture.Ecogesture;
-import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;

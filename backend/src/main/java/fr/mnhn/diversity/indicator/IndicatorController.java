@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
@@ -148,11 +148,11 @@ public class IndicatorController {
         return indicator.getEcogestures()
             .stream()
             .map(ecogesture ->
-                    pageRepository.findByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())
+                    pageRepository.findByNameAndModel(ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName())
                                   .map(page ->
                                            new EcogestureCard(
                                               ecogesture,
-                                              pageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, page)
+                                              pageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, page)
                                           )
                                   )
             )

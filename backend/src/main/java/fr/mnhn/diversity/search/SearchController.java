@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.territory.TerritoryModel;
@@ -36,8 +36,8 @@ public class SearchController {
 
         urlFactories.put(HomeModel.HOME_PAGE_MODEL.getName(), r -> "/");
         urlFactories.put(AboutModel.ABOUT_PAGE_MODEL.getName(), r -> "/apropos");
-        urlFactories.put(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), r -> "/ecogestes");
-        urlFactories.put(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), r -> "/ecogestes/" + r.getName());
+        urlFactories.put(EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), r -> "/ecogestes");
+        urlFactories.put(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), r -> "/ecogestes/" + r.getName());
         urlFactories.put(TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), r -> "/territoires");
         urlFactories.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), r -> "/territoires/" + r.getName());
         urlFactories.put(IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), r -> "/indicateurs");

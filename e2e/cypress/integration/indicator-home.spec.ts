@@ -7,7 +7,7 @@ describe('Indicator home', () => {
     cy.get('h1').should('contain', 'Compter la biodiversité, oui mais comment ?');
     cy.get('#categories').should('contain', 'TOUT');
     cy.get('#categories').should('contain', 'Écosystèmes');
-    cy.get('#indicators').should('contain', '64');
+    cy.get('#indicators').should('contain', '65');
     cy.get('#indicators').should('contain', 'des espèces considérées');
     cy.get('#onb').should('contain', "L'observatoire national de la biodiversité");
     cy.get('#quote').should('contain', 'Documenter et présenter');
@@ -18,7 +18,7 @@ describe('Indicator home', () => {
   it('should link to indicator', () => {
     cy.visit('/indicateurs');
 
-    cy.get('.indicateur-number').should('contain', '64');
+    cy.get('.indicateur-number').should('contain', '65');
     cy.get('.indicateur-description').should('contain', 'des espèces considérées');
     cy.get('.indicateur-link').should('have.attr', 'href', '/indicateurs/especes-envahissantes');
   });

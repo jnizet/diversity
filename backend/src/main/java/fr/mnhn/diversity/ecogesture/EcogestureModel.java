@@ -8,7 +8,7 @@ import fr.mnhn.diversity.model.meta.SectionElement;
  * The model for eco-gestures.
  * @author JB Nizet
  */
-public final class EcoGestureModel {
+public final class EcogestureModel {
 
     /**
      * The model of an ecogesture. This model has several (8 initially) instances in database, and more can be created.
@@ -21,19 +21,19 @@ public final class EcoGestureModel {
                               .builder("presentation")
                               .describedAs("Présentation de l'écogeste, et informations affichées sur sa vignette dans la page d'accueil des écogestes")
                               .titleText("name", "Nom de l'écogeste")
-                              // TODO add some information to the model, or use a different element type, because it should be edited as a select box
                               .text("category", "Catégorie de l'écogeste")
                               .text("description", "Description de l'écogeste")
                               .image("image", "Illustration de l'écogeste")
-                              // TODO should we use an image? I guess it doesn't hurt, as long as we add a PDF format
                               .image("file", "Fiche technique de l'écogeste")
+                              .link("twitter", "Lien de partage vers Twitter")
+                              .link("facebook", "Lien de partage vers Facebook")
                  )
                  .section(SectionElement
                               .builder("understand")
                               .describedAs("Comprendre l'écogeste")
                               .text("title", "Titre de la rubrique")
                               .multiLineText("text", "Texte de la rubrique")
-                              .image("image", "Illustration de la rubrique")
+                              .text("quote", "Citation de la rubrique")
                               // TODO add indicator
                  )
                  .section(SectionElement
@@ -46,9 +46,6 @@ public final class EcoGestureModel {
                                       .multiLineText("description", "Icône de la vignette")
                               )
                  )
-                 // the last two sections seem to be common to all ecogestures, so thay're not modeled here.
-                 // either we will hard-code everything there, or well specify a specific "sub-page" model that is
-                 // common to all eco-gesture pages
                  .build();
 
     /**
@@ -72,6 +69,6 @@ public final class EcoGestureModel {
                  .build();
     public static final String ECO_GESTURE_HOME_PAGE_NAME = "EcoGestureHome";
 
-    private EcoGestureModel() {
+    private EcogestureModel() {
     }
 }

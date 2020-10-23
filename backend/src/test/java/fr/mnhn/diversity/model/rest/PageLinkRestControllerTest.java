@@ -1,7 +1,6 @@
 package fr.mnhn.diversity.model.rest;
 
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -10,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Optional;
 
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.home.HomeModel;
@@ -21,14 +20,12 @@ import fr.mnhn.diversity.model.BasicPage;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 /**
  * MVC tests for {@link PageLinkRestController}
@@ -55,8 +52,8 @@ class PageLinkRestControllerTest {
             .thenReturn(List.of(new BasicPage(11L, "i1", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Indicateur i1")));
         when(mockPageRepository.findBasicByModel(TerritoryModel.TERRITORY_PAGE_MODEL.getName()))
             .thenReturn(List.of(new BasicPage(21L, Territory.GUADELOUPE.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Guadeloupe")));
-        when(mockPageRepository.findBasicByModel(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
-            .thenReturn(List.of(new BasicPage(31L, "e1", EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Ecogeste e1")));
+        when(mockPageRepository.findBasicByModel(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
+            .thenReturn(List.of(new BasicPage(31L, "e1", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Ecogeste e1")));
 
         when(mockIndicatorRepository.list()).thenReturn(
             List.of(

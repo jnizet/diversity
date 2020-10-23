@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.model.Page;
@@ -90,12 +90,12 @@ class ActControllerTest {
         when(mockEcogestureRepository.list()).thenReturn(ecogestures);
 
         Page ecogesturePage = new Page(2L,
-                 "g1",
-                 EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(),
-                 "Some Ecogesture",
-                 Collections.emptyList()
+                                       "g1",
+                                       EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(),
+                                       "Some Ecogesture",
+                                       Collections.emptyList()
         );
-        when(mockPageRepository.findByNameAndModel(any(), eq(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName())))
+        when(mockPageRepository.findByNameAndModel(any(), eq(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName())))
             .thenAnswer(invocation -> {
                 String requestedPageName = invocation.getArgument(0, String.class);
                 if (requestedPageName.compareTo("g3") <= 0) {
@@ -104,7 +104,7 @@ class ActControllerTest {
                     return Optional.empty();
                 }
             });
-        when(mockPageService.buildPageContent(eq(EcoGestureModel.ECO_GESTURE_PAGE_MODEL), any())).thenReturn(
+        when(mockPageService.buildPageContent(eq(EcogestureModel.ECO_GESTURE_PAGE_MODEL), any())).thenReturn(
             new PageContent(
                 ecogesturePage,
                 Map.of(

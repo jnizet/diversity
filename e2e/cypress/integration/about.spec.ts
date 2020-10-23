@@ -22,7 +22,7 @@ describe('About', () => {
     cy.title().should('eq', 'Territoires');
   });
 
-  it('should navigate to territories', () => {
+  it('should navigate to act together', () => {
     cy.visit('/');
     cy.contains('À propos').click();
     cy.contains('Agir ensemble').click();

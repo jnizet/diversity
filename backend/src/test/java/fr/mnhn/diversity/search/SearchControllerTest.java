@@ -10,7 +10,7 @@ import java.util.List;
 
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.territory.TerritoryModel;
@@ -51,13 +51,13 @@ public class SearchControllerTest {
                                  null),
             new PageSearchResult(3L,
                                  "Ecogestures",
-                                 EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(),
+                                 EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(),
                                  "Ecogestes",
                                  "<b>compteurs</b",
                                  null),
             new PageSearchResult(4L,
                                  "coral",
-                                 EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(),
+                                 EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(),
                                  "Protéger le corail",
                                  "<b>compteurs</b",
                                  null),

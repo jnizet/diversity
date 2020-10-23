@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
@@ -56,7 +56,7 @@ public class PageLinkRestController {
             getStaticLink(AboutModel.ABOUT_PAGE_NAME, AboutModel.ABOUT_PAGE_MODEL),
             getStaticLink(TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL),
             getStaticLink(IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL),
-            getStaticLink(EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL),
+            getStaticLink(EcogestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL),
             getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL),
             getStaticLink(ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL)
         );
@@ -85,7 +85,7 @@ public class PageLinkRestController {
     }
 
     private List<PageLinkDTO> getEcogestureLinks() {
-        PageModel pageModel = EcoGestureModel.ECO_GESTURE_PAGE_MODEL;
+        PageModel pageModel = EcogestureModel.ECO_GESTURE_PAGE_MODEL;
         Map<String, BasicPage> pagesByName = getPageByName(pageModel);
         return ecogestureRepository.list()
                                   .stream()

@@ -1,7 +1,6 @@
 package fr.mnhn.diversity.ecogesture;
 
-import static fr.mnhn.diversity.model.testing.ModelTestingUtil.image;
-import static fr.mnhn.diversity.model.testing.ModelTestingUtil.text;
+import static fr.mnhn.diversity.model.testing.ModelTestingUtil.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,29 +12,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import fr.mnhn.diversity.indicator.Indicator;
+import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.indicator.IndicatorRepository;
+import fr.mnhn.diversity.indicator.IndicatorValue;
+import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
+import fr.mnhn.diversity.territory.Territory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * MVC tests for {@link EcoGestureController}
+ * MVC tests for {@link EcogestureController}
  * @author JB Nizet
  */
-@WebMvcTest(EcoGestureController.class)
-class EcoGestureControllerTest {
+@WebMvcTest(EcogestureController.class)
+@Import(IndicatorDialect.class)
+class EcogestureControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private PageRepository mockPageRepository;
+
+    @MockBean
+    private IndicatorRepository mockIndicatorRepository;
+
+    @MockBean
+    private EcogestureRepository mockEcogestureRepository;
 
     @MockBean
     private PageService mockPageService;
@@ -44,23 +57,65 @@ class EcoGestureControllerTest {
     void prepare() {
         Page coralsPage = new Page(1L,
                                    "corals",
-                                   EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(),
+                                   EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(),
                                    "Protect corals",
                                    Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(coralsPage.getName(), coralsPage.getModelName()))
             .thenReturn(Optional.of(coralsPage));
 
         Page homePage = new Page(2L,
-                                 EcoGestureModel.ECO_GESTURE_HOME_PAGE_NAME,
-                                 EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(),
+                                 EcogestureModel.ECO_GESTURE_HOME_PAGE_NAME,
+                                 EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(),
                                  "Écogestes",
                                  Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(homePage.getName(), homePage.getModelName()))
             .thenReturn(Optional.of(homePage));
 
         List<Page> gesturePages = List.of(coralsPage);
-        when(mockPageRepository.findByModel(EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
+        when(mockPageRepository.findByModel(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
             .thenReturn(gesturePages);
+
+        Ecogesture corals = new Ecogesture(101L, "corals");
+        Indicator indicator = new Indicator(1L,"biom-1", "deforestation", List.of(), List.of(corals));
+        when(mockIndicatorRepository.findIndicatorsForEcogesture(corals.getSlug()))
+            .thenReturn(List.of(indicator));
+        when(mockIndicatorRepository.getValuesForIndicatorsAndTerritory(List.of(indicator), Territory.OUTRE_MER))
+            .thenReturn(Map.of(indicator, new IndicatorValue(24, "%")));
+        Page deforestationPage = new Page(3L,
+                                          IndicatorModel.INDICATOR_HOME_PAGE_NAME,
+                                          IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(),
+                                          "Deforestation",
+                                          Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(indicator.getSlug(), IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
+            .thenReturn(Optional.of(deforestationPage));
+        when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, deforestationPage)).thenReturn(
+            new PageContent(
+                deforestationPage,
+                Map.of(
+                    "name", text("Deforestation"),
+                    "presentation", Map.of(
+                        "description", text("arbres"),
+                        "image", image(1L)
+                    )
+                )
+            )
+        );
+
+        Page plasticPage = new Page(4L, "plastics", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Plastics", Collections.emptyList());
+        when(mockPageRepository.findNextOrFirstByModel(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), coralsPage.getId()))
+            .thenReturn(Optional.of(plasticPage));
+        when(mockEcogestureRepository.findBySlug(plasticPage.getName()))
+            .thenReturn(Optional.of(new Ecogesture(102L, "plastics")));
+        when(mockPageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, plasticPage))
+            .thenReturn(new PageContent(
+                plasticPage,
+                Map.of(
+                    "presentation", Map.of(
+                        "name", text("Plastics"),
+                        "image", image(1L)
+                    )
+                )
+            ));
 
         Map<String, Object> coralsContent = Map.of(
             "presentation", Map.of(
@@ -68,12 +123,14 @@ class EcoGestureControllerTest {
                 "category", text("Leisure"),
                 "description", text("Description"),
                 "image", image(1L),
-                "file", image(2L)
+                "file", image(2L),
+                "twitter", link("Twitter"),
+                "facebook", link("Facebook")
             ),
             "understand", Map.of(
                 "title", text("Understand"),
                 "text", text("understand text"),
-                "image", image(3L)
+                "quote", text("quote text")
             ),
             "action", Map.of(
                 "title", text("Action"),
@@ -104,9 +161,9 @@ class EcoGestureControllerTest {
             )
         );
 
-        when(mockPageService.buildPageContent(EcoGestureModel.ECO_GESTURE_HOME_PAGE_MODEL, homePage))
+        when(mockPageService.buildPageContent(EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL, homePage))
             .thenReturn(new PageContent(homePage, homeContent));
-        when(mockPageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, coralsPage))
+        when(mockPageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, coralsPage))
             .thenReturn(new PageContent(coralsPage, coralsContent));;
     }
 
@@ -130,9 +187,14 @@ class EcoGestureControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Protect corals</title>")))
-               .andExpect(content().string(containsString("<h1>Corals</h1>")))
-               .andExpect(content().string(containsString("<h2>Understand</h2>")))
-               .andExpect(content().string(containsString("<h2>Action</h2>")))
+               .andExpect(content().string(containsString("Corals</h1>")))
+               .andExpect(content().string(containsString("Understand</h2>")))
+               .andExpect(content().string(containsString("href=\"/indicateurs/deforestation\"")))
+               .andExpect(content().string(containsString("<div class=\"indicateur-number-small\">24")))
+               .andExpect(content().string(containsString("<div class=\"text-big\">arbres")))
+               .andExpect(content().string(containsString("<div class=\"text-big\">arbres")))
+               .andExpect(content().string(containsString("Action</h2>")))
+               .andExpect(content().string(containsString("href=\"/ecogestes/plastics")))
                .andExpect(content().string(containsString("</html>")));
     }
 }

@@ -25,7 +25,8 @@ insert into indicator_value (id, indicator_id, territory, value, unit) values
     (13, 1, 'GUADELOUPE', 14, null),
     (21, 2, 'OUTRE_MER', 5, '%'),
     (22, 2, 'REUNION', 7, '%'),
-    (23, 2, 'SAINT_PIERRE_ET_MIQUELON', 3, '%');
+    (23, 2, 'SAINT_PIERRE_ET_MIQUELON', 3, '%'),
+    (24, 4, 'OUTRE_MER', 51, '%');
 
 insert into category (id, name) values
     (1, 'Écosystèmes'),
@@ -43,7 +44,8 @@ insert into ecogesture (id, slug) values
 
 insert into indicator_ecogesture (indicator_id, ecogesture_id) values
     (1, 1),
-    (2, 1);
+    (2, 1),
+    (4, 1);
 
 insert into image (id, content_type, original_file_name) values
     (1, 'image/jpeg', 'carousel1.png'),
@@ -153,32 +155,36 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
 --     Ecogesture "Recifs coralliens"
     (nextval('page_element_seq'), 3, 'TEXT', 'presentation.name', 'Protégeons les récifs coralliens', null, null, null, true),
     (nextval('page_element_seq'), 3, 'TEXT', 'presentation.category', 'Loisirs', null, null, null, false),
-    (nextval('page_element_seq'), 3, 'TEXT', 'presentation.description', 'Sinon ils vont mourir', null, null, null, false),
+    (nextval('page_element_seq'), 3, 'TEXT', 'presentation.description', 'Au sein de l’archipel des Seychelles, le premier projet de restauration des récifs coraliens à grande échelle a débuté', null, null, null, false),
     (nextval('page_element_seq'), 3, 'IMAGE', 'presentation.image', null, 30, 'Jolis coraux', null, false),
     (nextval('page_element_seq'), 3, 'IMAGE', 'presentation.file', null, 31, 'Fiche technique', null, false),
+    (nextval('page_element_seq'), 3, 'LINK', 'presentation.twitter', 'Protégeons les récifs', null, null, 'https://twitter.com/intent/tweet?text=Protegeons%20les%20recifs', false),
+    (nextval('page_element_seq'), 3, 'LINK', 'presentation.facebook', 'Protégeons les récifs', null, null, 'https://www.facebook.com/sharer/sharer.php?text=Protegeons%20les%20recifs', false),
     (nextval('page_element_seq'), 3, 'TEXT', 'understand.title', 'Comprendre : un écosystème très riche', null, null, null, false),
-    (nextval('page_element_seq'), 3, 'TEXT', 'understand.text', 'Les récifs coralliens affichent plus d''un tiers des espèces marines connues...', null, null, null, false),
-    (nextval('page_element_seq'), 3, 'IMAGE', 'understand.image', null, 32, 'Comprendre', null, false),
+    (nextval('page_element_seq'), 3, 'TEXT', 'understand.text', 'Les récifs coralliens abritent plus d’un tiers des espèces marines connues pour lesquelles ils représentent notamment une zone de nourricerie pour les juvéniles. Ils forment également une barrière naturelle contre la houle, protégeant la côte lors des tempêtes. De nombreux facteurs menacent les coraux : changements climatiques (augmentation de la température et acidification des océans), surexploitation des ressources, pollutions… ', null, null, null, false),
+    (nextval('page_element_seq'), 3, 'TEXT', 'understand.quote', 'Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l’eau, de l’air mais aussi de la qualité de vie', null, null, null, false),
     (nextval('page_element_seq'), 3, 'TEXT', 'action.title', 'Les bons gestes pour protéger les récifs', null, null, null, false),
     (nextval('page_element_seq'), 3, 'IMAGE', 'action.cards.0.icon', null, 33, 'Crème solaire', null, false),
     (nextval('page_element_seq'), 3, 'TEXT', 'action.cards.0.description', 'Je choisis une crème solaire non nocive pour l''environnement', null, null, null, false),
     (nextval('page_element_seq'), 3, 'IMAGE', 'action.cards.1.icon', null, 34, 'Bateau', null, false),
-    (nextval('page_element_seq'), 3, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null, false),
+    (nextval('page_element_seq'), 3, 'TEXT', 'action.cards.1.description', 'En bateau, je ne jette pas l''ancre à proximité de récifs', null, null, null, false),
 
 --     Ecogesture "Especes exotiques envahissantes"
     (nextval('page_element_seq'), 4, 'TEXT', 'presentation.name', 'Lutter contre l’introduction d’espèces exotiques envahissantes', null, null, null, true),
     (nextval('page_element_seq'), 4, 'TEXT', 'presentation.category', 'Biodiversité', null, null, null, false),
     (nextval('page_element_seq'), 4, 'TEXT', 'presentation.description', 'Sinon elles sont pas gentilles avec les autres espèces', null, null, null, false),
     (nextval('page_element_seq'), 4, 'IMAGE', 'presentation.image', null, 29, 'Espèce envahissante', null, false),
+    (nextval('page_element_seq'), 4, 'LINK', 'presentation.twitter', 'Lutter contre l’introduction d’espèces exotiques', null, null, 'https://twitter.com/intent/tweet?text=Lutter', false),
+    (nextval('page_element_seq'), 4, 'LINK', 'presentation.facebook', 'Lutter contre l’introduction d’espèces exotiques', null, null, 'https://www.facebook.com/sharer/sharer.php?text=Lutter', false),
     (nextval('page_element_seq'), 4, 'IMAGE', 'presentation.file', null, 31, 'Fiche technique', null, false),
     (nextval('page_element_seq'), 4, 'TEXT', 'understand.title', 'Comprendre : un écosystème très riche', null, null, null, false),
-    (nextval('page_element_seq'), 4, 'TEXT', 'understand.text', 'Les récifs coralliens affichent plus d''un tiers des espèces marines connues...', null, null, null, false),
-    (nextval('page_element_seq'), 4, 'IMAGE', 'understand.image', null, 32, 'Comprendre', null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'understand.text', 'Les récifs coralliens abritent plus d’un tiers des espèces marines connues pour lesquelles ils représentent notamment une zone de nourricerie pour les juvéniles. Ils forment également une barrière naturelle contre la houle, protégeant la côte lors des tempêtes. De nombreux facteurs menacent les coraux : changements climatiques (augmentation de la température et acidification des océans), surexploitation des ressources, pollutions… ', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'understand.quote', 'Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l’eau, de l’air mais aussi de la qualité de vie', null, null, null, false),
     (nextval('page_element_seq'), 4, 'TEXT', 'action.title', 'Les bons gestes pour protéger les récifs', null, null, null, false),
     (nextval('page_element_seq'), 4, 'IMAGE', 'action.cards.0.icon', null, 33, 'Crème solaire', null, false),
     (nextval('page_element_seq'), 4, 'TEXT', 'action.cards.0.description', 'Je choisis une crème solaire non nocive pour l''environnement', null, null, null, false),
     (nextval('page_element_seq'), 4, 'IMAGE', 'action.cards.1.icon', null, 33, 'Bateau', null, false),
-    (nextval('page_element_seq'), 4, 'TEXT', 'action.cards.1.description', 'En bâteau, je ne jette pas l''ancre à proximité de récifs', null, null, null, false),
+    (nextval('page_element_seq'), 4, 'TEXT', 'action.cards.1.description', 'En bateau, je ne jette pas l''ancre à proximité de récifs', null, null, null, false),
 
 --     Ecogestures home
     (nextval('page_element_seq'), 5, 'TEXT', 'title', 'Adaptons notre comportement pour préserver la biodiversité', null, null, null, true),

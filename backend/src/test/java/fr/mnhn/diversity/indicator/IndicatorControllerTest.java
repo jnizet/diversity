@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import fr.mnhn.diversity.ecogesture.EcoGestureModel;
+import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.ecogesture.Ecogesture;
 import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
 import fr.mnhn.diversity.model.Page;
@@ -184,10 +184,10 @@ class IndicatorControllerTest {
         when(mockIndicatorRepository.getValueForIndicatorAndTerritory(deforestation, Territory.OUTRE_MER))
             .thenReturn(Optional.of(new IndicatorValue(2000, "km2")));
 
-        Page ecogesturePage = new Page(435L, ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Corals", Collections.emptyList());
-        when(mockPageRepository.findByNameAndModel(ecogesture.getSlug(), EcoGestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
+        Page ecogesturePage = new Page(435L, ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Corals", Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
             .thenReturn(Optional.of(ecogesturePage));
-        when(mockPageService.buildPageContent(EcoGestureModel.ECO_GESTURE_PAGE_MODEL, ecogesturePage))
+        when(mockPageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, ecogesturePage))
             .thenReturn(
                 new PageContent(
                     ecogesturePage,
