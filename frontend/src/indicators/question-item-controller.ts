@@ -17,7 +17,7 @@ export class QuestionItemController extends Controller {
       this.itemTarget.classList.remove('closed');
       this.answerTarget.style.height = this.answerTarget.scrollHeight + 20 + 'px';
     } else {
-      this.questionTarget.classList.add('closed');
+      this.itemTarget.classList.add('closed');
       this.answerTarget.style.height = '0px';
     }
   }
