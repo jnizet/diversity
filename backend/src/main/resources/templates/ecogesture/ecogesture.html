@@ -38,10 +38,14 @@
           <a th:href="@{/images/{imageId}/document(imageId=*{presentation.file.imageId})}" class="share-link file w-inline-block">
             <img th:src="@{/assets/images/pdf.svg}" loading="lazy" width="18" alt="" />
           </a>
-          <a th:href="*{presentation.twitter.href}" class="share-link twitter w-inline-block">
+          <a target="_blank" th:href="@{https://twitter.com/intent/tweet(text=${twitterText})}" class="share-link twitter w-inline-block">
             <img th:src="@{/assets/images/twitter.svg}" loading="lazy" alt="" />
           </a>
-          <a th:href="*{presentation.facebook.href}" class="share-link facebook w-inline-block">
+          <a
+            target="_blank"
+            th:href="@{https://www.facebook.com/share.php(u=${#httpServletRequest.requestURL}, quote=*{presentation.name.text})}"
+            class="share-link facebook w-inline-block"
+          >
             <img th:src="@{/assets/images/facebook.svg}" loading="lazy" alt="" />
           </a>
         </div>

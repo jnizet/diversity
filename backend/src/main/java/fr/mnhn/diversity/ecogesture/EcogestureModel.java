@@ -25,8 +25,6 @@ public final class EcogestureModel {
                               .text("description", "Description de l'écogeste")
                               .image("image", "Illustration de l'écogeste")
                               .document("file", "Fiche technique de l'écogeste")
-                              .link("twitter", "Lien de partage vers Twitter")
-                              .link("facebook", "Lien de partage vers Facebook")
                  )
                  .section(SectionElement
                               .builder("understand")

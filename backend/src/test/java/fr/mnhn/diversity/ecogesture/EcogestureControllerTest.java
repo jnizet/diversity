@@ -143,9 +143,7 @@ class EcogestureControllerTest {
                 "category", text("Leisure"),
                 "description", text("Description"),
                 "image", image(1L),
-                "file", image(2L),
-                "twitter", link("Twitter"),
-                "facebook", link("Facebook")
+                "file", image(2L)
             ),
             "understand", Map.of(
                 "title", text("Understand"),

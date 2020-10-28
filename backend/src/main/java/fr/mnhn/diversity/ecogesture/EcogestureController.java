@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.indicator.Indicator;
 import fr.mnhn.diversity.indicator.IndicatorModel;
@@ -15,6 +17,7 @@ import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
+import fr.mnhn.diversity.model.Text;
 import fr.mnhn.diversity.territory.Territory;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,7 +85,7 @@ public class EcogestureController {
      * @param slug the slug of the eco-gesture, which is also the name of the eco-gesture page
      */
     @GetMapping("/{slug}")
-    public ModelAndView detail(@PathVariable("slug") String slug) {
+    public ModelAndView detail(@PathVariable("slug") String slug, HttpServletRequest request) {
         Page page = pageRepository.findByNameAndModel(slug, EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
 
@@ -94,13 +97,25 @@ public class EcogestureController {
                                   .orElseThrow(NotFoundException::new);
         PageContent actSectionContent = pageService.buildPageContent(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL, actSection);
 
+        PageContent pageContent = pageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, page);
+        String twitterText = getTwitterText(pageContent, request);
+
         Map<String, Object> model = Map.of(
-            "page", pageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, page),
+            "page", pageContent,
             "act", actSectionContent,
             "indicator", linkedIndicatorCard == null ? false : linkedIndicatorCard,
-            "nextEcogestureCard", nextEcogestureCard == null ? false : nextEcogestureCard
+            "nextEcogestureCard", nextEcogestureCard == null ? false : nextEcogestureCard,
+            "twitterText", twitterText
         );
         return new ModelAndView("ecogesture/ecogesture", model);
+    }
+
+    private String getTwitterText(PageContent pageContent, HttpServletRequest request) {
+        Map<String, Object> presentation = (Map<String, Object>) pageContent.getContent().get("presentation");
+        Text nameText = (Text) presentation.get("name");
+        String name = nameText.getText();
+
+        return name + "\n" + request.getRequestURL();
     }
 
     private Optional<IndicatorCard> getLinkedIndicatorCard(String slug) {

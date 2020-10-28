@@ -63,8 +63,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                              .values(TEXT, "presentation.description", "Sinon ils vont mourir", null, null, null, false)
                              .values(IMAGE, "presentation.image", null, 30L, "Jolis coraux", null, false)
                              .values(IMAGE, "presentation.file", null, 31L, "Fiche technique", null, false)
-                             .values(LINK, "presentation.twitter", "Twitter", null, null, "https://twitter.com", false)
-                             .values(LINK, "presentation.facebook", "Facebook", null, null, "https://facebook.com", false)
                              .values(TEXT, "understand.title", "Comprendre : un écosystème très riche", null, null, null, false)
                              .values(TEXT, "understand.text", "Les récifs coralliens affichent plus d'un tiers des espèces marines connues...", null, null, null, false)
                              .values(TEXT, "understand.quote", "Ces actions conjuguées entraînent un accroissement de la biodiversité...", null, null, null, false)

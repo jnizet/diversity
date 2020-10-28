@@ -13,8 +13,18 @@ describe('Ecogesture', () => {
     cy.visit('/ecogestes/recifs');
     cy.get('p').should('contain', 'Sinon ils vont mourir');
     cy.get('div.ecogeste-thematique').should('contain', 'Loisirs');
-    cy.get('.share-link.twitter').should('have.attr', 'href', 'https://twitter.com');
-    cy.get('.share-link.facebook').should('have.attr', 'href', 'https://facebook.com');
+    cy.url().then(url => {
+      cy.get('.share-link.twitter').should(
+        'have.attr',
+        'href',
+        'https://twitter.com/intent/tweet?text=Prot%C3%A9geons%20les%20r%C3%A9cifs%20coralliens%0A' + url
+      );
+      cy.get('.share-link.facebook').should(
+        'have.attr',
+        'href',
+        'https://www.facebook.com/share.php?u=' + url + '&quote=Prot%C3%A9geons%20les%20r%C3%A9cifs%20coralliens'
+      );
+    });
   });
 
   it('should have a quote', () => {
