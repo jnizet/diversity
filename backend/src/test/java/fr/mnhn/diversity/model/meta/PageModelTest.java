@@ -16,11 +16,13 @@ class PageModelTest {
                 .describedAs("The home page")
                 .titleText("mainTitle", "The main title")
                 .section(SectionElement.builder("welcomeSection")
-                                       .text(TextElement.builder("paragraph").multiLine())
+                                       .describedAs("Welcome section")
+                                       .multiLineText("paragraph", "Paragraph")
                 )
                 .list(ListElement.builder("list")
-                                 .image("landscape")
-                                 .link("tourismLink")
+                                 .describedAs("Some list")
+                                 .image("landscape", "Landscape")
+                                 .link("tourismLink", "Tourism link")
                 )
                 .build();
 
@@ -43,13 +45,16 @@ class PageModelTest {
         assertThat(paragraph.isMultiLine()).isTrue();
 
         ListElement list = (ListElement) home.getElements().get(2);
+        assertThat(list.getDescription()).isEqualTo("Some list");
         assertThat(list.getName()).isEqualTo("list");
         assertThat(list.getElements()).hasSize(2);
 
         ImageElement landscape = (ImageElement) list.getElements().get(0);
         assertThat(landscape.getName()).isEqualTo("landscape");
+        assertThat(landscape.getDescription()).isEqualTo("Landscape");
 
         LinkElement tourismLink = (LinkElement) list.getElements().get(1);
         assertThat(tourismLink.getName()).isEqualTo("tourismLink");
+        assertThat(tourismLink.getDescription()).isEqualTo("Tourism link");
     }
 }

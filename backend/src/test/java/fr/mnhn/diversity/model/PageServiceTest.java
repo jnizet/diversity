@@ -19,14 +19,16 @@ class PageServiceTest {
     public void shouldPopulatePage() {
         PageModel pageModel =
             PageModel.builder("Home")
-                     .text("title")
+                     .text("title", "Title")
                      .section(SectionElement.builder("welcome")
+                                            .describedAs("Welcome section")
                                             .multiSizeImage("welcomeImage", "Welcome")
-                                            .text("welcomeLegend")
-                                            .link("tourismLink"))
+                                            .text("welcomeLegend", "Welcome legend")
+                                            .link("tourismLink", "Tourism link"))
                      .list(ListElement.builder("carousel")
-                                      .image("image")
-                                      .text("legend")
+                                      .describedAs("Carousel")
+                                      .image("image", "Image")
+                                      .text("legend", "Legend")
                      )
                      .build();
 
@@ -76,9 +78,11 @@ class PageServiceTest {
         PageModel pageModel =
             PageModel.builder("Home")
                      .list(ListElement.builder("carousel")
+                                      .describedAs("Carousel")
                                       .section(SectionElement.builder("section")
-                                                             .image("image")
-                                                             .text("legend")
+                                                             .describedAs("Some section")
+                                                             .image("image", "Image")
+                                                             .text("legend", "Legend")
                                       )
                      )
                      .build();

@@ -24,10 +24,6 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
         return this.link(LinkElement.builder(name).describedAs(description));
     }
 
-    public B link(String name) {
-        return this.link(name, null);
-    }
-
     @SuppressWarnings("unchecked")
     public B image(ImageElement.Builder imageBuilder) {
         this.elements.add(imageBuilder);
@@ -46,10 +42,6 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
         return this.image(ImageElement.builder(name).describedAs(description).document());
     }
 
-    public B image(String name) {
-        return this.image(name, null);
-    }
-
     @SuppressWarnings("unchecked")
     public B text(TextElement.Builder textBuilder) {
         this.elements.add(textBuilder);
@@ -66,10 +58,6 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
 
     public B titleText(String name, String description) {
         return this.text(TextElement.builder(name).describedAs(description).title());
-    }
-
-    public B text(String name) {
-        return this.text(name, null);
     }
 
     @SuppressWarnings("unchecked")

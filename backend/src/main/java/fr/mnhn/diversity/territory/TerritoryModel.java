@@ -21,7 +21,7 @@ public final class TerritoryModel {
                     .section(SectionElement.builder("interests").describedAs("Lieux d'intérêts")
                                            .text("title", "Titre du carousel des lieux d'intérêts")
                                            .list(ListElement.builder("images").describedAs("Les photos affichées par le carousel")
-                                                            .image("image")
+                                                            .image("image", "Photo")
                                            )
                      )
                      // Indicateurs
