@@ -414,8 +414,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "ecosystems.title", "Écosystèmes", null, null, null, false)
                 .values(TEXT, "timeline.title", "Frise chronologique", null, null, null, false)
                 .values(TEXT, "risks.title", "Risques et enjeux", null, null, null, false)
-                .values(IMAGE, "other.image", null, 105L, "Autre territoire", null, false)
-                .values(LINK, "other.link", "Portail local de l'environnement", null, null, "https://oeil.nc", false)
                 .build();
 
         Operation stPierreEtMiquelonElements =
@@ -444,8 +442,6 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "risks.risks.0.name", "Les ressources naturelles", null, null, null, false)
                 .values(TEXT, "risks.risks.0.description", "Le territoire est pour l'instant...", null, null, null, false)
                 .values(IMAGE, "risks.risks.0.image", null, 109L, "Ressources naturelles", null, false)
-                .values(IMAGE, "other.image", null, 105L, "Autre territoire", null, false)
-                .values(LINK, "other.link", "Portail local de l'environnement", null, null, "https://oeil.nc", false)
                 .build();
 
         Operation indicatorHomeElements =

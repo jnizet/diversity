@@ -70,11 +70,6 @@ public final class TerritoryModel {
                                                              .image("image", "Image illustrant le risque")
                                             )
                      )
-                     // Autre territoire
-                     .section(SectionElement.builder("other").describedAs("Bandeau autre territoire")
-                                            .image("image", "Image illustrant le territoire")
-                                            .link("link", "Lien vers le portail du territoire")
-                     )
                      .build();
 
     public static final String TERRITORY_HOME_PAGE_NAME = "Territories";

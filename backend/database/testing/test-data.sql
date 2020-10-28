@@ -290,8 +290,6 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 10, 'TEXT', 'ecosystems.title', 'Écosystèmes', null, null, null, false),
     (nextval('page_element_seq'), 10, 'TEXT', 'timeline.title', 'Frise chronologique', null, null, null, false),
     (nextval('page_element_seq'), 10, 'TEXT', 'risks.title', 'Risques et enjeux', null, null, null, false),
-    (nextval('page_element_seq'), 10, 'IMAGE', 'other.image', null, 105, 'Autre territoire', null, false),
-    (nextval('page_element_seq'), 10, 'LINK', 'other.link', 'Portail local de l''environnement', null, null, 'https://oeil.nc', false),
 
 --     St-Pierre-Et-Miquelon
     (nextval('page_element_seq'), 11, 'TEXT', 'name',  'Saint-Pierre-et-Miquelon', null, null, null, true),
@@ -323,8 +321,6 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 11, 'TEXT', 'risks.risks.0.name', 'Les ressources naturelles', null, null, null, false),
     (nextval('page_element_seq'), 11, 'TEXT', 'risks.risks.0.description', 'Le territoire est pour l''instant...', null, null, null, false),
     (nextval('page_element_seq'), 11, 'IMAGE', 'risks.risks.0.image', null, 109, 'Ressources naturelles', null, false),
-    (nextval('page_element_seq'), 11, 'IMAGE', 'other.image', null, 105, 'Autre territoire', null, false),
-    (nextval('page_element_seq'), 11, 'LINK', 'other.link', 'Portail local de l''environnement', null, null, 'https://oeil.nc', false),
 
 --     Indicator home
     (nextval('page_element_seq'), 29, 'TEXT', 'title', 'Compter la biodiversité, oui mais comment ?', null, null, null, true),

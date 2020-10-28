@@ -1,7 +1,12 @@
 package fr.mnhn.diversity.territory;
 
+import java.util.EnumSet;
+import java.util.Map;
+import java.util.Optional;
+
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.model.Page;
+import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
 import org.springframework.stereotype.Controller;
@@ -36,6 +41,47 @@ public class TerritoryController {
     @GetMapping("/{territorySlug}")
     public ModelAndView territory(@PathVariable("territorySlug") String territorySlug) {
         Page page = pageRepository.findByNameAndModel(territorySlug, TerritoryModel.TERRITORY_PAGE_MODEL.getName()).orElseThrow(NotFoundException::new);
-        return new ModelAndView("territory/territory", "page", pageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page));
+
+        TerritoryCard nextTerritoryCard = getNextTerritoryCard(page.getId()).orElse(null);
+
+        Map<String, Object> model = Map.of(
+            "page", pageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page),
+            "nextTerritoryCard", nextTerritoryCard == null ? false : nextTerritoryCard
+        );
+        return new ModelAndView("territory/territory", model);
+    }
+
+    private Optional<TerritoryCard> getNextTerritoryCard(Long currentTerritoryPageId) {
+        return pageRepository
+            .findNextOrFirstByModel(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), currentTerritoryPageId)
+            .flatMap(nextOrFirstTerritoryPage ->
+                         EnumSet.allOf(Territory.class)
+                                .stream()
+                                .filter(territory -> nextOrFirstTerritoryPage.getName().equals(territory.getSlug()))
+                                .findFirst()
+                                .map(territory -> new TerritoryCard(
+                                         territory,
+                                         pageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, nextOrFirstTerritoryPage)
+                                     )
+                                )
+            );
+    }
+
+    private static class TerritoryCard {
+        private final Territory territory;
+        private final PageContent page;
+
+        public TerritoryCard(Territory territory, PageContent page) {
+            this.territory = territory;
+            this.page = page;
+        }
+
+        public Territory getTerritory() {
+            return territory;
+        }
+
+        public PageContent getPage() {
+            return page;
+        }
     }
 }

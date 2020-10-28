@@ -26,6 +26,10 @@ describe('Territory', () => {
     cy.get('.species p').should('contain', 'Dernier rapace de la Réunion');
     cy.get('.species img').should('have.attr', 'src', '/images/104/image');
 
+    // other territory
+    cy.get('.other-territory img').should('have.attr', 'src', '/images/107/image');
+    cy.get('.other-territory a').should('have.attr', 'href', '/territoires/saint-pierre-et-miquelon');
+
     cy.get('footer').should('contain', 'Territoires');
   });
 
@@ -60,7 +64,7 @@ describe('Territory', () => {
     cy.get('.risks img').should('have.attr', 'src', '/images/109/image');
 
     // other territory
-    cy.get('.other-territory img').should('have.attr', 'src', '/images/105/image');
-    cy.get('.other-territory a').should('have.attr', 'href', 'https://oeil.nc');
+    cy.get('.other-territory img').should('have.attr', 'src', '/images/106/image');
+    cy.get('.other-territory a').should('have.attr', 'href', '/territoires/reunion');
   });
 });

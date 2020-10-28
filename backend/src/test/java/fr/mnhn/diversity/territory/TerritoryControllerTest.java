@@ -42,77 +42,101 @@ class TerritoryControllerTest {
     void prepare() {
         Page page = new Page(1L, Territory.REUNION.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Territoire - La Réunion", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(page.getName(), TerritoryModel.TERRITORY_PAGE_MODEL.getName())).thenReturn(Optional.of(page));
+        Map<String, Object> interests = Map.of(
+            "title", text("Interests"),
+            "images", List.of(
+                Map.of("image", image(2L)),
+                Map.of("image", image(3L))
+            )
+        );
+        Map<String, Object> indicators = Map.of(
+            "title", text("Indicators"),
+            "indicators", List.of(
+                Map.of(
+                    "name", text("Indicator1"),
+                    "value", text("12"),
+                    "image", image(4L),
+                    "link", link("12")
+                )
+            )
+        );
+        Map<String, Object> species = Map.of(
+            "title", text("Species"),
+            "species", List.of(
+                Map.of(
+                    "name", text("Specie1"),
+                    "description", text("specie1"),
+                    "image", image(5L)
+                )
+            )
+        );
+        Map<String, Object> ecosystems = Map.of(
+            "title", text("Ecosystems"),
+            "ecosystems", List.of(
+                Map.of(
+                    "name", text("Ecosystem1"),
+                    "description", text("ecosystem1"),
+                    "image", image(6L)
+                )
+            )
+        );
+        Map<String, Object> timeline = Map.of(
+            "title", text("Timeline"),
+            "events", List.of(
+                Map.of(
+                    "name", text("1535"),
+                    "description", text("desc 1535")
+                )
+            )
+        );
+        Map<String, Object> risks = Map.of(
+            "title", text("Risks"),
+            "risks", List.of(
+                Map.of(
+                    "name", text("Risk1"),
+                    "description", text("risk1"),
+                    "image", image(7L)
+                )
+            )
+        );
         when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, page)).thenReturn(
             new PageContent(
                 page,
                 Map.of(
-                        "name", text("La Réunion"),
-                        "identity", Map.of(
+                    "name", text("La Réunion"),
+                    "identity", Map.of(
                                 "title", text("La Réunion"),
                                 "presentation", text("presentation"),
                                 "infography", image(1L)
                         ),
-                        "interests", Map.of(
-                                "title", text("Interests"),
-                                "images", List.of(
-                                        Map.of("image", image(2L)),
-                                        Map.of("image", image(3L))
-                                )
-                        ),
-                        "indicators", Map.of(
-                                "title", text("Indicators"),
-                                "indicators", List.of(
-                                        Map.of(
-                                                "name", text("Indicator1"),
-                                                "value", text("12"),
-                                                "image", image(4L),
-                                                "link", link("12")
-                                        )
-                                )
-                        ),
-                        "species", Map.of(
-                                "title", text("Species"),
-                                "species", List.of(
-                                        Map.of(
-                                                "name", text("Specie1"),
-                                                "description", text("specie1"),
-                                                "image", image(5L)
-                                        )
-                                )
-                        ),
-                        "ecosystems", Map.of(
-                                "title", text("Ecosystems"),
-                                "ecosystems", List.of(
-                                        Map.of(
-                                                "name", text("Ecosystem1"),
-                                                "description", text("ecosystem1"),
-                                                "image", image(6L)
-                                        )
-                                )
-                        ),
-                        "timeline", Map.of(
-                                "title", text("Timeline"),
-                                "events", List.of(
-                                        Map.of(
-                                                "name", text("1535"),
-                                                "description", text("desc 1535")
-                                        )
-                                )
-                        ),
-                        "risks", Map.of(
-                                "title", text("Risks"),
-                                "risks", List.of(
-                                        Map.of(
-                                                "name", text("Risk1"),
-                                                "description", text("risk1"),
-                                                "image", image(7L)
-                                        )
-                                )
-                        ),
-                        "other", Map.of(
-                                "image", image(8L),
-                                "link", link("other")
-                        )
+                    "interests", interests,
+                    "indicators", indicators,
+                    "species", species,
+                    "ecosystems", ecosystems,
+                    "timeline", timeline,
+                    "risks", risks
+                )
+            )
+        );
+
+        Page saintPierreEtMiquelon = new Page(2L, Territory.SAINT_PIERRE_ET_MIQUELON.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Territoire - Saint-Pierre-Et-Miquelon", Collections.emptyList());
+        when(mockPageRepository.findNextOrFirstByModel(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), 1L)).thenReturn(Optional.of(saintPierreEtMiquelon));
+        when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, saintPierreEtMiquelon)).thenReturn(
+            new PageContent(
+                page,
+                Map.of(
+                    "name", text("Saint-Pierre-Et-Miquelon"),
+                    "identity", Map.of(
+                        "title", text("Saint-Pierre-Et-Miquelon"),
+                        "presentation", text("presentation"),
+                        "infography", image(1L)
+                    ),
+                    "interests", interests,
+                    "indicators", indicators,
+                    "species", species,
+                    "ecosystems", ecosystems,
+                    "timeline", timeline,
+                    "risks", risks
                 )
             )
         );
@@ -152,6 +176,7 @@ class TerritoryControllerTest {
                .andExpect(content().string(containsString("<h3>1535</h3>")))
                .andExpect(content().string(containsString("<h2>Risks</h2>")))
                .andExpect(content().string(containsString("<h3>Risk1</h3>")))
+               .andExpect(content().string(containsString("Saint-Pierre-Et-Miquelon</a>")))
                .andExpect(content().string(containsString("</html>")));
     }
 
