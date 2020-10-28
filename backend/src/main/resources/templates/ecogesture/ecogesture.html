@@ -92,29 +92,25 @@
       </section>
 
       <!-- Act for science -->
-      <!-- TODO extract in a subpage, so it can be configured only once -->
       <section class="section-agir">
-        <h2 class="section-title col-3">Agir pour la science</h2>
+        <h2 class="section-title col-3" th:text="${act.content.title.text}"></h2>
         <div class="col-5">
-          <p>
-            La majorité des territoires d’outre-mer français sont situés dans des régions particulièrement riches en espèces, notamment en
-            espèces endémiques, ce qu’on appelle des points chauds de la biodiversité
-          </p>
+          <p th:text="${act.content.description.text}"></p>
           <div class="agir-divider"></div>
           <div class="agir-block">
             <div class="col-1">
               <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
             </div>
-            <div class="text-big col-2">J’agis en ligne</div>
-            <a href="#" class="cta-secondary yellow">Je télécharge <br />l’application INPN Espaces</a>
+            <div class="text-big col-2" th:text="${act.content.firstActionName.text}"></div>
+            <a th:href="${act.content.firstActionLink.href}" class="cta-secondary yellow" th:text="${act.content.firstActionLink.text}"></a>
           </div>
           <div class="agir-divider"></div>
           <div class="agir-block">
             <div class="col-1">
               <img th:src="@{/assets/images/icon-agir-2.svg}" loading="lazy" alt="" />
             </div>
-            <div class="text-big col-2">Je donne de<br />mon temps</div>
-            <a th:href="@{/sciences-participatives}" class="cta-secondary yellow">Tous les programmes de<br />sciences participatives</a>
+            <div class="text-big col-2" th:text="${act.content.secondActionName.text}"></div>
+            <a th:href="${act.content.secondActionLink.href}" class="cta-secondary yellow" th:text="${act.content.secondActionLink.text}"></a>
           </div>
           <div class="agir-divider"></div>
         </div>

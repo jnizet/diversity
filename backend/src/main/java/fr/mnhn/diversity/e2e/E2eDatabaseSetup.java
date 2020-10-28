@@ -18,6 +18,7 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.admin.security.PasswordHasher;
+import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
 import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.image.ImageType;
@@ -179,6 +180,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(indicatorHome, IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), "Indicateurs")
                 .values(especesEnvahissantes, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes")
                 .values(deforestation, "deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation")
+                .values(32L, "ecogesture-act", EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(), "Section Agir pour la science des ecogestes")
                 .build();
 
         String png = ImageType.PNG.getMediaType().toString();
@@ -359,6 +361,20 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "other.text", "Biodiversité. Tous vivants !", null, null, null, false)
                 .build();
 
+        Operation ecogestureActSectionElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", 32L)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "title", "Agir pour la science", null, null, null, true)
+                .values(TEXT, "description", "La majorité des territoires d’outre-mer français sont situés dans des régions particulièrement riches en espèces, notamment en espèces endémiques, ce qu’on appelle des points chauds de la biodiversité", null, null, null, false)
+                .values(IMAGE, "image", null, 91L, "Ecogestes", null, false)
+                .values(TEXT, "firstActionName", "J’agis en ligne", null, null, null, false)
+                .values(LINK, "firstActionLink", "Je télécharge l’application INPN Espaces", null, null, "https://google.com", false)
+                .values(TEXT, "secondActionName", "Je donne de mon temps", null, null, null, false)
+                .values(LINK, "secondActionLink", "Tous les programmes de sciences participatives", null, null, "/sciences-participatives", false)
+                .build();
+
         Operation territoryHomeElements =
             insertInto("page_element")
                 .withDefaultValue("page_id", territoryHome)
@@ -510,6 +526,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             actElements,
             scienceElements,
             ecogestureHomeElements,
+            ecogestureActSectionElements,
             territoryHomeElements,
             reunionElements,
             stPierreEtMiquelonElements,

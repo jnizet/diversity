@@ -3,6 +3,7 @@ package fr.mnhn.diversity.search;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class SearchController {
 
     private final SearchRepository searchRepository;
-    private Map<String, Function<PageSearchResult, String>> urlFactories = new HashMap<>();
+    private final Map<String, Function<PageSearchResult, String>> urlFactories = new HashMap<>();
 
     public SearchController(SearchRepository searchRepository) {
         this.searchRepository = searchRepository;
@@ -48,9 +49,10 @@ public class SearchController {
 
     @GetMapping
     public ModelAndView search(@RequestParam("texte") String text) {
-        List<PageSearchResult> resultsWithourUrl = searchRepository.search(text);
-        List<PageSearchResult> results = resultsWithourUrl.stream()
+        List<PageSearchResult> resultsWithoutUrl = searchRepository.search(text);
+        List<PageSearchResult> results = resultsWithoutUrl.stream()
                                                           .map(result -> withUrl(result))
+                                                          .filter(Objects::nonNull)
                                                           .collect(Collectors.toList());
         return new ModelAndView("search", Map.of(
             "results", results,
@@ -59,6 +61,10 @@ public class SearchController {
     }
 
     private PageSearchResult withUrl(PageSearchResult result) {
-        return result.withUrl(urlFactories.get(result.getModelName()).apply(result));
+        Function<PageSearchResult, String> urlFunction = urlFactories.get(result.getModelName());
+        if (urlFunction == null) {
+            return null;
+        }
+        return result.withUrl(urlFunction.apply(result));
     }
 }

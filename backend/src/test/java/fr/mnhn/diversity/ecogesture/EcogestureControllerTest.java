@@ -117,6 +117,26 @@ class EcogestureControllerTest {
                 )
             ));
 
+        Page actSection = new Page(5L,
+                                   "ecogesture-act",
+                                   EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(),
+                                   "Agir pour la science",
+                                   Collections.emptyList());
+        when(mockPageRepository.findByNameAndModel(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_NAME, EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName()))
+            .thenReturn(Optional.of(actSection));
+        when(mockPageService.buildPageContent(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL, actSection))
+            .thenReturn(new PageContent(
+                actSection,
+                Map.of(
+                "title", text("Agir pour la science"),
+                "description", text("description"),
+                "firstActionName", text("Action 1"),
+                "firstActionLink", link("Lien action 1"),
+                "secondActionName", text("Action 2"),
+                "secondActionLink", link("Lien action 2")
+                )
+            ));
+
         Map<String, Object> coralsContent = Map.of(
             "presentation", Map.of(
                 "name", text("Corals"),
@@ -192,8 +212,8 @@ class EcogestureControllerTest {
                .andExpect(content().string(containsString("href=\"/indicateurs/deforestation\"")))
                .andExpect(content().string(containsString("<div class=\"indicateur-number-small\">24")))
                .andExpect(content().string(containsString("<div class=\"text-big\">arbres")))
-               .andExpect(content().string(containsString("<div class=\"text-big\">arbres")))
                .andExpect(content().string(containsString("Action</h2>")))
+               .andExpect(content().string(containsString("Agir pour la science</h2>")))
                .andExpect(content().string(containsString("href=\"/ecogestes/plastics")))
                .andExpect(content().string(containsString("</html>")));
     }

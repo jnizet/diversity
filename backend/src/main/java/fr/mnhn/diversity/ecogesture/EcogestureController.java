@@ -90,8 +90,13 @@ public class EcogestureController {
 
         EcogestureCard nextEcogestureCard = getNextEcogestureCard(page.getId()).orElse(null);
 
+        Page actSection = pageRepository.findByNameAndModel(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_NAME, EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName())
+                                  .orElseThrow(NotFoundException::new);
+        PageContent actSectionContent = pageService.buildPageContent(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL, actSection);
+
         Map<String, Object> model = Map.of(
             "page", pageService.buildPageContent(EcogestureModel.ECO_GESTURE_PAGE_MODEL, page),
+            "act", actSectionContent,
             "indicator", linkedIndicatorCard == null ? false : linkedIndicatorCard,
             "nextEcogestureCard", nextEcogestureCard == null ? false : nextEcogestureCard
         );

@@ -28,6 +28,7 @@ import fr.mnhn.diversity.model.meta.PageElementVisitor;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
 import fr.mnhn.diversity.model.meta.TextElement;
+import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,7 @@ public class PageRestController {
         modelsByName.put(ActModel.SCIENCE_PAGE_MODEL.getName(), ActModel.SCIENCE_PAGE_MODEL);
         modelsByName.put(EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL);
         modelsByName.put(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), EcogestureModel.ECO_GESTURE_PAGE_MODEL);
+        modelsByName.put(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(), EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL);
         modelsByName.put(TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), TerritoryModel.TERRITORY_HOME_PAGE_MODEL);
         modelsByName.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), TerritoryModel.TERRITORY_PAGE_MODEL);
         modelsByName.put(IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), IndicatorModel.INDICATOR_HOME_PAGE_MODEL);

@@ -103,7 +103,8 @@ insert into page (id, name, model_name, title) values
    (11, 'saint-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
    (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
    (30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes'),
-   (31, 'deforestation', 'indicator', 'Déforestation');
+   (31, 'deforestation', 'indicator', 'Déforestation'),
+   (51, 'ecogesture-act', 'ecogesture-act', 'Section agir commune aux pages ecogestes');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href, title) values
 --     Home
@@ -142,7 +143,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 2, 'TEXT', 'goal2.quote', 'Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines.', null, null, null, false),
     (nextval('page_element_seq'), 2, 'IMAGE', 'goal2.quoteImage', null, 14, 'Légende', null, false),
     (nextval('page_element_seq'), 2, 'TEXT', 'goal3.title', 'Encourager chacun à agir', null, null, null, true),
-    (nextval('page_element_seq'), 2, 'TEXT', 'goal3.description', 'Chacun, à son échelle, peut agir pour préserver la biodiversité. Connaitre et appliquer des gestes simples, modifier ses habitudes et son comportement ou encore s’investir dans desprogrammes de sciences participatives, tout le monde est concerné par la préservation de la biodiversité. Le rôle du compteur est d’accompagner les citoyens en partageant desinformations claires et adaptées à tous les territoires, et en encourageant à se mobiliser.', null, null, null, false),
+    (nextval('page_element_seq'), 2, 'TEXT', 'goal3.description', 'Chacun, à son échelle, peut agir pour préserver la biodiversité. Connaitre et appliquer des gestes simples, modifier ses habitudes et son comportement ou encore s’investir dans des programmes de sciences participatives, tout le monde est concerné par la préservation de la biodiversité. Le rôle du compteur est d’accompagner les citoyens en partageant desinformations claires et adaptées à tous les territoires, et en encourageant à se mobiliser.', null, null, null, false),
     (nextval('page_element_seq'), 2, 'IMAGE', 'goal3.image', null, 13, 'Légende', null, false),
     (nextval('page_element_seq'), 2, 'TEXT', 'partners.title', 'Ils contribuent au compteur de la biodiversité', null, null, null, false),
     (nextval('page_element_seq'), 2, 'IMAGE', 'partners.partners.0.logo', null, 8, 'Logo1', null, false),
@@ -151,6 +152,14 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 2, 'TEXT', 'partners.partners.1.url', 'http://google.com', null, null, null, false),
     (nextval('page_element_seq'), 2, 'IMAGE', 'partners.partners.2.logo', null, 10, 'Logo3', null, false),
     (nextval('page_element_seq'), 2, 'TEXT', 'partners.partners.2.url', 'http://google.com', null, null, null, false),
+
+--     Ecogesture "Act" section
+    (nextval('page_element_seq'), 51, 'TEXT', 'title', 'Agir pour la science', null, null, null, true),
+    (nextval('page_element_seq'), 51, 'TEXT', 'description', 'La majorité des territoires d’outre-mer français sont situés dans des régions particulièrement riches en espèces, notamment en espèces endémiques, ce qu’on appelle des points chauds de la biodiversité', null, null, null, true),
+    (nextval('page_element_seq'), 51, 'TEXT', 'firstActionName', 'J’agis en ligne', null, null, null, false),
+    (nextval('page_element_seq'), 51, 'LINK', 'firstActionLink', 'Je télécharge l’application INPN Espaces', null, null, 'https://google.com', false),
+    (nextval('page_element_seq'), 51, 'TEXT', 'secondActionName', 'Je donne de mon temps', null, null, null, false),
+    (nextval('page_element_seq'), 51, 'LINK', 'secondActionLink', 'Tous les programmes de sciences participatives', null, null, '/sciences-participatives', false),
 
 --     Ecogesture "Recifs coralliens"
     (nextval('page_element_seq'), 3, 'TEXT', 'presentation.name', 'Protégeons les récifs coralliens', null, null, null, true),

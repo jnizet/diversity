@@ -16,6 +16,7 @@ import fr.mnhn.diversity.indicator.IndicatorRepository;
 import fr.mnhn.diversity.model.BasicPage;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.meta.PageModel;
+import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +58,7 @@ public class PageLinkRestController {
             getStaticLink(TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL),
             getStaticLink(IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL),
             getStaticLink(EcogestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL),
+            getStaticLink(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_NAME, EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL),
             getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL),
             getStaticLink(ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL)
         );

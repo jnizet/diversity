@@ -31,7 +31,13 @@ describe('Ecogesture', () => {
     cy.visit('/ecogestes/recifs');
     cy.get('.section-action').should('contain', "Je choisis une crème solaire non nocive pour l'environnement");
     cy.get('.section-action').should('contain', "En bateau, je ne jette pas l'ancre à proximité de récifs");
+  });
+
+  it('should have a section to act for science', () => {
+    cy.visit('/ecogestes/recifs');
     cy.get('.section-agir').should('contain', 'Agir pour la science');
+    cy.get('.section-agir').should('contain', 'J’agis en ligne');
+    cy.get('.section-agir').should('contain', 'Je donne de mon temps');
   });
 
   it('should have a link to the next ecogesture', () => {
