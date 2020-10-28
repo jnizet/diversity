@@ -184,6 +184,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         String png = ImageType.PNG.getMediaType().toString();
         String jpg = ImageType.JPG.getMediaType().toString();
         String svg = ImageType.SVG.getMediaType().toString();
+        String pdf = ImageType.PDF.getMediaType().toString();
         Operation images =
             insertInto("image")
                 .columns("id", "content_type", "original_file_name")
@@ -203,7 +204,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(13L, jpg, "apropos3.jpg")
                 .values(14L, jpg, "apropos-quote.jpg")
                 .values(30L, jpg, "ecogeste_corail.jpg")
-                .values(31L, png, "fiche-technique.png")
+                .values(31L, pdf, "fiche-technique.pdf")
                 .values(32L, png, "comprendre.png")
                 .values(33L, png, "vignette1.png")
                 .values(34L, png, "vignette2.png")

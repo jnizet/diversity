@@ -105,7 +105,8 @@ describe('EditPageComponent', () => {
     description: 'Image du carousel',
     imageId: 1,
     alt: 'Image 1',
-    multiSize: true
+    multiSize: true,
+    document: false
   };
   const link1: LinkElement = {
     id: 6,
@@ -129,7 +130,8 @@ describe('EditPageComponent', () => {
     description: 'Image du carousel',
     imageId: 2,
     alt: 'Image 2',
-    multiSize: true
+    multiSize: true,
+    document: false
   };
   const link2: LinkElement = {
     id: 9,

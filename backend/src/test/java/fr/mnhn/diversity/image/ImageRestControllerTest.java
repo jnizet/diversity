@@ -57,6 +57,14 @@ class ImageRestControllerTest {
     }
 
     @Test
+    void shouldThrowIfDocumentAndNotPDF() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/images")
+                                              .file(new MockMultipartFile("file", "foo.gif", "image/gif", "hello".getBytes()))
+                                              .param("document", "true"))
+               .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void shouldSaveSimpleImage() throws Exception {
         byte[] smallOriginal = StreamUtils.copyToByteArray(ImageRestControllerTest.class.getResourceAsStream("/images/small-original.jpg"));
         Image image = new Image(null, ImageType.JPG.getMediaType().toString(), "foo.jpg");

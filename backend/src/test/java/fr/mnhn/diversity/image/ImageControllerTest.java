@@ -55,6 +55,25 @@ class ImageControllerTest {
     }
 
     @Test
+    void shouldReturnDocument() throws Exception {
+        Long id = 42L;
+        Image image = new Image(id, ImageType.PDF.getMediaType().toString(), "test.pdf");
+        when(mockImageRepository.findById(id)).thenReturn(Optional.of(image));
+
+        byte[] bytes = "pdfDocument".getBytes(StandardCharsets.UTF_8);
+        when(mockImageStorageService.imageExists(image)).thenReturn(true);
+        when(mockImageStorageService.imageResource(image)).thenReturn(new ByteArrayResource(bytes));
+
+        mockMvc.perform(get("/images/{id}/document", id))
+               .andExpect(status().isOk())
+               .andExpect(content().contentType(MediaType.APPLICATION_PDF))
+               .andExpect(header().longValue(HttpHeaders.CONTENT_LENGTH, bytes.length))
+               .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"test.pdf\""))
+               .andExpect(header().exists(HttpHeaders.CACHE_CONTROL))
+               .andExpect(content().bytes(bytes));
+    }
+
+    @Test
     void shouldReturnNotFoundIfImageDoesNotExistInDatabase() throws Exception {
         mockMvc.perform(get("/images/{id}/image", 345678L))
                .andExpect(status().isNotFound());

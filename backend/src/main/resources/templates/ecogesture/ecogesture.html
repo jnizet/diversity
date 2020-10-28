@@ -35,7 +35,7 @@
         </div>
         <img biom:image="*{presentation.image}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
         <div class="section-top-side">
-          <a th:href="@{/images/{imageId}/image(imageId=*{presentation.file.imageId})}" class="share-link file w-inline-block">
+          <a th:href="@{/images/{imageId}/document(imageId=*{presentation.file.imageId})}" class="share-link file w-inline-block">
             <img th:src="@{/assets/images/pdf.svg}" loading="lazy" width="18" alt="" />
           </a>
           <a th:href="*{presentation.twitter.href}" class="share-link twitter w-inline-block">

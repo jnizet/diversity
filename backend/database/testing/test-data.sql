@@ -65,7 +65,7 @@ insert into image (id, content_type, original_file_name) values
     (14, 'image/jpeg', 'apropos-quote.jpg'),
     (29, 'image/jpeg', 'ecogeste_especes_exotiques.jpg'),
     (30, 'image/jpeg', 'ecogeste_corail.jpg'),
-    (31, 'image/png', 'fiche-technique.png'),
+    (31, 'application/pdf', 'fiche-technique.pdf'),
     (32, 'image/png', 'comprendre.png'),
     (33, 'image/png', 'vignette1.png'),
     (34, 'image/png', 'vignette2.png'),

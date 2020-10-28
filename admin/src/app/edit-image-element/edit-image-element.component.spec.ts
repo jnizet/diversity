@@ -29,7 +29,8 @@ class DummyFormComponent {
     description: 'The landscape picture',
     imageId: 42,
     alt: 'Beautiful landscape by John Doe',
-    multiSize: false
+    multiSize: false,
+    document: false
   };
   form = new FormGroup({
     imageElement: new FormControl(this.imageElement)
@@ -57,8 +58,16 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
     return this.element('.image-div');
   }
 
+  get documentDiv() {
+    return this.element('.document-div');
+  }
+
   get image() {
     return this.imageDiv.element('img');
+  }
+
+  get documentLink() {
+    return this.documentDiv.element('a');
   }
 
   get chooseImageButton() {
@@ -119,6 +128,22 @@ describe('EditImageElementComponent', () => {
     expect(tester.image).not.toBeNull();
     expect(tester.image.attr('src')).toBe('/images/42/image');
     expect(tester.chooseImageButton).toHaveText('Choisir une autre image');
+    expect(tester.documentDiv).toBeNull();
+    expect(tester.altInput).toHaveValue('Beautiful landscape by John Doe');
+    expect(tester.largeImage).toBeNull();
+  });
+
+  it('should display a document icon and an alt input', () => {
+    tester.componentInstance.imageElement.document = true;
+    tester.detectChanges();
+
+    expect(tester.description).toHaveText('The landscape picture');
+    expect(tester.uploading).toBeNull();
+    expect(tester.noImage).toBeNull();
+    expect(tester.documentDiv).not.toBeNull();
+    expect(tester.documentLink.attr('href')).toBe('/images/42/document');
+    expect(tester.imageDiv).toBeNull();
+    expect(tester.chooseImageButton).toHaveText('Choisir un autre document');
     expect(tester.altInput).toHaveValue('Beautiful landscape by John Doe');
     expect(tester.largeImage).toBeNull();
   });
@@ -130,13 +155,25 @@ describe('EditImageElementComponent', () => {
     expect(tester.image.attr('src')).toBe('/images/42/image/sm');
   });
 
-  it('should display no image and  different text in choose image button if no image', () => {
+  it('should display no image and different text in choose image button if no image', () => {
     tester.componentInstance.imageElement.imageId = null;
     tester.detectChanges();
 
     expect(tester.noImage).not.toBeNull();
     expect(tester.imageDiv).toBeNull();
+    expect(tester.documentDiv).toBeNull();
     expect(tester.chooseImageButton).toHaveText('Choisir une image');
+  });
+
+  it('should display no document and different text in choose image button if no document', () => {
+    tester.componentInstance.imageElement.imageId = null;
+    tester.componentInstance.imageElement.document = true;
+    tester.detectChanges();
+
+    expect(tester.noImage).not.toBeNull();
+    expect(tester.imageDiv).toBeNull();
+    expect(tester.documentDiv).toBeNull();
+    expect(tester.chooseImageButton).toHaveText('Choisir un document');
   });
 
   it('should display large image in modal', () => {

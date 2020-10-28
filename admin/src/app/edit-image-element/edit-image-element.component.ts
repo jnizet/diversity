@@ -4,7 +4,7 @@ import { ImageElement } from '../page.model';
 import { ModalService } from '../modal.service';
 import { ImageService } from '../image.service';
 import { finalize } from 'rxjs/operators';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faFilePdf, faImage } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'biom-edit-image-element',
@@ -22,7 +22,9 @@ export class EditImageElementComponent {
   editedImageElement: ImageElement;
   imageGroup: FormGroup;
   uploading = false;
+
   imageIcon = faImage;
+  documentIcon = faFilePdf;
 
   private onChange: (value: ImageElement) => void = () => {};
   private onTouched: () => void = () => {};
@@ -88,7 +90,13 @@ export class EditImageElementComponent {
   }
 
   get acceptedFiles(): string {
-    return this.editedImageElement.multiSize ? '.jpg,.jpeg' : '.jpg,.jpeg,.png,.gif,.svg';
+    if (this.editedImageElement.multiSize) {
+      return '.jpg,.jpeg';
+    } else if (this.editedImageElement.document) {
+      return '.pdf';
+    } else {
+      return '.jpg,.jpeg,.png,.gif,.svg';
+    }
   }
 
   openImageModal(content: TemplateRef<any>) {

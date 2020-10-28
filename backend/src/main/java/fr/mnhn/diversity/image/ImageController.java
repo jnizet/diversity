@@ -54,8 +54,7 @@ public class ImageController {
                              " exists in the database but not in the file " + imageStorageService.imagePath(image));
             throw new NotFoundException();
         }
-        return createResponse(image, imageStorageService.imageResource(image));
-
+        return createInlineResponse(image, imageStorageService.imageResource(image));
     }
 
     @GetMapping("/{imageId}/image/{imageSize}")
@@ -82,10 +81,21 @@ public class ImageController {
             throw new NotFoundException();
         }
 
-        return createResponse(image, foundImageResource);
+        return createInlineResponse(image, foundImageResource);
     }
 
-    private ResponseEntity<Resource> createResponse(Image image, Resource imageResource) throws IOException {
+    @GetMapping("/{imageId}/document")
+    public ResponseEntity<Resource> getDocumentBytes(@PathVariable("imageId") Long imageId) throws IOException {
+        Image image = imageRepository.findById(imageId).orElseThrow(NotFoundException::new);
+        if (!imageStorageService.imageExists(image)) {
+            LOGGER.error("Document with ID " + imageId +
+                             " exists in the database but not in the file " + imageStorageService.imagePath(image));
+            throw new NotFoundException();
+        }
+        return createAttachmentResponse(image, imageStorageService.imageResource(image));
+    }
+
+    private ResponseEntity<Resource> createInlineResponse(Image image, Resource imageResource) throws IOException {
         // we set the content disposition so that if the user wants to save the image, the suggested file name
         // will be the original file name rather than `<imageId>.<extension>`.
         String contentDisposition =
@@ -93,7 +103,19 @@ public class ImageController {
                               .filename(image.getOriginalFileName())
                               .build()
                               .toString();
+        return createResponse(image, imageResource, contentDisposition);
+    }
 
+    private ResponseEntity<Resource> createAttachmentResponse(Image image, Resource imageResource) throws IOException {
+        String contentDisposition =
+            ContentDisposition.builder("attachment")
+                              .filename(image.getOriginalFileName())
+                              .build()
+                              .toString();
+        return createResponse(image, imageResource, contentDisposition);
+    }
+
+    private ResponseEntity<Resource> createResponse(Image image, Resource imageResource, String contentDisposition) throws IOException {
         // we tell the browser to cache the image for 365 days, because images are supposed to be immutable:
         // if we change the image, then we should change its ID
         return ResponseEntity.ok()

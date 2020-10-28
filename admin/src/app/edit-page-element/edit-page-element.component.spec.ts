@@ -129,7 +129,8 @@ describe('EditPageElementComponent', () => {
       name: 'image',
       alt: 'Image 1',
       imageId: 42,
-      multiSize: true
+      multiSize: true,
+      document: false
     };
     tester.componentInstance.form.get('element').setValue(image);
     tester.detectChanges();

@@ -13,6 +13,7 @@ public final class ImageElementDTO extends PageElementDTO {
     private final String alt;
     // model
     private final boolean multiSize;
+    private final boolean document;
 
     public ImageElementDTO(ImageElement image, Image value) {
         super(PageElementType.IMAGE, image);
@@ -20,6 +21,7 @@ public final class ImageElementDTO extends PageElementDTO {
         this.imageId = value.getImageId();
         this.alt = value.getAlt();
         this.multiSize = image.isMultiSize();
+        this.document = image.isDocument();
     }
 
     public Long getId() {
@@ -36,5 +38,9 @@ public final class ImageElementDTO extends PageElementDTO {
 
     public boolean isMultiSize() {
         return multiSize;
+    }
+
+    public boolean isDocument() {
+        return document;
     }
 }

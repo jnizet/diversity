@@ -22,6 +22,7 @@ export interface TextElement extends BasePageElement {
 export interface ImageElement extends BasePageElement {
   type: 'IMAGE';
   multiSize: boolean;
+  document: boolean;
   imageId: number;
   alt: string;
 }

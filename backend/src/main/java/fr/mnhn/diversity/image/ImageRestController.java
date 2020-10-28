@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import javax.imageio.ImageIO;
 
 import fr.mnhn.diversity.common.exception.BadRequestException;
@@ -47,8 +48,9 @@ public class ImageRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ImageDTO create(@RequestParam(value = "multisize", defaultValue = "false") boolean multiSize,
+                           @RequestParam(value = "document", defaultValue = "false") boolean document,
                            @RequestParam("file") MultipartFile file) {
-        ImageType imageType = getAndValidateImageType(multiSize, file);
+        ImageType imageType = getAndValidateImageType(multiSize, document, file);
 
         Image image = new Image(null, imageType.getMediaType().toString(), file.getOriginalFilename());
         image = imageRepository.create(image);
@@ -58,22 +60,29 @@ public class ImageRestController {
         return new ImageDTO(image);
     }
 
-    private ImageType getAndValidateImageType(boolean multiSize, MultipartFile file) {
+    private ImageType getAndValidateImageType(boolean multiSize, boolean document, MultipartFile file) {
         if (file.getContentType() == null) {
             throw new BadRequestException("Content type of file must be set");
         }
-        MediaType mediaType = MediaType.parseMediaType(file.getContentType());
-        if (multiSize) {
-            if (!mediaType.isCompatibleWith(ImageType.JPG.getMediaType())) {
-                throw new BadRequestException("The content type must be " + ImageType.JPG.getMediaType() + " for multi-size images");
-            }
-            return ImageType.JPG;
-        } else {
-            return Arrays.stream(ImageType.values())
-                         .filter(imageType -> imageType.getMediaType().isCompatibleWith(mediaType))
-                         .findAny()
-                         .orElseThrow(() -> new BadRequestException("The content type is not one of the accepted content types"));
+        if (document && multiSize) {
+            throw new BadRequestException("An image may not be a document and multiSize at the same time");
         }
+        MediaType mediaType = MediaType.parseMediaType(file.getContentType());
+
+        Set<ImageType> acceptedImageTypes;
+        if (multiSize) {
+            acceptedImageTypes = Set.of(ImageType.JPG);
+        } else if (document) {
+            acceptedImageTypes = Set.of(ImageType.PDF);
+        } else {
+            acceptedImageTypes = EnumSet.complementOf(EnumSet.of(ImageType.PDF));
+        }
+
+        return acceptedImageTypes
+            .stream()
+            .filter(imageType -> imageType.getMediaType().isCompatibleWith(mediaType))
+            .findAny()
+            .orElseThrow(() -> new BadRequestException("The content type is not one of the accepted content types"));
     }
 
     private void saveImage(boolean multiSize, MultipartFile file, Image image) {
