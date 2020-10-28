@@ -23,10 +23,10 @@ describe('ImageService', () => {
 
     const file = {} as File;
 
-    service.createImage(file, false).subscribe(image => (actual = image));
+    service.createImage(file, false, false).subscribe(image => (actual = image));
 
     const expected = {} as Image;
-    const testRequest = http.expectOne({ method: 'POST', url: '/api/images' });
+    const testRequest = http.expectOne({ method: 'POST', url: '/api/images?multisize=false&document=false' });
     expect(testRequest.request.body instanceof FormData).toBeTrue();
     expect((testRequest.request.body as FormData).has('file')).toBeTrue();
     testRequest.flush(expected);
@@ -38,10 +38,25 @@ describe('ImageService', () => {
 
     const file = {} as File;
 
-    service.createImage(file, true).subscribe(image => (actual = image));
+    service.createImage(file, true, false).subscribe(image => (actual = image));
 
     const expected = {} as Image;
-    http.expectOne({ method: 'POST', url: '/api/images?multisize=true' }).flush(expected);
+    http.expectOne({ method: 'POST', url: '/api/images?multisize=true&document=false' }).flush(expected);
+    expect(actual).toBe(expected);
+  });
+
+  it('should create a document', () => {
+    let actual: Image = null;
+
+    const file = {} as File;
+
+    service.createImage(file, false, true).subscribe(image => (actual = image));
+
+    const expected = {} as Image;
+    const testRequest = http.expectOne({ method: 'POST', url: '/api/images?multisize=false&document=true' });
+    expect(testRequest.request.body instanceof FormData).toBeTrue();
+    expect((testRequest.request.body as FormData).has('file')).toBeTrue();
+    testRequest.flush(expected);
     expect(actual).toBe(expected);
   });
 });

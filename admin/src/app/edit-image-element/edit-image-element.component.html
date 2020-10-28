@@ -12,7 +12,8 @@
           <div *ngIf="!uploading && !imageGroup.value.imageId" class="text-center text-muted no-image mt-2">
             <fa-icon [icon]="imageIcon" size="4x"></fa-icon>
             <br />
-            Aucune image sélectionnée
+            <span *ngIf="!editedImageElement.document">Aucune image sélectionnée</span>
+            <span *ngIf="editedImageElement.document">Aucun document sélectionné</span>
           </div>
           <ng-container *ngIf="!uploading && imageGroup.value.imageId">
             <div *ngIf="!editedImageElement.document" class="image-div">

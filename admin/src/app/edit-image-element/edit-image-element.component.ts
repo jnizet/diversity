@@ -118,7 +118,7 @@ export class EditImageElementComponent {
     const file = fileInput.files[0];
 
     this.imageService
-      .createImage(file, this.editedImageElement.multiSize)
+      .createImage(file, this.editedImageElement.multiSize, this.editedImageElement.document)
       .pipe(finalize(() => (this.uploading = false)))
       .subscribe(image => this.imageGroup.patchValue({ imageId: image.id }));
 

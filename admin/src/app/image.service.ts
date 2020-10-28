@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 export class ImageService {
   constructor(private http: HttpClient) {}
 
-  createImage(file: File, multiSize: boolean): Observable<Image> {
+  createImage(file: File, multiSize: boolean, document: boolean): Observable<Image> {
     const body = new FormData();
     body.set('file', file);
-    const params = multiSize ? { multisize: 'true' } : {};
+    const params = { multisize: `${multiSize}`, document: `${document}` };
     return this.http.post<Image>('/api/images', body, { params });
   }
 }

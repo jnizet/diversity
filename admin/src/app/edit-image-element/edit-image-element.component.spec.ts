@@ -160,6 +160,7 @@ describe('EditImageElementComponent', () => {
     tester.detectChanges();
 
     expect(tester.noImage).not.toBeNull();
+    expect(tester.noImage).toContainText('Aucune image sélectionnée');
     expect(tester.imageDiv).toBeNull();
     expect(tester.documentDiv).toBeNull();
     expect(tester.chooseImageButton).toHaveText('Choisir une image');
@@ -171,6 +172,7 @@ describe('EditImageElementComponent', () => {
     tester.detectChanges();
 
     expect(tester.noImage).not.toBeNull();
+    expect(tester.noImage).toContainText('Aucun document sélectionné');
     expect(tester.imageDiv).toBeNull();
     expect(tester.documentDiv).toBeNull();
     expect(tester.chooseImageButton).toHaveText('Choisir un document');
@@ -225,7 +227,39 @@ describe('EditImageElementComponent', () => {
     expect(tester.uploading).toBeNull();
     expect(tester.image.attr('src')).toBe('/images/54/image');
     expect(tester.chooseImageButton.disabled).toBe(false);
-    expect(imageService.createImage).toHaveBeenCalledWith(file, false);
+    expect(imageService.createImage).toHaveBeenCalledWith(file, false, false);
+  });
+
+  it('should upload a document', () => {
+    tester.componentInstance.imageElement.document = true;
+
+    const imageSubject = new Subject<Image>();
+    imageService.createImage.and.returnValue(imageSubject);
+    tester.detectChanges();
+
+    const file = {} as File;
+    const fakeFileEvent = ({
+      target: {
+        files: [file]
+      }
+    } as unknown) as Event;
+
+    spyOn(tester.editImageComponent, 'chooseImage').and.callFake(() => tester.editImageComponent.upload(fakeFileEvent));
+    tester.chooseImageButton.click();
+    expect(tester.documentDiv).toBeNull();
+    expect(tester.uploading).not.toBeNull();
+    expect(tester.chooseImageButton.disabled).toBe(true);
+
+    imageSubject.next({
+      id: 54
+    } as Image);
+    imageSubject.complete();
+    tester.detectChanges();
+
+    expect(tester.documentDiv).not.toBeNull();
+    expect(tester.uploading).toBeNull();
+    expect(tester.chooseImageButton.disabled).toBe(false);
+    expect(imageService.createImage).toHaveBeenCalledWith(file, false, true);
   });
 
   it('should emit the new image element on change', () => {
