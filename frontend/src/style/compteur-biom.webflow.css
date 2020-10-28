@@ -4144,7 +4144,7 @@ blockquote {
   transform: translate(-40%, 0px);
 }
 
-.section-404 {
+.section-error {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -4165,13 +4165,13 @@ blockquote {
   align-items: center;
 }
 
-.page-404-text {
+.error-page-text {
   width: 480px;
   margin-top: -10px;
   text-align: center;
 }
 
-.page-404-title {
+.error-page-title {
   z-index: 1;
   overflow: visible;
   width: 100vw;
@@ -4185,68 +4185,68 @@ blockquote {
   text-transform: uppercase;
 }
 
-.page-404-title.apropos {
+.error-page-title.apropos {
   top: 50%;
   white-space: nowrap;
 }
 
-.page-404-title.zoom {
+.error-page-title.zoom {
   top: -9%;
   opacity: 0.8;
 }
 
-.page-404-title.indicateurs {
+.error-page-title.indicateurs {
   bottom: 340px;
   overflow: hidden;
 }
 
-.page-404-title.apprendre {
+.error-page-title.apprendre {
   top: -120px;
   z-index: -1;
 }
 
-.page-404-title.temoignages {
+.error-page-title.temoignages {
   top: 50%;
   white-space: nowrap;
 }
 
-.page-404-title.temoignage {
+.error-page-title.temoignage {
   top: 50%;
 }
 
-.page-404-title.espece {
+.error-page-title.espece {
   top: 84%;
 }
 
-.page-404-title.comprendre {
+.error-page-title.comprendre {
   top: 63%;
 }
 
-.page-404-title.ecogeste {
+.error-page-title.ecogeste {
   top: 140px;
 }
 
-.page-404-title.agir {
+.error-page-title.agir {
   top: 7%;
 }
 
-.page-404-title.action {
+.error-page-title.action {
   top: 10%;
 }
 
-.page-404-title.mission {
+.error-page-title.mission {
   top: 85%;
 }
 
-.page-404-title.ecogestes {
+.error-page-title.ecogestes {
   top: 25%;
 }
 
-.page-404-title.decouvrir {
+.error-page-title.decouvrir {
   top: 40%;
 }
 
-.page-404-title.contact {
+.error-page-title.contact {
   top: 24%;
 }
 
@@ -5270,15 +5270,15 @@ blockquote {
   .section-decoration-static.temoignage {
     top: 63%;
   }
-  .page-404-title {
+  .error-page-title {
     font-size: 150px;
     line-height: 150px;
     white-space: nowrap;
   }
-  .page-404-title.apropos {
+  .error-page-title.apropos {
     top: 60%;
   }
-  .page-404-title.temoignage {
+  .error-page-title.temoignage {
     top: 63%;
   }
   .legals-content h2 {

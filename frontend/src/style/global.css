@@ -148,19 +148,19 @@ blockquote:before {
 
 .sticky .nav,
 .dark-nav .nav,
-.page-404 .nav {
+.error-page .nav {
     background-color: white;
 }
 
 .sticky .nav-link,
 .dark-nav .nav-link,
-.page-404 .nav-link {
+.error-page .nav-link {
     color: #122c33;
 }
 
 .sticky .logo-dark,
 .dark-nav .logo-dark,
-.page-404 .logo-dark,
+.error-page .logo-dark,
 .menu-open .logo-dark,
 .indicateur-fiche .logo-dark {
     opacity: 1;
@@ -168,7 +168,7 @@ blockquote:before {
 
 .sticky .logo-white,
 .dark-nav .logo-white,
-.page-404 .logo-white,
+.error-page .logo-white,
 .menu-open .logo-white,
 .indicateur-fiche .logo-white {
     opacity: 0;
@@ -213,7 +213,7 @@ blockquote:before {
 .sticky .color-change,
 .menu-open .color-change,
 .dark-nav .color-change,
-.page-404x .color-change {
+.error-page .color-change {
     stroke: #122c33;
     fill: #122c33;
 }
