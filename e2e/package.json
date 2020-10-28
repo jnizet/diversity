@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "e2e": "cypress open",
-    "e2e:headless": "cypress run --headless",
+    "e2e:headless": "cypress run --headless -b chrome",
     "start:e2e": "cd .. && java -jar backend/build/libs/diversity.jar --spring.profiles.active=e2e",
     "start:e2e:ci": "cd .. && java -jar backend/build/libs/diversity.jar --spring.profiles.active=e2e,ci",
     "e2e:standalone": "start-server-and-test 'yarn start:e2e' http-get://localhost:8081 'yarn e2e:headless'",

@@ -20,4 +20,4 @@ test:
     # because Yarn can't install otherwise, with a privilege issue.
     # As we run as sudo, we can't rely on environment variable to know if we are on CI or not
     # so we need to manually pass the CI property, used in the gradle config
-    - sudo ./gradlew check build --no-daemon -PCI=true -xe2e:e2e
+    - sudo ./gradlew check build --no-daemon -PCI=true
