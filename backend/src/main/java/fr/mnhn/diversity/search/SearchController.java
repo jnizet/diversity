@@ -12,6 +12,7 @@ import fr.mnhn.diversity.act.ActModel;
 import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,7 @@ public class SearchController {
         urlFactories.put(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), r -> "/indicateurs/" + r.getName());
         urlFactories.put(ActModel.ACT_PAGE_MODEL.getName(), r -> "/agir-ensemble");
         urlFactories.put(ActModel.SCIENCE_PAGE_MODEL.getName(), r -> "/sciences-participatives");
+        urlFactories.put(LegalTermsModel.LEGAL_TERMS_PAGE_MODEL.getName(), r -> "/mentions-legales");
     }
 
     @GetMapping

@@ -13,6 +13,7 @@ import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.indicator.IndicatorRepository;
+import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.model.BasicPage;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.meta.PageModel;
@@ -60,7 +61,8 @@ public class PageLinkRestController {
             getStaticLink(EcogestureModel.ECO_GESTURE_HOME_PAGE_NAME, EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL),
             getStaticLink(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_NAME, EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL),
             getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL),
-            getStaticLink(ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL)
+            getStaticLink(ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL),
+            getStaticLink(LegalTermsModel.LEGAL_TERMS_PAGE_NAME, LegalTermsModel.LEGAL_TERMS_PAGE_MODEL)
         );
     }
 

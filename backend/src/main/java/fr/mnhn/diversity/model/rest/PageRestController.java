@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
@@ -12,6 +14,7 @@ import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.model.Element;
 import fr.mnhn.diversity.model.ElementType;
 import fr.mnhn.diversity.model.Image;
@@ -51,21 +54,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class PageRestController {
 
     private final PageRepository pageRepository;
-    private Map<String, PageModel> modelsByName = new HashMap<>();
+    private Map<String, PageModel> modelsByName;
 
     public PageRestController(PageRepository pageRepository) {
         this.pageRepository = pageRepository;
-        modelsByName.put(HomeModel.HOME_PAGE_MODEL.getName(), HomeModel.HOME_PAGE_MODEL);
-        modelsByName.put(AboutModel.ABOUT_PAGE_MODEL.getName(), AboutModel.ABOUT_PAGE_MODEL);
-        modelsByName.put(ActModel.ACT_PAGE_MODEL.getName(), ActModel.ACT_PAGE_MODEL);
-        modelsByName.put(ActModel.SCIENCE_PAGE_MODEL.getName(), ActModel.SCIENCE_PAGE_MODEL);
-        modelsByName.put(EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL);
-        modelsByName.put(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), EcogestureModel.ECO_GESTURE_PAGE_MODEL);
-        modelsByName.put(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(), EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL);
-        modelsByName.put(TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), TerritoryModel.TERRITORY_HOME_PAGE_MODEL);
-        modelsByName.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), TerritoryModel.TERRITORY_PAGE_MODEL);
-        modelsByName.put(IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), IndicatorModel.INDICATOR_HOME_PAGE_MODEL);
-        modelsByName.put(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), IndicatorModel.INDICATOR_PAGE_MODEL);
+        modelsByName =
+            Stream.of(HomeModel.HOME_PAGE_MODEL,
+                      AboutModel.ABOUT_PAGE_MODEL,
+                      ActModel.ACT_PAGE_MODEL,
+                      ActModel.SCIENCE_PAGE_MODEL,
+                      EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL,
+                      EcogestureModel.ECO_GESTURE_PAGE_MODEL,
+                      EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL,
+                      TerritoryModel.TERRITORY_HOME_PAGE_MODEL,
+                      TerritoryModel.TERRITORY_PAGE_MODEL,
+                      IndicatorModel.INDICATOR_HOME_PAGE_MODEL,
+                      IndicatorModel.INDICATOR_PAGE_MODEL,
+                      LegalTermsModel.LEGAL_TERMS_PAGE_MODEL)
+                .collect(Collectors.toUnmodifiableMap(PageModel::getName, Function.identity()));
     }
 
     /**

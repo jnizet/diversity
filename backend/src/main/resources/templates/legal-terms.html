@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='dark-nav')}"
+>
+  <head>
+    <title th:text="${page.title}">Mentions légales</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
+    <meta th:ref="og" property="og:image" th:attr="content=@{/assets/images/BIOM.jpg}" />
+  </head>
+
+  <body>
+    <main class="main simple-page" th:object="${page.content}">
+      <h1 class="page-title" th:text="*{title.text}">Mentions légales</h1>
+      <div class="section-decoration-text legals">mentions légales</div>
+      <div class="legals-content w-richtext">
+        <div th:each="paragraph: *{paragraphs}">
+          <h2 th:text="${paragraph.title.text}"></h2>
+          <p th:text="${paragraph.text.text}"></p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

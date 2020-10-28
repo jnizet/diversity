@@ -99,6 +99,7 @@ insert into page (id, name, model_name, title) values
    (6, 'Act', 'act', 'Agir ensemble'),
    (7, 'Science', 'science', 'Sciences participatives'),
    (8, 'Territories', 'territories', 'Territoires'),
+   (9, 'LegalTerms', 'legal-terms', 'Mentions légales'),
    (10, 'reunion', 'territory', 'La Réunion'),
    (11, 'saint-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
    (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
@@ -256,6 +257,13 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 8, 'TEXT', 'header.text', 'Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités humaines. Naviguez parmi les portraits biodiversité des différents territoires et découvrez l’histoire des espèces et des écosystèmes qui les peuplent, les enjeux de chaque territoire et les initiatives des acteurs locaux pour les préserver.', null, null, null, false),
     (nextval('page_element_seq'), 8, 'TEXT', 'header.population', '6 274', null, null, null, false),
     (nextval('page_element_seq'), 8, 'TEXT', 'header.species', '85 117', null, null, null, false),
+
+--     Legal terms
+    (nextval('page_element_seq'), 9, 'TEXT', 'title', 'Mentions légales', null, null, null, true),
+    (nextval('page_element_seq'), 9, 'TEXT', 'paragraphs.0.title', 'Clause 1', null, null, null, false),
+    (nextval('page_element_seq'), 9, 'TEXT', 'paragraphs.0.text', 'Bla bla bla', null, null, null, false),
+    (nextval('page_element_seq'), 9, 'TEXT', 'paragraphs.1.title', 'Clause 2', null, null, null, false),
+    (nextval('page_element_seq'), 9, 'TEXT', 'paragraphs.1.text', 'Bla bla bla', null, null, null, false),
 
 --     Territory
 --     Reunion

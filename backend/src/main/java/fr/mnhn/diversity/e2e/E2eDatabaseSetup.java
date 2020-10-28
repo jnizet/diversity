@@ -23,6 +23,7 @@ import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.image.ImageType;
 import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.boot.CommandLineRunner;
@@ -147,11 +148,13 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long act = 5L;
         Long science = 7L;
         Long territoryHome = 8L;
+        Long legalTerms = 9L;
         Long reunion = 10L;
         Long stPierreEtMiquelon = 11L;
         Long indicatorHome = 29L;
         Long especesEnvahissantes = 30L;
         Long deforestation = 31L;
+        Long ecogestureAct = 32L;
         Operation pages =
             insertInto("page")
                 .columns("id", "name", "model_name", "title")
@@ -180,7 +183,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(indicatorHome, IndicatorModel.INDICATOR_HOME_PAGE_NAME, IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), "Indicateurs")
                 .values(especesEnvahissantes, "especes-envahissantes", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes")
                 .values(deforestation, "deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation")
-                .values(32L, "ecogesture-act", EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(), "Section Agir pour la science des ecogestes")
+                .values(legalTerms, LegalTermsModel.LEGAL_TERMS_PAGE_NAME, LegalTermsModel.LEGAL_TERMS_PAGE_MODEL.getName(), "Mentions légales")
+                .values(ecogestureAct, "ecogesture-act", EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(), "Section Agir pour la science des ecogestes")
                 .build();
 
         String png = ImageType.PNG.getMediaType().toString();
@@ -363,7 +367,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
         Operation ecogestureActSectionElements =
             insertInto("page_element")
-                .withDefaultValue("page_id", 32L)
+                .withDefaultValue("page_id", ecogestureAct)
                 .withGeneratedValue("id", elementIdGenerator)
                 .columns("type", "key", "text", "image_id", "alt", "href", "title")
                 .values(TEXT, "title", "Agir pour la science", null, null, null, true)
@@ -505,6 +509,18 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
                 .build();
 
+        Operation legalTermsElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", legalTerms)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "title", "Mentions légales", null, null, null, true)
+                .values(TEXT, "paragraphs.0.title", "Clause 1", null, null, null, false)
+                .values(TEXT, "paragraphs.0.text", "Bla bla", null, null, null, false)
+                .values(TEXT, "paragraphs.1.title", "Clause 2", null, null, null, false)
+                .values(TEXT, "paragraphs.1.text", "Bla bla", null, null, null, false)
+                .build();
+
         Operation users = insertInto("app_user")
             .withGeneratedValue("id", ValueGenerators.sequence())
             .columns("login", "hashed_password")
@@ -533,6 +549,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             indicatorHomeElements,
             especesEnvahissantesElements,
             deforestationElements,
+            legalTermsElements,
             users
         ));
         // 13 ecogestures
