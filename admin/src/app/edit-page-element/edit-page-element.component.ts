@@ -20,6 +20,7 @@ import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCES
 export class EditPageElementComponent implements ControlValueAccessor {
   @Input() elementModel: PageElement;
   @Input() submitted: boolean;
+  @Input() level: number;
   element: PageElement;
   elementGroup: FormGroup;
   private onChange: (value: any) => void = () => {};

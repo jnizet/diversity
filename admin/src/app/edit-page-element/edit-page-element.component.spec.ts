@@ -13,11 +13,12 @@ import { EditImageElementComponent } from '../edit-image-element/edit-image-elem
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HeadingDirective } from '../heading/heading.directive';
 
 @Component({
   template: `
     <form [formGroup]="form">
-      <biom-edit-page-element formControlName="element" [elementModel]="model"></biom-edit-page-element>
+      <biom-edit-page-element formControlName="element" [elementModel]="model" level="3"></biom-edit-page-element>
     </form>
   `
 })
@@ -57,8 +58,8 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
     return this.debugElement.query(By.directive(EditImageElementComponent));
   }
 
-  get listLabel() {
-    return this.element('label');
+  get listHeading() {
+    return this.element('h3');
   }
 
   get addUnitButton() {
@@ -69,8 +70,8 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
     return this.button('.remove-unit');
   }
 
-  get sectionLabel() {
-    return this.element('strong');
+  get sectionHeading() {
+    return this.element('h3');
   }
 }
 
@@ -85,7 +86,8 @@ describe('EditPageElementComponent', () => {
         EditPageElementComponent,
         EditTextElementComponent,
         EditLinkElementComponent,
-        EditImageElementComponent
+        EditImageElementComponent,
+        HeadingDirective
       ]
     });
     tester = new DummyFormComponentTester();
@@ -166,7 +168,7 @@ describe('EditPageElementComponent', () => {
     tester.detectChanges();
 
     expect(tester.linkComponents.length).toBe(2);
-    expect(tester.listLabel).toHaveText('Liens');
+    expect(tester.listHeading).toHaveText('Liens');
     const component = tester.linkComponent.componentInstance as EditLinkElementComponent;
     expect(component.editedLinkElement).toBe(link1);
 
@@ -206,7 +208,7 @@ describe('EditPageElementComponent', () => {
     tester.componentInstance.model = sectionModel;
     tester.detectChanges();
 
-    expect(tester.sectionLabel).toHaveText('Liens');
+    expect(tester.sectionHeading).toHaveText('Liens');
     expect(tester.linkComponents.length).toBe(2);
     const component = tester.linkComponent.componentInstance as EditLinkElementComponent;
     expect(component.editedLinkElement).toBe(link1);

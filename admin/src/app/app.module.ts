@@ -29,6 +29,7 @@ import { EditTextElementComponent } from './edit-text-element/edit-text-element.
 import { EditLinkElementComponent } from './edit-link-element/edit-link-element.component';
 import { EditImageElementComponent } from './edit-image-element/edit-image-element.component';
 import { PageLinkComponent } from './home/page-link/page-link.component';
+import { HeadingDirective } from './heading/heading.directive';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { PageLinkComponent } from './home/page-link/page-link.component';
     EditTextElementComponent,
     EditLinkElementComponent,
     EditImageElementComponent,
-    PageLinkComponent
+    PageLinkComponent,
+    HeadingDirective
   ],
   imports: [
     BrowserModule,

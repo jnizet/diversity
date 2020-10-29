@@ -33,6 +33,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Image } from '../image.model';
 import { By } from '@angular/platform-browser';
 import { ImageService } from '../image.service';
+import { HeadingDirective } from '../heading/heading.directive';
 
 class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   constructor() {
@@ -211,7 +212,8 @@ describe('EditPageComponent', () => {
         EditTextElementComponent,
         EditLinkElementComponent,
         EditImageElementComponent,
-        ValidationDefaultsComponent
+        ValidationDefaultsComponent,
+        HeadingDirective
       ],
       providers: [
         { provide: PageService, useValue: pageService },

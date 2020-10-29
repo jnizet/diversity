@@ -1,34 +1,37 @@
 <div *ngIf="element" [formGroup]="elementGroup">
   <!-- SectionElement -->
-  <div class="my-5" *ngIf="isSection(element)">
-    <strong>{{ element.description }}</strong>
+  <div class="mb-5 pl-3 left-border" *ngIf="isSection(element)">
+    <biom-heading [level]="level" [title]="element.description"></biom-heading>
     <div *ngFor="let sectionElement of element.elements">
       <biom-edit-page-element
         [formControlName]="sectionElement.name"
         [submitted]="submitted"
         [elementModel]="getElementModel(sectionElement.name)"
+        [level]="level + 1"
       ></biom-edit-page-element>
     </div>
   </div>
   <!-- ListUnitElement -->
-  <div *ngIf="isListUnit(element)" class="my-3">
+  <div *ngIf="isListUnit(element)">
     <div *ngFor="let unitElement of element.elements">
       <biom-edit-page-element
         [formControlName]="unitElement.name"
         [submitted]="submitted"
         [elementModel]="getElementModel(unitElement.name)"
+        [level]="level + 1"
       ></biom-edit-page-element>
     </div>
   </div>
   <!-- ListElement -->
-  <div *ngIf="isList(element)" class="mb-2">
-    <label>{{ element.description }}</label>
+  <div *ngIf="isList(element)" class="mb-5 pl-3 left-border">
+    <biom-heading [level]="level" [title]="element.description"></biom-heading>
     <div formArrayName="elements">
       <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2 unit">
         <biom-edit-page-element
           [formControlName]="unitIndex"
           [submitted]="submitted"
           [elementModel]="getElementModel(listElement.name)"
+          [level]="level + 1"
         ></biom-edit-page-element>
         <button type="button" class="btn btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
           Enlever l'élément de la liste

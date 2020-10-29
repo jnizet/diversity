@@ -2,7 +2,7 @@
   <label>{{ editedImageElement.description }}</label>
   <div class="form-row">
     <div class="col-4">
-      <label *ngIf="!editedImageElement.document">Image</label>
+      <label *ngIf="!editedImageElement.document">Source de l'image</label>
       <label *ngIf="editedImageElement.document">Document</label>
       <div class="border rounded p-2" [class.border-danger]="imageGroup.get('imageId').invalid && imageGroup.get('imageId').touched">
         <div class="text-center thumbnail">

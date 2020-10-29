@@ -1,4 +1,10 @@
+@import '../../common';
+
 .unit {
   border: 1px grey dashed;
   padding: 20px;
+}
+
+.left-border {
+  border-left: 4px solid $info;
 }
