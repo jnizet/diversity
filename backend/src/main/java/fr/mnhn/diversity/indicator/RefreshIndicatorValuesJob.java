@@ -11,15 +11,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Scheduled job used to refresh the indicator values every night
+ * Scheduled job used to refresh the indicator values every night.
+ * It also executes at startup to immediately get the indicator values when the application starts
  * @author JB Nizet
  */
 @Component
+@Profile("!e2e")
 public class RefreshIndicatorValuesJob implements ApplicationRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RefreshIndicatorValuesJob.class);
@@ -65,6 +68,7 @@ public class RefreshIndicatorValuesJob implements ApplicationRunner {
     }
 
     @Override
+    @Transactional
     public void run(ApplicationArguments args) {
         refreshIndicatorValues();
     }
