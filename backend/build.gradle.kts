@@ -67,4 +67,22 @@ tasks {
         workingDir = rootDir
         args = listOf("--spring.profiles.active=dev")
     }
+
+    register("generateSecretKey", JavaExec::class) {
+        description = "Generates a secret key to populate the diversity.security.secret-key property"
+        group = "application"
+        classpath = sourceSets.main.get().runtimeClasspath
+        mainClass.set("fr.mnhn.diversity.admin.security.JwtHelper")
+    }
+
+    register("hashPassword", JavaExec::class) {
+        description = "Salts and hashes a user password passed with `-Ppassword=...`"
+        group = "application"
+        classpath = sourceSets.main.get().runtimeClasspath
+        mainClass.set("fr.mnhn.diversity.admin.security.PasswordHasher")
+        val argumentProvider = CommandLineArgumentProvider {
+            listOf(((project.findProperty("password") ?: throw GradleException("No property password found. Use -Ppassword=...")) as String))
+        }
+        argumentProviders.add(argumentProvider)
+    }
 }
