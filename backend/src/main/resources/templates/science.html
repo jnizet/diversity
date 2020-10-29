@@ -141,8 +141,7 @@
                 <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
               </div>
               <div class="text-big col-2" th:text="*{application.subtitle.text}">J'agis en ligne</div>
-              <!-- TODO what is the link? -->
-              <a th:href="*{application.downloadLink.text}" class="cta-secondary yellow" th:text="*{application.downloadLink.text}">
+              <a th:href="*{application.downloadLink.href}" class="cta-secondary yellow" th:text="*{application.downloadLink.text}">
                 Je télécharge l'application INPN Espaces
               </a>
             </div>

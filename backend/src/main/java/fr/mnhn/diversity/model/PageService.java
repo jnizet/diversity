@@ -2,9 +2,12 @@ package fr.mnhn.diversity.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import fr.mnhn.diversity.common.exception.BadRequestException;
 import fr.mnhn.diversity.model.meta.ImageElement;
 import fr.mnhn.diversity.model.meta.LinkElement;
 import fr.mnhn.diversity.model.meta.ListElement;
@@ -25,8 +28,7 @@ public class PageService {
     /**
      * Returns a {@link PageContent} containing the information of the given page, and its content, structured as
      * described in {@link PageContent#content}.
-     * F
-     * or example, for a page model such as
+     * For example, for a page model such as
      *
      * <pre>
      *     - ImageElement background
@@ -55,21 +57,47 @@ public class PageService {
         return new PageContent(page, visitor.getResult());
     }
 
+    /**
+     * Validates that the given page contains all the required elements and nothing else based on the
+     * given page model
+     */
+    public void validatePageContent(PageModel model, Page page) throws BadRequestException {
+        PagePopulatorVisitor visitor = new PagePopulatorVisitor(page, "");
+        try {
+            for (PageElement pageElement : model.getElements()) {
+                pageElement.accept(visitor);
+            }
+        } catch (Exception e) {
+            throw new BadRequestException("Invalid page: " + e.getMessage());
+        }
+        if (!visitor.allElementsUsed()) {
+            throw new BadRequestException("Invalid page: some elements are not part of the model");
+        }
+    }
+
     private static class PagePopulatorVisitor implements PageElementVisitor<Void> {
         private final Page page;
         private final String prefix;
         private final Map<String, Object> result = new HashMap<>();
+        private final Set<Element> usedElements;
 
         public PagePopulatorVisitor(Page page, String prefix) {
             this.page = page;
             this.prefix = prefix;
+            this.usedElements = new HashSet<>();
+        }
+
+        public PagePopulatorVisitor(Page page, String prefix, Set<Element> usedElements) {
+            this.page = page;
+            this.prefix = prefix;
+            this.usedElements = usedElements;
         }
 
         @Override
         public Void visitSection(SectionElement section) {
             String name = section.getName();
             String key = prefix + name;
-            PagePopulatorVisitor sectionVisitor = new PagePopulatorVisitor(page,key + ".");
+            PagePopulatorVisitor sectionVisitor = new PagePopulatorVisitor(page,key + ".", usedElements);
             for (PageElement element : section.getElements()) {
                 element.accept(sectionVisitor);
             }
@@ -105,7 +133,7 @@ public class PageService {
                         // the key is not found, so we there is no element to add to the list anymore
                         stop = true;
                     } else {
-                        PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix);
+                        PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix, usedElements);
                         for (PageElement element : list.getElements()) {
                             element.accept(listVisitor);
                         }
@@ -124,7 +152,7 @@ public class PageService {
                 int maxListIndex = PageUtils.findMaxListIndex(page, keyPrefix);
                 for (int i = 0; i <= maxListIndex; i++) {
                     String elementsPrefix = keyPrefix + i + ".";
-                    PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix);
+                    PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix, usedElements);
                     for (PageElement element : list.getElements()) {
                         element.accept(listVisitor);
                     }
@@ -139,7 +167,9 @@ public class PageService {
         public Void visitText(TextElement text) {
             String name = text.getName();
             String key = prefix + name;
-            result.put(name, PageUtils.getElement(page, key, ElementType.TEXT));
+            Element element = PageUtils.getElement(page, key, ElementType.TEXT);
+            result.put(name, element);
+            usedElements.add(element);
             return null;
         }
 
@@ -147,8 +177,9 @@ public class PageService {
         public Void visitImage(ImageElement image) {
             String name = image.getName();
             String key = prefix + name;
-            Image element = ((Image) PageUtils.getElement(page, key, ElementType.IMAGE)).withMultiSize(image.isMultiSize());
-            result.put(name, element);
+            Image element = ((Image) PageUtils.getElement(page, key, ElementType.IMAGE));
+            usedElements.add(element);
+            result.put(name, element.withMultiSize(image.isMultiSize()));
             return null;
         }
 
@@ -156,12 +187,18 @@ public class PageService {
         public Void visitLink(LinkElement link) {
             String name = link.getName();
             String key = prefix + name;
-            result.put(name, PageUtils.getElement(page, key, ElementType.LINK));
+            Element element = PageUtils.getElement(page, key, ElementType.LINK);
+            result.put(name, element);
+            usedElements.add(element);
             return null;
         }
 
         public Map<String, Object> getResult() {
             return result;
+        }
+
+        public boolean allElementsUsed() {
+            return usedElements.containsAll(page.getElements().values());
         }
     }
 }

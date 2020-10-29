@@ -20,6 +20,7 @@ import fr.mnhn.diversity.model.Image;
 import fr.mnhn.diversity.model.Link;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageRepository;
+import fr.mnhn.diversity.model.PageService;
 import fr.mnhn.diversity.model.Text;
 import fr.mnhn.diversity.model.meta.ListElement;
 import fr.mnhn.diversity.model.meta.PageModel;
@@ -45,6 +46,9 @@ class PageRestControllerTest {
     @MockBean
     private PageRepository mockPageRepository;
 
+    @MockBean
+    private PageService mockPageService;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -64,23 +68,25 @@ class PageRestControllerTest {
     private Link secondCarouselLink;
     private Image secondCarouselImage;
     private Page page;
+    private PageModel homePageModel;
 
     @BeforeEach
     void prepare() {
         // override the model with a simpler one
-        controller.setModelsByName(Map.of("home", PageModel.builder("home")
-                                                           .withPath("/")
-                                                           .text("title", "Titre")
-                                                           .section(
-                                                               SectionElement.builder("carousel").describedAs("Carousel")
-                                                                             .text("title", "Titre du carousel")
-                                                                             .list(
-                                                                                 ListElement.builder("slides").describedAs("Slides du carousel")
-                                                                                            .link("link", "Lien du slide")
-                                                                                            .image("image", "Image du slide")
-                                                                             )
-                                                           )
-                                                           .build()));
+        homePageModel = PageModel.builder("home")
+                                 .withPath("/")
+                                 .text("title", "Titre")
+                                 .section(
+                                     SectionElement.builder("carousel").describedAs("Carousel")
+                                                   .text("title", "Titre du carousel")
+                                                   .list(
+                                                       ListElement.builder("slides").describedAs("Slides du carousel")
+                                                                  .link("link", "Lien du slide")
+                                                                  .image("image", "Image du slide")
+                                                   )
+                                 )
+                                 .build();
+        controller.setModelsByName(Map.of(homePageModel.getName(), homePageModel));
 
         title = new Text(101L, "title", "Portail de la diversité");
         carouselTitle = new Text(102L, "carousel.title", "Apprendre en s'amusant");
@@ -200,6 +206,7 @@ class PageRestControllerTest {
             new Link(null, "carousel.slides.0.link", "Lien 1", "https://lien1.fr"),
             new Text(null, "carousel.title", "Vive la bio-diversité")
         );
+        verify(mockPageService).validatePageContent(homePageModel, pageToUpdate);
     }
 
     @Test
@@ -234,5 +241,7 @@ class PageRestControllerTest {
             new Text(null, "carousel.title", "Vive la bio-diversité"),
             new Text(null, "title", "Bienvenu")
         );
+
+        verify(mockPageService).validatePageContent(homePageModel, pageToCreate);
     }
 }

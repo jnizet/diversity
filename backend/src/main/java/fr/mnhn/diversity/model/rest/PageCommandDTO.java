@@ -2,6 +2,11 @@ package fr.mnhn.diversity.model.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,9 +16,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * with their keys already computed ("carousel.slides.0.link").
  */
 public final class PageCommandDTO {
+    @NotBlank
     private final String title;
+    @NotBlank
     private final String name;
-    private final List<ElementCommandDTO> elements;
+    @NotEmpty
+    private final List<@Valid ElementCommandDTO> elements;
 
     @JsonCreator
     public PageCommandDTO(

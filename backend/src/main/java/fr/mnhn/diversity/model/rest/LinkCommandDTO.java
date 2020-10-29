@@ -1,10 +1,14 @@
 package fr.mnhn.diversity.model.rest;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class LinkCommandDTO extends ElementCommandDTO {
+    @NotBlank
     private final String text;
+    @NotBlank
     private final String href;
 
     @JsonCreator

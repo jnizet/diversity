@@ -49,7 +49,6 @@ public class EcogestureRestController {
     @DeleteMapping("/{ecogestureId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("ecogestureId") Long ecogestureId) {
-        // TODO delete the related page if there is one, or prevent the deletion?
         Ecogesture ecogesture = ecogestureRepository.findById(ecogestureId).orElseThrow(NotFoundException::new);
         pageRepository.deleteByNameAndModel(ecogesture.getSlug(), EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName());
         ecogestureRepository.delete(ecogesture);

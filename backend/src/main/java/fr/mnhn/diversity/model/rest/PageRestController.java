@@ -3,26 +3,19 @@ package fr.mnhn.diversity.model.rest;
 import static fr.mnhn.diversity.common.PageModels.ALL_PAGE_MODELS_BY_NAME;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import fr.mnhn.diversity.about.AboutModel;
-import fr.mnhn.diversity.act.ActModel;
+import fr.mnhn.diversity.common.exception.BadRequestException;
 import fr.mnhn.diversity.common.exception.NotFoundException;
-import fr.mnhn.diversity.ecogesture.EcogestureModel;
-import fr.mnhn.diversity.home.HomeModel;
-import fr.mnhn.diversity.indicator.IndicatorModel;
-import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.model.Element;
 import fr.mnhn.diversity.model.ElementType;
 import fr.mnhn.diversity.model.Image;
 import fr.mnhn.diversity.model.Link;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageRepository;
+import fr.mnhn.diversity.model.PageService;
 import fr.mnhn.diversity.model.PageUtils;
 import fr.mnhn.diversity.model.Text;
 import fr.mnhn.diversity.model.meta.ImageElement;
@@ -33,8 +26,6 @@ import fr.mnhn.diversity.model.meta.PageElementVisitor;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
 import fr.mnhn.diversity.model.meta.TextElement;
-import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
-import fr.mnhn.diversity.territory.TerritoryModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -56,10 +47,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class PageRestController {
 
     private final PageRepository pageRepository;
+    private final PageService pageService;
     private Map<String, PageModel> modelsByName;
 
-    public PageRestController(PageRepository pageRepository) {
+    public PageRestController(PageRepository pageRepository, PageService pageService) {
         this.pageRepository = pageRepository;
+        this.pageService = pageService;
         modelsByName = ALL_PAGE_MODELS_BY_NAME;
     }
 
@@ -229,20 +222,28 @@ public class PageRestController {
     public void update(@PathVariable("pageId") Long pageId,
                        @Validated @RequestBody PageCommandDTO command) {
         Page page = pageRepository.findById(pageId).orElseThrow(NotFoundException::new);
+
         ElementCommandVisitor<Element> commandVisitor = new CommandVisitor();
         List<Element> updateElements = command.getElements().stream().map(element -> element.accept(commandVisitor)).collect(Collectors.toList());
         Page updatedPage = new Page(pageId, page.getName(), page.getModelName(), command.getTitle(), updateElements);
-        // TODO validate the page
+
+        pageService.validatePageContent(modelsByName.get(page.getModelName()), updatedPage);
+
         pageRepository.update(updatedPage);
     }
 
     @PostMapping("/models/{modelName}")
     @ResponseStatus(HttpStatus.CREATED)
     public PageValuesDTO create(@PathVariable("modelName") String modelName, @Validated @RequestBody PageCommandDTO command) {
+        if (!modelsByName.containsKey(modelName)) {
+            throw new BadRequestException("invalid model name");
+        }
         ElementCommandVisitor<Element> commandVisitor = new CommandVisitor();
         List<Element> elementsToCreate = command.getElements().stream().map(element -> element.accept(commandVisitor)).collect(Collectors.toList());
         Page page = new Page(null, command.getName(), modelName, command.getTitle(), elementsToCreate);
-        // TODO validate the page
+
+        pageService.validatePageContent(modelsByName.get(page.getModelName()), page);
+
         page = pageRepository.create(page);
         // rebuild the DTO
         PageModel model = modelsByName.get(modelName);

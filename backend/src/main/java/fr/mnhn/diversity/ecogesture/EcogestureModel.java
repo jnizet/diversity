@@ -33,7 +33,6 @@ public final class EcogestureModel {
                               .text("title", "Titre de la rubrique")
                               .multiLineText("text", "Texte de la rubrique")
                               .text("quote", "Citation de la rubrique")
-                              // TODO add indicator
                  )
                  .section(SectionElement
                               .builder("action")

@@ -1,9 +1,13 @@
 package fr.mnhn.diversity.model.rest;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class TextCommandDTO extends ElementCommandDTO {
+
+    @NotBlank
     private final String text;
 
     @JsonCreator

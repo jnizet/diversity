@@ -1,5 +1,7 @@
 package fr.mnhn.diversity.model.rest;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -15,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = ImageCommandDTO.class, name = "IMAGE")
 })
 public abstract class ElementCommandDTO {
+    @NotBlank
     private final String key;
 
     @JsonCreator

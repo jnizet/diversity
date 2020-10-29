@@ -1,10 +1,15 @@
 package fr.mnhn.diversity.model.rest;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class ImageCommandDTO extends ElementCommandDTO {
+    @NotNull
     private final Long imageId;
+    @NotBlank
     private final String alt;
     private final boolean multiSize;
 
