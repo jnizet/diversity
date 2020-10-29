@@ -13,7 +13,7 @@ javaPlatform {
 val jwtVersion = "0.11.2"
 
 dependencies {
-    api(platform("org.springframework.boot:spring-boot-dependencies:2.3.3.RELEASE"))
+    api(platform("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"))
 
     constraints {
         api("com.ninja-squad:DbSetup:2.1.0")

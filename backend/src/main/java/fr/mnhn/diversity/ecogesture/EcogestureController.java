@@ -110,6 +110,7 @@ public class EcogestureController {
         return new ModelAndView("ecogesture/ecogesture", model);
     }
 
+    @SuppressWarnings("unchecked")
     private String getTwitterText(PageContent pageContent, HttpServletRequest request) {
         Map<String, Object> presentation = (Map<String, Object>) pageContent.getContent().get("presentation");
         Text nameText = (Text) presentation.get("name");
