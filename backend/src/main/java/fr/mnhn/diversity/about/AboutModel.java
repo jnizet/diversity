@@ -13,6 +13,7 @@ public final class AboutModel {
     public static final String ABOUT_PAGE_NAME = "About";
     public static final PageModel ABOUT_PAGE_MODEL =
         PageModel.builder("about")
+                 .withPath("/apropos")
                  .section(SectionElement.builder("header").describedAs("En-tête")
                                         .multiSizeImage("background", "Image de fond de l'en-tête")
                                         .titleText("title", "Titre de la page")

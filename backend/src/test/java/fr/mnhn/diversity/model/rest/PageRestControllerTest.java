@@ -69,6 +69,7 @@ class PageRestControllerTest {
     void prepare() {
         // override the model with a simpler one
         controller.setModelsByName(Map.of("home", PageModel.builder("home")
+                                                           .withPath("/")
                                                            .text("title", "Titre")
                                                            .section(
                                                                SectionElement.builder("carousel").describedAs("Carousel")

@@ -17,6 +17,7 @@ public final class EcogestureModel {
      */
     public static final PageModel ECO_GESTURE_PAGE_MODEL =
         PageModel.builder("ecogesture")
+                 .withPathFactory(slug -> "/ecogestes/" + slug)
                  .section(SectionElement
                               .builder("presentation")
                               .describedAs("Présentation de l'écogeste, et informations affichées sur sa vignette dans la page d'accueil des écogestes")
@@ -52,6 +53,7 @@ public final class EcogestureModel {
      */
     public static final PageModel ECO_GESTURE_HOME_PAGE_MODEL =
         PageModel.builder("ecogestures")
+                 .withPath("/ecogestes")
                  .text("title", "Titre de la page")
                  .multiLineText("presentation", "Présentation des écogestes")
                  .image("image", "Illustration")

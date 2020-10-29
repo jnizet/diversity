@@ -80,7 +80,7 @@ class SearchRepositoryTest {
         assertThat(results.get(0).getModelName()).isEqualTo("home");
         assertThat(results.get(0).getTitle()).isEqualTo("Accueil");
         assertThat(results.get(0).getHighlight()).isEqualTo("<b>Compteurs</b> de biodiversité");
-        assertThat(results.get(0).getUrl()).isNull();
+        assertThat(results.get(0).getPath()).isNull();
 
         assertThat(results.get(1).getId()).isEqualTo(2L);
     }

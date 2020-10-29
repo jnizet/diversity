@@ -12,6 +12,7 @@ public final class IndicatorModel {
     public static final PageModel INDICATOR_PAGE_MODEL =
         PageModel.builder("indicator")
                  .describedAs("Indicator page")
+                 .withPathFactory(slug -> "/indicateurs/" + slug)
                  // Présentation
                  .section(SectionElement.builder("presentation").describedAs("Présentation de l'indicateur")
                                         .text("description", "Description de l'indicateur")
@@ -47,6 +48,7 @@ public final class IndicatorModel {
      */
     public static final PageModel INDICATOR_HOME_PAGE_MODEL =
         PageModel.builder("indicators")
+                 .withPath("/indicateurs")
                  .text("title", "Titre de la page")
                  .multiLineText("presentation", "Présentation des indicateurs")
                  .image("image", "Illustration")

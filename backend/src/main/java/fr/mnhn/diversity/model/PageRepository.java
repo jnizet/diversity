@@ -74,6 +74,14 @@ public class PageRepository {
         return jdbcTemplate.query(sql, Map.of("modelName", modelName), this::extractBasicPages);
     }
 
+    public List<BasicPage> findAllBasic() {
+        String sql =
+            "select page.id, page.name, page.model_name, page.title" +
+                " from page" +
+                " order by page.id";
+        return jdbcTemplate.query(sql, this::extractBasicPages);
+    }
+
     /**
      * Finds the next page which has the given model, when ordering these pages by ID.
      * If no page has an ID greater than the given one, returns the first one.

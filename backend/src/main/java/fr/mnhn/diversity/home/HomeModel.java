@@ -13,6 +13,7 @@ public final class HomeModel {
     public static final String HOME_PAGE_NAME = "Home";
     public static final PageModel HOME_PAGE_MODEL =
         PageModel.builder("home")
+                 .withPath("/")
                  .section(SectionElement.builder("carousel").describedAs("Carousel")
                      .text("title", "Titre du carousel, affiché sur chaque slide")
                      .multiLineText("text", "Texte du carousel, affiché sur chaque slide")

@@ -12,15 +12,15 @@ public final class PageSearchResult {
     private final String modelName;
     private final String title;
     private final String highlight;
-    private final String url;
+    private final String path;
 
-    public PageSearchResult(Long id, String name, String modelName, String title, String highlight, String url) {
+    public PageSearchResult(Long id, String name, String modelName, String title, String highlight, String path) {
         this.id = id;
         this.name = name;
         this.modelName = modelName;
         this.title = title;
         this.highlight = highlight;
-        this.url = url;
+        this.path = path;
     }
 
     public Long getId() {
@@ -43,12 +43,12 @@ public final class PageSearchResult {
         return highlight;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPath() {
+        return path;
     }
 
-    public PageSearchResult withUrl(String url) {
-        return new PageSearchResult(id, name, modelName, title, highlight, url);
+    public PageSearchResult withPath(String path) {
+        return new PageSearchResult(id, name, modelName, title, highlight, path);
     }
 
     @Override
@@ -65,12 +65,12 @@ public final class PageSearchResult {
             Objects.equals(modelName, that.modelName) &&
             Objects.equals(title, that.title) &&
             Objects.equals(highlight, that.highlight) &&
-            Objects.equals(url, that.url);
+            Objects.equals(path, that.path);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, modelName, title, highlight, url);
+        return Objects.hash(id, name, modelName, title, highlight, path);
     }
 
     @Override
@@ -81,7 +81,7 @@ public final class PageSearchResult {
             ", modelName='" + modelName + '\'' +
             ", title='" + title + '\'' +
             ", highlight='" + highlight + '\'' +
-            ", url='" + url + '\'' +
+            ", url='" + path + '\'' +
             '}';
     }
 }

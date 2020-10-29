@@ -1,6 +1,7 @@
 package fr.mnhn.diversity.search;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
+import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
 import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
@@ -84,7 +86,13 @@ public class SearchControllerTest {
                                  ActModel.SCIENCE_PAGE_MODEL.getName(),
                                  "Sciences participatives",
                                  "<b>compteurs</b",
-                                 null)
+                                 null),
+            new PageSearchResult(8L,
+                                 EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_NAME,
+                                 EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(),
+                                 "Shared section",
+                                 "<b>compteurs</b",
+                                 null) // this result should be ignored because it doesn't have a path
         );
         when(mockSearchRepository.search("compteur")).thenReturn(searchResults);
 
@@ -95,8 +103,12 @@ public class SearchControllerTest {
                    .andExpect(content().string(containsString("</html>")));
 
         for (PageSearchResult searchResult : searchResults) {
-            resultActions.andExpect(content().string(containsString(searchResult.getTitle())))
-                         .andExpect(content().string(containsString(searchResult.getHighlight())));
+            if (searchResult.getModelName().equals(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName())) {
+                resultActions.andExpect(content().string(not(containsString(searchResult.getTitle()))));
+            } else {
+                resultActions.andExpect(content().string(containsString(searchResult.getTitle())))
+                             .andExpect(content().string(containsString(searchResult.getHighlight())));
+            }
         }
 
         resultActions.andExpect(content().string(containsString("href=\"/\"")))

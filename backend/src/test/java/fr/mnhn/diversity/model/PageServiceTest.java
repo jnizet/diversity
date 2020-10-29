@@ -19,6 +19,7 @@ class PageServiceTest {
     public void shouldPopulatePage() {
         PageModel pageModel =
             PageModel.builder("Home")
+                     .withPath("/")
                      .text("title", "Title")
                      .section(SectionElement.builder("welcome")
                                             .describedAs("Welcome section")
@@ -77,6 +78,7 @@ class PageServiceTest {
     public void shouldPopulatePageWhenListDoesNotContainLeafElement() {
         PageModel pageModel =
             PageModel.builder("Home")
+                     .withPath("/")
                      .list(ListElement.builder("carousel")
                                       .describedAs("Carousel")
                                       .section(SectionElement.builder("section")

@@ -10,6 +10,7 @@ import fr.mnhn.diversity.model.meta.SectionElement;
 public final class TerritoryModel {
     public static final PageModel TERRITORY_PAGE_MODEL =
             PageModel.builder("territory").describedAs("Territoire")
+                     .withPathFactory(slug -> "/territoires/" + slug)
                      .titleText("name", "Nom du territoire")
                      // Carte d'identité
                      .section(SectionElement.builder("identity").describedAs("Carte d'identité")
@@ -75,6 +76,7 @@ public final class TerritoryModel {
     public static final String TERRITORY_HOME_PAGE_NAME = "Territories";
     public static final PageModel TERRITORY_HOME_PAGE_MODEL =
         PageModel.builder("territories").describedAs("Territoires")
+                 .withPath("/territoires")
                  .section(SectionElement
                               .builder("header").describedAs("En-tête")
                               .titleText("title", "Titre de la page")

@@ -12,6 +12,7 @@ public class EcogestureActSectionModel {
     public static final String ECOGESTURE_ACT_SECTION_NAME = "ecogesture-act";
     public static final PageModel ECOGESTURE_ACT_SECTION_MODEL =
         PageModel.builder("ecogesture-act")
+                 .withPath(null)
                  .titleText("title", "Titre de la section 'Agir pour la science'")
                  .text("description", "Description de la section 'Agir pour la science'")
                  .text("firstActionName", "Nom de la première action")

@@ -154,6 +154,13 @@ class PageRepositoryTest {
     }
 
     @Test
+    void shouldFindAllBasic() {
+        TRACKER.skipNextLaunch();
+        List<BasicPage> pages = repository.findAllBasic();
+        assertThat(pages.stream().map(BasicPage::getId)).containsExactly(1L, 2L, 3L);
+    }
+
+    @Test
     void shouldFindNextOfFirstByModel() {
         TRACKER.skipNextLaunch();
         assertThat(repository.findNextOrFirstByModel("unknown", 42L)).isEmpty();

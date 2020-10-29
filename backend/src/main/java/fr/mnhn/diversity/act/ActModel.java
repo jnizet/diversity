@@ -13,6 +13,7 @@ public final class ActModel {
     public static final String ACT_PAGE_NAME = "Act";
     public static final PageModel ACT_PAGE_MODEL =
         PageModel.builder("act")
+                 .withPath("/agir-ensemble")
                  .section(SectionElement.builder("header").describedAs("En-tête")
                                         .multiSizeImage("background", "Image de fond de l'en-tête")
                                         .titleText("title", "Titre de la page")
@@ -36,6 +37,7 @@ public final class ActModel {
     public static final String SCIENCE_PAGE_NAME = "Science";
     public static final PageModel SCIENCE_PAGE_MODEL =
         PageModel.builder("science")
+                 .withPath("/sciences-participatives")
                  .section(SectionElement.builder("header").describedAs("En-tête")
                                         .multiSizeImage("background", "Image de fond de l'en-tête")
                                         .titleText("title", "Titre de la page")

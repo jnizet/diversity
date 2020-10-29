@@ -14,6 +14,7 @@ class PageModelTest {
         PageModel home =
             PageModel.builder("Home")
                 .describedAs("The home page")
+                .withPath("/")
                 .titleText("mainTitle", "The main title")
                 .section(SectionElement.builder("welcomeSection")
                                        .describedAs("Welcome section")
@@ -29,6 +30,7 @@ class PageModelTest {
         assertThat(home.getName()).isEqualTo("Home");
         assertThat(home.getDescription()).isEqualTo("The home page");
         assertThat(home.getElements()).hasSize(3);
+        assertThat(home.toPath("Home")).contains("/");
 
         TextElement mainTitle = (TextElement) home.getElements().get(0);
         assertThat(mainTitle.getName()).isEqualTo("mainTitle");

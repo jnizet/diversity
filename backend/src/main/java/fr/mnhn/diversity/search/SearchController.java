@@ -1,19 +1,12 @@
 package fr.mnhn.diversity.search;
 
-import java.util.HashMap;
+import static fr.mnhn.diversity.common.PageModels.ALL_PAGE_MODELS_BY_NAME;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import fr.mnhn.diversity.about.AboutModel;
-import fr.mnhn.diversity.act.ActModel;
-import fr.mnhn.diversity.ecogesture.EcogestureModel;
-import fr.mnhn.diversity.home.HomeModel;
-import fr.mnhn.diversity.indicator.IndicatorModel;
-import fr.mnhn.diversity.legal.LegalTermsModel;
-import fr.mnhn.diversity.territory.TerritoryModel;
+import fr.mnhn.diversity.model.meta.PageModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,30 +24,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class SearchController {
 
     private final SearchRepository searchRepository;
-    private final Map<String, Function<PageSearchResult, String>> urlFactories = new HashMap<>();
 
     public SearchController(SearchRepository searchRepository) {
         this.searchRepository = searchRepository;
-
-        urlFactories.put(HomeModel.HOME_PAGE_MODEL.getName(), r -> "/");
-        urlFactories.put(AboutModel.ABOUT_PAGE_MODEL.getName(), r -> "/apropos");
-        urlFactories.put(EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL.getName(), r -> "/ecogestes");
-        urlFactories.put(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), r -> "/ecogestes/" + r.getName());
-        urlFactories.put(TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), r -> "/territoires");
-        urlFactories.put(TerritoryModel.TERRITORY_PAGE_MODEL.getName(), r -> "/territoires/" + r.getName());
-        urlFactories.put(IndicatorModel.INDICATOR_HOME_PAGE_MODEL.getName(), r -> "/indicateurs");
-        urlFactories.put(IndicatorModel.INDICATOR_PAGE_MODEL.getName(), r -> "/indicateurs/" + r.getName());
-        urlFactories.put(ActModel.ACT_PAGE_MODEL.getName(), r -> "/agir-ensemble");
-        urlFactories.put(ActModel.SCIENCE_PAGE_MODEL.getName(), r -> "/sciences-participatives");
-        urlFactories.put(LegalTermsModel.LEGAL_TERMS_PAGE_MODEL.getName(), r -> "/mentions-legales");
     }
 
     @GetMapping
     public ModelAndView search(@RequestParam("texte") String text) {
         List<PageSearchResult> resultsWithoutUrl = searchRepository.search(text);
         List<PageSearchResult> results = resultsWithoutUrl.stream()
-                                                          .map(result -> withUrl(result))
-                                                          .filter(Objects::nonNull)
+                                                          .map(this::withPath)
+                                                          .filter(result -> result.getPath() != null)
                                                           .collect(Collectors.toList());
         return new ModelAndView("search", Map.of(
             "results", results,
@@ -62,11 +42,12 @@ public class SearchController {
         ));
     }
 
-    private PageSearchResult withUrl(PageSearchResult result) {
-        Function<PageSearchResult, String> urlFunction = urlFactories.get(result.getModelName());
-        if (urlFunction == null) {
-            return null;
-        }
-        return result.withUrl(urlFunction.apply(result));
+    /**
+     * Returns a copy of the given result with its path, deduced from its page model name
+     */
+    private PageSearchResult withPath(PageSearchResult result) {
+        PageModel pageModel = ALL_PAGE_MODELS_BY_NAME.get(result.getModelName());
+        String path = pageModel == null ? null : pageModel.toPath(result.getName()).orElse(null);
+        return result.withPath(path);
     }
 }

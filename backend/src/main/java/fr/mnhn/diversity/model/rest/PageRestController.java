@@ -1,5 +1,7 @@
 package fr.mnhn.diversity.model.rest;
 
+import static fr.mnhn.diversity.common.PageModels.ALL_PAGE_MODELS_BY_NAME;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,20 +60,7 @@ public class PageRestController {
 
     public PageRestController(PageRepository pageRepository) {
         this.pageRepository = pageRepository;
-        modelsByName =
-            Stream.of(HomeModel.HOME_PAGE_MODEL,
-                      AboutModel.ABOUT_PAGE_MODEL,
-                      ActModel.ACT_PAGE_MODEL,
-                      ActModel.SCIENCE_PAGE_MODEL,
-                      EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL,
-                      EcogestureModel.ECO_GESTURE_PAGE_MODEL,
-                      EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL,
-                      TerritoryModel.TERRITORY_HOME_PAGE_MODEL,
-                      TerritoryModel.TERRITORY_PAGE_MODEL,
-                      IndicatorModel.INDICATOR_HOME_PAGE_MODEL,
-                      IndicatorModel.INDICATOR_PAGE_MODEL,
-                      LegalTermsModel.LEGAL_TERMS_PAGE_MODEL)
-                .collect(Collectors.toUnmodifiableMap(PageModel::getName, Function.identity()));
+        modelsByName = ALL_PAGE_MODELS_BY_NAME;
     }
 
     /**

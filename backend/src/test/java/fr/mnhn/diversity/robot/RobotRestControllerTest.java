@@ -1,7 +1,6 @@
 package fr.mnhn.diversity.robot;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -9,13 +8,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.ecogesture.EcogestureModel;
+import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.model.BasicPage;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +35,15 @@ class RobotRestControllerTest {
 
     @BeforeEach
     void prepare() {
-        when(mockPageRepository.findBasicByModel(TerritoryModel.TERRITORY_PAGE_MODEL.getName()))
-            .thenReturn(List.of(new BasicPage(1L, Territory.GUADELOUPE.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "")));
-        when(mockPageRepository.findBasicByModel(IndicatorModel.INDICATOR_PAGE_MODEL.getName()))
-            .thenReturn(List.of(new BasicPage(2L, "i1", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "")));
-        when(mockPageRepository.findBasicByModel(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
-            .thenReturn(List.of(new BasicPage(3L, "e1", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "")));
+        when(mockPageRepository.findAllBasic()).thenReturn(
+            List.of(
+                new BasicPage(1L, Territory.GUADELOUPE.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), ""),
+                new BasicPage(2L, "i1", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), ""),
+                new BasicPage(3L, "e1", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), ""),
+                new BasicPage(4L, "Home", HomeModel.HOME_PAGE_MODEL.getName(), ""),
+                new BasicPage(5L, "About", AboutModel.ABOUT_PAGE_MODEL.getName(), "")
+            )
+        );
     }
 
     @Test
