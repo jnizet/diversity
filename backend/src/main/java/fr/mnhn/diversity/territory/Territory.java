@@ -17,42 +17,84 @@ public enum Territory {
         "Réunion",
         "La Réunion",
         "reunion",
-        new MapCoordinates(12, 43),
+        new MapCoordinates(290, 615),
         null
     ),
     GUADELOUPE(
         "Guadeloupe",
         "Guadeloupe",
         "guadeloupe",
-        new MapCoordinates(46, 12),
+        new MapCoordinates(1167, 488),
         ANTILLES
     ),
     MARTINIQUE(
         "Martinique",
         "Martinique",
         "martinique",
-        new MapCoordinates(46, 16),
+        new MapCoordinates(1166, 483),
+        ANTILLES
+    ),
+    SAINT_MARTIN(
+        "Saint-Martin",
+        "Saint-Martin", // TODO check this
+        "saint-martin",
+        new MapCoordinates(1156, 473),
+        ANTILLES
+    ),
+    SAINT_BARTHELEMY(
+        "Saint-Barthélemy",
+        "Saint-Barthélemy", // TODO check this
+        "saint-barthelemy",
+        new MapCoordinates(1158, 474),
         ANTILLES
     ),
     NOUVELLE_CALEDONIE(
         "Nouvelle Calédonie",
         "Nouvelle-Calédonie",
         "nouvelle-caledonie",
-        new MapCoordinates(432, 324),
+        new MapCoordinates(684, 615),
         null
     ),
     GUYANE(
         "Guyane",
         "Guyane",
         "guyane",
-        new MapCoordinates(46, 256),
+        new MapCoordinates(1195, 525),
         null
     ),
     SAINT_PIERRE_ET_MIQUELON(
         "Saint-Pierre-Et-Miquelon",
         "Saint-Pierre-et-Miquelon",
         "saint-pierre-et-miquelon",
-        new MapCoordinates(345, 312),
+        new MapCoordinates(1181, 348),
+        null
+    ),
+    POLYNESIE_FRANCAISE(
+        "Polynésie Française",
+        "Polynésie Française", // TODO check this
+        "polynesie",
+        new MapCoordinates(855, 597),
+        null
+    ),
+    MAYOTTE(
+        "Mayotte",
+        "Mayotte", // TODO check this
+        "mayotte",
+        new MapCoordinates(248, 580),
+        null
+    ),
+    WALLIS_ET_FUTUNA(
+        "Wallis et Futuna",
+        "Wallis et Futuna", // TODO check this
+        "wallis-et-futuna",
+        new MapCoordinates(747, 580),
+        null
+    ),
+    CLIPPERTON(
+        "Clipperton",
+        "Clipperton", // TODO check this
+        "clipperton",
+        new MapCoordinates(992, 501),
         null
     );
 

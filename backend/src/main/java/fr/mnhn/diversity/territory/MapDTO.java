@@ -13,11 +13,6 @@ public final class MapDTO {
     private final List<ZoneDTO> zones;
     private final List<TerritoryDTO> territories;
 
-    public static final MapDTO INSTANCE = new MapDTO(
-        Stream.of(Zone.values()).map(ZoneDTO::new).collect(Collectors.toUnmodifiableList()),
-        Stream.of(Territory.values()).filter(t -> t != Territory.OUTRE_MER).map(TerritoryDTO::new).collect(Collectors.toUnmodifiableList())
-    );
-
     public MapDTO(List<ZoneDTO> zones, List<TerritoryDTO> territories) {
         this.zones = zones;
         this.territories = territories;

@@ -6,5 +6,7 @@
   },
   "video": false,
   "experimentalFetchPolyfill": true,
-  "experimentalNetworkStubbing": true
+  "experimentalNetworkStubbing": true,
+  "viewportWidth": 1200,
+  "viewportHeight": 800
 }

@@ -17,6 +17,9 @@ import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
+import fr.mnhn.diversity.territory.Territory;
+import fr.mnhn.diversity.territory.TerritoryModel;
+import fr.mnhn.diversity.territory.Zone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +87,24 @@ class HomeControllerTest {
                 )
             )
         );
+
+        String territoryModelName = TerritoryModel.TERRITORY_PAGE_MODEL.getName();
+        Page reunionPage = new Page(43L, Territory.REUNION.getSlug(), territoryModelName, "", List.of());
+        when(mockPageRepository.findByModel(TerritoryModel.TERRITORY_PAGE_MODEL.getName()))
+            .thenReturn(List.of(reunionPage));
+
+        when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL, reunionPage)).thenReturn(
+            new PageContent(
+                reunionPage,
+                Map.of(
+                    "identity", Map.of(
+                        "title", text("La Réunion"),
+                        "presentation", text("presentation of reunion"),
+                        "infography", image(1L)
+                    )
+                )
+            )
+        );
     }
 
     @Test
@@ -94,6 +115,9 @@ class HomeControllerTest {
             .andExpect(content().string(containsString("<title>Diversité</title>")))
             .andExpect(content().string(containsString("Hello")))
             .andExpect(content().string(containsString("Presentation")))
+            .andExpect(content().string(containsString(Zone.ANTILLES.getText())))
+            .andExpect(content().string(containsString("Réunion")))
+            .andExpect(content().string(containsString("presentation of reunion")))
             .andExpect(content().string(containsString("Testimony")))
             .andExpect(content().string(containsString("Science")))
             .andExpect(content().string(containsString("</html>")));

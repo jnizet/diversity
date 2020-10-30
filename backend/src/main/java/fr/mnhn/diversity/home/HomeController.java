@@ -1,9 +1,20 @@
 package fr.mnhn.diversity.home;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.model.Page;
+import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
+import fr.mnhn.diversity.territory.Territory;
+import fr.mnhn.diversity.territory.TerritoryModel;
+import fr.mnhn.diversity.territory.Zone;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +42,58 @@ public class HomeController {
     public ModelAndView home() {
         Page page = pageRepository.findByNameAndModel(HomeModel.HOME_PAGE_NAME, HomeModel.HOME_PAGE_MODEL.getName())
                                   .orElseThrow(NotFoundException::new);
-        return new ModelAndView("home", "page", pageService.buildPageContent(HomeModel.HOME_PAGE_MODEL, page));
+        PageContent pageContent = pageService.buildPageContent(HomeModel.HOME_PAGE_MODEL, page);
+
+        List<TerritoryCard> territoryCards = getTerritoryCards();
+        List<Zone> zones = getActiveZones();
+
+        return new ModelAndView(
+            "home",
+            Map.of(
+                "page", pageContent,
+                "territoryCards", territoryCards,
+                "zones", zones
+            )
+        );
+    }
+
+    private List<Zone> getActiveZones() {
+        return Stream.of(Zone.values()).filter(Zone::isActive).collect(Collectors.toList());
+    }
+
+    private List<TerritoryCard> getTerritoryCards() {
+        Map<String, Page> territoryPagesByName =
+            pageRepository.findByModel(TerritoryModel.TERRITORY_PAGE_MODEL.getName())
+                          .stream()
+                          .collect(Collectors.toMap(Page::getName, Function.identity()));
+
+        return Stream.of(Territory.values())
+            .filter(territory -> territoryPagesByName.containsKey(territory.getSlug()))
+            .map(territory ->
+                     new TerritoryCard(
+                        territory,
+                        pageService.buildPageContent(TerritoryModel.TERRITORY_PAGE_MODEL,
+                                                     territoryPagesByName.get(territory.getSlug()))
+                     )
+            )
+            .collect(Collectors.toList());
+    }
+
+    private static class TerritoryCard {
+        private final Territory territory;
+        private final PageContent page;
+
+        public TerritoryCard(Territory territory, PageContent page) {
+            this.territory = territory;
+            this.page = page;
+        }
+
+        public Territory getTerritory() {
+            return territory;
+        }
+
+        public PageContent getPage() {
+            return page;
+        }
     }
 }

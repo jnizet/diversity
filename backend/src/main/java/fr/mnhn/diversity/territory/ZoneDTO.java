@@ -23,6 +23,10 @@ public final class ZoneDTO {
         return zone.getCoordinates();
     }
 
+    public boolean isActive() {
+        return zone.isActive();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

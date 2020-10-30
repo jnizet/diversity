@@ -4,9 +4,11 @@ import java.util.Objects;
 
 public final class TerritoryDTO {
     private final Territory territory;
+    private final boolean active;
 
-    public TerritoryDTO(Territory territory) {
+    public TerritoryDTO(Territory territory, boolean active) {
         this.territory = territory;
+        this.active = active;
     }
 
     public Territory getTerritory() {
@@ -29,6 +31,10 @@ public final class TerritoryDTO {
         return territory.getZone();
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -38,18 +44,20 @@ public final class TerritoryDTO {
             return false;
         }
         TerritoryDTO that = (TerritoryDTO) o;
-        return territory == that.territory;
+        return active == that.active &&
+            territory == that.territory;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(territory);
+        return Objects.hash(territory, active);
     }
 
     @Override
     public String toString() {
         return "TerritoryDTO{" +
             "territory=" + territory +
+            ", active=" + active +
             '}';
     }
 }
