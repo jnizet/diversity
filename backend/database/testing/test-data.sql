@@ -91,21 +91,21 @@ insert into image (id, content_type, original_file_name) values
     (405, 'image/jpeg', 'oiseau.jpg');
 
 insert into page (id, name, model_name, title) values
-   (1, 'Home', 'home', 'Accueil'),
-   (2, 'About', 'about', 'À propos'),
+   (1, 'accueil', 'home', 'Accueil'),
+   (2, 'apropos', 'about', 'À propos'),
    (3, 'recifs', 'ecogesture', 'Écogeste : protéger les récifs'),
    (4, 'especes-exotiques-envahissantes', 'ecogesture', 'Écogeste : lutter contre l’introduction d’espèces exotiques envahissantes'),
-   (5, 'EcoGestureHome', 'ecogestures', 'Écogestes'),
-   (6, 'Act', 'act', 'Agir ensemble'),
-   (7, 'Science', 'science', 'Sciences participatives'),
-   (8, 'Territories', 'territories', 'Territoires'),
-   (9, 'LegalTerms', 'legal-terms', 'Mentions légales'),
+   (5, 'ecogestes', 'ecogestures', 'Écogestes'),
+   (6, 'agir-ensemble', 'act', 'Agir ensemble'),
+   (7, 'sciences-participatives', 'science', 'Sciences participatives'),
+   (8, 'territoires', 'territories', 'Territoires'),
+   (9, 'mentions-legales', 'legal-terms', 'Mentions légales'),
    (10, 'reunion', 'territory', 'La Réunion'),
    (11, 'saint-pierre-et-miquelon', 'territory', 'Saint Pierre et Miquelon'),
-   (29, 'IndicatorHome', 'indicators', 'Indicateurs'),
+   (29, 'indicateurs', 'indicators', 'Indicateurs'),
    (30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes'),
    (31, 'deforestation', 'indicator', 'Déforestation'),
-   (51, 'ecogesture-act', 'ecogesture-act', 'Section agir commune aux pages ecogestes');
+   (51, 'ecogeste-agir', 'ecogesture-act', 'Section agir commune aux pages ecogestes');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href, title) values
 --     Home

@@ -72,7 +72,7 @@ public final class IndicatorModel {
                                 .text("quote", "Citation")
                  )
                  .build();
-    public static final String INDICATOR_HOME_PAGE_NAME = "IndicatorHome";
+    public static final String INDICATOR_HOME_PAGE_NAME = "indicateurs";
 
     private IndicatorModel() {
     }

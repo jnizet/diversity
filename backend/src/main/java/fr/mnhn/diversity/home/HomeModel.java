@@ -10,7 +10,7 @@ import fr.mnhn.diversity.model.meta.SectionElement;
  */
 public final class HomeModel {
 
-    public static final String HOME_PAGE_NAME = "Home";
+    public static final String HOME_PAGE_NAME = "accueil";
     public static final PageModel HOME_PAGE_MODEL =
         PageModel.builder("home")
                  .withPath("/")

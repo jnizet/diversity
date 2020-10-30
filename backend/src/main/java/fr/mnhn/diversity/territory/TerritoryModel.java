@@ -73,7 +73,7 @@ public final class TerritoryModel {
                      )
                      .build();
 
-    public static final String TERRITORY_HOME_PAGE_NAME = "Territories";
+    public static final String TERRITORY_HOME_PAGE_NAME = "territoires";
     public static final PageModel TERRITORY_HOME_PAGE_MODEL =
         PageModel.builder("territories").describedAs("Territoires")
                  .withPath("/territoires")

@@ -141,7 +141,7 @@ class TerritoryControllerTest {
             )
         );
 
-        Page homePage = new Page(2L, "Territories", TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), "Territoires", Collections.emptyList());
+        Page homePage = new Page(2L, TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName(), "Territoires", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(homePage.getName(), TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName())).thenReturn(Optional.of(homePage));
         when(mockPageService.buildPageContent(TerritoryModel.TERRITORY_HOME_PAGE_MODEL, homePage)).thenReturn(
             new PageContent(

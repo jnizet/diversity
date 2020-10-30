@@ -10,7 +10,7 @@ import fr.mnhn.diversity.model.meta.SectionElement;
  */
 public final class ActModel {
 
-    public static final String ACT_PAGE_NAME = "Act";
+    public static final String ACT_PAGE_NAME = "agir-ensemble";
     public static final PageModel ACT_PAGE_MODEL =
         PageModel.builder("act")
                  .withPath("/agir-ensemble")
@@ -34,7 +34,7 @@ public final class ActModel {
                  )
                  .build();
 
-    public static final String SCIENCE_PAGE_NAME = "Science";
+    public static final String SCIENCE_PAGE_NAME = "sciences-participatives";
     public static final PageModel SCIENCE_PAGE_MODEL =
         PageModel.builder("science")
                  .withPath("/sciences-participatives")

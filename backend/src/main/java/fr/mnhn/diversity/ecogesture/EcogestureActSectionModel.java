@@ -9,7 +9,7 @@ import fr.mnhn.diversity.model.meta.PageModel;
  */
 public class EcogestureActSectionModel {
 
-    public static final String ECOGESTURE_ACT_SECTION_NAME = "ecogesture-act";
+    public static final String ECOGESTURE_ACT_SECTION_NAME = "ecogeste-agir";
     public static final PageModel ECOGESTURE_ACT_SECTION_MODEL =
         PageModel.builder("ecogesture-act")
                  .withPath(null)

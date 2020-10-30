@@ -10,7 +10,7 @@ import fr.mnhn.diversity.model.meta.SectionElement;
  */
 public final class AboutModel {
 
-    public static final String ABOUT_PAGE_NAME = "About";
+    public static final String ABOUT_PAGE_NAME = "apropos";
     public static final PageModel ABOUT_PAGE_MODEL =
         PageModel.builder("about")
                  .withPath("/apropos")

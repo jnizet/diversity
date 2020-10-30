@@ -66,7 +66,7 @@ public final class EcogestureModel {
                                    .image("image", "Illustration")
                  )
                  .build();
-    public static final String ECO_GESTURE_HOME_PAGE_NAME = "EcoGestureHome";
+    public static final String ECO_GESTURE_HOME_PAGE_NAME = "ecogestes";
 
     private EcogestureModel() {
     }
