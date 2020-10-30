@@ -78,10 +78,12 @@
                       espèces menacées
                     </div>
                   </div>
-                  <img th:src="@{/images/{imageId}/image/sm(imageId=${card.page.content.presentation.image.imageId})}"
-                       th:alt="${card.page.content.presentation.image.alt}"
-                       loading="lazy"
-                       class="indicateur-item-bkg"/>
+                  <img
+                    th:src="@{/images/{imageId}/image/sm(imageId=${card.page.content.presentation.image.imageId})}"
+                    th:alt="${card.page.content.presentation.image.alt}"
+                    loading="lazy"
+                    class="indicateur-item-bkg"
+                  />
                 </a>
               </li>
             </ul>

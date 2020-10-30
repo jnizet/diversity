@@ -57,14 +57,14 @@
             </p>
           </div>
         </div>
-        <div class="left-1">
-          <div th:each="imageElement,iterStat: *{images}" class="col-7" th:classappend="${iterStat.index > 0 ? 'top-1' : ''}">
+        <div class="left-1 right-n1">
+          <div th:each="imageElement,iterStat: *{images}" th:class="${iterStat.index > 0 ? 'col-4 top-1' : 'col-7'}">
             <img
               biom:image="${imageElement.image}"
               loading="lazy"
-              sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 60vw"
+              th:sizes="${iterStat.index > 0 ? '(max-width: 479px) 100vw, 480px' : '(max-width: 991px) 100vw, 63vw'}"
             />
-            <div class="legend-wrapper">
+            <div class="legend-wrapper right">
               <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
               <div class="legend-text" th:text="${imageElement.image.alt}">Légende de la photo</div>
             </div>

@@ -59,7 +59,7 @@
                 th:src="@{/images/{imageId}/image/sm(imageId=${card.content.presentation.image.imageId})}"
                 th:alt="${card.content.presentation.image.alt}"
                 loading="lazy"
-                sizes="(max-width: 479px) 100vw, 480px"
+                sizes="42vw"
                 class="ecogeste-bkg"
               />
             </div>
@@ -95,7 +95,8 @@
             <img
               biom:image="*{science.project.image}"
               loading="lazy"
-              sizes="(max-width: 479px) 87vw, (max-width: 767px) 84vw, (max-width: 991px) 88vw, 52vw"
+              sizes="(max-width: 479px) 87vw, (max-width: 767px) 84vw, (max-width: 991px) 88vw, 46vw"
+              class="img-full-width"
             />
             <div class="legend-wrapper">
               <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />

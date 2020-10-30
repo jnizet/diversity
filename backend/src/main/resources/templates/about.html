@@ -58,12 +58,17 @@
         </div>
       </section>
       <section class="sextion-apropos-right">
-        <div class="col-6">
+        <div class="col-7">
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
             <div class="legend-text" th:text="*{goal2.image.alt}">legende photo</div>
           </div>
-          <img biom:image="*{goal2.image}" loading="lazy" sizes="(max-width: 479px) 87vw, (max-width: 991px) 92vw, 50vw" />
+          <img
+            biom:image="*{goal2.image}"
+            loading="lazy"
+            sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 50vw"
+            class="img-full"
+          />
         </div>
         <div class="col-4 apropos left-1">
           <div class="objectif-label">Objectif n°2</div>

@@ -82,10 +82,10 @@
           <img
             biom:image="*{understand.image}"
             loading="lazy"
-            sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 840px"
-            class="col-6"
+            sizes="(max-width: 479px) 87vw, (max-width: 767px) 100vw, (max-width: 991px) 94vw, 58vw"
+            class="push-left"
           />
-          <div class="col-3 left-1">
+          <div class="push-right big">
             <h3 class="text-title col-4"><strong th:text="*{understand.title2.text}">Espèces exotiques VS espèces indigènes</strong></h3>
             <p th:text="*{understand.text2.text}">
               Si de nombreuses espèces n’arrivent pas à s’adapter ou se reproduire dans leurs territoires d’introduction, certaines
@@ -182,15 +182,14 @@
             <a
               th:each="card,iterStat: ${ecogestureCards}"
               th:href="@{/ecogestes/{slug}(slug=${card.ecogesture.slug})}"
-              class="w-inline-block"
-              th:classappend="${iterStat.odd ? 'ecogeste-link-push' : ''}"
+              class="ecogeste-link-push w-inline-block"
             >
               <div class="ecogeste-bkg-wrapper">
                 <img
                   th:src="@{/images/{imageId}/image/sm(imageId=${card.page.content.presentation.image.imageId})}"
                   th:alt="${card.page.content.presentation.image.alt}"
                   loading="lazy"
-                  sizes="(max-width: 479px) 94vw, (max-width: 767px) 83vw, 480px"
+                  sizes="(max-width: 479px) 94vw, (max-width: 767px) 83vw, (max-width: 991px) 480px, 42vw"
                   class="ecogeste-bkg"
                 />
               </div>
@@ -220,7 +219,7 @@
             th:src="@{/images/{imageId}/image/sm(imageId=${nextIndicatorCard.page.content.presentation.image.imageId})}"
             th:alt="${nextIndicatorCard.page.content.presentation.image.alt}"
             loading="lazy"
-            sizes="(max-width: 4200px) 40vw, 1680px"
+            sizes="40vw"
             class="next-img"
           />
         </div>

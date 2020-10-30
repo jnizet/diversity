@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="126px" height="6px" viewBox="0 0 126 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Rectangle</title>
+    <g id="A-propos" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-121.000000, -906.000000)" fill="#FFCF3F" id="valeur-1">
+            <g transform="translate(120.000000, 820.000000)">
+                <g id="Group-3" transform="translate(0.000000, 42.000000)">
+                    <g id="quote" transform="translate(63.852085, 46.672707) rotate(68.000000) translate(-63.852085, -46.672707) translate(37.852085, -11.327293)">
+                        <polygon id="Rectangle" points="48.7964968 0.89810778 52 0.89810778 5.60613053 115.199998 5.91287562e-13 115.199998"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
