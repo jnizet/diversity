@@ -1,10 +1,10 @@
 import { Controller } from 'stimulus';
-import Swiper, { Navigation, Pagination, EffectFade } from 'swiper';
+import Swiper, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
 
 export class ScienceController extends Controller {
   connect() {
     // configure Swiper to use modules
-    Swiper.use([Navigation, Pagination, EffectFade]);
+    Swiper.use([Navigation, Pagination, EffectFade, Autoplay]);
 
     new Swiper('.swiper-science', {
       speed: 1000,
