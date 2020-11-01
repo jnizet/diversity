@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import fr.mnhn.diversity.common.thymeleaf.RequestDialect;
 import fr.mnhn.diversity.indicator.Indicator;
 import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.indicator.IndicatorRepository;
@@ -36,7 +37,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(EcogestureController.class)
-@Import(IndicatorDialect.class)
+@Import({RequestDialect.class, IndicatorDialect.class})
 class EcogestureControllerTest {
     @Autowired
     private MockMvc mockMvc;

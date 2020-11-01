@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
-import fr.mnhn.diversity.common.RequestUtils;
 import fr.mnhn.diversity.model.BasicPage;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.meta.PageModel;
@@ -16,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * REST controller used to generate the robots.txt file and the sitemap
@@ -30,13 +30,15 @@ public class RobotRestController {
     }
 
     @GetMapping(value = "/robots.txt", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<byte[]> robots(HttpServletRequest request) {
+    public ResponseEntity<byte[]> robots() {
         String body =
             "User-agent: *\n" +
             "Disallow: /admin/\n" +
             "Disallow: /mentions-legales\n\n" +
             "Sitemap: " +
-                RequestUtils.absoluteBaseUrl(request) + "/sitemap.txt" +
+                ServletUriComponentsBuilder.fromCurrentContextPath()
+                                           .path("/sitemap.txt")
+                                           .toUriString() +
             "\n";
 
         return ResponseEntity.ok(body.getBytes(StandardCharsets.UTF_8));
@@ -44,13 +46,14 @@ public class RobotRestController {
 
     @GetMapping(value = "/sitemap.txt", produces = MediaType.TEXT_PLAIN_VALUE)
     @Transactional
-    public ResponseEntity<byte[]> sitemap(HttpServletRequest request) {
-        String prefix = RequestUtils.absoluteBaseUrl(request);
+    public ResponseEntity<byte[]> sitemap() {
+        ServletUriComponentsBuilder uriBuilder =
+            ServletUriComponentsBuilder.fromCurrentContextPath();
         String body = pageRepository.findAllBasic()
             .stream()
             .map(this::toPath)
             .filter(Objects::nonNull)
-            .map(path -> prefix + path)
+            .map(path -> uriBuilder.cloneBuilder().path(path).toUriString())
             .collect(Collectors.joining("\n"));
         return ResponseEntity.ok(body.getBytes(StandardCharsets.UTF_8));
     }

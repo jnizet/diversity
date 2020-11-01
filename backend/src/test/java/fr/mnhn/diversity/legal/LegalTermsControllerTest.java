@@ -1,6 +1,5 @@
 package fr.mnhn.diversity.legal;
 
-import static fr.mnhn.diversity.model.testing.ModelTestingUtil.multiSizeImage;
 import static fr.mnhn.diversity.model.testing.ModelTestingUtil.text;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
@@ -13,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import fr.mnhn.diversity.home.HomeController;
-import fr.mnhn.diversity.home.HomeModel;
+import fr.mnhn.diversity.common.thymeleaf.RequestDialect;
+import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -24,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,6 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(LegalTermsController.class)
+@Import(RequestDialect.class)
 class LegalTermsControllerTest {
 
     @Autowired
