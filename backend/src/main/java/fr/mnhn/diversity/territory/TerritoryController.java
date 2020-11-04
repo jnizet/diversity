@@ -1,6 +1,7 @@
 package fr.mnhn.diversity.territory;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,16 +27,26 @@ public class TerritoryController {
 
     private final PageRepository pageRepository;
     private final PageService pageService;
+    private final MapService mapService;
 
-    public TerritoryController(PageRepository pageRepository, PageService pageService) {
+    public TerritoryController(PageRepository pageRepository,
+                               PageService pageService,
+                               MapService mapService) {
         this.pageRepository = pageRepository;
         this.pageService = pageService;
+        this.mapService = mapService;
     }
 
     @GetMapping()
     public ModelAndView home() {
         Page page = pageRepository.findByNameAndModel(TerritoryModel.TERRITORY_HOME_PAGE_NAME, TerritoryModel.TERRITORY_HOME_PAGE_MODEL.getName()).orElseThrow(NotFoundException::new);
-        return new ModelAndView("territory/territory-home", "page", pageService.buildPageContent(TerritoryModel.TERRITORY_HOME_PAGE_MODEL, page));
+        PageContent pageContent = pageService.buildPageContent(TerritoryModel.TERRITORY_HOME_PAGE_MODEL, page);
+        List<MapTerritoryCard> territoryCards = mapService.getTerritoryCards();
+
+        return new ModelAndView("territory/territory-home", Map.of(
+            "page", pageContent,
+            "territoryCards", territoryCards
+        ));
     }
 
     @GetMapping("/{territorySlug}")

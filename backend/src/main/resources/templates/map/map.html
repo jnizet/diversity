@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <section th:fragment="map (variant)" class="section-map" data-controller="map">
+      <div th:if="${variant == 'home'}" class="section-decoration-text zoom">ZOOM</div>
+      <div class="map-mask">
+        <div class="map-container" th:classappend="${variant == 'territories' ? 'touch' : ''}">
+          <div class="map-wrapper">
+            <div class="map-world-wrapper"></div>
+            <div class="map-content off">
+              <div class="hotspot hide">
+                <div class="hotspot-resize">
+                  <div class="hotspot-middle"></div>
+                  <div class="hotspot-circle"></div>
+                  <div class="hotspot-outside"></div>
+                  <div class="hotspot-text"></div>
+                </div>
+              </div>
+              <div class="bassin hide">
+                <div class="hotspot-resize">
+                  <div class="hotspot-middle"></div>
+                  <div class="hotspot-circle"></div>
+                  <div class="hotspot-outside"></div>
+                  <div class="bassin-circle"></div>
+                  <div class="hotspot-text bassin-text"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img
+          th:src="@{/assets/images/carte_bkg.jpg}"
+          loading="lazy"
+          sizes="100vw"
+          th:srcset="@{/assets/images/carte_bkg-p-800.jpeg} + ' 800w, ' + @{/assets/images/carte_bkg-p-1080.jpeg} + ' 1080w, ' + @{/assets/images/carte_bkg.jpg} + ' 1440w'"
+          alt=""
+          class="map-bkg"
+        />
+        <div class="bassin-text-wrapper">
+          <div class="bassin-text-title"></div>
+          <p></p>
+          <div class="cta-secondary yellow cta-close-bassin">Fermer</div>
+        </div>
+        <ul role="list" class="territoire-fiche-list w-list-unstyled">
+          <li
+            th:each="territoryCard, iterStat: ${territoryCards}"
+            th:data-slug="${territoryCard.territory.slug}"
+            class="territoire-fiche-item"
+          >
+            <div class="territoire-fiche-wrapper">
+              <div class="col-6">
+                <h4 class="territoire-fiche-title" th:text="${territoryCard.territory.name}"></h4>
+                <div class="col-5 left-1">
+                  <p th:text="${territoryCard.page.content.identity.presentation.text}"></p>
+                  <div class="territoire-fiche-number">
+                    <div class="territoire-number-block">
+                      <img th:src="@{/assets/images/Tracé.svg}" loading="lazy" alt="" class="territoire-icon" />
+                      <!-- todo area -->
+                      <div><span th:text="234"></span> km<sup>2</sup></div>
+                    </div>
+                    <div class="territoire-number-block">
+                      <img th:src="@{/assets/images/Habitants.svg}" loading="lazy" alt="" class="territoire-icon" />
+                      <!-- todo population -->
+                      <div><span th:text="34567"></span> hab.</div>
+                    </div>
+                    <div class="territoire-number-block">
+                      <img th:src="@{/assets/images/Espèces.svg}" loading="lazy" alt="" class="territoire-icon" />
+                      <!-- todo species -->
+                      <div><span th:text="54321"></span> espèces indigènes</div>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="swiper-container swiper-fiche swiper-fiche1" th:data-slug="${territoryCard.territory.slug}">
+                      <div class="swiper-wrapper fiche-info-wrapper">
+                        <!-- todo statistics -->
+                        <div class="swiper-slide">
+                          <div class="fiche-info-number" th:text="234"></div>
+                          <div class="fiche-info-text" th:text="'some text'"></div>
+                        </div>
+                        <!--div th:each="stat: ${territoryCard.page.content.statistics}" class="swiper-slide">
+                      <div class="fiche-info-number" th:text="${stat.number}"></div>
+                      <div class="fiche-info-text" th:text="${stat.text}"></div>
+                    </div-->
+                      </div>
+                    </div>
+                    <div class="swiper-layout">
+                      <div class="swiper-pagination-territoire swiper-pagination0">
+                        <div class="bullet-white active-yellow"></div>
+                        <div class="bullet-white"></div>
+                        <div class="bullet-white"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <a th:href="@{/territoires/{slug}(slug=${territoryCard.territory.slug})}" class="cta-primary yellow margin-top"
+                    >Découvrir ce portrait</a
+                  >
+                </div>
+              </div>
+            </div>
+            <img
+              th:src="@{/assets/images/territories/map/{slug}.svg(slug=${territoryCard.territory.slug})}"
+              loading="lazy"
+              alt=""
+              class="territoire-fiche-map"
+            />
+          </li>
+        </ul>
+      </div>
+      <div class="territoire-nav" th:classappend="${variant == 'home' ? 'closed' : ''}">
+        <div class="nav-back-wrapper">
+          <div class="cta-back-world">
+            <img th:src="@{/assets/images/world_back.svg}" loading="lazy" alt="" />
+            <div class="nav-back-text">tous les territoires</div>
+          </div>
+        </div>
+        <div class="swiper-container swiper-fiche-nav">
+          <div class="swiper-wrapper">
+            <div th:each="territoryCard: ${territoryCards}" th:data-slug="${territoryCard.territory.slug}" class="swiper-slide nav-slide">
+              <div class="nav-img-wrapper">
+                <img
+                  th:src="@{/assets/images/territories/map-nav/{slug}.svg(slug=${territoryCard.territory.slug})}"
+                  loading="lazy"
+                  alt=""
+                />
+              </div>
+              <div class="nav-under-text" th:text="${territoryCard.territory.name}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

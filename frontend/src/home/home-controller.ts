@@ -1,11 +1,9 @@
 import { Controller } from 'stimulus';
-import Swiper, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
+import Swiper from 'swiper';
 import $ from 'jquery';
 
 export class HomeController extends Controller {
   connect() {
-    // configure Swiper to use modules
-    Swiper.use([Navigation, Pagination, EffectFade, Autoplay]);
     new Swiper('.swiper-top', {
       speed: 1000,
       effect: 'fade',

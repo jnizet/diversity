@@ -1,5 +1,5 @@
 import { Controller } from 'stimulus';
-import Swiper, { Navigation, Pagination } from 'swiper';
+import Swiper from 'swiper';
 import { TweenMax } from 'gsap';
 import $ from 'jquery';
 
@@ -42,9 +42,6 @@ export class MapController extends Controller {
   ficheSwipersByTerritorySlug = new Map<string, Swiper>();
 
   async connect() {
-    // configure Swiper to use modules
-    Swiper.use([Navigation, Pagination]);
-
     $('.map-container').removeClass('intro');
     $('.territoire-nav').removeClass('closed');
     $('.map-content').removeClass('off');
@@ -126,7 +123,6 @@ export class MapController extends Controller {
       this.zoomHotspot(this.mapData.territories.findIndex(t => t.slug === slug));
     });
 
-    // start with first active territory
     if (window.matchMedia('(max-width: 1024px)').matches) {
       let startX: number;
       let memoX = 0;

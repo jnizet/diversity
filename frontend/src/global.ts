@@ -1,7 +1,11 @@
 import { TweenMax, TweenLite } from 'gsap';
 import $ from 'jquery';
+import Swiper, { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 
 export function initialize() {
+  // configure Swiper to use modules
+  Swiper.use([Navigation, Pagination, EffectFade, Autoplay]);
+
   $(document).ready(function () {
     let memo_scroll: number, wh: number, ww: number, nv: number;
     let deco_y: Array<any> = [];

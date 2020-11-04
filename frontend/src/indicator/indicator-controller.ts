@@ -1,11 +1,8 @@
 import { Controller } from 'stimulus';
-import Swiper, { Navigation, Pagination } from 'swiper';
+import Swiper from 'swiper';
 
 export class IndicatorController extends Controller {
   connect() {
-    // configure Swiper to use modules
-    Swiper.use([Navigation, Pagination]);
-
     new Swiper('.swiper-indicateur', {
       speed: 1000,
       keyboard: true,

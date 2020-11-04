@@ -9,4 +9,31 @@ describe('Territory home', () => {
     cy.contains('85 117 espèces indigènes');
     cy.get('footer').should('contain', 'Territoires');
   });
+
+  it('should display territories in map', () => {
+    cy.visit('/territoires');
+    cy.contains('.nav-slide', 'Réunion');
+    cy.contains('.nav-slide', 'Saint-Pierre-Et-Miquelon').click();
+    cy.contains('h4', 'Saint-Pierre-Et-Miquelon');
+
+    cy.contains('.active a', 'Découvrir ce portrait').click({ force: true });
+    cy.title().should('eq', 'Saint Pierre et Miquelon');
+  });
+
+  it('should display zone in world map', () => {
+    cy.visit('/territoires');
+    cy.get('.bassin0 .bassin-circle').click({ force: true });
+
+    cy.contains('.bassin-text-title', 'Bassin Antillais');
+    cy.contains('.cta-close-bassin', 'Fermer').click({ force: true });
+
+    cy.get('map-container').should('not.contain', 'Bassin Antillais');
+  });
+
+  it('should display territory in map', () => {
+    cy.visit('/territoires');
+    cy.get('.hotspot7 .hotspot-circle').click({ force: true });
+
+    cy.contains('h4', 'Saint-Pierre-Et-Miquelon');
+  });
 });

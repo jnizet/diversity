@@ -41,6 +41,9 @@ class TerritoryControllerTest {
     @MockBean
     private PageService mockPageService;
 
+    @MockBean
+    private MapService mockMapService;
+
     @BeforeEach
     void prepare() {
         Page page = new Page(1L, Territory.REUNION.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Territoire - La Réunion", Collections.emptyList());
@@ -185,11 +188,26 @@ class TerritoryControllerTest {
 
     @Test
     void shouldDisplayTerritoryHome() throws Exception {
+        Page reunionPage = new Page(43L, Territory.REUNION.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "", List.of());
+        PageContent reunionPageContent =
+            new PageContent(
+                reunionPage,
+                Map.of(
+                    "identity", Map.of(
+                        "title", text("La Réunion"),
+                        "presentation", text("presentation of reunion")
+                    )
+                )
+            );
+        when(mockMapService.getTerritoryCards()).thenReturn(List.of(new MapTerritoryCard(Territory.REUNION, reunionPageContent)));
+
         mockMvc.perform(get("/territoires"))
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Territoires</title>")))
                .andExpect(content().string(containsString("Découvrez les territoires</h1>")))
+               .andExpect(content().string(containsString("Réunion")))
+               .andExpect(content().string(containsString("presentation of reunion")))
                .andExpect(content().string(containsString("</html>")));
     }
 }

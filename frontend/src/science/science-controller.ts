@@ -1,12 +1,9 @@
 import { Controller } from 'stimulus';
-import Swiper, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
+import Swiper from 'swiper';
 import $ from 'jquery';
 
 export class ScienceController extends Controller {
   connect() {
-    // configure Swiper to use modules
-    Swiper.use([Navigation, Pagination, EffectFade, Autoplay]);
-
     const topSwiper = new Swiper('.swiper-science', {
       speed: 1000,
       keyboard: true,
