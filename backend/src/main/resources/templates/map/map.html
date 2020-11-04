@@ -70,15 +70,10 @@
                   <div class="col-3">
                     <div class="swiper-container swiper-fiche swiper-fiche1" th:data-slug="${territoryCard.territory.slug}">
                       <div class="swiper-wrapper fiche-info-wrapper">
-                        <!-- todo statistics -->
-                        <div class="swiper-slide">
-                          <div class="fiche-info-number" th:text="234"></div>
-                          <div class="fiche-info-text" th:text="'some text'"></div>
+                        <div th:each="stat: ${territoryCard.page.content.statistics}" class="swiper-slide">
+                          <div class="fiche-info-number" th:text="${stat.number.text}"></div>
+                          <div class="fiche-info-text" th:text="${stat.text.text}"></div>
                         </div>
-                        <!--div th:each="stat: ${territoryCard.page.content.statistics}" class="swiper-slide">
-                      <div class="fiche-info-number" th:text="${stat.number}"></div>
-                      <div class="fiche-info-text" th:text="${stat.text}"></div>
-                    </div-->
                       </div>
                     </div>
                     <div class="swiper-layout">

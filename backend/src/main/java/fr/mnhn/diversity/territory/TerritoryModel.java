@@ -25,12 +25,17 @@ public final class TerritoryModel {
                                             .text("highestPoint", "Altitude du point culminant en mètres")
                                             .text("highestPointName", "Nom du point culminant")
                      )
-                    // Lieux d'intérêts
-                    .section(SectionElement.builder("interests").describedAs("Lieux d'intérêts")
-                                           .text("title", "Titre du carousel des lieux d'intérêts")
-                                           .list(ListElement.builder("images").describedAs("Les photos affichées par le carousel")
-                                                            .image("image", "Photo")
-                                           )
+                     // statistiques indiquées dans la carte
+                     .list(ListElement.builder("statistics").describedAs("Statistiques affichées dans la carte")
+                           .text("number", "Nombre (et unité)")
+                           .text("text", "Texte suivant le nombre")
+                     )
+                     // Lieux d'intérêts
+                     .section(SectionElement.builder("interests").describedAs("Lieux d'intérêts")
+                                            .text("title", "Titre du carousel des lieux d'intérêts")
+                                            .list(ListElement.builder("images").describedAs("Les photos affichées par le carousel")
+                                                             .image("image", "Photo")
+                                            )
                      )
                      // Indicateurs
                      .section(SectionElement.builder("indicators").describedAs("Indicateurs")

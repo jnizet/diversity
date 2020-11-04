@@ -104,6 +104,12 @@ class HomeControllerTest {
                         "area", text("2 512"),
                         "population", text("859 959"),
                         "species", text("3456")
+                    ),
+                    "statistics", List.of(
+                        Map.of(
+                            "number", text("89%"),
+                            "text", text("du territoire classé...")
+                        )
                     )
                 )
             );
