@@ -2,6 +2,8 @@ package fr.mnhn.diversity.territory;
 
 import static fr.mnhn.diversity.model.testing.ModelTestingUtil.*;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -11,8 +13,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import fr.mnhn.diversity.common.thymeleaf.RequestDialect;
+import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.indicator.IndicatorRepository;
+import fr.mnhn.diversity.indicator.IndicatorValue;
+import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -30,7 +37,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * MVC tests for {@link TerritoryController}
  */
 @WebMvcTest(TerritoryController.class)
-@Import(RequestDialect.class)
+@Import({RequestDialect.class, IndicatorDialect.class})
 class TerritoryControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -44,54 +51,48 @@ class TerritoryControllerTest {
     @MockBean
     private MapService mockMapService;
 
+    @MockBean
+    private IndicatorRepository mockIndicatorRepository;
+
     @BeforeEach
     void prepare() {
         Page page = new Page(1L, Territory.REUNION.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Territoire - La Réunion", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(page.getName(), TerritoryModel.TERRITORY_PAGE_MODEL.getName())).thenReturn(Optional.of(page));
         Map<String, Object> interests = Map.of(
             "title", text("Interests"),
-            "images", List.of(
-                Map.of("image", image(2L)),
-                Map.of("image", image(3L))
-            )
-        );
-        Map<String, Object> indicators = Map.of(
-            "title", text("Indicators"),
-            "indicators", List.of(
+            "locations", List.of(
                 Map.of(
-                    "name", text("Indicator1"),
-                    "value", text("12"),
-                    "image", image(4L),
-                    "link", link("12")
+                    "image", image(2L),
+                    "name", text("interest1"),
+                    "description", text("interestDesc1")
+                ),
+                Map.of(
+                    "image", image(3L),
+                    "name", text("interest2"),
+                    "description", text("interestDesc2")
                 )
             )
         );
-        Map<String, Object> species = Map.of(
-            "title", text("Species"),
-            "species", List.of(
-                Map.of(
-                    "name", text("Specie1"),
-                    "description", text("specie1"),
-                    "image", image(5L)
-                )
+        List<Map<String, Object>> species = List.of(
+            Map.of(
+                "name", text("Specie1"),
+                "description", text("specie1"),
+                "image", image(5L)
+            )
+        );
+        List<Map<String, Object>> events = List.of(
+            Map.of(
+                "date", text("1503"),
+                "description", text("event1")
             )
         );
         Map<String, Object> ecosystems = Map.of(
-            "title", text("Ecosystems"),
+            "image", image(34567L),
             "ecosystems", List.of(
                 Map.of(
                     "name", text("Ecosystem1"),
                     "description", text("ecosystem1"),
                     "image", image(6L)
-                )
-            )
-        );
-        Map<String, Object> timeline = Map.of(
-            "title", text("Timeline"),
-            "events", List.of(
-                Map.of(
-                    "name", text("1535"),
-                    "description", text("desc 1535")
                 )
             )
         );
@@ -109,17 +110,23 @@ class TerritoryControllerTest {
             new PageContent(
                 page,
                 Map.of(
-                    "name", text("La Réunion"),
-                    "identity", Map.of(
-                                "title", text("La Réunion"),
-                                "presentation", text("presentation"),
-                                "infography", image(1L)
+                    "identity", Map.ofEntries(
+                                Map.entry("title", text("La Réunion")),
+                                Map.entry("subtitle", text("Une bien jolie île")),
+                                Map.entry("presentation", text("presentation")),
+                                Map.entry("image", image(1L)),
+                                Map.entry("area", text("234")),
+                                Map.entry("marineArea", text("345")),
+                                Map.entry("population", text("45678")),
+                                Map.entry("populationYear", text("2017")),
+                                Map.entry("species", text("5432")),
+                                Map.entry("highestPoint", text("98")),
+                                Map.entry("highestPointName", text("Morne"))
                         ),
                     "interests", interests,
-                    "indicators", indicators,
                     "species", species,
+                    "events", events,
                     "ecosystems", ecosystems,
-                    "timeline", timeline,
                     "risks", risks
                 )
             )
@@ -135,14 +142,8 @@ class TerritoryControllerTest {
                     "identity", Map.of(
                         "title", text("Saint-Pierre-Et-Miquelon"),
                         "presentation", text("presentation"),
-                        "infography", image(1L)
-                    ),
-                    "interests", interests,
-                    "indicators", indicators,
-                    "species", species,
-                    "ecosystems", ecosystems,
-                    "timeline", timeline,
-                    "risks", risks
+                        "image", image(1L)
+                    )
                 )
             )
         );
@@ -162,6 +163,27 @@ class TerritoryControllerTest {
                 )
             )
         );
+
+        Page i1Page = new Page(7654L, "i1", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "", List.of());
+        Page i2Page = new Page(7655L, "i2", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "", List.of());
+        when(mockPageRepository.findRandomIndicatorPagesForTerritory(eq(2), any())).thenReturn(
+            List.of(
+                i1Page,
+                i2Page
+            )
+        );
+        when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, i1Page)).thenReturn(
+            new PageContent(i1Page, Map.of("presentation", Map.of("description", text("i1 desc"))))
+        );
+        when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, i2Page)).thenReturn(
+            new PageContent(i2Page, Map.of("presentation", Map.of("description", text("i2 desc"))))
+        );
+        when(mockIndicatorRepository.getValuesForIndicatorSlugsAndTerritory(Set.of("i1", "i2"), Territory.OUTRE_MER)).thenReturn(
+            Map.of(
+                "i1", new IndicatorValue(10, "%"),
+                "i2", new IndicatorValue(20, "%")
+            )
+        );
     }
 
     @Test
@@ -170,19 +192,28 @@ class TerritoryControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Territoire - La Réunion</title>")))
-               .andExpect(content().string(containsString("<h1>La Réunion</h1>")))
-               .andExpect(content().string(containsString("<h2>Interests</h2>")))
-               .andExpect(content().string(containsString("<h2>Indicators</h2>")))
-               .andExpect(content().string(containsString("<h3>Indicator1</h3>")))
-               .andExpect(content().string(containsString("<h2>Species</h2>")))
-               .andExpect(content().string(containsString("<h3>Specie1</h3>")))
-               .andExpect(content().string(containsString("<h2>Ecosystems</h2>")))
-               .andExpect(content().string(containsString("<h3>Ecosystem1</h3>")))
-               .andExpect(content().string(containsString("<h2>Timeline</h2>")))
-               .andExpect(content().string(containsString("<h3>1535</h3>")))
-               .andExpect(content().string(containsString("<h2>Risks</h2>")))
-               .andExpect(content().string(containsString("<h3>Risk1</h3>")))
-               .andExpect(content().string(containsString("Saint-Pierre-Et-Miquelon</a>")))
+               .andExpect(content().string(containsString("La Réunion</h1>")))
+               .andExpect(content().string(containsString("Une bien jolie île</h2>")))
+               .andExpect(content().string(containsString("presentation")))
+               .andExpect(content().string(containsString("Interests")))
+               .andExpect(content().string(containsString("interest1")))
+               .andExpect(content().string(containsString("interestDesc1")))
+               .andExpect(content().string(containsString("interest2")))
+               .andExpect(content().string(containsString("interestDesc2")))
+               .andExpect(content().string(containsString("10\u00a0%")))
+               .andExpect(content().string(containsString("i1 desc")))
+               .andExpect(content().string(containsString("20\u00a0%")))
+               .andExpect(content().string(containsString("i2 desc")))
+               .andExpect(content().string(containsString("Specie1")))
+               .andExpect(content().string(containsString("specie1")))
+               .andExpect(content().string(containsString("1503")))
+               .andExpect(content().string(containsString("event1")))
+               .andExpect(content().string(containsString("Ecosystem1")))
+               .andExpect(content().string(containsString("ecosystem1")))
+               .andExpect(content().string(containsString("Risks")))
+               .andExpect(content().string(containsString("Risk1")))
+               .andExpect(content().string(containsString("risk1")))
+               .andExpect(content().string(containsString("Saint-Pierre-Et-Miquelon")))
                .andExpect(content().string(containsString("</html>")));
     }
 

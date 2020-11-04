@@ -5,66 +5,58 @@ describe('Territory', () => {
     cy.get('header').should('contain', 'Territoires');
 
     // title
-    cy.get('h1').should('contain', 'La Réunion');
+    cy.get('h1').should('contain', 'La Réunion, entre mer et montagnes');
 
     // identity
-    cy.get('.identity h2').should('contain', 'Un climat tropical');
-    cy.get('.identity p').should('contain', "À l'ouest de l'Océan Indien");
-    cy.get('.identity img').should('have.attr', 'src', '/images/106/image');
+    cy.get('h2').should('contain', 'Un climat tropical');
+    cy.get('p').should('contain', "À l'ouest de l'Océan Indien");
 
     // interests
-    cy.get('.interests img').should('have.length', 2);
-
-    // indicators
-    cy.get('.indicators h3').should('contain', 'Espèces inventoriées');
-    cy.get('.indicators p').should('contain', '4123');
-    cy.get('.indicators img').should('have.attr', 'src', '/images/103/image');
-    cy.get('.indicators a').should('have.attr', 'href', '/indicators/especes');
+    cy.get('.lieu-slide').should('have.length', 2);
 
     // species
-    cy.get('.species h3').should('contain', 'Papangue');
-    cy.get('.species p').should('contain', 'Dernier rapace de la Réunion');
-    cy.get('.species img').should('have.attr', 'src', '/images/104/image');
+    cy.get('.espece-slide h3').should('contain', 'Papangue');
+    cy.get('.espece-slide p').should('contain', 'Dernier rapace de la Réunion');
+
+    // timeline
+    cy.get('.frise-element .frise-element-title').should('contain', '1535');
+    cy.get('.frise-element p').should('contain', 'Prise de possession française');
+
+    // ecosystems
+    cy.get('.ecosysteme-slide h3').should('contain', 'Les marais tourbeux et les tourbières');
+    cy.get('.ecosysteme-slide p').should('contain', 'Ces zones humides occupent des superficies importantes');
+
+    // risks
+    cy.get('.risk-element h3').should('contain', 'Les ressources naturelles');
+    cy.get('.risk-element p').should('contain', 'Le territoire est pour le moment le seul');
 
     // other territory
-    cy.get('.other-territory img').should('have.attr', 'src', '/images/107/image');
-    cy.get('.other-territory a').should('have.attr', 'href', '/territoires/saint-pierre-et-miquelon');
+    cy.get('a.section-push-next').should('have.attr', 'href', '/territoires/saint-pierre-et-miquelon');
 
     cy.get('footer').should('contain', 'Territoires');
   });
 
-  it('should have a page for Saint-Pierre-Et-Miquelon', () => {
-    cy.visit('/territoires/saint-pierre-et-miquelon');
+  it('should navigate to Saint-Pierre-Et-Miquelon', () => {
+    cy.visit('/territoires/reunion');
 
-    // title
-    cy.get('h1').should('contain', 'Saint-Pierre-Et-Miquelon');
+    cy.get('a.section-push-next').click();
 
-    // identity
-    cy.get('.identity h2').should('contain', 'Un climat subarctique, froid et humide');
-    cy.get('.identity p').should('contain', 'Au sud de Terre-Neuve (Canada)');
-    cy.get('.identity img').should('have.attr', 'src', '/images/107/image');
+    cy.get('h1').should('contain', 'St-Pierre-et-Miquelon, des eaux très riches en biodiversité');
+  });
 
-    // interests
-    cy.get('.interests img').should('have.length', 1);
+  it('should navigate to first indicator', () => {
+    cy.visit('/territoires/reunion');
 
-    // ecosystems
-    cy.get('.ecosystems h3').should('contain', 'Les marais tourbeux');
-    cy.get('.ecosystems p').should('contain', 'Ces zones humides...');
-    cy.get('.ecosystems img').should('have.attr', 'src', '/images/108/image');
+    cy.get('.indicator-card').contains('65').closest('.indicator-card').contains('En savoir plus').click();
 
-    // timeline
-    cy.get('.timeline h3').should('contain', '1535');
-    cy.get('.timeline p').should('contain', 'Prise de possession française...');
-    cy.get('.timeline h3').should('contain', '17ème siècle');
-    cy.get('.timeline p').should('contain', 'Premières installations permanentes...');
+    cy.get('h1').should('contain', '65');
+  });
 
-    // risks
-    cy.get('.risks h3').should('contain', 'Les ressources naturelles');
-    cy.get('.risks p').should('contain', "Le territoire est pour l'instant...");
-    cy.get('.risks img').should('have.attr', 'src', '/images/109/image');
+  it('should navigate to second indicator', () => {
+    cy.visit('/territoires/reunion');
 
-    // other territory
-    cy.get('.other-territory img').should('have.attr', 'src', '/images/106/image');
-    cy.get('.other-territory a').should('have.attr', 'href', '/territoires/reunion');
+    cy.get('.indicator-card').contains('de la forêt').closest('.indicator-card').contains('En savoir plus').click();
+
+    cy.get('h1').should('contain', 'de la forêt');
   });
 });

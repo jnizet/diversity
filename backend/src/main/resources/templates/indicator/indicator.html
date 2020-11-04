@@ -146,7 +146,7 @@
                 <div class="indicateur-slide-number" th:text="${#indicators.formatValue(card.indicatorValue)}">16</div>
                 <div class="indicateur-slide-tiytle" th:text="${card.territory.name}">Martinique</div>
                 <img
-                  th:src="@{/assets/images/territories/{slug}.svg(slug=${card.territory.slug})}"
+                  th:src="@{/assets/images/territories/indicator/{slug}.svg(slug=${card.territory.slug})}"
                   loading="lazy"
                   th:alt="${card.territory.name}"
                   class="indicateur-map"

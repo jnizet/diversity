@@ -246,6 +246,31 @@ public class IndicatorRepository {
             });
     }
 
+    /**
+     * Gets the values for a given territory and a set of indicator slugs
+     */
+    public Map<String, IndicatorValue> getValuesForIndicatorSlugsAndTerritory(Collection<String> indicatorSlugs, Territory territory) {
+        if (indicatorSlugs.isEmpty()) {
+            return Map.of();
+        }
+
+        return jdbcTemplate.query(
+            "select indicator.slug, iv.value, iv.unit from indicator_value iv" +
+                " inner join indicator on indicator.id = iv.indicator_id" +
+                " where indicator.slug in (:indicatorSlugs) and territory = :territory",
+            Map.of("indicatorSlugs", indicatorSlugs,
+                   "territory", territory.name()),
+            (rs) -> {
+                Map<String, IndicatorValue> result = new HashMap<>();
+                while (rs.next()) {
+                    String indicatorSlug = rs.getString("slug");
+                    IndicatorValue value = new IndicatorValue(rs.getDouble("value"), rs.getString("unit"));
+                    result.put(indicatorSlug, value);
+                }
+                return result;
+            });
+    }
+
     public Optional<IndicatorValue> getValueForIndicatorAndTerritory(Indicator indicator, Territory territory) {
         return Optional.ofNullable(
             getValuesForIndicatorsAndTerritory(Set.of(indicator), territory).get(indicator)

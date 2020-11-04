@@ -4,15 +4,20 @@ import static com.ninja_squad.dbsetup.Operations.insertInto;
 import static com.ninja_squad.dbsetup.Operations.sequenceOf;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.DELETE_ALL;
 import static fr.mnhn.diversity.common.testing.RepositoryTests.TRACKER;
+import static fr.mnhn.diversity.territory.Territory.*;
+import static fr.mnhn.diversity.territory.Territory.SAINT_PIERRE_ET_MIQUELON;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Set;
 import javax.sql.DataSource;
 
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.generator.ValueGenerators;
 import fr.mnhn.diversity.common.testing.RepositoryTest;
 import fr.mnhn.diversity.home.HomeModel;
+import fr.mnhn.diversity.indicator.IndicatorModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +44,28 @@ class PageRepositoryTest {
                 new DataSourceDestination(dataSource),
                 sequenceOf(
                     DELETE_ALL,
+                    insertInto("indicator")
+                        .columns("id", "biom_id", "slug")
+                        .values(1L, "indicator1", "slug1")
+                        .values(2L, "indicator2", "slug2")
+                        .values(3L, "indicator3", "slug3")
+                        .values(4L, "indicator4", "slug4")
+                        .build(),
+                    insertInto("indicator_value")
+                        .withGeneratedValue("id", ValueGenerators.sequence())
+                        .columns("indicator_id", "territory", "value", "unit")
+                        .values(1L, REUNION, 11, "%")
+                        .values(2L, REUNION, 12, "%")
+                        .values(3L, REUNION, 13, "%")
+                        .build(),
                     insertInto("page")
                         .columns("id", "name", "model_name", "title")
                         .values(1L, "Home", "home", "Accueil")
                         .values(2L, "gesture1", "gesture", "Ecogeste 1")
                         .values(3L, "gesture2", "gesture", "Ecogeste 2")
+                        .values(4L, "slug1", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Indicator 1")
+                        .values(5L, "slug2", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Indicator 2")
+                        .values(6L, "slug3", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Indicator 3")
                         .build(),
                     insertInto("image")
                         .columns("id", "content_type", "original_file_name")
@@ -157,7 +179,7 @@ class PageRepositoryTest {
     void shouldFindAllBasic() {
         TRACKER.skipNextLaunch();
         List<BasicPage> pages = repository.findAllBasic();
-        assertThat(pages.stream().map(BasicPage::getId)).containsExactly(1L, 2L, 3L);
+        assertThat(pages.stream().map(BasicPage::getId)).containsExactly(1L, 2L, 3L, 4L, 5L, 6L);
     }
 
     @Test
@@ -238,5 +260,14 @@ class PageRepositoryTest {
         assertThat(((Link) page.getElements().get("tourism")).getHref()).isEqualTo(link.getHref());
         assertThat(((Image) page.getElements().get("landscape")).getImageId()).isEqualTo(image.getImageId());
         assertThat(((Image) page.getElements().get("landscape")).getAlt()).isEqualTo(image.getAlt());
+    }
+
+    @Test
+    void shouldFindRandomIndicatorPagesForTerritory() {
+        TRACKER.skipNextLaunch();
+        assertThat(repository.findRandomIndicatorPagesForTerritory(2, GUADELOUPE)).isEmpty();
+        List<Page> pages = repository.findRandomIndicatorPagesForTerritory(2, REUNION);
+        assertThat(pages).hasSize(2);
+        pages.forEach(page -> assertThat(page.getId()).isIn(4L, 5L, 6L));
     }
 }

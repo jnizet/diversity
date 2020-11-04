@@ -11,6 +11,7 @@ import { ScienceController } from './science/science-controller';
 import { EcogesturesController } from './ecogestures/ecogestures-controller';
 import { IndicatorController } from './indicator/indicator-controller';
 import { MapController } from './map/map-controller';
+import { TerritoryController } from './territory/territory-controller';
 
 const application = Application.start();
 application.register('contact', ContactController);
@@ -24,5 +25,6 @@ application.register('about', AboutController);
 application.register('science', ScienceController);
 application.register('ecogestures', EcogesturesController);
 application.register('map', MapController);
+application.register('territory', TerritoryController);
 
 initialize();

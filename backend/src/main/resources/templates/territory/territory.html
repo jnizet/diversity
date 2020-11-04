@@ -2,6 +2,7 @@
 
 <html
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
 >
   <head>
@@ -13,87 +14,316 @@
     <meta
       th:ref="og"
       property="og:image"
-      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.identity.infography.imageId})}"
+      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.identity.image.imageId})}"
     />
   </head>
 
   <body>
-    <main th:object="${page.content}">
-      <h1 th:text="*{name.text}">Nom du territoire</h1>
-
-      <!-- Carte d'identité -->
-      <div class="identity">
-        <h2 th:text="*{identity.title.text}">Titre de présentation</h2>
-        <p th:text="*{identity.presentation.text}">Texte de présentation</p>
-        <img th:src="@{/images/{imageId}/image(imageId=*{identity.infography.imageId})}" th:alt="*{identity.infography.alt}" />
-      </div>
-
-      <!-- Lieux d'intérêt -->
-      <div class="interests">
-        <h2 th:text="*{interests.title.text}">Title</h2>
-        <div th:each="imageElement : *{interests.images}" th:object="${imageElement.image}">
-          <img th:src="@{/images/{imageId}/image(imageId=*{imageId})}" th:alt="*{alt}" />
+    <main class="main" th:object="${page.content}" data-controller="territory">
+      <section class="section-top-territoire">
+        <div class="section-top-wrapper">
+          <div class="legend-wrapper territoire">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{identity.image.alt}">Légende de la photo</div>
+          </div>
+          <div class="section-top-center">
+            <h1 class="section-top-title" th:text="*{identity.title.text}">St-Pierre-et-Miquelon, des eaux très riches en biodiversité</h1>
+          </div>
+          <div class="top-territoire-map">
+            <img
+              th:src="@{/assets/images/territories/presentation/{slug}.svg(slug=${territory.slug})}"
+              loading="lazy"
+              th:alt="${territory.name}"
+              class="top-territoire-img"
+            />
+          </div>
         </div>
-      </div>
+        <img biom:image="*{identity.image}" loading="lazy" sizes="100vw" class="img-full" />
+      </section>
 
-      <!-- Indicateurs -->
-      <div class="indicators">
-        <h2 th:text="*{indicators.title.text}">Title</h2>
-        <div th:each="indicator : *{indicators.indicators}">
-          <h3 th:text="${indicator.name.text}"></h3>
-          <p th:text="${indicator.value.text}"></p>
-          <img th:src="@{/images/{imageId}/image(imageId=${indicator.image.imageId})}" th:alt="${indicator.image.alt}" />
-          <a th:href="@{${indicator.link.href}}" th:text="${indicator.link.text}">Link</a>
+      <section class="section-territoire-fiche">
+        <div class="section-label">découvrir</div>
+        <div class="section-content-left">
+          <div class="col-6 max-50">
+            <h2 class="section-title col-4" th:text="*{identity.subtitle.text}">Un climat subarctique, froid et humide</h2>
+            <div class="left-1">
+              <p th:text="*{identity.presentation.text}">
+                Au sud de Terre Neuve (Canada), cet archipel est constitué de 3 îles principales : Saint-Pierre, Langlade, Miquelon. Il se
+                situe à la confluence du courant froid du Labrador et des eaux plus chaudes du Gulf Stream, offrant des eaux riches en
+                biodiversité. La proximité de l’océan influence les écosystèmes terrestres : dunes, prairies côtières, lagunes, marais. On y
+                trouve également la seule forêt boréale française.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <!-- Espèces -->
-      <div class="species">
-        <h2 th:text="*{species.title.text}">Title</h2>
-        <div th:each="speciesItem : *{species.species}">
-          <h3 th:text="${speciesItem.name.text}"></h3>
-          <p th:text="${speciesItem.description.text}"></p>
-          <img th:src="@{/images/{imageId}/image(imageId=${speciesItem.image.imageId})}" th:alt="${speciesItem.image.alt}" />
+        <div class="section-decoration-text decouvrir">découvrir</div>
+        <div class="territoire-side">
+          <div class="swiper-fact">
+            <div class="fact-slide">
+              <img th:src="@{/assets/images/superficie-terrestre.svg}" loading="lazy" alt="" class="fact-img" />
+              <div class="fact-text-wrapper">
+                <div class="fact-top-wrapper">
+                  <div class="fact-number" th:text="*{identity.area.text}">242</div>
+                  <div class="fact-unit">km<sup>2</sup></div>
+                </div>
+                <div class="fact-text">Superficie terrestre</div>
+              </div>
+            </div>
+            <div class="fact-slide">
+              <img th:src="@{/assets/images/superficie-marine.svg}" loading="lazy" alt="" class="fact-img" />
+              <div class="fact-text-wrapper">
+                <div class="fact-top-wrapper">
+                  <div class="fact-number" th:text="*{identity.marineArea.text}">12300</div>
+                  <div class="fact-unit">km<sup>2</sup></div>
+                </div>
+                <div class="fact-text">Superficie marine</div>
+              </div>
+            </div>
+            <div class="fact-slide">
+              <img th:src="@{/assets/images/habitants_1.svg}" loading="lazy" alt="" class="fact-img" />
+              <div class="fact-text-wrapper">
+                <div class="fact-top-wrapper">
+                  <div class="fact-number" th:text="*{identity.population.text}">6274</div>
+                </div>
+                <div class="fact-text">habitants en <span th:text="*{identity.populationYear.text}">2017</span></div>
+              </div>
+            </div>
+            <div class="fact-slide">
+              <img th:src="@{/assets/images/about.svg}" loading="lazy" alt="" class="fact-img" />
+              <div class="fact-text-wrapper">
+                <div class="fact-top-wrapper">
+                  <div class="fact-number" th:text="*{identity.highestPoint.text}">240</div>
+                  <div class="fact-unit">m</div>
+                </div>
+                <div class="fact-text">
+                  point culminant <span th:text="*{identity.highestPointName.text}">Morne de la Grande Montagne</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Écosystème -->
-      <div class="ecosystems">
-        <h2 th:text="*{ecosystems.title.text}">Title</h2>
-        <div th:each="ecosystem : *{ecosystems.ecosystems}">
-          <h3 th:text="${ecosystem.name.text}"></h3>
-          <p th:text="${ecosystem.description.text}"></p>
-          <img th:src="@{/images/{imageId}/image(imageId=${ecosystem.image.imageId})}" th:alt="${ecosystem.image.alt}" />
+      <section class="section-lieu">
+        <div class="lieu-title-wrapper">
+          <div class="section-label">Lieux d'intérêt</div>
+          <h3 class="section-title col-4" th:text="*{interests.title.text}">A la découverte des endroits emblématiques</h3>
         </div>
-      </div>
-
-      <!-- Frise chronologie -->
-      <div class="timeline">
-        <h2 th:text="*{timeline.title.text}">Title</h2>
-        <div th:each="event : *{timeline.events}">
-          <h3 th:text="${event.name.text}"></h3>
-          <p th:text="${event.description.text}"></p>
+        <div class="lieux-wrapper">
+          <div class="swiper-container swiper-lieu">
+            <div class="swiper-wrapper lieu-swiper-wrapper">
+              <div th:each="location: *{interests.locations}" class="swiper-slide lieu-slide">
+                <img
+                  biom:image="${location.image}"
+                  loading="lazy"
+                  sizes="(max-width: 479px) 33vw, (max-width: 991px) 107.078125px, 11vw"
+                  alt=""
+                  class="lieu-slide-img"
+                />
+                <div class="col-3">
+                  <h4 class="lieu-title" th:text="${location.name.text}">Le grand barachois</h4>
+                  <p th:text="${location.description.text}">
+                    Cette lagune de 1 000 ha est bordée de marais et communique avec la mer par un goulet au sud-est.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <!-- Risques et menaces -->
-      <div class="risks">
-        <h2 th:text="*{risks.title.text}">Title</h2>
-        <div th:each="risk : *{risks.risks}">
-          <h3 th:text="${risk.name.text}"></h3>
-          <p th:text="${risk.description.text}"></p>
-          <img th:src="@{/images/{imageId}/image(imageId=${risk.image.imageId})}" th:alt="${risk.image.alt}" />
+        <div class="swiper-navigation-wide">
+          <div class="cta-swiper-nav">
+            <img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-prev" />
+          </div>
+          <div class="cta-swiper-nav">
+            <img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-next" />
+          </div>
         </div>
-      </div>
+        <div class="section-decoration-text lieu">Lieux d’intérêt</div>
+      </section>
 
-      <!-- Bandeau autre territoire -->
-      <div class="other-territory" th:if="${nextTerritoryCard}">
-        <img
-          th:src="@{/images/{imageId}/image(imageId=${nextTerritoryCard.page.content.identity.infography.imageId})}"
-          th:alt="${nextTerritoryCard.page.content.identity.infography.alt}"
-        />
-        <a th:href="@{/territoires/{slug}(slug=${nextTerritoryCard.territory.slug})}" th:text="${nextTerritoryCard.territory.name}"></a>
-      </div>
+      <section th:if="${indicatorCards.size() > 0}" class="section-territoire-indicateur">
+        <div class="territoire-indicateur-wrapper">
+          <div class="indicateur-push-content left-1 indicator-card">
+            <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicatorCards[0].indicatorValue)}"></div>
+            <div class="text-big" th:text="${indicatorCards[0].page.content.presentation.description.text}"></div>
+            <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[0].page.name})}" class="cta-secondary">En savoir plus</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-espece">
+        <div class="espce-wrapper">
+          <div class="swiper-container swiper-espece">
+            <div class="swiper-wrapper">
+              <div th:each="speciesItem : *{species}" class="swiper-slide espece-slide">
+                <img
+                  biom:image="${speciesItem.image}"
+                  loading="lazy"
+                  sizes="(max-width: 479px) 80vw, (max-width: 991px) 480px, 40vw"
+                  class="espce-img"
+                />
+                <div class="col-4">
+                  <div class="section-label">espèces</div>
+                  <h3 class="espece-title" th:text="${speciesItem.name.text}">Cerf de<br />Virginie</h3>
+                  <p th:text="${speciesItem.description.text}">
+                    Peu de mammifères terrestres sont indigènes de l’archipel. Le Cerf de Virginie (Odocoileus virginianus) a été introduit
+                    à Miquelon et Langlade en 1953 pour la chasse. Ses populations dégradent fortement la forêt boréale.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-layout">
+            <div class="swiper-pagination-espece">
+              <div class="bullet-white active-white"></div>
+              <div class="bullet-white"></div>
+              <div class="bullet-white"></div>
+            </div>
+            <div class="swiper-navigation-small">
+              <div class="cta-swiper-nav">
+                <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-prev" />
+              </div>
+              <div class="cta-swiper-nav">
+                <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-next" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-decoration-text especes">espèces</div>
+      </section>
+
+      <section class="section-frise">
+        <div class="frise-title-wrapper">
+          <div class="section-label" th:text="${territory.name}">saint-pierre-et-miquelon</div>
+          <h3 class="section-title col-4">Histoire &amp; temps forts</h3>
+        </div>
+        <div class="swiper-container swiper-frise">
+          <div class="swiper-wrapper swiper-wrapper-frise">
+            <div th:each="event: *{events}" class="swiper-slide frise-element">
+              <div class="frise-circle"></div>
+              <div class="frise-text-wrapper">
+                <div class="frise-element-title" th:text="${event.date.text}">1535</div>
+                <p th:text="${event.description.text}">Prise de possession française des îles par Jacques Cartier</p>
+              </div>
+            </div>
+          </div>
+          <div class="frise-bkg">
+            <img
+              th:src="@{/assets/images/territories/presentation/{slug}.svg(slug=${territory.slug})}"
+              loading="lazy"
+              alt=""
+              class="frise-bkg-img"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="section-ecosysteme">
+        <div class="swiper-container swiper-ecosysteme">
+          <div class="swiper-wrapper">
+            <div th:each="ecosystem: *{ecosystems.ecosystems}" class="swiper-slide ecosysteme-slide">
+              <div class="ecosysteme-left">
+                <div class="section-label">Écosystèmes</div>
+                <h3 class="section-title" th:text="${ecosystem.name.text}">Les marais tourbeux et les tourbières</h3>
+                <p th:text="${ecosystem.description.text}">
+                  Ces zones humides occupent des superficies importantes. Caractérisées par la formation et l’accumulation de tourbe,
+                  parfois sur plusieurs mètres d’épaisseur, elles présentent des groupements végétaux remarquables et variés, parmi
+                  lesquelles on trouve des sphaignes, des mousses, ainsi que des orchidées.  
+                </p>
+              </div>
+              <div class="col-6 left-1 right-n1">
+                <img
+                  biom:image="${ecosystem.image}"
+                  loading="lazy"
+                  sizes="(max-width: 479px) 94vw, (max-width: 991px) 90vw, 57vw"
+                  class="ecosysteme-img"
+                />
+                <div class="legend-wrapper right">
+                  <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+                  <div class="legend-text" th:text="${ecosystem.image.alt}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-layout-eco">
+            <div class="swiper-pagination-eco">
+              <div class="bullet-black active"></div>
+              <div class="bullet-black"></div>
+              <div class="bullet-black"></div>
+            </div>
+            <div class="swiper-navigation-small">
+              <div class="cta-swiper-nav">
+                <img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-prev" />
+              </div>
+              <div class="cta-swiper-nav">
+                <img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-next" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-decoration-text ecosysteme">écosystème</div>
+      </section>
+
+      <section class="ecosysteme-push">
+        <div class="push-left">
+          <img
+            biom:image="*{ecosystems.image}"
+            loading="lazy"
+            sizes="(max-width: 479px) 94vw, (max-width: 767px) 100vw, (max-width: 991px) 94vw, 67vw"
+            class="img-full-height"
+          />
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" th:text="*{ecosystems.image.alt}"></div>
+          </div>
+        </div>
+        <div th:if="${indicatorCards.size() > 1}" class="push-right indicator-card">
+          <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicatorCards[1].indicatorValue)}"></div>
+          <div class="text-big" th:text="${indicatorCards[1].page.content.presentation.description.text}"></div>
+          <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[1].page.name})}" class="cta-secondary">En savoir plus</a>
+        </div>
+      </section>
+
+      <section class="section-text">
+        <div class="section-label" th:text="*{risks.title.text}">Enjeux et menaces</div>
+        <div
+          th:each="risk, iterStat: *{risks.risks}"
+          class="section-content-left risk-element"
+          th:classappend="${iterStat.index > 0 ? 'top-1' : ''}"
+        >
+          <div class="text-title-wrapper">
+            <h3 class="section-title col-4" th:text="${risk.name.text}">Les ressources naturelles : un enjeu important</h3>
+          </div>
+          <div class="col-8">
+            <p class="two-column left-1" th:text="${risk.description.text}"></p>
+          </div>
+          <div class="col-4 left-1"></div>
+        </div>
+        <div class="section-decoration-text">enjeux</div>
+      </section>
+
+      <a
+        th:if="${nextTerritoryCard}"
+        th:href="@{/territoires/{slug}(slug=${nextTerritoryCard.territory.slug})}"
+        class="section-push-next w-inline-block"
+      >
+        <div class="push-next-img">
+          <img
+            th:src="@{/images/{imageId}/image/sm(imageId=${nextTerritoryCard.page.content.identity.image.imageId})}"
+            th:alt="${nextTerritoryCard.page.content.identity.image.alt}"
+            loading="lazy"
+            sizes="40vw"
+            class="next-img"
+          />
+        </div>
+        <div class="push-next-wrapper">
+          <div class="push-next-before">territoire suivant</div>
+          <div class="push-next-title-wrapper">
+            <div class="push-next-title col-4" th:text="${nextTerritoryCard.territory.name}"></div>
+            <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
+          </div>
+        </div>
+      </a>
     </main>
   </body>
 </html>

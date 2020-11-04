@@ -212,6 +212,15 @@ class IndicatorRepositoryTest {
     }
 
     @Test
+    void shouldGetValuesForIndicatorSlugsAndTerritory() {
+        TRACKER.skipNextLaunch();
+        Set<String> slugs = Set.of("slug2", "slug3");
+        Map<String, IndicatorValue> result = repository.getValuesForIndicatorSlugsAndTerritory(slugs, OUTRE_MER);
+        assertThat(result).containsOnly(
+            entry("slug3", new IndicatorValue(10, "%"))
+        );
+    }
+    @Test
     void shouldFindIndicatorsReferencingAnEcogesture() {
         TRACKER.skipNextLaunch();
         List<Long> indicatorsForEcogesture1 = repository.findIndicatorsForEcogesture(ecogesture1.getSlug())

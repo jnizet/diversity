@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.territory.Territory;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -119,6 +122,45 @@ public class PageRepository {
                 + "         left outer join page_element el on page.id = el.page_id\n"
                 + "where page.id = (select id from searched_id)";
         return jdbcTemplate.query(sql, Map.of("modelName", modelName, "currentPageId", currentPageId), this::extractPage);
+    }
+
+    /**
+     * Finds up to N random indicator pages where an indicator value exists for the given territory
+     */
+    public List<Page> findRandomIndicatorPagesForTerritory(int max, Territory territory) {
+        String sql =
+            "with page_ids as\n"
+                + "         (select page.id\n"
+                + "          from page page\n"
+                + "                   inner join indicator on indicator.slug = page.name\n"
+                + "                   inner join indicator_value iv on indicator.id = iv.indicator_id\n"
+                + "          where page.model_name = :indicatorModelName\n"
+                + "            and iv.territory = :territory\n"
+                + "          order by random()\n"
+                + "          limit :max)\n"
+                + "select page.id,\n"
+                + "       page.name,\n"
+                + "       page.model_name,\n"
+                + "       page.title,\n"
+                + "       el.id as element_id,\n"
+                + "       el.type,\n"
+                + "       el.key,\n"
+                + "       el.text,\n"
+                + "       el.image_id,\n"
+                + "       el.alt,\n"
+                + "       el.href\n"
+                + "from page\n"
+                + "         left outer join page_element el on page.id = el.page_id\n"
+                + "         inner join page_ids on page.id = page_ids.id";
+
+        return jdbcTemplate.query(
+            sql,
+            Map.of(
+                "territory", territory.name(),
+                "max", max,
+                "indicatorModelName", IndicatorModel.INDICATOR_PAGE_MODEL.getName()
+            ),
+            this::extractPages);
     }
 
     /**
