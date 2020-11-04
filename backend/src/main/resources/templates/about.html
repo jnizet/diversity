@@ -11,17 +11,21 @@
 
     <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
     <meta th:ref="og" property="og:description" th:attr="content=${page.content.header.subtitle.text}" />
-    <meta th:ref="og" property="og:image" th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.header.background.imageId})}" />
+    <meta
+      th:ref="og"
+      property="og:image"
+      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.header.background.imageId})}"
+    />
   </head>
 
   <body>
     <main class="main" th:object="${page.content}" data-controller="about">
       <section class="section-top">
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" th:text="*{header.background.alt}"></div>
+        </div>
         <div class="section-top-wrapper">
-          <div class="legend-wrapper">
-            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{header.background.alt}"></div>
-          </div>
           <div class="section-top-content">
             <h1 class="section-top-title" th:text="*{header.title.text}">Pourquoi un compteur de la biodiversité en outre-mer ?</h1>
             <p class="section-top-text" th:text="*{header.subtitle.text}">
@@ -50,6 +54,7 @@
             biom:image="*{goal1.image}"
             loading="lazy"
             sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 40vw"
+            class="img-full-height"
           />
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
@@ -57,7 +62,7 @@
           </div>
         </div>
       </section>
-      <section class="sextion-apropos-right">
+      <section class="section-apropos-right">
         <div class="col-7">
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
@@ -118,7 +123,8 @@
           <img
             biom:image="*{goal3.image}"
             loading="lazy"
-            sizes="(max-width: 479px) 87vw, (max-width: 767px) 88vw, (max-width: 991px) 480px, 40vw"
+            sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 40vw"
+            class="img-full-height"
           />
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />

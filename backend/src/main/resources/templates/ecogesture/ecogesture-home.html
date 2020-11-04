@@ -11,18 +11,22 @@
 
     <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
     <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.text}" />
-    <meta th:ref="og" property="og:image" th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.image.imageId})}" />
+    <meta
+      th:ref="og"
+      property="og:image"
+      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.image.imageId})}"
+    />
   </head>
 
   <body>
     <main class="main" th:object="${page.content}">
       <!-- Top -->
       <section class="section-top">
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" th:text="*{image.alt}">Légende photo</div>
+        </div>
         <div class="section-top-wrapper">
-          <div class="legend-wrapper">
-            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{image.alt}">Légende photo</div>
-          </div>
           <div class="section-top-content">
             <h1 class="section-top-title" th:text="*{title.text}"></h1>
             <p class="section-top-text" th:text="*{presentation.text}"></p>
@@ -52,7 +56,7 @@
                   th:src="@{/images/{imageId}/image/sm(imageId=${gesturePage.content.presentation.image.imageId})}"
                   th:alt="${gesturePage.content.presentation.image.alt}"
                   loading="lazy"
-                  sizes="42vw"
+                  sizes="(max-width: 479px) 100vw, (max-width: 767px) 45vw, (max-width: 991px) 46vw, 42vw"
                   class="ecogeste-bkg"
                 />
               </div>

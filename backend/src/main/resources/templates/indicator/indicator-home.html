@@ -11,7 +11,11 @@
 
     <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
     <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.text}" />
-    <meta th:ref="og" property="og:image" th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.image.imageId})}" />
+    <meta
+      th:ref="og"
+      property="og:image"
+      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.image.imageId})}"
+    />
   </head>
 
   <body>

@@ -11,17 +11,21 @@
 
     <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
     <meta th:ref="og" property="og:description" th:attr="content=${page.content.header.subtitle.text}" />
-    <meta th:ref="og" property="og:image" th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.header.background.imageId})}" />
+    <meta
+      th:ref="og"
+      property="og:image"
+      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.header.background.imageId})}"
+    />
   </head>
 
   <body>
     <main class="main" th:object="${page.content}">
       <section class="section-top">
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" th:text="*{header.background.alt}">Légende de la photo</div>
+        </div>
         <div class="section-top-wrapper">
-          <div class="legend-wrapper">
-            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{header.background.alt}">Légende de la photo</div>
-          </div>
           <div class="section-top-content">
             <h1 class="section-top-title" th:text="*{header.title.text}">Agir ensemble pour une biodiversité unique mais fragile</h1>
             <p class="section-top-text" th:text="*{header.subtitle.text}">
@@ -59,7 +63,7 @@
                 th:src="@{/images/{imageId}/image/sm(imageId=${card.content.presentation.image.imageId})}"
                 th:alt="${card.content.presentation.image.alt}"
                 loading="lazy"
-                sizes="42vw"
+                sizes="(max-width: 479px) 94vw, (max-width: 991px) 480px, 42vw"
                 class="ecogeste-bkg"
               />
             </div>

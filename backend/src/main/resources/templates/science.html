@@ -11,17 +11,21 @@
 
     <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
     <meta th:ref="og" property="og:description" th:attr="content=${page.content.header.subtitle.text}" />
-    <meta th:ref="og" property="og:image" th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.header.background.imageId})}" />
+    <meta
+      th:ref="og"
+      property="og:image"
+      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.header.background.imageId})}"
+    />
   </head>
 
   <body>
     <main class="main" th:object="${page.content}" data-controller="science">
       <section class="section-top">
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" th:text="*{header.background.alt}">Légende de la photo</div>
+        </div>
         <div class="section-top-wrapper">
-          <div class="legend-wrapper">
-            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{header.background.alt}">Légende de la photo</div>
-          </div>
           <div class="section-top-content">
             <h1 class="section-top-title" th:text="*{header.title.text}">Que sont les sciences participatives ?</h1>
             <p class="section-top-text" th:text="*{header.subtitle.text}">
@@ -58,11 +62,15 @@
           </div>
         </div>
         <div class="left-1 right-n1">
-          <div th:each="imageElement,iterStat: *{images}" th:class="${iterStat.index > 0 ? 'col-4 top-1' : 'col-7'}">
+          <div
+            th:each="imageElement,iterStat: *{images}"
+            th:class="${iterStat.even ? 'col-4' : 'col-7'}"
+            th:classappend="${iterStat.index > 0 ? 'top-1' : ''}"
+          >
             <img
               biom:image="${imageElement.image}"
               loading="lazy"
-              th:sizes="${iterStat.index > 0 ? '(max-width: 479px) 100vw, 480px' : '(max-width: 991px) 100vw, 63vw'}"
+              th:sizes="${iterStat.even ? '(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 63vw' : '(max-width: 479px) 87vw, (max-width: 767px) 88vw, 480px'}"
             />
             <div class="legend-wrapper right">
               <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
