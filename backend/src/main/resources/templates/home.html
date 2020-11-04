@@ -130,12 +130,10 @@
       <section class="section-map" data-controller="map">
         <div class="section-decoration-text zoom">ZOOM</div>
         <div class="map-mask">
-          <div class="map-container hide">
+          <div class="map-container">
             <div class="map-wrapper">
-              <div class="map-world-wrapper">
-                <img th:src="@{/assets/images/world_map_3.svg}" alt="" class="world-back" />
-              </div>
-              <div class="map-content">
+              <div class="map-world-wrapper"></div>
+              <div class="map-content off">
                 <div class="hotspot hide">
                   <div class="hotspot-resize">
                     <div class="hotspot-middle"></div>
@@ -164,9 +162,9 @@
             alt=""
             class="map-bkg"
           />
-          <div th:each="zone: ${zones}" class="bassin-text-wrapper" th:data-slug="${zone}">
-            <div class="bassin-text-title" th:text="${zone.name}"></div>
-            <p th:text="${zone.text}"></p>
+          <div class="bassin-text-wrapper">
+            <div class="bassin-text-title"></div>
+            <p></p>
             <div class="cta-secondary yellow cta-close-bassin">Fermer</div>
           </div>
           <ul role="list" class="territoire-fiche-list w-list-unstyled">
@@ -199,7 +197,7 @@
                       </div>
                     </div>
                     <div class="col-3">
-                      <div class="swiper-container swiper-fiche">
+                      <div class="swiper-container swiper-fiche swiper-fiche1" th:data-slug="${territoryCard.territory.slug}">
                         <div class="swiper-wrapper fiche-info-wrapper">
                           <!-- todo statistics -->
                           <div class="swiper-slide">
@@ -213,7 +211,7 @@
                         </div>
                       </div>
                       <div class="swiper-layout">
-                        <div class="swiper-pagination-territoire">
+                        <div class="swiper-pagination-territoire swiper-pagination0">
                           <div class="bullet-white active-yellow"></div>
                           <div class="bullet-white"></div>
                           <div class="bullet-white"></div>
@@ -227,16 +225,15 @@
                 </div>
               </div>
               <img
-                th:src="@{/assets/images/territories/map-nav/{slug}.svg(slug=${territoryCard.territory.slug})}"
+                th:src="@{/assets/images/territories/map/{slug}.svg(slug=${territoryCard.territory.slug})}"
                 loading="lazy"
                 alt=""
                 class="territoire-fiche-map"
               />
-              <img biom:image="${territoryCard.page.content.identity.infography}" loading="lazy" alt="" class="territoire-fiche-bkg" />
             </li>
           </ul>
         </div>
-        <div class="territoire-nav">
+        <div class="territoire-nav closed">
           <div class="nav-back-wrapper">
             <div class="cta-back-world">
               <img th:src="@{/assets/images/world_back.svg}" loading="lazy" alt="" />

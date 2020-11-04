@@ -25,7 +25,7 @@ describe('Home', () => {
     cy.contains('.nav-slide', 'Saint-Pierre-Et-Miquelon').click();
     cy.contains('h4', 'Saint-Pierre-Et-Miquelon');
 
-    cy.contains('.active a', 'Découvrir ce portrait').click();
+    cy.contains('.active a', 'Découvrir ce portrait').click({ force: true });
     cy.title().should('eq', 'Saint Pierre et Miquelon');
   });
 

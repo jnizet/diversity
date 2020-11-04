@@ -115,7 +115,6 @@ class HomeControllerTest {
             .andExpect(content().string(containsString("<title>Diversité</title>")))
             .andExpect(content().string(containsString("Hello")))
             .andExpect(content().string(containsString("Presentation")))
-            .andExpect(content().string(containsString(Zone.ANTILLES.getText())))
             .andExpect(content().string(containsString("Réunion")))
             .andExpect(content().string(containsString("presentation of reunion")))
             .andExpect(content().string(containsString("Testimony")))

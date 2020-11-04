@@ -27,6 +27,10 @@ public final class ZoneDTO {
         return zone.isActive();
     }
 
+    public String getText() {
+        return zone.getText();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

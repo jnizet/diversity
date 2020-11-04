@@ -45,20 +45,14 @@ public class HomeController {
         PageContent pageContent = pageService.buildPageContent(HomeModel.HOME_PAGE_MODEL, page);
 
         List<TerritoryCard> territoryCards = getTerritoryCards();
-        List<Zone> zones = getActiveZones();
 
         return new ModelAndView(
             "home",
             Map.of(
                 "page", pageContent,
-                "territoryCards", territoryCards,
-                "zones", zones
+                "territoryCards", territoryCards
             )
         );
-    }
-
-    private List<Zone> getActiveZones() {
-        return Stream.of(Zone.values()).filter(Zone::isActive).collect(Collectors.toList());
     }
 
     private List<TerritoryCard> getTerritoryCards() {

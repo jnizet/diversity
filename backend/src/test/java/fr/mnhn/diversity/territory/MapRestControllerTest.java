@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
 import java.util.List;
 
 import fr.mnhn.diversity.model.BasicPage;
@@ -27,14 +28,17 @@ class MapRestControllerTest {
     @Test
     void shouldGetMap() throws Exception {
         Zone zone = Zone.ANTILLES;
-        Territory territory = Territory.REUNION;
-        Territory territory2 = Territory.GUADELOUPE;
+        Territory reunion = Territory.REUNION;
+        int reunionIndex = Arrays.asList(Territory.values()).indexOf(reunion) - 1;
+        Territory guageloupe = Territory.GUADELOUPE;
+        int guadeloupeIndex = Arrays.asList(Territory.values()).indexOf(guageloupe) - 1;
+        int guyaneIndex = Arrays.asList(Territory.values()).indexOf(Territory.GUYANE) - 1;
 
         String territoryModelName = TerritoryModel.TERRITORY_PAGE_MODEL.getName();
         when(mockPageRepository.findBasicByModel(territoryModelName)).thenReturn(
             List.of(
-                new BasicPage(1L, Territory.REUNION.getSlug(), territoryModelName, ""),
-                new BasicPage(2L, Territory.GUADELOUPE.getSlug(), territoryModelName, "")
+                new BasicPage(1L, reunion.getSlug(), territoryModelName, ""),
+                new BasicPage(2L, guageloupe.getSlug(), territoryModelName, "")
             )
         );
 
@@ -47,14 +51,14 @@ class MapRestControllerTest {
                .andExpect(jsonPath("$.zones[0].coordinates.y").value(zone.getCoordinates().getY()))
                .andExpect(jsonPath("$.zones[0].active").value(true))
                .andExpect(jsonPath("$.territories.length()").value(Territory.values().length - 1))
-               .andExpect(jsonPath("$.territories[0].territory").value(territory.name()))
-               .andExpect(jsonPath("$.territories[0].name").value(territory.getName()))
-               .andExpect(jsonPath("$.territories[0].coordinates.x").value(territory.getCoordinates().getX()))
-               .andExpect(jsonPath("$.territories[0].coordinates.y").value(territory.getCoordinates().getY()))
-               .andExpect(jsonPath("$.territories[0].zone").isEmpty())
-               .andExpect(jsonPath("$.territories[0].slug").value(territory.getSlug()))
-               .andExpect(jsonPath("$.territories[0].active").value(true))
-               .andExpect(jsonPath("$.territories[1].zone").value(territory2.getZone().name()))
-               .andExpect(jsonPath("$.territories[4].active").value(false));
+               .andExpect(jsonPath("$.territories[" + reunionIndex + "].territory").value(reunion.name()))
+               .andExpect(jsonPath("$.territories[" + reunionIndex + "].name").value(reunion.getName()))
+               .andExpect(jsonPath("$.territories[" + reunionIndex + "].coordinates.x").value(reunion.getCoordinates().getX()))
+               .andExpect(jsonPath("$.territories[" + reunionIndex + "].coordinates.y").value(reunion.getCoordinates().getY()))
+               .andExpect(jsonPath("$.territories[" + reunionIndex + "].zone").isEmpty())
+               .andExpect(jsonPath("$.territories[" + reunionIndex + "].slug").value(reunion.getSlug()))
+               .andExpect(jsonPath("$.territories[" + reunionIndex + "].active").value(true))
+               .andExpect(jsonPath("$.territories[" + guadeloupeIndex + "].zone").value(guageloupe.getZone().name()))
+               .andExpect(jsonPath("$.territories[" + guyaneIndex + "].active").value(false));
     }
 }

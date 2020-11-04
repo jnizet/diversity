@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +73,8 @@ class PageLinkRestControllerTest {
 
     @Test
     void shouldGetPageLinks() throws Exception {
+        int reunionIndex = Arrays.asList(Territory.values()).indexOf(Territory.REUNION) - 1;
+        int guadeloupeIndex = Arrays.asList(Territory.values()).indexOf(Territory.GUADELOUPE) - 1;
         mockMvc.perform(get("/api/pages/links"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.staticPageLinks.length()").value(9))
@@ -87,10 +90,10 @@ class PageLinkRestControllerTest {
                .andExpect(jsonPath("$.indicatorPageLinks[1].id").value(nullValue()))
                .andExpect(jsonPath("$.indicatorPageLinks[1].name").value("i2"))
                .andExpect(jsonPath("$.territoryPageLinks.length()").value(Territory.values().length - 1))
-               .andExpect(jsonPath("$.territoryPageLinks[0].id").value(nullValue()))
-               .andExpect(jsonPath("$.territoryPageLinks[0].name").value(Territory.REUNION.getSlug()))
-               .andExpect(jsonPath("$.territoryPageLinks[1].id").value(21L))
-               .andExpect(jsonPath("$.territoryPageLinks[1].name").value(Territory.GUADELOUPE.getSlug()))
+               .andExpect(jsonPath("$.territoryPageLinks[" + reunionIndex + "].id").value(nullValue()))
+               .andExpect(jsonPath("$.territoryPageLinks[" + reunionIndex + "].name").value(Territory.REUNION.getSlug()))
+               .andExpect(jsonPath("$.territoryPageLinks["  + guadeloupeIndex + "].id").value(21L))
+               .andExpect(jsonPath("$.territoryPageLinks["  + guadeloupeIndex + "].name").value(Territory.GUADELOUPE.getSlug()))
                .andExpect(jsonPath("$.ecogesturePageLinks.length()").value(2))
                .andExpect(jsonPath("$.ecogesturePageLinks[0].id").value(31L))
                .andExpect(jsonPath("$.ecogesturePageLinks[0].name").value("e1"))

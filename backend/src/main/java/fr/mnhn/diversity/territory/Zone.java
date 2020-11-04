@@ -11,12 +11,6 @@ public enum Zone {
         "Les Antilles sont un « point chaud » de la biodiversité mondiale." +
             " Si chacun des quatre territoires français du bassin a son identité et ses spécificités,"
             + " les acteurs locaux collaborent autour de problématiques partagées."
-    ),
-    ILES_AUSTRALES(
-        "Îles australes",
-        new MapCoordinates(357, 749),
-        false,
-        null
     );
 
     private final String name;

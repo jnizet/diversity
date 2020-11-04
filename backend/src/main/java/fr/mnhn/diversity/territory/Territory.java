@@ -13,25 +13,18 @@ public enum Territory {
         null,
         null
     ),
-    REUNION(
-        "Réunion",
-        "La Réunion",
-        "reunion",
-        new MapCoordinates(290, 615),
-        null
-    ),
     GUADELOUPE(
         "Guadeloupe",
         "Guadeloupe",
         "guadeloupe",
-        new MapCoordinates(1167, 488),
+        new MapCoordinates(1166, 484),
         ANTILLES
     ),
     MARTINIQUE(
         "Martinique",
         "Martinique",
         "martinique",
-        new MapCoordinates(1166, 483),
+        new MapCoordinates(1167, 489),
         ANTILLES
     ),
     SAINT_MARTIN(
@@ -55,6 +48,55 @@ public enum Territory {
         new MapCoordinates(684, 615),
         null
     ),
+    POLYNESIE_FRANCAISE(
+        "Polynésie Française",
+        "Polynésie Française", // TODO check this
+        "polynesie",
+        new MapCoordinates(855, 597),
+        null
+    ),
+    WALLIS_ET_FUTUNA(
+        "Wallis et Futuna",
+        "Wallis et Futuna", // TODO check this
+        "wallis-et-futuna",
+        new MapCoordinates(747, 580),
+        null
+    ),
+    REUNION(
+        "Réunion",
+        "La Réunion",
+        "reunion",
+        new MapCoordinates(290, 615),
+        null
+    ),
+    MAYOTTE(
+        "Mayotte",
+        "Mayotte", // TODO check this
+        "mayotte",
+        new MapCoordinates(254, 585),
+        null
+    ),
+    ILES_AUSTRALES(
+        "Îles Australes",
+        "Iles Australes", // TODO check this
+        "iles-australes",
+        new MapCoordinates(367, 687),
+        null
+    ),
+    ILES_EPARSES(
+        "Îles Éparses",
+        "Iles Eparses", // TODO check this
+        "iles-eparses",
+        new MapCoordinates(237, 621),
+        null
+    ),
+    CLIPPERTON(
+        "Clipperton",
+        "Clipperton", // TODO check this
+        "clipperton",
+        new MapCoordinates(992, 501),
+        null
+    ),
     GUYANE(
         "Guyane",
         "Guyane",
@@ -69,32 +111,11 @@ public enum Territory {
         new MapCoordinates(1181, 348),
         null
     ),
-    POLYNESIE_FRANCAISE(
-        "Polynésie Française",
-        "Polynésie Française", // TODO check this
-        "polynesie",
-        new MapCoordinates(855, 597),
-        null
-    ),
-    MAYOTTE(
-        "Mayotte",
-        "Mayotte", // TODO check this
-        "mayotte",
-        new MapCoordinates(248, 580),
-        null
-    ),
-    WALLIS_ET_FUTUNA(
-        "Wallis et Futuna",
-        "Wallis et Futuna", // TODO check this
-        "wallis-et-futuna",
-        new MapCoordinates(747, 580),
-        null
-    ),
-    CLIPPERTON(
-        "Clipperton",
-        "Clipperton", // TODO check this
-        "clipperton",
-        new MapCoordinates(992, 501),
+    TERRE_ADELIE(
+        "Terre Adélie",
+        "Terre Adélie", // TODO check this
+        "terre-adelie",
+        new MapCoordinates(611, 804),
         null
     );
 
