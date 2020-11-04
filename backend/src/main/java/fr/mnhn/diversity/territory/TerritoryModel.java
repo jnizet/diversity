@@ -17,6 +17,13 @@ public final class TerritoryModel {
                                             .titleText("title", "Titre de la présentation")
                                             .multiLineText("presentation", "Texte de la présentation")
                                             .image("infography", "Infographie de la présentation")
+                                            .text("area", "Superficie terrestre en km2")
+                                            .text("marineArea", "Superficie marine en km2")
+                                            .text("population", "Nombre d'habitants")
+                                            .text("populationYear", "Année de recensement du nombre d'habitants")
+                                            .text("species", "Nombre d'espèces indigènes")
+                                            .text("highestPoint", "Altitude du point culminant en mètres")
+                                            .text("highestPointName", "Nom du point culminant")
                      )
                     // Lieux d'intérêts
                     .section(SectionElement.builder("interests").describedAs("Lieux d'intérêts")

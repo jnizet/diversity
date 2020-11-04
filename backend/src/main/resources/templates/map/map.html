@@ -56,18 +56,15 @@
                   <div class="territoire-fiche-number">
                     <div class="territoire-number-block">
                       <img th:src="@{/assets/images/Tracé.svg}" loading="lazy" alt="" class="territoire-icon" />
-                      <!-- todo area -->
-                      <div><span th:text="234"></span> km<sup>2</sup></div>
+                      <div><span th:text="${territoryCard.page.content.identity.area.text}"></span> km<sup>2</sup></div>
                     </div>
                     <div class="territoire-number-block">
                       <img th:src="@{/assets/images/Habitants.svg}" loading="lazy" alt="" class="territoire-icon" />
-                      <!-- todo population -->
-                      <div><span th:text="34567"></span> hab.</div>
+                      <div><span th:text="${territoryCard.page.content.identity.population.text}"></span> hab.</div>
                     </div>
                     <div class="territoire-number-block">
                       <img th:src="@{/assets/images/Espèces.svg}" loading="lazy" alt="" class="territoire-icon" />
-                      <!-- todo species -->
-                      <div><span th:text="54321"></span> espèces indigènes</div>
+                      <div><span th:text="${territoryCard.page.content.identity.species.text}"></span> espèces indigènes</div>
                     </div>
                   </div>
                   <div class="col-3">

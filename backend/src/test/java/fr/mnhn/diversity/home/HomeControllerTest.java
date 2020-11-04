@@ -100,7 +100,10 @@ class HomeControllerTest {
                 Map.of(
                     "identity", Map.of(
                         "title", text("La Réunion"),
-                        "presentation", text("presentation of reunion")
+                        "presentation", text("presentation of reunion"),
+                        "area", text("2 512"),
+                        "population", text("859 959"),
+                        "species", text("3456")
                     )
                 )
             );
