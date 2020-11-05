@@ -64,7 +64,7 @@ public enum Territory {
     ),
     REUNION(
         "Réunion",
-        "La Réunion",
+        "Réunion",
         "reunion",
         new MapCoordinates(290, 615),
         null
