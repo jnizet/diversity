@@ -18,6 +18,7 @@ import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.indicator.IndicatorRepository;
 import fr.mnhn.diversity.indicator.IndicatorValue;
 import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
+import fr.mnhn.diversity.matomo.MatomoConfig;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -37,7 +38,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(EcogestureController.class)
-@Import({RequestDialect.class, IndicatorDialect.class})
+@Import({RequestDialect.class, IndicatorDialect.class, MatomoConfig.class})
 class EcogestureControllerTest {
     @Autowired
     private MockMvc mockMvc;

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import fr.mnhn.diversity.common.thymeleaf.RequestDialect;
 import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
+import fr.mnhn.diversity.matomo.MatomoConfig;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -32,7 +33,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(LegalTermsController.class)
-@Import(RequestDialect.class)
+@Import({RequestDialect.class, MatomoConfig.class})
 class LegalTermsControllerTest {
 
     @Autowired

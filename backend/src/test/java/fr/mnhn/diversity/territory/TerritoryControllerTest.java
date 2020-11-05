@@ -20,6 +20,7 @@ import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.indicator.IndicatorRepository;
 import fr.mnhn.diversity.indicator.IndicatorValue;
 import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
+import fr.mnhn.diversity.matomo.MatomoConfig;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -36,7 +37,7 @@ import org.springframework.test.web.servlet.MockMvc;
 /**
  * MVC tests for {@link TerritoryController}
  */
-@WebMvcTest(TerritoryController.class)
+@WebMvcTest({TerritoryController.class, MatomoConfig.class})
 @Import({RequestDialect.class, IndicatorDialect.class})
 class TerritoryControllerTest {
     @Autowired

@@ -83,6 +83,10 @@ But of course, in production, some of these properties should be modified:
 - `diversity.security.secret-key`: a base-64 encoded secret key used to cryptographically sign the JWT tokens
   used to identify an administrator user. You can generate a random one using `./gradlew generateSecretKey`.
 - `diversity.indicators.base-url`: the base URL of the BIOM indicators server. Set by default to `https://odata-indicateurs.mnhn.fr`.
+- `diversity.matomo.host`: the Matomo host where page hits are being sent.
+- `diversity.matomo.site-id`: the Matomo Site ID where page hits are being sent. If any of those two matomo properties is left blank, then 
+  Matomo will be disabled (the Matomo JavaScript snippet won't even be included in generated pages).
+  This is the case by default: during development and tests, Matomo is not used.
 - `spring.datasource.url`: the [JDBC URL](https://jdbc.postgresql.org/documentation/head/connect.html) to the PostgreSQL database
 - `spring.datasource.username`: the user name used to connect to the database. 
    This user must have the rights to create and update tables and sequences, since that is done by the application

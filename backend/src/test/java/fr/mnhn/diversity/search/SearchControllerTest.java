@@ -15,6 +15,7 @@ import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
 import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
+import fr.mnhn.diversity.matomo.MatomoConfig;
 import fr.mnhn.diversity.territory.TerritoryModel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import org.springframework.test.web.servlet.ResultActions;
  * MVC tests for {@link SearchController}
  * @author JB Nizet
  */
-@WebMvcTest(SearchController.class)
+@WebMvcTest({SearchController.class, MatomoConfig.class})
 public class SearchControllerTest {
 
     @Autowired

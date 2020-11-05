@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import fr.mnhn.diversity.common.thymeleaf.RequestDialect;
+import fr.mnhn.diversity.matomo.MatomoConfig;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -36,7 +37,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(HomeController.class)
-@Import(RequestDialect.class)
+@Import({RequestDialect.class, MatomoConfig.class})
 class HomeControllerTest {
 
     @Autowired
