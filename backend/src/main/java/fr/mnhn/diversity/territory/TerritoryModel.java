@@ -83,6 +83,12 @@ public final class TerritoryModel {
                  )
                  .build();
 
+    public static final PageModel ZONE_PAGE_MODEL =
+        PageModel.builder("territory-zone").describedAs("Bassin de territoires")
+                 .withPath("/territoires")
+                 .text("description", "Description du bassin, affichée dans la carte")
+                 .build();
+
     private TerritoryModel() {
     }
 }

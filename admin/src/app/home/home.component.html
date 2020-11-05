@@ -24,6 +24,12 @@
         <biom-page-link [pageLink]="pageLink"></biom-page-link>
       </li>
     </ul>
+    <h3>Bassins</h3>
+    <ul class="list-unstyled">
+      <li *ngFor="let pageLink of pageLinks.zonePageLinks">
+        <biom-page-link [pageLink]="pageLink"></biom-page-link>
+      </li>
+    </ul>
   </div>
   <div class="col-md-3">
     <h2>Éco-gestes</h2>

@@ -10,15 +10,18 @@ public final class PageLinksDTO {
     private final List<PageLinkDTO> staticPageLinks;
     private final List<PageLinkDTO> indicatorPageLinks;
     private final List<PageLinkDTO> territoryPageLinks;
+    private final List<PageLinkDTO> zonePageLinks;
     private final List<PageLinkDTO> ecogesturePageLinks;
 
     public PageLinksDTO(List<PageLinkDTO> staticPageLinks,
                         List<PageLinkDTO> indicatorPageLinks,
                         List<PageLinkDTO> territoryPageLinks,
+                        List<PageLinkDTO> zonePageLinks,
                         List<PageLinkDTO> ecogesturePageLinks) {
         this.staticPageLinks = staticPageLinks;
         this.indicatorPageLinks = indicatorPageLinks;
         this.territoryPageLinks = territoryPageLinks;
+        this.zonePageLinks = zonePageLinks;
         this.ecogesturePageLinks = ecogesturePageLinks;
     }
 
@@ -32,6 +35,10 @@ public final class PageLinksDTO {
 
     public List<PageLinkDTO> getTerritoryPageLinks() {
         return territoryPageLinks;
+    }
+
+    public List<PageLinkDTO> getZonePageLinks() {
+        return zonePageLinks;
     }
 
     public List<PageLinkDTO> getEcogesturePageLinks() {
@@ -50,12 +57,17 @@ public final class PageLinksDTO {
         return Objects.equals(staticPageLinks, that.staticPageLinks) &&
             Objects.equals(indicatorPageLinks, that.indicatorPageLinks) &&
             Objects.equals(territoryPageLinks, that.territoryPageLinks) &&
+            Objects.equals(zonePageLinks, that.zonePageLinks) &&
             Objects.equals(ecogesturePageLinks, that.ecogesturePageLinks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(staticPageLinks, indicatorPageLinks, territoryPageLinks, ecogesturePageLinks);
+        return Objects.hash(staticPageLinks,
+                            indicatorPageLinks,
+                            territoryPageLinks,
+                            zonePageLinks,
+                            ecogesturePageLinks);
     }
 
     @Override
@@ -64,6 +76,7 @@ public final class PageLinksDTO {
             "staticPageLinks=" + staticPageLinks +
             ", indicatorPageLinks=" + indicatorPageLinks +
             ", territoryPageLinks=" + territoryPageLinks +
+            ", zonePageLinks=" + zonePageLinks +
             ", ecogesturePageLinks=" + ecogesturePageLinks +
             '}';
     }

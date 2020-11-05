@@ -25,8 +25,12 @@ class HomeComponentTester extends ComponentTester<HomeComponent> {
     return this.elements('ul')[2].elements('biom-page-link');
   }
 
-  get ecogestureLinks() {
+  get zoneLinks() {
     return this.elements('ul')[3].elements('biom-page-link');
+  }
+
+  get ecogestureLinks() {
+    return this.elements('ul')[4].elements('biom-page-link');
   }
 }
 
@@ -61,6 +65,14 @@ describe('HomeComponent', () => {
             title: 'Guadeloupe'
           }
         ],
+        zonePageLinks: [
+          {
+            id: 41,
+            name: 'antilles',
+            modelName: 'territory-zone',
+            title: 'Bassin Antillais'
+          }
+        ],
         ecogesturePageLinks: [
           {
             id: 4,
@@ -90,6 +102,9 @@ describe('HomeComponent', () => {
 
     expect(tester.territoryLinks.length).toBe(1);
     expect(tester.territoryLinks[0]).toContainText('Guadeloupe');
+
+    expect(tester.zoneLinks.length).toBe(1);
+    expect(tester.zoneLinks[0]).toContainText('Bassin Antillais');
 
     expect(tester.ecogestureLinks.length).toBe(1);
     expect(tester.ecogestureLinks[0]).toContainText('Ecogeste 1');

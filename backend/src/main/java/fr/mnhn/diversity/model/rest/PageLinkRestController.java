@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.about.AboutModel;
 import fr.mnhn.diversity.act.ActModel;
+import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
 import fr.mnhn.diversity.ecogesture.EcogestureModel;
 import fr.mnhn.diversity.ecogesture.EcogestureRepository;
 import fr.mnhn.diversity.home.HomeModel;
@@ -17,9 +18,9 @@ import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.model.BasicPage;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.meta.PageModel;
-import fr.mnhn.diversity.ecogesture.EcogestureActSectionModel;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
+import fr.mnhn.diversity.territory.Zone;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,7 @@ public class PageLinkRestController {
             getStaticLinks(),
             getIndicatorLinks(),
             getTerritoryLinks(),
+            getZoneLinks(),
             getEcogestureLinks()
         );
     }
@@ -83,9 +85,20 @@ public class PageLinkRestController {
         return EnumSet.complementOf(EnumSet.of(Territory.OUTRE_MER))
                       .stream()
                       .map(territory -> getLink(pagesByName.get(territory.getSlug()),
-                                                                territory.getSlug(),
-                                                                pageModel))
+                                                territory.getSlug(),
+                                                pageModel))
                       .collect(Collectors.toList());
+    }
+
+    private List<PageLinkDTO> getZoneLinks() {
+        PageModel pageModel = TerritoryModel.ZONE_PAGE_MODEL;
+        Map<String, BasicPage> pagesByName = getPageByName(pageModel);
+        return EnumSet.allOf(Zone.class)
+                   .stream()
+                   .map(zone -> getLink(pagesByName.get(zone.getSlug()),
+                                        zone.getSlug(),
+                                        pageModel))
+            .collect(Collectors.toList());
     }
 
     private List<PageLinkDTO> getEcogestureLinks() {

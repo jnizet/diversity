@@ -23,5 +23,5 @@ export class IndicatorController extends Controller {
     });
   }
 
-  // TODO deal with bassins when it's ready
+  // TODO deal with bassins when it's worth it
 }

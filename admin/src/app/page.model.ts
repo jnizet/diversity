@@ -167,5 +167,6 @@ export interface PageLinks {
   staticPageLinks: Array<PageLink>;
   indicatorPageLinks: Array<PageLink>;
   territoryPageLinks: Array<PageLink>;
+  zonePageLinks: Array<PageLink>;
   ecogesturePageLinks: Array<PageLink>;
 }

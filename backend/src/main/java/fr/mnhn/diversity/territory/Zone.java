@@ -6,24 +6,25 @@ package fr.mnhn.diversity.territory;
 public enum Zone {
     ANTILLES(
         "Bassin Antillais",
+        "antilles",
         new MapCoordinates(1161, 465),
-        true,
-        "Les Antilles sont un « point chaud » de la biodiversité mondiale." +
-            " Si chacun des quatre territoires français du bassin a son identité et ses spécificités,"
-            + " les acteurs locaux collaborent autour de problématiques partagées."
+        true
     );
 
     private final String name;
+    private final String slug;
     private final MapCoordinates coordinates;
     private final boolean active;
-    private final String text;
 
-    // TODO externalize text somehow
-    Zone(String name, MapCoordinates coordinates, boolean active, String text) {
+    Zone(String name, String slug, MapCoordinates coordinates, boolean active) {
         this.name = name;
+        this.slug = slug;
         this.coordinates = coordinates;
         this.active = active;
-        this.text = text;
+    }
+
+    public String getSlug() {
+        return slug;
     }
 
     public String getName() {
@@ -36,9 +37,5 @@ public enum Zone {
 
     public boolean isActive() {
         return active;
-    }
-
-    public String getText() {
-        return text;
     }
 }

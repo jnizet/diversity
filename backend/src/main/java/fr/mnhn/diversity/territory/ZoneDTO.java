@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public final class ZoneDTO {
     private final Zone zone;
+    private final String text;
 
-    public ZoneDTO(Zone zone) {
+    public ZoneDTO(Zone zone, String text) {
         this.zone = zone;
+        this.text = text;
     }
 
     public Zone getZone() {
@@ -28,7 +30,7 @@ public final class ZoneDTO {
     }
 
     public String getText() {
-        return zone.getText();
+        return text;
     }
 
     @Override
@@ -40,18 +42,20 @@ public final class ZoneDTO {
             return false;
         }
         ZoneDTO zoneDTO = (ZoneDTO) o;
-        return zone == zoneDTO.zone;
+        return zone == zoneDTO.zone &&
+            Objects.equals(text, zoneDTO.text);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(zone);
+        return Objects.hash(zone, text);
     }
 
     @Override
     public String toString() {
         return "ZoneDTO{" +
             "zone=" + zone +
+            ", text='" + text + '\'' +
             '}';
     }
 }

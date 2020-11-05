@@ -125,7 +125,7 @@
             <div class="text-big col-3 left-1" th:text="*{territories.title.text}">
               Nombre d’espèces exotiques envahissantes par territoires
             </div>
-            <!-- TODO deal with bassins when it's ready -->
+            <!-- TODO deal with bassins when it's worth it -->
             <div class="indicateur-filter" th:if="false">
               <div class="indicateur-filter-top">
                 <div>tous les territoires</div>
@@ -140,7 +140,7 @@
             </div>
           </div>
           <div class="swiper-container swiper-indicateur">
-            <!-- TODO deal with bassins when it's ready -->
+            <!-- TODO deal with bassins when it's worth it -->
             <div class="swiper-wrapper indicateur-wrapper">
               <div data-bassin="1" class="swiper-slide indicateur-slide" th:each="card: ${territoryCards}">
                 <div class="indicateur-slide-number" th:text="${#indicators.formatValue(card.indicatorValue)}">16</div>

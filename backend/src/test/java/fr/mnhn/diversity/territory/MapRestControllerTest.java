@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.territory;
 
+import static fr.mnhn.diversity.model.testing.ModelTestingUtil.text;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,9 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import fr.mnhn.diversity.model.BasicPage;
+import fr.mnhn.diversity.model.Page;
+import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
+import fr.mnhn.diversity.model.PageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -24,6 +29,9 @@ class MapRestControllerTest {
 
     @MockBean
     private PageRepository mockPageRepository;
+
+    @MockBean
+    private PageService mockPageService;
 
     @Test
     void shouldGetMap() throws Exception {
@@ -42,14 +50,25 @@ class MapRestControllerTest {
             )
         );
 
+        Page antillesPage = new Page(4567L, Zone.ANTILLES.getSlug(), TerritoryModel.ZONE_PAGE_MODEL.getName(), "", List.of());
+        when(mockPageRepository.findByModel(TerritoryModel.ZONE_PAGE_MODEL.getName()))
+            .thenReturn(List.of(antillesPage));
+
+        when(mockPageService.buildPageContent(TerritoryModel.ZONE_PAGE_MODEL, antillesPage)).thenReturn(
+            new PageContent(antillesPage, Map.of("description", text("Les Antilles")))
+        );
+
+        int antillesIndex = Arrays.asList(Zone.values()).indexOf(Zone.ANTILLES);
+
         mockMvc.perform(get("/map"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.zones.length()").value(Zone.values().length))
-               .andExpect(jsonPath("$.zones[0].zone").value(zone.name()))
-               .andExpect(jsonPath("$.zones[0].name").value(zone.getName()))
-               .andExpect(jsonPath("$.zones[0].coordinates.x").value(zone.getCoordinates().getX()))
-               .andExpect(jsonPath("$.zones[0].coordinates.y").value(zone.getCoordinates().getY()))
-               .andExpect(jsonPath("$.zones[0].active").value(true))
+               .andExpect(jsonPath("$.zones[" + antillesIndex + "].zone").value(zone.name()))
+               .andExpect(jsonPath("$.zones[" + antillesIndex + "].name").value(zone.getName()))
+               .andExpect(jsonPath("$.zones[" + antillesIndex + "].name").value(zone.getName()))
+               .andExpect(jsonPath("$.zones[" + antillesIndex + "].coordinates.x").value(zone.getCoordinates().getX()))
+               .andExpect(jsonPath("$.zones[" + antillesIndex + "].coordinates.y").value(zone.getCoordinates().getY()))
+               .andExpect(jsonPath("$.zones[" + antillesIndex + "].text").value("Les Antilles"))
                .andExpect(jsonPath("$.territories.length()").value(Territory.values().length - 1))
                .andExpect(jsonPath("$.territories[" + reunionIndex + "].territory").value(reunion.name()))
                .andExpect(jsonPath("$.territories[" + reunionIndex + "].name").value(reunion.getName()))

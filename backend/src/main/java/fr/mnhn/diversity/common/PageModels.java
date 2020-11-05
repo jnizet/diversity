@@ -13,7 +13,6 @@ import fr.mnhn.diversity.home.HomeModel;
 import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.model.meta.PageModel;
-import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
 
 /**
@@ -29,6 +28,7 @@ public final class PageModels {
                 LegalTermsModel.LEGAL_TERMS_PAGE_MODEL,
                 TerritoryModel.TERRITORY_HOME_PAGE_MODEL,
                 TerritoryModel.TERRITORY_PAGE_MODEL,
+                TerritoryModel.ZONE_PAGE_MODEL,
                 IndicatorModel.INDICATOR_HOME_PAGE_MODEL,
                 IndicatorModel.INDICATOR_PAGE_MODEL,
                 EcogestureModel.ECO_GESTURE_HOME_PAGE_MODEL,

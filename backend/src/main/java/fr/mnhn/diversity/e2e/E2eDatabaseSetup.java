@@ -26,6 +26,7 @@ import fr.mnhn.diversity.indicator.IndicatorModel;
 import fr.mnhn.diversity.legal.LegalTermsModel;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
+import fr.mnhn.diversity.territory.Zone;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -153,6 +154,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
         Long especesEnvahissantes = 30L;
         Long deforestation = 31L;
         Long ecogestureAct = 32L;
+        Long antilles = 41L;
         Operation pages =
             insertInto("page")
                 .columns("id", "name", "model_name", "title")
@@ -183,6 +185,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(deforestation, "deforestation", IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Déforestation")
                 .values(legalTerms, LegalTermsModel.LEGAL_TERMS_PAGE_NAME, LegalTermsModel.LEGAL_TERMS_PAGE_MODEL.getName(), "Mentions légales")
                 .values(ecogestureAct, EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_NAME, EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL.getName(), "Section Agir pour la science des ecogestes")
+                .values(antilles, Zone.ANTILLES.getSlug(), TerritoryModel.ZONE_PAGE_MODEL.getName(), "Le bassin Antillais")
                 .build();
 
         String png = ImageType.PNG.getMediaType().toString();
@@ -581,6 +584,14 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "paragraphs.1.text", "Bla bla", null, null, null, false)
                 .build();
 
+        Operation antillesElements =
+            insertInto("page_element")
+                .withDefaultValue("page_id", antilles)
+                .withGeneratedValue("id", elementIdGenerator)
+                .columns("type", "key", "text", "image_id", "alt", "href", "title")
+                .values(TEXT, "description", "Les Antilles sont un « point chaud » de la biodiversité mondiale. Si chacun des quatre territoires français du bassin a son identité et ses spécificités, les acteurs locaux collaborent autour de problématiques partagées.", null, null, null, true)
+                .build();
+
         Operation users = insertInto("app_user")
             .withGeneratedValue("id", ValueGenerators.sequence())
             .columns("login", "hashed_password")
@@ -610,6 +621,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
             especesEnvahissantesElements,
             deforestationElements,
             legalTermsElements,
+            antillesElements,
             users
         ));
         // 13 ecogestures

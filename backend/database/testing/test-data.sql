@@ -105,7 +105,8 @@ insert into page (id, name, model_name, title) values
    (29, 'indicateurs', 'indicators', 'Indicateurs'),
    (30, 'especes-envahissantes', 'indicator', 'Espèces envahissantes'),
    (31, 'deforestation', 'indicator', 'Déforestation'),
-   (51, 'ecogeste-agir', 'ecogesture-act', 'Section agir commune aux pages ecogestes');
+   (51, 'ecogeste-agir', 'ecogesture-act', 'Section agir commune aux pages ecogestes'),
+   (101, 'antilles', 'territory-zone', 'Bassin Antillais');
 
 insert into page_element (id, page_id, type, key, text, image_id, alt, href, title) values
 --     Home
@@ -418,7 +419,11 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 31, 'TEXT', 'understand.text2',  'Explication raison 2', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'understand.keyword',  'Forêts', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'territories.title',  'Déforestation par territoire', null, null, null, false),
-    (nextval('page_element_seq'), 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false);
+    (nextval('page_element_seq'), 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
+
+--     Zone Antilles
+    (nextval('page_element_seq'), 101, 'TEXT', 'description', 'Les Antilles sont un « point chaud » de la biodiversité mondiale. Si chacun des quatre territoires français du bassin a son identité et ses spécificités, les acteurs locaux collaborent autour de problématiques partagées.', null, null, null, false);
+
 
 -- Users
 insert into app_user (id, login, hashed_password) values

@@ -21,6 +21,7 @@ import fr.mnhn.diversity.model.BasicPage;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
+import fr.mnhn.diversity.territory.Zone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,8 @@ class PageLinkRestControllerTest {
             .thenReturn(List.of(new BasicPage(21L, Territory.GUADELOUPE.getSlug(), TerritoryModel.TERRITORY_PAGE_MODEL.getName(), "Guadeloupe")));
         when(mockPageRepository.findBasicByModel(EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName()))
             .thenReturn(List.of(new BasicPage(31L, "e1", EcogestureModel.ECO_GESTURE_PAGE_MODEL.getName(), "Ecogeste e1")));
+        when(mockPageRepository.findBasicByModel(TerritoryModel.ZONE_PAGE_MODEL.getName()))
+            .thenReturn(List.of(new BasicPage(41L, Zone.ANTILLES.getSlug(), TerritoryModel.ZONE_PAGE_MODEL.getName(), "Antilles")));
 
         when(mockIndicatorRepository.list()).thenReturn(
             List.of(
@@ -75,6 +78,7 @@ class PageLinkRestControllerTest {
     void shouldGetPageLinks() throws Exception {
         int reunionIndex = Arrays.asList(Territory.values()).indexOf(Territory.REUNION) - 1;
         int guadeloupeIndex = Arrays.asList(Territory.values()).indexOf(Territory.GUADELOUPE) - 1;
+        int antillesIndex = Arrays.asList(Zone.values()).indexOf(Zone.ANTILLES) - 1;
         mockMvc.perform(get("/api/pages/links"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.staticPageLinks.length()").value(9))
@@ -94,6 +98,9 @@ class PageLinkRestControllerTest {
                .andExpect(jsonPath("$.territoryPageLinks[" + reunionIndex + "].name").value(Territory.REUNION.getSlug()))
                .andExpect(jsonPath("$.territoryPageLinks["  + guadeloupeIndex + "].id").value(21L))
                .andExpect(jsonPath("$.territoryPageLinks["  + guadeloupeIndex + "].name").value(Territory.GUADELOUPE.getSlug()))
+               .andExpect(jsonPath("$.zonePageLinks.length()").value(Zone.values().length))
+               .andExpect(jsonPath("$.zonePageLinks["  + antillesIndex + "].id").value(41L))
+               .andExpect(jsonPath("$.zonePageLinks["  + antillesIndex + "].name").value(Zone.ANTILLES.getSlug()))
                .andExpect(jsonPath("$.ecogesturePageLinks.length()").value(2))
                .andExpect(jsonPath("$.ecogesturePageLinks[0].id").value(31L))
                .andExpect(jsonPath("$.ecogesturePageLinks[0].name").value("e1"))
