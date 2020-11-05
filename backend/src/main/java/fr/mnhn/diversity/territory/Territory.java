@@ -29,35 +29,35 @@ public enum Territory {
     ),
     SAINT_MARTIN(
         "Saint-Martin",
-        "Saint-Martin", // TODO check this
+        "Saint-Martin",
         "saint-martin",
         new MapCoordinates(1156, 473),
         ANTILLES
     ),
     SAINT_BARTHELEMY(
         "Saint-Barthélemy",
-        "Saint-Barthélemy", // TODO check this
+        "Saint-Barthélemy",
         "saint-barthelemy",
         new MapCoordinates(1158, 474),
         ANTILLES
     ),
     NOUVELLE_CALEDONIE(
-        "Nouvelle Calédonie",
+        "Nouvelle-Calédonie",
         "Nouvelle-Calédonie",
         "nouvelle-caledonie",
         new MapCoordinates(684, 615),
         null
     ),
     POLYNESIE_FRANCAISE(
-        "Polynésie Française",
-        "Polynésie Française", // TODO check this
+        "Polynésie française",
+        "Polynésie française",
         "polynesie",
         new MapCoordinates(855, 597),
         null
     ),
     WALLIS_ET_FUTUNA(
         "Wallis et Futuna",
-        "Wallis et Futuna", // TODO check this
+        "Wallis et Futuna",
         "wallis-et-futuna",
         new MapCoordinates(747, 580),
         null
@@ -71,35 +71,35 @@ public enum Territory {
     ),
     MAYOTTE(
         "Mayotte",
-        "Mayotte", // TODO check this
+        "Mayotte",
         "mayotte",
         new MapCoordinates(254, 585),
         null
     ),
-    ILES_AUSTRALES(
-        "Îles Australes",
-        "Iles Australes", // TODO check this
-        "iles-australes",
+    ILES_SUBANTARCTIQUES(
+        "Îles sub-antarctiques",
+        "TAAF : Îles sub-antarctiques",
+        "iles-subantarctiques",
         new MapCoordinates(367, 687),
         null
     ),
     ILES_EPARSES(
         "Îles Éparses",
-        "Iles Eparses", // TODO check this
+        "TAAF : Îles éparses",
         "iles-eparses",
         new MapCoordinates(237, 621),
         null
     ),
     CLIPPERTON(
         "Clipperton",
-        "Clipperton", // TODO check this
+        "Île de Clipperton",
         "clipperton",
         new MapCoordinates(992, 501),
         null
     ),
     GUYANE(
         "Guyane",
-        "Guyane",
+        "Guyane française",
         "guyane",
         new MapCoordinates(1195, 525),
         null
@@ -113,7 +113,7 @@ public enum Territory {
     ),
     TERRE_ADELIE(
         "Terre Adélie",
-        "Terre Adélie", // TODO check this
+        "TAAF : Terre-Adélie",
         "terre-adelie",
         new MapCoordinates(611, 804),
         null
