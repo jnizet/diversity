@@ -1,4 +1,4 @@
-<nav *ngIf="user$ | async as user" class="navbar navbar-expand-md navbar-dark bg-dark py-0">
+<nav *ngIf="user$ | async as user" class="navbar navbar-expand-lg navbar-dark bg-dark py-1">
   <a class="navbar-brand" routerLink="/">
     <img src="assets/logo.png" alt="Logo" />
     Administration
@@ -34,7 +34,10 @@
       </li>
     </ul>
     <div class="navbar-nav">
-      <li class="navbar-text">{{ user.login }}</li>
+      <li class="navbar-text">
+        <fa-icon [icon]="userIcon" class="mr-1"></fa-icon>
+        {{ user.login }}
+      </li>
       <li class="nav-item">
         <a class="nav-link" role="button" (click)="logout($event)" id="nav-logout">
           <span class="sr-only">Déconnexion</span>

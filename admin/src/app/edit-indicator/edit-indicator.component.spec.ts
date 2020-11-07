@@ -67,20 +67,28 @@ class EditIndicatorComponentTester extends ComponentTester<EditIndicatorComponen
     return this.button('#fetch-values');
   }
 
+  get indicatorSection() {
+    return this.element('#indicator-section');
+  }
+
+  get closeIndicatorSection() {
+    return this.indicatorSection.button('.close');
+  }
+
   get spinner() {
-    return this.element('#fetching-spinner');
+    return this.indicatorSection.element('#fetching-spinner');
   }
 
   get noData() {
-    return this.element('#no-data');
+    return this.indicatorSection.element('#no-data');
   }
 
   get valuedIndicator() {
-    return this.element('#valued-indicator');
+    return this.indicatorSection.element('#valued-indicator');
   }
 
   get values() {
-    return this.elements('.value');
+    return this.valuedIndicator.elements('.value');
   }
 
   get errors() {
@@ -153,6 +161,7 @@ describe('EditIndicatorComponent', () => {
       expect(tester.secondCategory).toBeNull();
       expect(tester.firstEcogesture).toHaveSelectedLabel('');
       expect(tester.secondEcogesture).toBeNull();
+      expect(tester.indicatorSection).toBeNull();
     });
 
     it('should not save if error', () => {
@@ -324,6 +333,9 @@ describe('EditIndicatorComponent', () => {
         expect(tester.values[0]).toContainText('28.7\u00a0%');
         expect(tester.values[1]).toContainText('REUNION');
         expect(tester.values[1]).toContainText('13.2\u00a0%');
+
+        tester.closeIndicatorSection.click();
+        expect(tester.indicatorSection).toBeNull();
       });
 
       it('and display a message on error', () => {
@@ -333,7 +345,10 @@ describe('EditIndicatorComponent', () => {
 
         expect(tester.noData).toContainText(`Les valeurs n'ont pas pu être récupérées pour cet indicateur`);
         expect(tester.spinner).toBeNull();
-        expect(tester.values.length).toBe(0);
+        expect(tester.valuedIndicator).toBeNull();
+
+        tester.closeIndicatorSection.click();
+        expect(tester.indicatorSection).toBeNull();
       });
     });
   });

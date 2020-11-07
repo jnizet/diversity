@@ -162,4 +162,13 @@ export class EditIndicatorComponent implements OnInit {
         error: () => (this.fetchingError = true)
       });
   }
+
+  get indicatorSectionDisplayed() {
+    return this.isFetchingValues || this.valuedIndicator || this.fetchingError;
+  }
+
+  closeIndicatorSection() {
+    this.valuedIndicator = null;
+    this.fetchingError = null;
+  }
 }

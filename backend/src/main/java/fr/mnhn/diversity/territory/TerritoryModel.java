@@ -48,7 +48,7 @@ public final class TerritoryModel {
                      // Frise chronologique
                      .list(ListElement.builder("events").describedAs("Événements de la frise chronologique")
                                        .text("date", "Année / période de l'énénement")
-                                       .multiLineText("description", "Brève description de l'événement")
+                                       .text("description", "Brève description de l'événement")
                      )
                      // Écosystèmes
                      .section(SectionElement.builder("ecosystems")
@@ -77,7 +77,7 @@ public final class TerritoryModel {
                  .section(SectionElement
                               .builder("header").describedAs("En-tête")
                               .titleText("title", "Titre de la page")
-                              .text("text", "Texte de l'en-tête")
+                              .multiLineText("text", "Texte de l'en-tête")
                               .text("population", "Nombre d'habitants")
                               .text("species", "Nombre d'espèces indigènes")
                  )

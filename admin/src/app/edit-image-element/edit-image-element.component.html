@@ -1,7 +1,7 @@
 <div class="image" [formGroup]="imageGroup">
   <label>{{ editedImageElement.description }}</label>
   <div class="form-row">
-    <div class="col-4">
+    <div class="col-lg-4">
       <label *ngIf="!editedImageElement.document">Source de l'image</label>
       <label *ngIf="editedImageElement.document">Document</label>
       <div class="border rounded p-2" [class.border-danger]="imageGroup.get('imageId').invalid && imageGroup.get('imageId').touched">
@@ -60,7 +60,7 @@
       </small>
       <val-errors controlName="imageId" [label]="editedImageElement.document ? 'Le document' : 'L\'image'"></val-errors>
     </div>
-    <div class="col-8">
+    <div class="col-lg-8">
       <label>Légende / Texte alternatif</label>
       <input class="form-control image-alt" formControlName="alt" />
       <val-errors controlName="alt" label="La légende"></val-errors>

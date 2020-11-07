@@ -24,7 +24,7 @@ public final class HomeModel {
                  )
                  .section(SectionElement.builder("presentation").describedAs("Section présentation")
                      .text("title", "Titre de la section")
-                     .text("text", "Texte de la présentation du site")
+                     .multiLineText("text", "Texte de la présentation du site")
                      .text("indicators", "Courte présentation des indicateurs")
                      .text("ecogestures", "Courte présentation des éco-gestes")
                      .text("science", "Courte présentation des sciences participatives")

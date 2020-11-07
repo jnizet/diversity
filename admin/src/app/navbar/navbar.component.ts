@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faChartLine, faHandHoldingHeart, faPowerOff, faTags } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faHandHoldingHeart, faPowerOff, faTags, faUser } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserService } from '../current-user.service';
 import { AuthenticatedUser } from '../authentication.service';
 import { Observable } from 'rxjs';
@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
   indicatorsIcon = faChartLine;
   ecogesturesIcon = faHandHoldingHeart;
   logoutIcon = faPowerOff;
+  userIcon = faUser;
 
   user$: Observable<AuthenticatedUser>;
 

@@ -68,7 +68,7 @@ public final class IndicatorModel {
                  .list(
                      ListElement.builder("questions").describedAs("Questions pour apprendre")
                                 .text("question", "Texte de la question")
-                                .text("answer", "Texte de la réponse")
+                                .multiLineText("answer", "Texte de la réponse")
                                 .text("quote", "Citation")
                  )
                  .build();

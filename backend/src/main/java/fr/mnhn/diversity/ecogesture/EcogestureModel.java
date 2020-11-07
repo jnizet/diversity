@@ -57,7 +57,7 @@ public final class EcogestureModel {
                  .multiLineText("presentation", "Présentation des écogestes")
                  .image("image", "Illustration")
                  .text("question", "Question de présentation")
-                 .text("answer", "Réponse")
+                 .multiLineText("answer", "Réponse")
                  .text("quote", "Citation pour agir")
                  .section(
                      SectionElement.builder("other").describedAs("Autres gestes")

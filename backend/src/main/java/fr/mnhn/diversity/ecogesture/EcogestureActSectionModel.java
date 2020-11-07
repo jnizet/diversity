@@ -14,7 +14,7 @@ public class EcogestureActSectionModel {
         PageModel.builder("ecogesture-act")
                  .withPath(null)
                  .titleText("title", "Titre de la section 'Agir pour la science'")
-                 .text("description", "Description de la section 'Agir pour la science'")
+                 .multiLineText("description", "Description de la section 'Agir pour la science'")
                  .text("firstActionName", "Nom de la première action")
                  .link("firstActionLink", "Lien de la première action")
                  .text("secondActionName", "Nom de la seconde action")
