@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbModalModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbModalModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ValdemortModule } from 'ngx-valdemort';
 
 import { AppComponent } from './app.component';
@@ -62,6 +62,7 @@ import { HeadingDirective } from './heading/heading.directive';
     FontAwesomeModule,
     NgbModalModule,
     NgbToastModule,
+    NgbCollapseModule,
     ValdemortModule
   ],
   providers: [

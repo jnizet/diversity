@@ -7,6 +7,7 @@ import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { Toast, ToastService } from '../toast.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 class ToastsComponentTester extends ComponentTester<ToastsComponent> {
   constructor() {
@@ -28,7 +29,7 @@ describe('ToastsComponent', () => {
     toastService.toasts.and.returnValue(toastsSubject);
 
     TestBed.configureTestingModule({
-      imports: [NgbToastModule, FontAwesomeModule],
+      imports: [NgbToastModule, NgbTestingModule, FontAwesomeModule],
       declarations: [ToastsComponent],
       providers: [{ provide: ToastService, useValue: toastService }]
     });

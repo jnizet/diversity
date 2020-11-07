@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfirmationOptions, ConfirmationService } from '../confirmation.service';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 class ModalComponentTester {
   constructor(private fixture: ComponentFixture<any>) {}
@@ -51,6 +53,7 @@ describe('ConfirmationModalComponent and ConfirmationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [NgbModalModule, NgbTestingModule],
       declarations: [TestComponent]
     });
 

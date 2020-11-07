@@ -8,6 +8,8 @@ import { AuthenticatedUser } from '../authentication.service';
 import { Subject } from 'rxjs';
 import { CurrentUserService } from '../current-user.service';
 import { WindowService } from '../window.service';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 class NavbarComponentTester extends ComponentTester<NavbarComponent> {
   constructor() {
@@ -41,12 +43,13 @@ describe('NavbarComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [NavbarComponent],
-      imports: [FontAwesomeModule, RouterTestingModule],
+      imports: [FontAwesomeModule, RouterTestingModule, NgbCollapseModule, NgbTestingModule],
       providers: [
         { provide: CurrentUserService, useValue: currentUserService },
         { provide: WindowService, useValue: windowService }
       ]
     });
+
     tester = new NavbarComponentTester();
     tester.detectChanges();
   });

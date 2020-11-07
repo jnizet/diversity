@@ -10,6 +10,7 @@ import { ConfirmationService } from '../confirmation.service';
 import { ToastService } from '../toast.service';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { IndicatorCategory } from '../indicator-category.model';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 class IndicatorCategoriesComponentTester extends ComponentTester<IndicatorCategoriesComponent> {
   constructor() {
@@ -41,7 +42,7 @@ describe('IndicatorCategoriesComponent', () => {
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, NgbModalModule, RouterTestingModule],
+      imports: [FontAwesomeModule, NgbModalModule, NgbTestingModule, RouterTestingModule],
       declarations: [IndicatorCategoriesComponent],
       providers: [
         { provide: IndicatorCategoryService, useValue: categoryService },

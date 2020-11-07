@@ -14,6 +14,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeadingDirective } from '../heading/heading.directive';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 @Component({
   template: `
@@ -80,7 +81,7 @@ describe('EditPageElementComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, ValdemortModule, NgbModalModule, FontAwesomeModule, HttpClientTestingModule],
+      imports: [ReactiveFormsModule, ValdemortModule, NgbModalModule, NgbTestingModule, FontAwesomeModule, HttpClientTestingModule],
       declarations: [
         DummyFormComponent,
         EditPageElementComponent,

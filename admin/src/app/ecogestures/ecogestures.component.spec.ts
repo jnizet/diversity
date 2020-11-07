@@ -10,6 +10,7 @@ import { ConfirmationService } from '../confirmation.service';
 import { ToastService } from '../toast.service';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ecogesture } from '../ecogesture.model';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 class EcogesturesComponentTester extends ComponentTester<EcogesturesComponent> {
   constructor() {
@@ -41,7 +42,7 @@ describe('EcogesturesComponent', () => {
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, NgbModalModule, RouterTestingModule],
+      imports: [FontAwesomeModule, NgbModalModule, NgbTestingModule, RouterTestingModule],
       declarations: [EcogesturesComponent],
       providers: [
         { provide: EcogestureService, useValue: ecogestureService },

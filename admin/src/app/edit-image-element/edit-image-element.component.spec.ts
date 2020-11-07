@@ -13,6 +13,7 @@ import { Image } from '../image.model';
 import { of, Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 @Component({
   template: `
@@ -108,7 +109,7 @@ describe('EditImageElementComponent', () => {
     imageService = jasmine.createSpyObj<ImageService>('ImageService', ['createImage']);
 
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, ValdemortModule, NgbModalModule, FontAwesomeModule],
+      imports: [ReactiveFormsModule, ValdemortModule, NgbModalModule, NgbTestingModule, FontAwesomeModule],
       declarations: [DummyFormComponent, EditImageElementComponent, ValidationDefaultsComponent],
       providers: [{ provide: ImageService, useValue: imageService }]
     });

@@ -34,6 +34,7 @@ import { Image } from '../image.model';
 import { By } from '@angular/platform-browser';
 import { ImageService } from '../image.service';
 import { HeadingDirective } from '../heading/heading.directive';
+import { NgbTestingModule } from '../ngb-testing.module';
 
 class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   constructor() {
@@ -205,7 +206,15 @@ describe('EditPageComponent', () => {
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, ValdemortModule, NgbModalModule, FontAwesomeModule, HttpClientTestingModule],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        ValdemortModule,
+        NgbModalModule,
+        NgbTestingModule,
+        FontAwesomeModule,
+        HttpClientTestingModule
+      ],
       declarations: [
         EditPageComponent,
         EditPageElementComponent,
