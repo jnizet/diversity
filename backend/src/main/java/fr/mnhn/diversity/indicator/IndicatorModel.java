@@ -17,7 +17,7 @@ public final class IndicatorModel {
                  .section(SectionElement.builder("presentation").describedAs("Présentation de l'indicateur")
                                         .text("description", "Description de l'indicateur")
                                         .multiSizeImage("image", "Illustration de l'indicateur")
-                                        .text("onbUrl", "URL de l'indicateur sur le site de l'ONB")
+                                        .text("onbUrl", "URL de l'indicateur sur le site de l'ONB (indiquez NA pour ne pas afficher de lien ONB)")
                  )
                  // Comprendre l'indicateur
                  .section(SectionElement.builder("understand").describedAs("Comprendre l'indicateur")
