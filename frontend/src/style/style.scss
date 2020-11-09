@@ -24,22 +24,10 @@
   border: 0;
 }
 
-.cookies {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: white;
-  z-index: 100;
-  border-top: 1px solid black;
-  padding: 5px;
-  span {
-    margin-right: 1rem;
-  }
-}
-
 .error {
   color: #dc3545;
+}
+
+.preserve-lines {
+  white-space: pre-line;
 }

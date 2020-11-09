@@ -41,7 +41,7 @@ public final class EcogestureModel {
                               .list(
                                   ListElement.builder("cards").describedAs("Vignettes")
                                       .image("icon", "Icône de la vignette")
-                                      .multiLineText("description", "Icône de la vignette")
+                                      .multiLineText("description", "Texte de la vignette")
                               )
                  )
                  .build();

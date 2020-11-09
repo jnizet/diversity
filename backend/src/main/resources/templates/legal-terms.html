@@ -19,7 +19,7 @@
       <div class="legals-content w-richtext">
         <div th:each="paragraph: *{paragraphs}">
           <h2 th:text="${paragraph.title.text}"></h2>
-          <p th:text="${paragraph.text.text}"></p>
+          <p class="preserve-lines" th:text="${paragraph.text.text}"></p>
         </div>
       </div>
     </main>

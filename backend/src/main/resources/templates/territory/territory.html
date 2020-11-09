@@ -47,7 +47,7 @@
           <div class="col-6 max-50">
             <h2 class="section-title col-4" th:text="*{identity.subtitle.text}">Un climat subarctique, froid et humide</h2>
             <div class="left-1">
-              <p th:text="*{identity.presentation.text}">
+              <p class="preserve-lines" th:text="*{identity.presentation.text}">
                 Au sud de Terre Neuve (Canada), cet archipel est constitué de 3 îles principales : Saint-Pierre, Langlade, Miquelon. Il se
                 situe à la confluence du courant froid du Labrador et des eaux plus chaudes du Gulf Stream, offrant des eaux riches en
                 biodiversité. La proximité de l’océan influence les écosystèmes terrestres : dunes, prairies côtières, lagunes, marais. On y
@@ -122,7 +122,7 @@
                 />
                 <div class="col-3">
                   <h4 class="lieu-title" th:text="${location.name.text}">Le grand barachois</h4>
-                  <p th:text="${location.description.text}">
+                  <p class="preserve-lines" th:text="${location.description.text}">
                     Cette lagune de 1 000 ha est bordée de marais et communique avec la mer par un goulet au sud-est.
                   </p>
                 </div>
@@ -165,7 +165,7 @@
                 <div class="col-4">
                   <div class="section-label">espèces</div>
                   <h3 class="espece-title" th:text="${speciesItem.name.text}">Cerf de<br />Virginie</h3>
-                  <p th:text="${speciesItem.description.text}">
+                  <p class="preserve-lines" th:text="${speciesItem.description.text}">
                     Peu de mammifères terrestres sont indigènes de l’archipel. Le Cerf de Virginie (Odocoileus virginianus) a été introduit
                     à Miquelon et Langlade en 1953 pour la chasse. Ses populations dégradent fortement la forêt boréale.
                   </p>
@@ -225,7 +225,7 @@
               <div class="ecosysteme-left">
                 <div class="section-label">Écosystèmes</div>
                 <h3 class="section-title" th:text="${ecosystem.name.text}">Les marais tourbeux et les tourbières</h3>
-                <p th:text="${ecosystem.description.text}">
+                <p class="preserve-lines" th:text="${ecosystem.description.text}">
                   Ces zones humides occupent des superficies importantes. Caractérisées par la formation et l’accumulation de tourbe,
                   parfois sur plusieurs mètres d’épaisseur, elles présentent des groupements végétaux remarquables et variés, parmi
                   lesquelles on trouve des sphaignes, des mousses, ainsi que des orchidées.  
@@ -295,7 +295,7 @@
             <h3 class="section-title col-4" th:text="${risk.name.text}">Les ressources naturelles : un enjeu important</h3>
           </div>
           <div class="col-8">
-            <p class="two-column left-1" th:text="${risk.description.text}"></p>
+            <p class="two-column left-1 preserve-lines" th:text="${risk.description.text}"></p>
           </div>
           <div class="col-4 left-1"></div>
         </div>

@@ -26,7 +26,7 @@ public final class TerritoryModel {
                                             .text("highestPointName", "Nom du point culminant")
                      )
                      // statistiques indiquées dans la carte
-                     .list(ListElement.builder("statistics").describedAs("Statistiques affichées dans la carte")
+                     .list(ListElement.builder("statistics").describedAs("Informations affichées dans le zoom territoire de la carte")
                            .text("number", "Nombre (et unité)")
                            .text("text", "Texte suivant le nombre")
                      )
@@ -35,7 +35,7 @@ public final class TerritoryModel {
                                             .text("title", "Titre du carousel des lieux d'intérêts")
                                             .list(ListElement.builder("locations").describedAs("Lieux affichés par le carousel")
                                                              .text("name", "Nom du lieu")
-                                                             .text("description", "Courte description du lieu")
+                                                             .multiLineText("description", "Courte description du lieu")
                                                              .image("image", "Petite photo du lieu")
                                             )
                      )

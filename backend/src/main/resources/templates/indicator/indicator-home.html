@@ -24,7 +24,7 @@
         <div class="section-top-wrapper">
           <div class="section-top-content">
             <h1 class="section-top-title" th:text="*{title.text}">Compter la biodiversité, oui mais comment ?</h1>
-            <p class="section-top-text" th:text="*{presentation.text}">
+            <p class="section-top-text preserve-lines" th:text="*{presentation.text}">
               Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
               évolution. De nombreux paramètres sont étudiés : effectifs des populations, état de santé des écosystèmes, taux de pollutions,
               etc. Ils renseignent ainsi l’état de la biodiversité à un instant précis, mais également l’état des connaissances et des
@@ -102,7 +102,7 @@
             <h3 class="section-title" th:text="*{understand.title.text}"></h3>
             <div class="left-1">
               <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="img-full-width margin-bottom hide-desktop" />
-              <p th:text="*{understand.description.text}"></p>
+              <p class="preserve-lines" th:text="*{understand.description.text}"></p>
             </div>
           </div>
           <div class="col-5 left-1">
@@ -122,7 +122,7 @@
         </div>
         <div class="col-4 onb-text">
           <h2 class="heading" th:text="*{onb.title.text}">L’observatoire national de la biodiversité</h2>
-          <p th:text="*{onb.description.text}"></p>
+          <p class="preserve-lines" th:text="*{onb.description.text}"></p>
           <a th:href="*{onb.link.href}" th:text="*{onb.link.text}" class="cta-secondary"></a>
         </div>
       </section>
@@ -144,7 +144,7 @@
                 <div class="apprendre-title" th:text="${question.question.text}"></div>
               </div>
               <div class="apprendre-bottom" data-target="question-item.answer">
-                <p th:text="${question.answer.text}"></p>
+                <p class="preserve-lines" th:text="${question.answer.text}"></p>
                 <blockquote th:text="${question.quote.text}"></blockquote>
               </div>
             </li>

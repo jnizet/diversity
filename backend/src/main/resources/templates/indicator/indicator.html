@@ -65,7 +65,7 @@
           <div class="col-6">
             <h3 class="section-title col-5" th:text="*{understand.title1.text}">Qu’est-ce qu’une espèce exotique envahissante ?</h3>
             <div class="left-1">
-              <p th:text="*{understand.text1.text}">
+              <p class="preserve-lines" th:text="*{understand.text1.text}">
                 Une espèce exotique envahissante est une espèce introduite par l’Homme hors de son territoire d’origine et qui présente, sur
                 son territoire d’introduction, une dispersion rapide et des impacts environnementaux mais également parfois sociaux et
                 économiques. Ces introductions sont parfois volontaires (pour l’agriculture, l’ornementation, comme animaux de compagnie,
@@ -88,7 +88,7 @@
           </div>
           <div class="push-right big">
             <h3 class="text-title col-4"><strong th:text="*{understand.title2.text}">Espèces exotiques VS espèces indigènes</strong></h3>
-            <p th:text="*{understand.text2.text}">
+            <p class="preserve-lines" th:text="*{understand.text2.text}">
               Si de nombreuses espèces n’arrivent pas à s’adapter ou se reproduire dans leurs territoires d’introduction, certaines
               s’adaptent au contraire très bien, se développant en l’absence de leurs prédateurs ou parasites naturels. Elles peuvent alors
               causer de lourds impacts, en particulier dans les îles où les écosystèmes sont plus fragiles, par compétition avec les espèces
@@ -104,7 +104,7 @@
             <h3 class="text-title col-4" th:text="${paragraph.title.text}">Une liste mondiale des espèces les plus problématiques</h3>
           </div>
           <div class="col-9 left-1">
-            <p class="two-column" th:text="${paragraph.text.text}">
+            <p class="two-column preserve-lines" th:text="${paragraph.text.text}">
               En 2007, l’Union international pour la conservation de la nature a publié une liste de 100 espèces exotiques considérées comme
               les plus envahissantes du monde, c’est-à-dire celles avec le plus fort potentiel de dispersion et le plus lourd impact sur
               leur environnement d’accueil. On y trouve notamment le rat noir (Rattus rattus), introduit dans de nombreuses îles et
@@ -118,7 +118,7 @@
           </div>
         </div>
       </section>
-      <section class="section-list-territoire">
+      <section class="section-list-territoire" th:if="${!territoryCards.empty}">
         <div class="indicateur-content">
           <h2 class="section-swiper-title">L’indicateur par territoire</h2>
           <div class="indicateur-filter-wrapper">
@@ -171,7 +171,7 @@
           </div>
         </div>
       </section>
-      <div class="section-ecogeste-push">
+      <div class="section-ecogeste-push" th:if="${!ecogestureCards.empty}">
         <div class="section-content-left">
           <div class="col-6">
             <h3 class="section-title" th:text="*{ecogestures.title.text}">
