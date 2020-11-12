@@ -10,6 +10,7 @@ import {
   TextElement
 } from '../page.model';
 import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { atLeastOneElement, validElement, validList } from '../validators';
 
 @Component({
   selector: 'biom-edit-page-element',
@@ -19,8 +20,8 @@ import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCES
 })
 export class EditPageElementComponent implements ControlValueAccessor {
   @Input() elementModel: PageElement;
-  @Input() submitted: boolean;
   @Input() level: number;
+  isSubmitted: boolean;
   element: PageElement;
   elementGroup: FormGroup;
   private onChange: (value: any) => void = () => {};
@@ -60,15 +61,28 @@ export class EditPageElementComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
+  @Input()
+  set submitted(isSubmitted: boolean) {
+    this.isSubmitted = isSubmitted;
+    if (isSubmitted) {
+      if (this.elementGroup) {
+        this.elementGroup.markAsTouched();
+      }
+      if (this.elementsArray) {
+        this.elementsArray.markAsTouched();
+      }
+    }
+  }
+
   writeValue(element: PageElement): void {
     this.element = element;
-    this.elementGroup = this.fb.group({}, Validators.required);
+    this.elementGroup = this.fb.group({}, [Validators.required, validElement]);
     this.elementGroup.statusChanges.subscribe(() => this.onTouched());
 
     switch (element.type) {
       case 'TEXT': {
         // the element is a text: we want a simple form with a 'text' control
-        const textControl = this.fb.control(element, Validators.required);
+        const textControl = this.fb.control(element, [Validators.required, validElement]);
         this.elementGroup.addControl('text', textControl);
         textControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);
@@ -77,7 +91,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
       }
       case 'LINK': {
         // the element is a link: we want a simple form with a 'link' control
-        const linkControl = this.fb.control(element, Validators.required);
+        const linkControl = this.fb.control(element, [Validators.required, validElement]);
         this.elementGroup.addControl('link', linkControl);
         linkControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);
@@ -85,7 +99,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
         break;
       }
       case 'IMAGE': {
-        const imageControl = this.fb.control(element, Validators.required);
+        const imageControl = this.fb.control(element, [Validators.required, validElement]);
         this.elementGroup.addControl('image', imageControl);
         imageControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);
@@ -96,7 +110,8 @@ export class EditPageElementComponent implements ControlValueAccessor {
       case 'LIST_UNIT': {
         // the element is a section or a list unit: we want a form control for each element of the section
         element.elements.forEach(sectionElement => {
-          (this.elementGroup as FormGroup).addControl(sectionElement.name, this.fb.control(sectionElement, Validators.required));
+          const sectionElementControl = this.fb.control(sectionElement, [Validators.required, validElement]);
+          this.elementGroup.addControl(sectionElement.name, sectionElementControl);
         });
         this.elementGroup.valueChanges.subscribe((value: PageElement) => {
           this.onChange({ ...element, elements: Object.values(value) });
@@ -105,10 +120,10 @@ export class EditPageElementComponent implements ControlValueAccessor {
       }
       case 'LIST': {
         // the element is a list: we want a form array with a form control for each unit of the list
-        const elementsArray = this.fb.array([], Validators.required);
+        const elementsArray = this.fb.array([], [Validators.required, validList, atLeastOneElement]);
         this.elementGroup.addControl('elements', elementsArray);
         element.elements.forEach(listUnit => {
-          elementsArray.push(this.fb.control(listUnit, Validators.required));
+          elementsArray.push(this.fb.control(listUnit, [Validators.required, validElement]));
         });
         elementsArray.valueChanges.subscribe((value: PageElement) => {
           this.onChange({ ...element, elements: Object.values(value) });
@@ -126,7 +141,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
     // get the pristine list unit from the model
     const listUnitElement = { ...(this.elementModel as ListElement).elements[0] };
     // push it to the list elements
-    this.elementsArray.push(this.fb.control(listUnitElement, Validators.required));
+    this.elementsArray.push(this.fb.control(listUnitElement, [Validators.required, validElement]));
     element.elements.push(listUnitElement);
   }
 
@@ -136,6 +151,6 @@ export class EditPageElementComponent implements ControlValueAccessor {
   }
 
   get elementsArray() {
-    return this.elementGroup.get('elements') as FormArray;
+    return this.elementGroup ? (this.elementGroup.get('elements') as FormArray) : null;
   }
 }

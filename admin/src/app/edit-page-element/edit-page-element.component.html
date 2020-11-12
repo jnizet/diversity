@@ -5,7 +5,7 @@
     <div *ngFor="let sectionElement of element.elements">
       <biom-edit-page-element
         [formControlName]="sectionElement.name"
-        [submitted]="submitted"
+        [submitted]="isSubmitted"
         [elementModel]="getElementModel(sectionElement.name)"
         [level]="level + 1"
       ></biom-edit-page-element>
@@ -16,7 +16,7 @@
     <div *ngFor="let unitElement of element.elements">
       <biom-edit-page-element
         [formControlName]="unitElement.name"
-        [submitted]="submitted"
+        [submitted]="isSubmitted"
         [elementModel]="getElementModel(unitElement.name)"
         [level]="level + 1"
       ></biom-edit-page-element>
@@ -29,7 +29,7 @@
       <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2 unit">
         <biom-edit-page-element
           [formControlName]="unitIndex"
-          [submitted]="submitted"
+          [submitted]="isSubmitted"
           [elementModel]="getElementModel(listElement.name)"
           [level]="level + 1"
         ></biom-edit-page-element>
@@ -38,20 +38,24 @@
         </button>
       </div>
     </div>
+    <val-errors [control]="elementsArray" label="La liste">
+      <ng-template valError="atLeastOne">La liste doit contenir au moins un élément</ng-template>
+      <ng-template valError="invalidElement">La liste doit contenir des éléments valides</ng-template>
+    </val-errors>
     <button id="add-unit" type="button" class="btn btn-outline-primary" (click)="addListUnit(element)">
       Ajouter un élément à la liste
     </button>
   </div>
   <!-- TextElement -->
   <div *ngIf="isText(element)" class="mb-2">
-    <biom-edit-text-element [submitted]="submitted" formControlName="text"></biom-edit-text-element>
+    <biom-edit-text-element [submitted]="isSubmitted" formControlName="text"></biom-edit-text-element>
   </div>
   <!-- LinkElement -->
   <div *ngIf="isLink(element)" class="mb-2">
-    <biom-edit-link-element [submitted]="submitted" formControlName="link"></biom-edit-link-element>
+    <biom-edit-link-element [submitted]="isSubmitted" formControlName="link"></biom-edit-link-element>
   </div>
   <!-- ImageElement -->
   <div *ngIf="isImage(element)" class="mb-2">
-    <biom-edit-image-element [submitted]="submitted" formControlName="image"></biom-edit-image-element>
+    <biom-edit-image-element [submitted]="isSubmitted" formControlName="image"></biom-edit-image-element>
   </div>
 </div>

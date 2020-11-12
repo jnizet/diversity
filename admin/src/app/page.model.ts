@@ -46,6 +46,40 @@ export interface SectionElement extends ContainerElement {
 
 export type PageElement = TextElement | LinkElement | ImageElement | ListElement | ListUnitElement | SectionElement;
 
+function isValidText(text: TextElement): boolean {
+  return !!text.text;
+}
+
+function isValidLink(link: LinkElement): boolean {
+  return !!link.text && !!link.href;
+}
+
+function isValidImage(image: ImageElement): boolean {
+  return !!image.imageId && !!image.alt;
+}
+
+function isValidCollection(collection: ListElement | ListUnitElement | SectionElement): boolean {
+  return collection.elements.length > 0 && !collection.elements.some(element => !isValidElement(element));
+}
+
+export function isValidElement(element: PageElement | null): boolean {
+  if (!element) {
+    return false;
+  }
+  switch (element.type) {
+    case 'LIST':
+    case 'LIST_UNIT':
+    case 'SECTION':
+      return isValidCollection(element);
+    case 'TEXT':
+      return isValidText(element);
+    case 'LINK':
+      return isValidLink(element);
+    case 'IMAGE':
+      return isValidImage(element);
+  }
+}
+
 export interface Page {
   id: number;
   name: string;

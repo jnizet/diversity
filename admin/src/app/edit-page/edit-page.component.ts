@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../toast.service';
 import { forkJoin, Observable } from 'rxjs';
+import { validElement } from '../validators';
 
 interface FormValue {
   title: string;
@@ -50,7 +51,7 @@ export class EditPageComponent implements OnInit {
       forkJoin([this.pageService.getValues(pageId), this.pageService.getModel(modelName)]).subscribe(([page, model]) => {
         this.editedPage = page;
         page.elements.forEach(element => {
-          this.elementsGroup.addControl(element.name, new FormControl(element, Validators.required));
+          this.elementsGroup.addControl(element.name, new FormControl(element, [Validators.required, validElement]));
         });
         this.pageForm.patchValue({
           title: page.title
@@ -64,7 +65,7 @@ export class EditPageComponent implements OnInit {
         this.editedPage = JSON.parse(JSON.stringify(model));
         this.editedPage.name = pageName;
         this.editedPage.elements.forEach(element => {
-          this.elementsGroup.addControl(element.name, new FormControl(element, Validators.required));
+          this.elementsGroup.addControl(element.name, new FormControl(element, [Validators.required, validElement]));
         });
         this.pageModel = model;
       });
