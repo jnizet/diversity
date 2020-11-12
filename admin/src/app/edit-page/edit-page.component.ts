@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PageService } from '../page.service';
 import { ElementCommand, elementToCommand, Page, PageCommand, PageElement } from '../page.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ToastService } from '../toast.service';
 import { forkJoin, Observable } from 'rxjs';
 import { validElement } from '../validators';
+import { animate, classBasedAnimation } from '../animation';
 
 interface FormValue {
   title: string;
@@ -24,6 +25,9 @@ export class EditPageComponent implements OnInit {
   elementsGroup: FormGroup;
   pageModel: Page;
   submitted = false;
+
+  @ViewChild('saveButton')
+  saveButton: ElementRef<HTMLButtonElement>;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,6 +79,7 @@ export class EditPageComponent implements OnInit {
   savePage() {
     this.submitted = true;
     if (this.pageForm.invalid) {
+      animate(this.saveButton.nativeElement, classBasedAnimation('shake')).subscribe();
       return;
     }
 
@@ -100,9 +105,12 @@ export class EditPageComponent implements OnInit {
       obs = this.pageService.create(this.pageModel.modelName, command);
     }
 
-    obs.subscribe(() => {
-      this.toastService.success(`La page a été ${this.mode === 'update' ? 'modifiée' : 'créée'}`);
-      this.router.navigate(['/']);
+    obs.subscribe({
+      next: () => {
+        this.toastService.success(`La page a été ${this.mode === 'update' ? 'modifiée' : 'créée'}`);
+        this.router.navigate(['/']);
+      },
+      error: () => animate(this.saveButton.nativeElement, classBasedAnimation('shake')).subscribe()
     });
   }
 
