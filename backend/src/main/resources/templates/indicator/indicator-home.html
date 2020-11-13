@@ -3,7 +3,7 @@
 <html
   xmlns:th="http://www.thymeleaf.org"
   xmlns:biom="http://www.thymeleaf.org"
-  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null)}"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass=null, selectedMenu='indicators')}"
 >
   <head>
     <title th:text="${page.title}">Indicateurs</title>

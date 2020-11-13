@@ -92,19 +92,21 @@
         </div>
         <ul role="list" class="nav-link-list w-list-unstyled">
           <li class="nav-link-item">
-            <a th:href="@{/territoires}" class="nav-link">Territoires</a
+            <a th:href="@{/territoires}" class="nav-link" th:classappend="${selectedMenu == 'territories' ? 'w--current' : ''}"
+              >Territoires</a
             ><img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
           </li>
           <li class="nav-link-item">
-            <a th:href="@{/indicateurs}" class="nav-link">Indicateurs</a
+            <a th:href="@{/indicateurs}" class="nav-link" th:classappend="${selectedMenu == 'indicators' ? 'w--current' : ''}"
+              >Indicateurs</a
             ><img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
           </li>
           <li class="nav-link-item">
-            <a th:href="@{/agir-ensemble}" class="nav-link">Agir ensemble</a
+            <a th:href="@{/agir-ensemble}" class="nav-link" th:classappend="${selectedMenu == 'act' ? 'w--current' : ''}">Agir ensemble</a
             ><img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
           </li>
           <li class="nav-link-item">
-            <a th:href="@{/apropos}" class="nav-link">À propos</a
+            <a th:href="@{/apropos}" class="nav-link" th:classappend="${selectedMenu == 'about' ? 'w--current' : ''}">À propos</a
             ><img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
           </li>
         </ul>
