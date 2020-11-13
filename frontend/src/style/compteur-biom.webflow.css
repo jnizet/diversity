@@ -508,6 +508,7 @@ blockquote {
 }
 
 .swiper-slide.espece-slide {
+  position: relative;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -685,6 +686,32 @@ blockquote {
 .legend-wrapper.right {
   left: 25px;
   right: 0px;
+}
+
+.legend-wrapper.espece {
+  position: relative;
+  top: 0px;
+  right: auto;
+  bottom: 0px;
+  width: 40vw;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.legend-wrapper.lieu {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  -webkit-transform: translate(0px, -100%);
+  -ms-transform: translate(0px, -100%);
+  transform: translate(0px, -100%);
 }
 
 .legend-text {
@@ -5442,7 +5469,6 @@ blockquote {
 
 .lieu-slide-img {
   width: 100%;
-  margin-bottom: 30px;
 }
 
 .lieu-title {
@@ -5487,7 +5513,6 @@ blockquote {
   height: 40vw;
   max-height: 600px;
   max-width: 600px;
-  margin-right: 120px;
   border-radius: 300px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -6014,6 +6039,55 @@ blockquote {
   margin-bottom: 60px;
 }
 
+.espece-left {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 600px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 auto;
+  -ms-flex: 0 auto;
+  flex: 0 auto;
+}
+
+.espece-right {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.lieu-img-wrapper {
+  width: 100%;
+}
+
 @media screen and (max-width: 991px) {
   p {
     margin-bottom: 20px;
@@ -6158,6 +6232,10 @@ blockquote {
 
   .legend-wrapper.territoire {
     right: 20px;
+  }
+
+  .legend-wrapper.espece {
+    width: 100%;
   }
 
   .swiper-pagination {
@@ -7239,6 +7317,7 @@ blockquote {
   .espce-img {
     width: 480px;
     height: 480px;
+    margin-bottom: 0;
   }
 
   .ecosysteme-left {
@@ -7538,6 +7617,10 @@ blockquote {
   .legend-wrapper.science {
     left: 10px;
     bottom: 5px;
+  }
+
+  .legend-wrapper.espece {
+    width: 100%;
   }
 
   .legend-text {

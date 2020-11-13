@@ -24,7 +24,14 @@ export class TerritoryController extends Controller {
       }
     });
 
-    setInterval(() => {
+    const checkImageInterval = setInterval(() => {
+      checkImage();
+      locationSwiper.update();
+    }, 100);
+
+    checkImage();
+
+    function checkImage() {
       $('.lieu-slide').each((index, element) => {
         const $element = $(element);
         const $image = $element.find('.lieu-slide-img');
@@ -43,8 +50,19 @@ export class TerritoryController extends Controller {
           $element.addClass('type3');
         }
       });
-      locationSwiper.update();
-    }, 500);
+
+      let imageCount = 0;
+      const $localionImageSlides = $('.lieu-slide-img');
+      $localionImageSlides.each((index, element) => {
+        if (($(element).get(0) as HTMLImageElement).naturalHeight > 0) {
+          imageCount++;
+        }
+      });
+
+      if (imageCount >= $localionImageSlides.length) {
+        clearInterval(checkImageInterval);
+      }
+    }
 
     new Swiper('.swiper-frise', {
       speed: 1000,

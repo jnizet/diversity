@@ -113,13 +113,19 @@
           <div class="swiper-container swiper-lieu">
             <div class="swiper-wrapper lieu-swiper-wrapper">
               <div th:each="location: *{interests.locations}" class="swiper-slide lieu-slide">
-                <img
-                  biom:image="${location.image}"
-                  loading="lazy"
-                  sizes="(max-width: 479px) 33vw, (max-width: 991px) 107.078125px, 11vw"
-                  alt=""
-                  class="lieu-slide-img"
-                />
+                <div class="lieu-img-wrapper">
+                  <img
+                    biom:image="${location.image}"
+                    loading="lazy"
+                    sizes="(max-width: 479px) 33vw, (max-width: 991px) 107.078125px, 11vw"
+                    alt=""
+                    class="lieu-slide-img"
+                  />
+                  <div class="legend-wrapper lieu">
+                    <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+                    <div class="legend-text" th:text="${location.image.alt}"></div>
+                  </div>
+                </div>
                 <div class="col-3">
                   <h4 class="lieu-title" th:text="${location.name.text}">Le grand barachois</h4>
                   <p class="preserve-lines" th:text="${location.description.text}">
@@ -156,19 +162,26 @@
           <div class="swiper-container swiper-espece">
             <div class="swiper-wrapper">
               <div th:each="speciesItem : *{species}" class="swiper-slide espece-slide">
-                <img
-                  biom:image="${speciesItem.image}"
-                  loading="lazy"
-                  sizes="(max-width: 479px) 80vw, (max-width: 991px) 480px, 40vw"
-                  class="espce-img"
-                />
-                <div class="col-4">
-                  <div class="section-label">espèces</div>
-                  <h3 class="espece-title" th:text="${speciesItem.name.text}">Cerf de<br />Virginie</h3>
-                  <p class="preserve-lines" th:text="${speciesItem.description.text}">
-                    Peu de mammifères terrestres sont indigènes de l’archipel. Le Cerf de Virginie (Odocoileus virginianus) a été introduit
-                    à Miquelon et Langlade en 1953 pour la chasse. Ses populations dégradent fortement la forêt boréale.
-                  </p>
+                <div class="espece-left">
+                  <img
+                    biom:image="${speciesItem.image}"
+                    loading="lazy"
+                    sizes="(max-width: 479px) 80vw, (max-width: 991px) 480px, 40vw"
+                    class="espce-img"
+                  />
+                  <div class="legend-wrapper espece">
+                    <div class="legend-text" th:text="${speciesItem.image.alt}"></div>
+                  </div>
+                </div>
+                <div class="espece-right">
+                  <div class="col-4">
+                    <div class="section-label">espèces</div>
+                    <h3 class="espece-title" th:text="${speciesItem.name.text}">Cerf de<br />Virginie</h3>
+                    <p class="preserve-lines" th:text="${speciesItem.description.text}">
+                      Peu de mammifères terrestres sont indigènes de l’archipel. Le Cerf de Virginie (Odocoileus virginianus) a été
+                      introduit à Miquelon et Langlade en 1953 pour la chasse. Ses populations dégradent fortement la forêt boréale.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
