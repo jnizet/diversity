@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(ActController.class)
 @Import({RequestDialect.class, MatomoConfig.class})
-class ActControllerTest {
+class ActControllerTest extends ControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -128,9 +129,9 @@ class ActControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Act together</title>")))
-               .andExpect(content().string(containsString("Agir ensemble</h1>")))
-               .andExpect(content().string(containsString("Ecogestes</h2>")))
-               .andExpect(content().string(containsString("Sciences participatives</h2>")))
+               .andExpect(content().string(containsString("<p>Agir ensemble</p>")))
+               .andExpect(content().string(containsString("<p>Ecogestes</p>")))
+               .andExpect(content().string(containsString("<p>Sciences participatives</p>")))
                .andExpect(content().string(containsString("</html>")));
     }
 }

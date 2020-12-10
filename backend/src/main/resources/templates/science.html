@@ -23,12 +23,12 @@
       <section class="section-top">
         <div class="legend-wrapper">
           <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-          <div class="legend-text" th:text="*{header.background.alt}">Légende de la photo</div>
+          <div class="legend-text" biom:markdown="*{header.background.alt}">Légende de la photo</div>
         </div>
         <div class="section-top-wrapper">
           <div class="section-top-content">
-            <h1 class="section-top-title" th:text="*{header.title.text}">Que sont les sciences participatives ?</h1>
-            <p class="section-top-text" th:text="*{header.subtitle.text}">
+            <h1 class="section-top-title" biom:markdown="*{header.title.text}">Que sont les sciences participatives ?</h1>
+            <p class="section-top-text" biom:markdown="*{header.subtitle.text}">
               Les sciences participatives permettent à tous les curieux de la nature, du débutant à l’expérimenté, de contribuer à la
               recherche sur la biodiversité en fournissant aux scientifiques un grand nombre de données de terrain.
             </p>
@@ -39,9 +39,9 @@
 
       <section class="section-ecogeste-intro">
         <div class="section-content">
-          <h2 class="section-title top-title" th:text="*{presentation.title.text}">Sciences faites par des non-professionnels</h2>
+          <h2 class="section-title top-title" biom:markdown="*{presentation.title.text}">Sciences faites par des non-professionnels</h2>
           <div class="col-5">
-            <p class="preserve-lines" th:text="*{presentation.description.text}">
+            <p class="preserve-lines" biom:markdown="*{presentation.description.text}">
               Au-delà de la simple définition « sciences faites par des non-professionnels », l’Institut de formation et de recherche en
               éducation à l’environnement (Ifrée) distingue 3 catégories de programmes participatifs selon leurs objectifs, permettant de
               mieux comprendre ce que sont réellement les Sciences Participatives.
@@ -53,8 +53,8 @@
       <section class="science-content-wrapper">
         <div class="col-3">
           <div th:each="paragraph: *{paragraphs}">
-            <div class="text-big" th:text="${paragraph.title.text}">Les bases de données collaboratives</div>
-            <p class="text-science preserve-lines" th:text="${paragraph.text.text}">
+            <div class="text-big" biom:markdown="${paragraph.title.text}">Les bases de données collaboratives</div>
+            <p class="text-science preserve-lines" biom:markdown="${paragraph.text.text}">
               Il s’agit de projet d’inventaires et de signalements destinés aux amateurs sachant identifier les taxons observés. Les
               débutants y sont les bienvenus. L’objet principal est de partager de la connaissance, éventuellement mobilisable a posteriori
               dans unprojet de recherche ou dans un objectif de conservation.
@@ -74,24 +74,24 @@
             />
             <div class="legend-wrapper right">
               <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-              <div class="legend-text" th:text="${imageElement.image.alt}">Légende de la photo</div>
+              <div class="legend-text" biom:markdown="${imageElement.image.alt}">Légende de la photo</div>
             </div>
           </div>
         </div>
       </section>
       <section class="section-science-exemple">
         <div class="col-11 left-1">
-          <h2 class="section-title col-5" th:text="*{examples.title.text}">Trois exemples de programmes participatifs en Outre-mer</h2>
+          <h2 class="section-title col-5" biom:markdown="*{examples.title.text}">Trois exemples de programmes participatifs en Outre-mer</h2>
           <div class="swiper-container swiper-science">
             <div class="swiper-wrapper">
               <div class="swiper-slide science-exemple-wrapper" th:each="project: *{examples.projects}">
                 <div class="science-exmple-content">
-                  <div class="text-big" th:text="${project.title.text}">Un projet original en Nouvelle-Calédonie</div>
-                  <p class="text-science preserve-lines" th:text="${project.description.text}">
+                  <div class="text-big" biom:markdown="${project.title.text}">Un projet original en Nouvelle-Calédonie</div>
+                  <p class="text-science preserve-lines" biom:markdown="${project.description.text}">
                     Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie
                     pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.
                   </p>
-                  <a th:href="${project.more.href}" class="cta-primary yellow" th:text="${project.more.text}">en savoir plus</a>
+                  <a th:href="${project.more.href}" class="cta-primary yellow" biom:markdown="${project.more.text}">en savoir plus</a>
                 </div>
                 <div class="col-7 left-1">
                   <div class="div-block-4">
@@ -102,23 +102,23 @@
                     />
                     <div class="legend-wrapper science">
                       <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                      <div class="legend-text" th:text="${project.image.alt}">Légende de la photo</div>
+                      <div class="legend-text" biom:markdown="${project.image.alt}">Légende de la photo</div>
                     </div>
                   </div>
                   <div class="exemple-wrapper col-7">
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Objet de l’étude</h4>
-                      <p th:text="${project.subject.text}">
+                      <p biom:markdown="${project.subject.text}">
                         Suivi des populations d’oiseaux communs par échantillonnages ponctuels simples le long de parcours prédéfinis
                       </p>
                     </div>
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Acteur</h4>
-                      <p th:text="${project.actor.text}">Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)</p>
+                      <p biom:markdown="${project.actor.text}">Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)</p>
                     </div>
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Public visé</h4>
-                      <p th:text="${project.target.text}">
+                      <p biom:markdown="${project.target.text}">
                         Ornithologues à titre bénévole ou dans un cadre professionnels (Agents de zones protégées)
                       </p>
                     </div>
@@ -139,7 +139,7 @@
           </div>
         </div>
         <div class="exemple-action-wrapper">
-          <h2 class="section-title col-4" th:text="*{application.title.text}">
+          <h2 class="section-title col-4" biom:markdown="*{application.title.text}">
             Agir pour la science depuis son smartphone, c'est possible&nbsp;!
           </h2>
           <div class="col-6 left-1">
@@ -148,8 +148,8 @@
               <div class="col-1">
                 <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
               </div>
-              <div class="text-big col-2" th:text="*{application.subtitle.text}">J'agis en ligne</div>
-              <a th:href="*{application.downloadLink.href}" class="cta-secondary yellow" th:text="*{application.downloadLink.text}">
+              <div class="text-big col-2" biom:markdown="*{application.subtitle.text}">J'agis en ligne</div>
+              <a th:href="*{application.downloadLink.href}" class="cta-secondary yellow" biom:markdown="*{application.downloadLink.text}">
                 Je télécharge l'application INPN Espaces
               </a>
             </div>

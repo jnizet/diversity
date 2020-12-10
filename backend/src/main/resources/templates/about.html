@@ -23,12 +23,12 @@
       <section class="section-top">
         <div class="legend-wrapper">
           <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-          <div class="legend-text" th:text="*{header.background.alt}"></div>
+          <div class="legend-text" biom:markdown="*{header.background.alt}"></div>
         </div>
         <div class="section-top-wrapper">
           <div class="section-top-content">
-            <h1 class="section-top-title" th:text="*{header.title.text}">Pourquoi un compteur de la biodiversité en outre-mer ?</h1>
-            <p class="section-top-text" th:text="*{header.subtitle.text}">
+            <h1 class="section-top-title" biom:markdown="*{header.title.text}">Pourquoi un compteur de la biodiversité en outre-mer ?</h1>
+            <p class="section-top-text" biom:markdown="*{header.subtitle.text}">
               La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer, et s’articule
               autour de trois objectifs :
             </p>
@@ -40,8 +40,8 @@
       <section class="section-apropos-left">
         <div class="col-4 apropos">
           <div class="objectif-label">Objectif n°1</div>
-          <h2 class="section-title" th:text="*{goal1.title.text}">Partager la connaissance scientifique</h2>
-          <p class="preserve-lines" th:text="*{goal1.description.text}">
+          <h2 class="section-title" biom:markdown="*{goal1.title.text}">Partager la connaissance scientifique</h2>
+          <p class="preserve-lines" biom:markdown="*{goal1.description.text}">
             Quelles sont les espèces présentes dans ce territoire ? Comment évoluent leurs populations ? Quel est l’état de santé des récifs
             coralliens ? Pour répondre à ces questions et bien d’autres, différents paramètres, appelés « indicateurs », sont mesurés par
             les scientifiques pour suivre l’évolution de l’état de la biodiversité. Le compteur a pour mission de rendre compte de l’état de
@@ -58,7 +58,7 @@
           />
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{goal1.image.alt}">legende photo</div>
+            <div class="legend-text" biom:markdown="*{goal1.image.alt}">legende photo</div>
           </div>
         </div>
       </section>
@@ -66,7 +66,7 @@
         <div class="col-7">
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{goal2.image.alt}">legende photo</div>
+            <div class="legend-text" biom:markdown="*{goal2.image.alt}">legende photo</div>
           </div>
           <img
             biom:image="*{goal2.image}"
@@ -77,8 +77,8 @@
         </div>
         <div class="col-4 apropos left-1">
           <div class="objectif-label">Objectif n°2</div>
-          <h2 class="section-title" th:text="*{goal2.title.text}">Valoriser les actions des territoires</h2>
-          <p class="preserve-lines" th:text="*{goal2.description.text}">
+          <h2 class="section-title" biom:markdown="*{goal2.title.text}">Valoriser les actions des territoires</h2>
+          <p class="preserve-lines" biom:markdown="*{goal2.description.text}">
             De nombreuses actions locales sont mises en place afin de tenter de préserver les écosystèmes et les espèces. Donner de la
             visibilité aux acteurs locaux, partager les expériences et les réussites, au bénéfice de tous, c’est également l’un des
             objectifs du compteur.
@@ -89,7 +89,7 @@
       <section class="section-apropos-left">
         <div class="apropos-quote">
           <img th:src="@{/assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote-apropos" />
-          <div class="apropos-citation" th:text="*{goal2.quote.text}">
+          <div class="apropos-citation" biom:markdown="*{goal2.quote.text}">
             Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités
             humaines.
           </div>
@@ -102,7 +102,7 @@
           />
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{goal2.quoteImage.alt}">legende photo</div>
+            <div class="legend-text" biom:markdown="*{goal2.quoteImage.alt}">legende photo</div>
           </div>
         </div>
         <div class="section-decoration-text mission">mission</div>
@@ -110,8 +110,8 @@
       <section class="section-apropos-left">
         <div class="objectif-content">
           <div class="objectif-label">Objectif n°3</div>
-          <h2 class="section-title" th:text="*{goal3.title.text}">Encourager chacun à agir</h2>
-          <p class="preserve-lines" th:text="*{goal3.description.text}">
+          <h2 class="section-title" biom:markdown="*{goal3.title.text}">Encourager chacun à agir</h2>
+          <p class="preserve-lines" biom:markdown="*{goal3.description.text}">
             Chacun, à son échelle, peut agir pour préserver la biodiversité. Connaitre et appliquer des gestes simples, modifier ses
             habitudes et son comportement ou encore s’investir dans desprogrammes de sciences participatives, tout le monde est concerné par
             la préservation de la biodiversité. Le rôle du compteur est d’accompagner les citoyens en partageant desinformations claires et
@@ -128,14 +128,14 @@
           />
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{goal3.image.alt}">legende photo</div>
+            <div class="legend-text" biom:markdown="*{goal3.image.alt}">legende photo</div>
           </div>
         </div>
       </section>
 
       <section id="partenaires" class="section-partenaires">
         <div class="partner-content">
-          <h2 class="section-swiper-title" th:text="*{partners.title.text}">Nos partenaires pour le Compteur de la Biodiversité</h2>
+          <h2 class="section-swiper-title" biom:markdown="*{partners.title.text}">Nos partenaires pour le Compteur de la Biodiversité</h2>
           <div class="swiper-container swiper-partner">
             <div class="swiper-wrapper partner-wrapper">
               <a th:each="partner : *{partners.partners}" th:href="${partner.url.text}" class="swiper-slide partner-slide w-inline-block">

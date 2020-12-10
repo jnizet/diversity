@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @WebMvcTest({TerritoryController.class, MatomoConfig.class})
 @Import({RequestDialect.class, IndicatorDialect.class})
-class TerritoryControllerTest {
+class TerritoryControllerTest extends ControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -193,28 +194,28 @@ class TerritoryControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Territoire - La Réunion</title>")))
-               .andExpect(content().string(containsString("La Réunion</h1>")))
-               .andExpect(content().string(containsString("Une bien jolie île</h2>")))
-               .andExpect(content().string(containsString("presentation")))
-               .andExpect(content().string(containsString("Interests")))
-               .andExpect(content().string(containsString("interest1")))
-               .andExpect(content().string(containsString("interestDesc1")))
-               .andExpect(content().string(containsString("interest2")))
-               .andExpect(content().string(containsString("interestDesc2")))
-               .andExpect(content().string(containsString("10\u00a0%")))
-               .andExpect(content().string(containsString("i1 desc")))
-               .andExpect(content().string(containsString("20\u00a0%")))
-               .andExpect(content().string(containsString("i2 desc")))
-               .andExpect(content().string(containsString("Specie1")))
-               .andExpect(content().string(containsString("specie1")))
-               .andExpect(content().string(containsString("1503")))
-               .andExpect(content().string(containsString("event1")))
-               .andExpect(content().string(containsString("Ecosystem1")))
-               .andExpect(content().string(containsString("ecosystem1")))
-               .andExpect(content().string(containsString("Risks")))
-               .andExpect(content().string(containsString("Risk1")))
-               .andExpect(content().string(containsString("risk1")))
-               .andExpect(content().string(containsString("Saint-Pierre-Et-Miquelon")))
+               .andExpect(content().string(containsString("<p>Réunion</p>")))
+               .andExpect(content().string(containsString("<p>Une bien jolie île</p>")))
+               .andExpect(content().string(containsString("<p>presentation</p>")))
+               .andExpect(content().string(containsString("<p>Interests</p>")))
+               .andExpect(content().string(containsString("<p>interest1</p>")))
+               .andExpect(content().string(containsString("<p>interestDesc1</p>")))
+               .andExpect(content().string(containsString("<p>interest2</p>")))
+               .andExpect(content().string(containsString("<p>interestDesc2</p>")))
+               .andExpect(content().string(containsString("<p>10\u00a0%</p>")))
+               .andExpect(content().string(containsString("<p>i1 desc</p>")))
+               .andExpect(content().string(containsString("<p>20\u00a0%</p>")))
+               .andExpect(content().string(containsString("<p>i2 desc</p>")))
+               .andExpect(content().string(containsString("<p>Specie1</p>")))
+               .andExpect(content().string(containsString("<p>specie1</p>")))
+               .andExpect(content().string(containsString("<p>1503</p>")))
+               .andExpect(content().string(containsString("<p>event1</p>")))
+               .andExpect(content().string(containsString("<p>Ecosystem1</p>")))
+               .andExpect(content().string(containsString("<p>ecosystem1</p>")))
+               .andExpect(content().string(containsString("<p>Risks</p>")))
+               .andExpect(content().string(containsString("<p>Risk1</p>")))
+               .andExpect(content().string(containsString("<p>risk1</p>")))
+               .andExpect(content().string(containsString("<p>Saint-Pierre-Et-Miquelon</p>")))
                .andExpect(content().string(containsString("</html>")));
     }
 
@@ -246,9 +247,9 @@ class TerritoryControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Territoires</title>")))
-               .andExpect(content().string(containsString("Découvrez les territoires</h1>")))
-               .andExpect(content().string(containsString("Réunion")))
-               .andExpect(content().string(containsString("presentation of reunion")))
+               .andExpect(content().string(containsString("<p>Découvrez les territoires</p>")))
+               .andExpect(content().string(containsString("<p>Réunion</p>")))
+               .andExpect(content().string(containsString("<p>presentation of reunion</p>")))
                .andExpect(content().string(containsString("</html>")));
     }
 }

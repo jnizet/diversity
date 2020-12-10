@@ -28,13 +28,13 @@
         <div class="half indicateur-h1-wrapper">
           <div class="col-4 indicateur-h1-content">
             <h1 class="indicateur-h1">
-              <span class="indicateur-h1-number" th:text="${#indicators.formatValueWithoutUnit(outremerIndicatorValue)}">60</span>
-              <span class="h1-porcent" th:text="${outremerIndicatorValue.unit}">%</span>
-              <span class="h1-content" th:text="*{presentation.description.text}"
+              <span class="indicateur-h1-number" biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue)}">60</span>
+              <span class="h1-porcent" biom:markdown="${outremerIndicatorValue.unit}">%</span>
+              <span class="h1-content" biom:markdown="*{presentation.description.text}"
                 >espèces sur les 100 considérées comme les plus envahissantes au monde se trouvent en outre-mer.</span
               >
             </h1>
-            <div class="indicateur-thematique-blue" th:each="category: ${indicator.categories}" th:text="${category.name}">
+            <div class="indicateur-thematique-blue" th:each="category: ${indicator.categories}" biom:markdown="${category.name}">
               espèces exotiques envahissantes
             </div>
           </div>
@@ -43,7 +43,7 @@
           <img biom:image="*{presentation.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="img-full-height" />
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{presentation.image.alt}">Chelonia mydas ©  B. Guichard</div>
+            <div class="legend-text" biom:markdown="*{presentation.image.alt}">Chelonia mydas ©  B. Guichard</div>
           </div>
         </div>
       </section>
@@ -63,9 +63,9 @@
         <div class="section-label">comprendre</div>
         <div class="section-content-left">
           <div class="col-6">
-            <h3 class="section-title col-5" th:text="*{understand.title1.text}">Qu’est-ce qu’une espèce exotique envahissante ?</h3>
+            <h3 class="section-title col-5" biom:markdown="*{understand.title1.text}">Qu’est-ce qu’une espèce exotique envahissante ?</h3>
             <div class="left-1">
-              <p class="preserve-lines" th:text="*{understand.text1.text}">
+              <p class="preserve-lines" biom:markdown="*{understand.text1.text}">
                 Une espèce exotique envahissante est une espèce introduite par l’Homme hors de son territoire d’origine et qui présente, sur
                 son territoire d’introduction, une dispersion rapide et des impacts environnementaux mais également parfois sociaux et
                 économiques. Ces introductions sont parfois volontaires (pour l’agriculture, l’ornementation, comme animaux de compagnie,
@@ -84,13 +84,13 @@
               <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="image-6" />
               <div class="legend-wrapper">
                 <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                <div class="legend-text" th:text="*{understand.image.alt}"></div>
+                <div class="legend-text" biom:markdown="*{understand.image.alt}"></div>
               </div>
             </div>
           </div>
           <div class="push-right big">
-            <h3 class="text-title col-4"><strong th:text="*{understand.title2.text}">Espèces exotiques VS espèces indigènes</strong></h3>
-            <p class="preserve-lines" th:text="*{understand.text2.text}">
+            <h3 class="text-title col-4"><strong biom:markdown="*{understand.title2.text}">Espèces exotiques VS espèces indigènes</strong></h3>
+            <p class="preserve-lines" biom:markdown="*{understand.text2.text}">
               Si de nombreuses espèces n’arrivent pas à s’adapter ou se reproduire dans leurs territoires d’introduction, certaines
               s’adaptent au contraire très bien, se développant en l’absence de leurs prédateurs ou parasites naturels. Elles peuvent alors
               causer de lourds impacts, en particulier dans les îles où les écosystèmes sont plus fragiles, par compétition avec les espèces
@@ -98,15 +98,15 @@
             </p>
           </div>
         </div>
-        <div class="section-decoration-text espece" th:text="*{understand.keyword.text}">espèces</div>
+        <div class="section-decoration-text espece" biom:markdown="*{understand.keyword.text}">espèces</div>
       </section>
-      <section class="section-text" th:each="paragraph: *{understand.paragraphs}">
+      <section class="section-text" th:each=="paragraph: *{understand.paragraphs}">
         <div class="section-content-left">
           <div class="text-title-wrapper">
-            <h3 class="text-title col-4" th:text="${paragraph.title.text}">Une liste mondiale des espèces les plus problématiques</h3>
+            <h3 class="text-title col-4" biom:markdown="${paragraph.title.text}">Une liste mondiale des espèces les plus problématiques</h3>
           </div>
           <div class="col-9 left-1">
-            <p class="two-column preserve-lines" th:text="${paragraph.text.text}">
+            <p class="two-column preserve-lines" biom:markdown="${paragraph.text.text}">
               En 2007, l’Union international pour la conservation de la nature a publié une liste de 100 espèces exotiques considérées comme
               les plus envahissantes du monde, c’est-à-dire celles avec le plus fort potentiel de dispersion et le plus lourd impact sur
               leur environnement d’accueil. On y trouve notamment le rat noir (Rattus rattus), introduit dans de nombreuses îles et
@@ -124,7 +124,7 @@
         <div class="indicateur-content">
           <h2 class="section-swiper-title">L’indicateur par territoire</h2>
           <div class="indicateur-filter-wrapper">
-            <div class="text-big col-3 left-1" th:text="*{territories.title.text}">
+            <div class="text-big col-3 left-1" biom:markdown="*{territories.title.text}">
               Nombre d’espèces exotiques envahissantes par territoires
             </div>
             <!-- TODO deal with bassins when it's worth it -->
@@ -145,8 +145,8 @@
             <!-- TODO deal with bassins when it's worth it -->
             <div class="swiper-wrapper indicateur-wrapper">
               <div data-bassin="1" class="swiper-slide indicateur-slide" th:each="card: ${territoryCards}">
-                <div class="indicateur-slide-number" th:text="${#indicators.formatValue(card.indicatorValue)}">16</div>
-                <div class="indicateur-slide-tiytle" th:text="${card.territory.name}">Martinique</div>
+                <div class="indicateur-slide-number" biom:markdown="${#indicators.formatValue(card.indicatorValue)}">16</div>
+                <div class="indicateur-slide-tiytle" biom:markdown="${card.territory.name}">Martinique</div>
                 <img
                   th:src="@{/assets/images/territories/indicator/{slug}.svg(slug=${card.territory.slug})}"
                   loading="lazy"
@@ -176,7 +176,7 @@
       <div class="section-ecogeste-push" th:if="${!ecogestureCards.empty}">
         <div class="section-content-left">
           <div class="col-6">
-            <h3 class="section-title" th:text="*{ecogestures.title.text}">
+            <h3 class="section-title" biom:markdown="*{ecogestures.title.text}">
               Que puis-je faire pour éviter l’introduction et la dispersion d’espèces exotiques envahissantes ?
             </h3>
             <div class="ecogeste-item"></div>
@@ -197,10 +197,10 @@
                 />
               </div>
               <div class="ecogeste-wrapper">
-                <div class="ecogeste-thematique" th:text="${card.page.content.presentation.category.text}">biodiversité</div>
+                <div class="ecogeste-thematique" biom:markdown="${card.page.content.presentation.category.text}">biodiversité</div>
               </div>
               <div class="ecogeste-wrapper-bottom">
-                <h3 class="ecogeste-link-title" th:text="${card.page.content.presentation.name.text}">
+                <h3 class="ecogeste-link-title" biom:markdown="${card.page.content.presentation.name.text}">
                   Je protège les milieux contre l&#x27;introduction d&#x27;espèces exotiques envahissantes
                 </h3>
               </div>
@@ -230,8 +230,8 @@
           <div class="push-next-before">indicateur suivant</div>
           <div class="push-next-title-wrapper">
             <div class="push-next-title col-4">
-              <span th:text="${#indicators.formatValue(nextIndicatorCard.indicatorValue)}">85 117</span>
-              <span th:text="${nextIndicatorCard.page.content.presentation.description.text}"></span>
+              <span biom:markdown="${#indicators.formatValue(nextIndicatorCard.indicatorValue)}">85 117</span>
+              <span biom:markdown="${nextIndicatorCard.page.content.presentation.description.text}"></span>
             </div>
             <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
           </div>

@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,7 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @WebMvcTest(SecurityConfig.class)
 @MockBean(value = {UserRepository.class, JwtHelper.class})
-class AuthenticationFilterTest {
+class AuthenticationFilterTest extends ControllerTest {
 
     private JwtHelper mockJwtHelper;
     private UserRepository mockUserRepository;

@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(AuthenticationRestController.class)
-class AuthenticationRestControllerTest {
+class AuthenticationRestControllerTest extends ControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

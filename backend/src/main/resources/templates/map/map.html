@@ -50,29 +50,29 @@
           >
             <div class="territoire-fiche-wrapper">
               <div class="col-6">
-                <h4 class="territoire-fiche-title" th:text="${territoryCard.territory.name}"></h4>
+                <h4 class="territoire-fiche-title" biom:markdown="${territoryCard.territory.name}"></h4>
                 <div class="col-5 left-1">
-                  <p th:text="${territoryCard.page.content.identity.presentation.text}"></p>
+                  <p biom:markdown="${territoryCard.page.content.identity.presentation.text}"></p>
                   <div class="territoire-fiche-number">
                     <div class="territoire-number-block">
                       <img th:src="@{/assets/images/Trace.svg}" loading="lazy" alt="" class="territoire-icon" />
-                      <div><span th:text="${territoryCard.page.content.identity.area.text}"></span> km<sup>2</sup></div>
+                      <div><span biom:markdown="${territoryCard.page.content.identity.area.text}"></span> km<sup>2</sup></div>
                     </div>
                     <div class="territoire-number-block">
                       <img th:src="@{/assets/images/Habitants.svg}" loading="lazy" alt="" class="territoire-icon" />
-                      <div><span th:text="${territoryCard.page.content.identity.population.text}"></span> hab.</div>
+                      <div><span biom:markdown="${territoryCard.page.content.identity.population.text}"></span> hab.</div>
                     </div>
                     <div class="territoire-number-block">
                       <img th:src="@{/assets/images/Especes.svg}" loading="lazy" alt="" class="territoire-icon" />
-                      <div><span th:text="${territoryCard.page.content.identity.species.text}"></span> espèces indigènes</div>
+                      <div><span biom:markdown="${territoryCard.page.content.identity.species.text}"></span> espèces indigènes</div>
                     </div>
                   </div>
                   <div class="col-3">
                     <div class="swiper-container swiper-fiche swiper-fiche1" th:data-slug="${territoryCard.territory.slug}">
                       <div class="swiper-wrapper fiche-info-wrapper">
                         <div th:each="stat: ${territoryCard.page.content.statistics}" class="swiper-slide">
-                          <div class="fiche-info-number" th:text="${stat.number.text}"></div>
-                          <div class="fiche-info-text" th:text="${stat.text.text}"></div>
+                          <div class="fiche-info-number" biom:markdown="${stat.number.text}"></div>
+                          <div class="fiche-info-text" biom:markdown="${stat.text.text}"></div>
                         </div>
                       </div>
                     </div>
@@ -116,7 +116,7 @@
                   alt=""
                 />
               </div>
-              <div class="nav-under-text" th:text="${territoryCard.territory.name}"></div>
+              <div class="nav-under-text" biom:markdown="${territoryCard.territory.name}"></div>
             </div>
           </div>
         </div>

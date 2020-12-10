@@ -7,13 +7,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import fr.mnhn.diversity.common.thymeleaf.RequestDialect;
-import fr.mnhn.diversity.indicator.thymeleaf.IndicatorDialect;
 import fr.mnhn.diversity.matomo.MatomoConfig;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
@@ -34,7 +34,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @WebMvcTest(LegalTermsController.class)
 @Import({RequestDialect.class, MatomoConfig.class})
-class LegalTermsControllerTest {
+class LegalTermsControllerTest extends ControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -72,9 +72,9 @@ class LegalTermsControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
             .andExpect(content().string(containsString("<title>Legal terms</title>")))
-            .andExpect(content().string(containsString("Mentions légales</h1>")))
-            .andExpect(content().string(containsString("Hello")))
-            .andExpect(content().string(containsString("World")))
+            .andExpect(content().string(containsString("<p>Mentions légales</p>")))
+            .andExpect(content().string(containsString("<p>Hello</p>")))
+            .andExpect(content().string(containsString("<p>World</p>")))
             .andExpect(content().string(containsString("</html>")));
     }
 }

@@ -24,13 +24,13 @@
       <section class="section-top">
         <div class="legend-wrapper">
           <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-          <div class="legend-text" th:text="*{presentation.image.alt}"></div>
+          <div class="legend-text" biom:markdown="*{presentation.image.alt}"></div>
         </div>
         <div class="section-top-wrapper">
           <div class="ecogeste-top-content">
-            <h1 class="section-top-title" th:text="*{presentation.name.text}"></h1>
-            <p class="col-3" th:text="*{presentation.description.text}"></p>
-            <div class="ecogeste-thematique" th:text="*{presentation.category.text}"></div>
+            <h1 class="section-top-title" biom:markdown="*{presentation.name.text}"></h1>
+            <p class="col-3" biom:markdown="*{presentation.description.text}"></p>
+            <div class="ecogeste-thematique" biom:markdown="*{presentation.category.text}"></div>
           </div>
         </div>
         <img biom:image="*{presentation.image}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
@@ -54,10 +54,10 @@
       <!-- Understand -->
       <section class="section-ecogeste-intro">
         <div class="section-content">
-          <h2 class="section-title col-3" th:text="*{understand.title.text}"></h2>
+          <h2 class="section-title col-3" biom:markdown="*{understand.title.text}"></h2>
           <div class="col-5">
-            <p class="preserve-lines" th:text="*{understand.text.text}"></p>
-            <blockquote th:text="*{understand.quote.text}"></blockquote>
+            <p class="preserve-lines" biom:markdown="*{understand.text.text}"></p>
+            <blockquote biom:markdown="*{understand.quote.text}"></blockquote>
           </div>
         </div>
         <div class="section-decoration-text ecogeste">agir</div>
@@ -66,8 +66,8 @@
       <!-- Indicator -->
       <section class="indicateur-push" th:if="${indicator}">
         <div class="indicateur-push-content">
-          <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicator.indicatorValue)}"></div>
-          <div class="text-big" th:text="${indicator.page.content.presentation.description.text}"></div>
+          <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicator.indicatorValue)}"></div>
+          <div class="text-big" biom:markdown="${indicator.page.content.presentation.description.text}"></div>
           <a th:href="@{/indicateurs/{slug}(slug=${indicator.indicator.slug})}" class="cta-secondary">en savoir plus</a>
         </div>
         <div class="push-left left-1">
@@ -80,7 +80,7 @@
           />
           <div class="legend-wrapper right">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="${indicator.page.content.presentation.image.alt}"></div>
+            <div class="legend-text" biom:markdown="${indicator.page.content.presentation.image.alt}"></div>
           </div>
         </div>
       </section>
@@ -88,13 +88,13 @@
       <!-- Actions -->
       <section class="section-action">
         <div class="section-action-wrapper">
-          <h2 class="section-title col-4" th:text="*{action.title.text}"></h2>
+          <h2 class="section-title col-4" biom:markdown="*{action.title.text}"></h2>
           <ul role="list" class="action-list w-list-unstyled">
             <li class="action-item" th:each="card : *{action.cards}" th:object="${card}">
               <div class="action-img-wrapper">
                 <img th:src="@{/images/{imageId}/image(imageId=*{icon.imageId})}" th:alt="*{icon.alt}" />
               </div>
-              <p class="text-big" th:text="*{description.text}"></p>
+              <p class="text-big" biom:markdown="*{description.text}"></p>
             </li>
           </ul>
         </div>
@@ -103,27 +103,27 @@
 
       <!-- Act for science -->
       <section class="section-agir">
-        <h2 class="section-title col-3" th:text="${act.content.title.text}"></h2>
+        <h2 class="section-title col-3" biom:markdown="${act.content.title.text}"></h2>
         <div class="col-5">
-          <p th:text="${act.content.description.text}"></p>
+          <p biom:markdown="${act.content.description.text}"></p>
           <div class="agir-divider"></div>
           <div class="agir-block">
             <div class="col-1">
               <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
             </div>
-            <div class="text-big col-2" th:text="${act.content.firstActionName.text}"></div>
-            <a th:href="${act.content.firstActionLink.href}" class="cta-secondary yellow" th:text="${act.content.firstActionLink.text}"></a>
+            <div class="text-big col-2" biom:markdown="${act.content.firstActionName.text}"></div>
+            <a th:href="${act.content.firstActionLink.href}" class="cta-secondary yellow" biom:markdown="${act.content.firstActionLink.text}"></a>
           </div>
           <div class="agir-divider"></div>
           <div class="agir-block">
             <div class="col-1">
               <img th:src="@{/assets/images/icon-agir-2.svg}" loading="lazy" alt="" />
             </div>
-            <div class="text-big col-2" th:text="${act.content.secondActionName.text}"></div>
+            <div class="text-big col-2" biom:markdown="${act.content.secondActionName.text}"></div>
             <a
               th:href="${act.content.secondActionLink.href}"
               class="cta-secondary yellow"
-              th:text="${act.content.secondActionLink.text}"
+              biom:markdown="${act.content.secondActionLink.text}"
             ></a>
           </div>
           <div class="agir-divider"></div>
@@ -148,7 +148,7 @@
         <div class="push-next-wrapper">
           <div class="push-next-before">écogeste suivant</div>
           <div class="push-next-title-wrapper">
-            <div class="push-next-title col-4" th:text="${nextEcogestureCard.page.content.presentation.name.text}"></div>
+            <div class="push-next-title col-4" biom:markdown="${nextEcogestureCard.page.content.presentation.name.text}"></div>
             <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
           </div>
         </div>

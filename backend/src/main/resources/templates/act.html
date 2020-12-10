@@ -23,12 +23,12 @@
       <section class="section-top">
         <div class="legend-wrapper">
           <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-          <div class="legend-text" th:text="*{header.background.alt}">Légende de la photo</div>
+          <div class="legend-text" biom:markdown="*{header.background.alt}">Légende de la photo</div>
         </div>
         <div class="section-top-wrapper">
           <div class="section-top-content">
-            <h1 class="section-top-title" th:text="*{header.title.text}">Agir ensemble pour une biodiversité unique mais fragile</h1>
-            <p class="section-top-text" th:text="*{header.subtitle.text}">
+            <h1 class="section-top-title" biom:markdown="*{header.title.text}">Agir ensemble pour une biodiversité unique mais fragile</h1>
+            <p class="section-top-text" biom:markdown="*{header.subtitle.text}">
               Les outre-mer abritent une biodiversité unique mais fragile : protégeons-là ! Lorem ipsum sit dolor habet sumus erat sunt
               domine lorem.
             </p>
@@ -39,9 +39,9 @@
 
       <section class="section-agir-intro">
         <div class="section-content align">
-          <h2 class="section-title col-3" th:text="*{ecogestures.title.text}">Découvrez les écogestes</h2>
+          <h2 class="section-title col-3" biom:markdown="*{ecogestures.title.text}">Découvrez les écogestes</h2>
           <div class="col-6 left-1">
-            <p th:text="*{ecogestures.subtitle.text}">
+            <p biom:markdown="*{ecogestures.subtitle.text}">
               Découvrez les bons gestes recommandés par le Ministère de l’outre-mer pour une expérience responsable et lorem ipsum sit dolor
               habet sumus erat domine sunt.
             </p>
@@ -68,8 +68,8 @@
               />
             </div>
             <div class="ecogeste-wrapper">
-              <h3 class="ecogeste-link-title" th:text="${card.content.presentation.name.text}">Protégeons les recifs coralliens</h3>
-              <div class="ecogeste-thematique" th:text="${card.content.presentation.category.text}">biodiversité</div>
+              <h3 class="ecogeste-link-title" biom:markdown="${card.content.presentation.name.text}">Protégeons les recifs coralliens</h3>
+              <div class="ecogeste-thematique" biom:markdown="${card.content.presentation.category.text}">biodiversité</div>
             </div>
           </a>
         </div>
@@ -81,16 +81,16 @@
       </section>
       <section class="section-agir-science">
         <div class="section-content align">
-          <h2 class="section-title col-3" th:text="*{science.title.text}">Les sciences participatives</h2>
+          <h2 class="section-title col-3" biom:markdown="*{science.title.text}">Les sciences participatives</h2>
           <div class="col-6 left-1">
-            <p th:text="*{science.subtitle.text}">Protégez la biodiversité ultra-marine à travers les ciences participatives.</p>
+            <p biom:markdown="*{science.subtitle.text}">Protégez la biodiversité ultra-marine à travers les ciences participatives.</p>
           </div>
           <img th:src="@{/assets/images/icon-science.svg}" loading="lazy" width="141" height="146" alt="" class="agir-icon" />
         </div>
         <div class="science-push-wrapper">
           <div class="science-push-content">
-            <h3 class="text-big" th:text="*{science.project.title.text}">Un projet original en Nouvelle-Calédonie</h3>
-            <p class="preserve-lines" th:text="*{science.project.description.text}">
+            <h3 class="text-big" biom:markdown="*{science.project.title.text}">Un projet original en Nouvelle-Calédonie</h3>
+            <p class="preserve-lines" biom:markdown="*{science.project.description.text}">
               Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour
               étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.
             </p>
@@ -104,7 +104,7 @@
             />
             <div class="legend-wrapper">
               <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-              <div class="legend-text" th:text="*{science.project.image.alt}">Légende de la photo</div>
+              <div class="legend-text" biom:markdown="*{science.project.image.alt}">Légende de la photo</div>
             </div>
           </div>
         </div>

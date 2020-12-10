@@ -11,12 +11,12 @@
 
   <body>
     <main class="main simple-page">
-      <h1 class="page-title">Recherche&nbsp;: <span th:text="${query}"></span></h1>
+      <h1 class="page-title">Recherche&nbsp;: <span biom:markdown="${query}"></span></h1>
       <div class="section-decoration-text recherche">recherche</div>
       <ul role="list" class="search-result-list w-list-unstyled" th:if="${#lists.size(results) > 0}">
         <li class="search-result-item" th:each="result : ${results}">
           <a th:href="@{${result.path}}" class="search-result-link w-inline-block">
-            <h2 class="search-result-title" th:text="${result.title}">Titre de la page contenant le résultat</h2>
+            <h2 class="search-result-title" biom:markdown="${result.title}">Titre de la page contenant le résultat</h2>
             <p class="search-result-text" th:utext="${result.highlight}">bla bla</p>
             <div class="cta-secondary">voir la page</div>
           </a>

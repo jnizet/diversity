@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.List;
 
 import fr.mnhn.diversity.about.AboutModel;
@@ -29,7 +30,7 @@ import org.springframework.test.web.servlet.ResultActions;
  * @author JB Nizet
  */
 @WebMvcTest({SearchController.class, MatomoConfig.class})
-public class SearchControllerTest {
+public class SearchControllerTest extends ControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -100,7 +101,7 @@ public class SearchControllerTest {
         ResultActions resultActions =
             mockMvc.perform(get("/recherche?texte=compteur"))
                    .andExpect(status().isOk())
-                   .andExpect(content().string(containsString("Recherche&nbsp;: <span>compteur</span>")))
+                   .andExpect(content().string(containsString("Recherche&nbsp;: <span><p>compteur</p>")))
                    .andExpect(content().string(containsString("</html>")));
 
         for (PageSearchResult searchResult : searchResults) {

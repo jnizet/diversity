@@ -24,12 +24,12 @@
       <section class="section-top">
         <div class="legend-wrapper">
           <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-          <div class="legend-text" th:text="*{image.alt}">Légende photo</div>
+          <div class="legend-text" biom:markdown="*{image.alt}">Légende photo</div>
         </div>
         <div class="section-top-wrapper">
           <div class="section-top-content">
-            <h1 class="section-top-title" th:text="*{title.text}"></h1>
-            <p class="section-top-text" th:text="*{presentation.text}"></p>
+            <h1 class="section-top-title" biom:markdown="*{title.text}"></h1>
+            <p class="section-top-text" biom:markdown="*{presentation.text}"></p>
           </div>
         </div>
         <img biom:image="*{image}" sizes="100vw" class="img-full anim-zoom" />
@@ -38,9 +38,9 @@
       <!-- Intro -->
       <section class="section-ecogeste-intro">
         <div class="section-content">
-          <h2 class="section-title top-title" th:text="*{question.text}"></h2>
+          <h2 class="section-title top-title" biom:markdown="*{question.text}"></h2>
           <div class="col-5">
-            <p class="preserve-lines" th:text="*{answer.text}"></p>
+            <p class="preserve-lines" biom:markdown="*{answer.text}"></p>
           </div>
         </div>
         <div class="section-decoration-text ecogeste">ecogeste</div>
@@ -61,8 +61,8 @@
                 />
               </div>
               <div class="ecogeste-wrapper">
-                <h3 class="ecogeste-link-title" th:text="${gesturePage.content.presentation.name.text}"></h3>
-                <div class="ecogeste-thematique" th:text="${gesturePage.content.presentation.category.text}">biodiversité</div>
+                <h3 class="ecogeste-link-title" biom:markdown="${gesturePage.content.presentation.name.text}"></h3>
+                <div class="ecogeste-thematique" biom:markdown="${gesturePage.content.presentation.category.text}">biodiversité</div>
               </div>
             </a>
           </li>
@@ -82,7 +82,7 @@
       <!-- Quote -->
       <section class="section-citation">
         <img th:src="@{assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote" />
-        <p th:text="*{quote.text}"></p>
+        <p biom:markdown="*{quote.text}"></p>
         <div class="section-decoration-text agir">agir</div>
       </section>
 
@@ -92,9 +92,9 @@
           <img biom:image="*{other.image}" loading="lazy" sizes="40vw" alt="" class="next-img" />
         </div>
         <div class="push-next-wrapper">
-          <div class="push-next-before" th:text="*{other.title.text}"></div>
+          <div class="push-next-before" biom:markdown="*{other.title.text}"></div>
           <div class="push-next-title-wrapper">
-            <div class="push-next-title col-4" th:text="*{other.text.text}"></div>
+            <div class="push-next-title col-4" biom:markdown="*{other.text.text}"></div>
             <img th:src="@{assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
           </div>
         </div>

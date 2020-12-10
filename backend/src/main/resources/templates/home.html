@@ -20,9 +20,9 @@
       <section class="section-top">
         <div class="section-top-wrapper">
           <div class="col-4">
-            <h1 class="section-top-title" th:text="*{carousel.title.text}">Découvrez la biodiversité des outre-mer</h1>
-            <p th:text="*{carousel.text.text}">Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer</p>
-            <a th:href="@{/territoires}" th:text="*{carousel.territoriesButton.text}" class="cta-primary yellow">
+            <h1 class="section-top-title" biom:markdown="*{carousel.title.text}">Découvrez la biodiversité des outre-mer</h1>
+            <p biom:markdown="*{carousel.text.text}">Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer</p>
+            <a th:href="@{/territoires}" biom:markdown="*{carousel.territoriesButton.text}" class="cta-primary yellow">
               découvrir les territoires
             </a>
           </div>
@@ -40,7 +40,7 @@
             <div th:each="imageElement : *{carousel.images}" th:object="${imageElement}" class="swiper-slide swiper-top-slide">
               <div class="legend-wrapper top-slide">
                 <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                <div class="legend-text" th:text="*{image.alt}">Chelonia mydas ©  B. Guichard</div>
+                <div class="legend-text" biom:markdown="*{image.alt}">Chelonia mydas ©  B. Guichard</div>
               </div>
               <img biom:image="*{image}" loading="lazy" sizes="100vw" class="img-full" />
             </div>
@@ -51,9 +51,9 @@
       <section class="section-apropos">
         <div class="section-label">à propos</div>
         <div class="section-content">
-          <h2 class="section-title col-3" th:text="*{presentation.title.text}">Le compteur de biodiversité Outre-Mer</h2>
+          <h2 class="section-title col-3" biom:markdown="*{presentation.title.text}">Le compteur de biodiversité Outre-Mer</h2>
           <div class="col-5">
-            <p class="apropos-paragraph preserve-lines" th:text="*{presentation.text.text}">
+            <p class="apropos-paragraph preserve-lines" biom:markdown="*{presentation.text.text}">
               Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités
               humaines. La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer afin que
               chacun, résident ou voyageur de passage, puisse s’informer et s’impliquer à son échelle pour la préservation de cette
@@ -68,7 +68,7 @@
                       <div class="apropos-item-title">Indicateurs</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" th:text="*{presentation.indicators.text}">
+                    <p class="apropos-item-text" biom:markdown="*{presentation.indicators.text}">
                       Des chiffres clefs pour surveiller l’activité des territoires
                     </p>
                   </a>
@@ -80,7 +80,7 @@
                       <div class="apropos-item-title">Éco-gestes</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" th:text="*{presentation.ecogestures.text}">
+                    <p class="apropos-item-text" biom:markdown="*{presentation.ecogestures.text}">
                       Des gestes simples à mettre en place dans notre quotidien
                     </p>
                   </a>
@@ -92,7 +92,7 @@
                       <div class="apropos-item-title">Sciences participatives</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" th:text="*{presentation.science.text}">Contribuez à la mise à jour de la base de donnée</p>
+                    <p class="apropos-item-text" biom:markdown="*{presentation.science.text}">Contribuez à la mise à jour de la base de donnée</p>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -102,7 +102,7 @@
                       <div class="apropos-item-title">Territoires</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" th:text="*{presentation.territories.text}">
+                    <p class="apropos-item-text" biom:markdown="*{presentation.territories.text}">
                       Participer avec les acteurs locaux à la préservation des Outres-mer
                     </p>
                   </a>
@@ -133,14 +133,14 @@
         <div class="section-label">témoignages</div>
         <div class="text-img-wrapper">
           <div class="col-5">
-            <h2 class="section-title col-3" th:text="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h2>
+            <h2 class="section-title col-3" biom:markdown="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h2>
             <div class="left-1">
-              <p th:text="*{testimony.text.text}">
+              <p biom:markdown="*{testimony.text.text}">
                 La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l’impactent. Les
                 indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
                 évolution.
               </p>
-              <blockquote th:text="*{testimony.quote.text}">
+              <blockquote biom:markdown="*{testimony.quote.text}">
                 Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l’eau, de l’air
                 mais aussi de la qualité de vie.
               </blockquote>
@@ -155,7 +155,7 @@
             />
             <div class="legend-wrapper">
               <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-              <div class="legend-text" th:text="*{testimony.image.alt}"></div>
+              <div class="legend-text" biom:markdown="*{testimony.image.alt}"></div>
             </div>
           </div>
         </div>
@@ -166,15 +166,15 @@
         <img biom:image="*{science.image}" loading="lazy" sizes="100vw" class="img-full anim-zoom dark" />
         <div class="legend-wrapper">
           <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-          <div class="legend-text" th:text="*{science.image.alt}">Chelonia mydas ©  B. Guichard</div>
+          <div class="legend-text" biom:markdown="*{science.image.alt}">Chelonia mydas ©  B. Guichard</div>
         </div>
         <div class="full-img-wrapper">
           <div class="section-label">sciences participatives</div>
           <div class="col-5">
-            <h3 class="section-title" th:text="*{science.title.text}">
+            <h3 class="section-title" biom:markdown="*{science.title.text}">
               La photo-identification de serpents de mer par un groupe de plongeuses amatrices
             </h3>
-            <p class="col-4" th:text="*{science.text.text}">
+            <p class="col-4" biom:markdown="*{science.text.text}">
               Surnommées les « grand-mères fantastiques », un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de
               l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud
               de Nouméa. Leurs photographies très régulières ont permis de recenser 250 individus différents de ce serpent dont on pensait

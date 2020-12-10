@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(ScienceController.class)
 @Import({RequestDialect.class, MatomoConfig.class})
-class ScienceControllerTest {
+class ScienceControllerTest extends ControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -120,12 +121,12 @@ class ScienceControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Participative science</title>")))
-               .andExpect(content().string(containsString("Sciences participatives</h1>")))
-               .andExpect(content().string(containsString("Paragraph 1")))
-               .andExpect(content().string(containsString("Paragraph 2")))
-               .andExpect(content().string(containsString("Example projects</h2>")))
-               .andExpect(content().string(containsString("Project 1")))
-               .andExpect(content().string(containsString("Project 2")))
+               .andExpect(content().string(containsString("<p>Sciences participatives</p>")))
+               .andExpect(content().string(containsString("<p>Paragraph 1</p>")))
+               .andExpect(content().string(containsString("<p>Paragraph 2</p>")))
+               .andExpect(content().string(containsString("<p>Example projects</p>")))
+               .andExpect(content().string(containsString("<p>Project 1</p>")))
+               .andExpect(content().string(containsString("<p>Project 2</p>")))
                .andExpect(content().string(containsString("</html>")));
     }
 }

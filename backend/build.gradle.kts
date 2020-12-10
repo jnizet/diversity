@@ -26,6 +26,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("com.ninja-squad:DbSetup")
+    implementation("com.atlassian.commonmark:commonmark:0.15.2")
     implementation("io.jsonwebtoken:jjwt-api")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")

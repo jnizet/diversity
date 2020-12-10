@@ -24,10 +24,10 @@
         <div class="section-top-wrapper">
           <div class="legend-wrapper territoire">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{identity.image.alt}">Légende de la photo</div>
+            <div class="legend-text" biom:markdown="*{identity.image.alt}">Légende de la photo</div>
           </div>
           <div class="section-top-center">
-            <h1 class="section-top-title" th:text="*{identity.title.text}">St-Pierre-et-Miquelon, des eaux très riches en biodiversité</h1>
+            <h1 class="section-top-title" biom:markdown="*{identity.title.text}">St-Pierre-et-Miquelon, des eaux très riches en biodiversité</h1>
           </div>
           <div class="top-territoire-map">
             <img
@@ -45,9 +45,9 @@
         <div class="section-label">découvrir</div>
         <div class="section-content-left">
           <div class="col-6 max-50">
-            <h2 class="section-title col-4" th:text="*{identity.subtitle.text}">Un climat subarctique, froid et humide</h2>
+            <h2 class="section-title col-4" biom:markdown="*{identity.subtitle.text}">Un climat subarctique, froid et humide</h2>
             <div class="left-1">
-              <p class="preserve-lines" th:text="*{identity.presentation.text}">
+              <p class="preserve-lines" biom:markdown="*{identity.presentation.text}">
                 Au sud de Terre Neuve (Canada), cet archipel est constitué de 3 îles principales : Saint-Pierre, Langlade, Miquelon. Il se
                 situe à la confluence du courant froid du Labrador et des eaux plus chaudes du Gulf Stream, offrant des eaux riches en
                 biodiversité. La proximité de l’océan influence les écosystèmes terrestres : dunes, prairies côtières, lagunes, marais. On y
@@ -63,7 +63,7 @@
               <img th:src="@{/assets/images/superficie-terrestre.svg}" loading="lazy" alt="" class="fact-img" />
               <div class="fact-text-wrapper">
                 <div class="fact-top-wrapper">
-                  <div class="fact-number" th:text="*{identity.area.text}">242</div>
+                  <div class="fact-number" biom:markdown="*{identity.area.text}">242</div>
                   <div class="fact-unit">km<sup>2</sup></div>
                 </div>
                 <div class="fact-text">Superficie terrestre</div>
@@ -73,7 +73,7 @@
               <img th:src="@{/assets/images/superficie-marine.svg}" loading="lazy" alt="" class="fact-img" />
               <div class="fact-text-wrapper">
                 <div class="fact-top-wrapper">
-                  <div class="fact-number" th:text="*{identity.marineArea.text}">12300</div>
+                  <div class="fact-number" biom:markdown="*{identity.marineArea.text}">12300</div>
                   <div class="fact-unit">km<sup>2</sup></div>
                 </div>
                 <div class="fact-text">Superficie marine</div>
@@ -83,20 +83,20 @@
               <img th:src="@{/assets/images/habitants_1.svg}" loading="lazy" alt="" class="fact-img" />
               <div class="fact-text-wrapper">
                 <div class="fact-top-wrapper">
-                  <div class="fact-number" th:text="*{identity.population.text}">6274</div>
+                  <div class="fact-number" biom:markdown="*{identity.population.text}">6274</div>
                 </div>
-                <div class="fact-text">habitants en <span th:text="*{identity.populationYear.text}">2017</span></div>
+                <div class="fact-text">habitants en <span biom:markdown="*{identity.populationYear.text}">2017</span></div>
               </div>
             </div>
             <div class="fact-slide">
               <img th:src="@{/assets/images/about.svg}" loading="lazy" alt="" class="fact-img" />
               <div class="fact-text-wrapper">
                 <div class="fact-top-wrapper">
-                  <div class="fact-number" th:text="*{identity.highestPoint.text}">240</div>
+                  <div class="fact-number" biom:markdown="*{identity.highestPoint.text}">240</div>
                   <div class="fact-unit">m</div>
                 </div>
                 <div class="fact-text">
-                  point culminant <span th:text="*{identity.highestPointName.text}">Morne de la Grande Montagne</span>
+                  point culminant <span biom:markdown="*{identity.highestPointName.text}">Morne de la Grande Montagne</span>
                 </div>
               </div>
             </div>
@@ -107,7 +107,7 @@
       <section class="section-lieu">
         <div class="lieu-title-wrapper">
           <div class="section-label">Lieux d'intérêt</div>
-          <h3 class="section-title col-4" th:text="*{interests.title.text}">A la découverte des endroits emblématiques</h3>
+          <h3 class="section-title col-4" biom:markdown="*{interests.title.text}">A la découverte des endroits emblématiques</h3>
         </div>
         <div class="lieux-wrapper">
           <div class="swiper-container swiper-lieu">
@@ -123,12 +123,12 @@
                   />
                   <div class="legend-wrapper lieu">
                     <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                    <div class="legend-text" th:text="${location.image.alt}"></div>
+                    <div class="legend-text" biom:markdown="${location.image.alt}"></div>
                   </div>
                 </div>
                 <div class="col-3">
-                  <h4 class="lieu-title" th:text="${location.name.text}">Le grand barachois</h4>
-                  <p class="preserve-lines" th:text="${location.description.text}">
+                  <h4 class="lieu-title" biom:markdown="${location.name.text}">Le grand barachois</h4>
+                  <p class="preserve-lines" biom:markdown="${location.description.text}">
                     Cette lagune de 1 000 ha est bordée de marais et communique avec la mer par un goulet au sud-est.
                   </p>
                 </div>
@@ -150,8 +150,8 @@
       <section th:if="${indicatorCards.size() > 0}" class="section-territoire-indicateur">
         <div class="territoire-indicateur-wrapper">
           <div class="indicateur-push-content left-1 indicator-card">
-            <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicatorCards[0].indicatorValue)}"></div>
-            <div class="text-big" th:text="${indicatorCards[0].page.content.presentation.description.text}"></div>
+            <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicatorCards[0].indicatorValue)}"></div>
+            <div class="text-big" biom:markdown="${indicatorCards[0].page.content.presentation.description.text}"></div>
             <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[0].page.name})}" class="cta-secondary">En savoir plus</a>
           </div>
         </div>
@@ -170,14 +170,14 @@
                     class="espce-img"
                   />
                   <div class="legend-wrapper espece">
-                    <div class="legend-text" th:text="${speciesItem.image.alt}"></div>
+                    <div class="legend-text" biom:markdown="${speciesItem.image.alt}"></div>
                   </div>
                 </div>
                 <div class="espece-right">
                   <div class="col-4">
                     <div class="section-label">espèces</div>
-                    <h3 class="espece-title" th:text="${speciesItem.name.text}">Cerf de<br />Virginie</h3>
-                    <p class="preserve-lines" th:text="${speciesItem.description.text}">
+                    <h3 class="espece-title" biom:markdown="${speciesItem.name.text}">Cerf de<br />Virginie</h3>
+                    <p class="preserve-lines" biom:markdown="${speciesItem.description.text}">
                       Peu de mammifères terrestres sont indigènes de l’archipel. Le Cerf de Virginie (Odocoileus virginianus) a été
                       introduit à Miquelon et Langlade en 1953 pour la chasse. Ses populations dégradent fortement la forêt boréale.
                     </p>
@@ -207,7 +207,7 @@
 
       <section class="section-frise">
         <div class="frise-title-wrapper">
-          <div class="section-label" th:text="${territory.name}">saint-pierre-et-miquelon</div>
+          <div class="section-label" biom:markdown="${territory.name}">saint-pierre-et-miquelon</div>
           <h3 class="section-title col-4">Histoire &amp; temps forts</h3>
         </div>
         <div class="swiper-container swiper-frise">
@@ -215,8 +215,8 @@
             <div th:each="event: *{events}" class="swiper-slide frise-element">
               <div class="frise-circle"></div>
               <div class="frise-text-wrapper">
-                <div class="frise-element-title" th:text="${event.date.text}">1535</div>
-                <p th:text="${event.description.text}">Prise de possession française des îles par Jacques Cartier</p>
+                <div class="frise-element-title" biom:markdown="${event.date.text}">1535</div>
+                <p biom:markdown="${event.description.text}">Prise de possession française des îles par Jacques Cartier</p>
               </div>
             </div>
           </div>
@@ -237,8 +237,8 @@
             <div th:each="ecosystem: *{ecosystems.ecosystems}" class="swiper-slide ecosysteme-slide">
               <div class="ecosysteme-left">
                 <div class="section-label">Écosystèmes</div>
-                <h3 class="section-title" th:text="${ecosystem.name.text}">Les marais tourbeux et les tourbières</h3>
-                <p class="preserve-lines" th:text="${ecosystem.description.text}">
+                <h3 class="section-title" biom:markdown="${ecosystem.name.text}">Les marais tourbeux et les tourbières</h3>
+                <p class="preserve-lines" biom:markdown="${ecosystem.description.text}">
                   Ces zones humides occupent des superficies importantes. Caractérisées par la formation et l’accumulation de tourbe,
                   parfois sur plusieurs mètres d’épaisseur, elles présentent des groupements végétaux remarquables et variés, parmi
                   lesquelles on trouve des sphaignes, des mousses, ainsi que des orchidées.  
@@ -253,7 +253,7 @@
                 />
                 <div class="legend-wrapper right">
                   <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                  <div class="legend-text" th:text="${ecosystem.image.alt}"></div>
+                  <div class="legend-text" biom:markdown="${ecosystem.image.alt}"></div>
                 </div>
               </div>
             </div>
@@ -287,28 +287,28 @@
           />
           <div class="legend-wrapper">
             <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" th:text="*{ecosystems.image.alt}"></div>
+            <div class="legend-text" biom:markdown="*{ecosystems.image.alt}"></div>
           </div>
         </div>
         <div th:if="${indicatorCards.size() > 1}" class="push-right indicator-card">
-          <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicatorCards[1].indicatorValue)}"></div>
-          <div class="text-big" th:text="${indicatorCards[1].page.content.presentation.description.text}"></div>
+          <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicatorCards[1].indicatorValue)}"></div>
+          <div class="text-big" biom:markdown="${indicatorCards[1].page.content.presentation.description.text}"></div>
           <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[1].page.name})}" class="cta-secondary">En savoir plus</a>
         </div>
       </section>
 
       <section class="section-text">
-        <div class="section-label" th:text="*{risks.title.text}">Enjeux et menaces</div>
+        <div class="section-label" biom:markdown="*{risks.title.text}">Enjeux et menaces</div>
         <div
           th:each="risk, iterStat: *{risks.risks}"
           class="section-content-left risk-element"
           th:classappend="${iterStat.index > 0 ? 'top-1' : ''}"
         >
           <div class="text-title-wrapper">
-            <h3 class="section-title col-4" th:text="${risk.name.text}">Les ressources naturelles : un enjeu important</h3>
+            <h3 class="section-title col-4" biom:markdown="${risk.name.text}">Les ressources naturelles : un enjeu important</h3>
           </div>
           <div class="col-8">
-            <p class="two-column left-1 preserve-lines" th:text="${risk.description.text}"></p>
+            <p class="two-column left-1 preserve-lines" biom:markdown="${risk.description.text}"></p>
           </div>
           <div class="col-4 left-1"></div>
         </div>
@@ -332,7 +332,7 @@
         <div class="push-next-wrapper">
           <div class="push-next-before">territoire suivant</div>
           <div class="push-next-title-wrapper">
-            <div class="push-next-title col-4" th:text="${nextTerritoryCard.territory.name}"></div>
+            <div class="push-next-title col-4" biom:markdown="${nextTerritoryCard.territory.name}"></div>
             <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
           </div>
         </div>

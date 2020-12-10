@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @WebMvcTest(ImageController.class)
 @Import(ImageConfig.class)
-class ImageControllerTest {
+class ImageControllerTest extends ControllerTest {
     @MockBean
     private ImageRepository mockImageRepository;
 

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(AdminWebConfig.class)
-class AdminIndexFilterTest {
+class AdminIndexFilterTest extends ControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

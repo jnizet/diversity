@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @WebMvcTest(IndicatorController.class)
 @Import({RequestDialect.class, IndicatorDialect.class, MatomoConfig.class})
-class IndicatorControllerTest {
+class IndicatorControllerTest extends ControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

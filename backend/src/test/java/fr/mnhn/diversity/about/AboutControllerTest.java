@@ -7,13 +7,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import fr.mnhn.diversity.common.thymeleaf.RequestDialect;
-import fr.mnhn.diversity.matomo.MatomoConfig;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;
@@ -23,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,8 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(AboutController.class)
-@Import({RequestDialect.class, MatomoConfig.class})
-class AboutControllerTest {
+class AboutControllerTest extends ControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -97,11 +94,11 @@ class AboutControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
             .andExpect(content().string(containsString("<title>About diversity</title>")))
-            .andExpect(content().string(containsString("About</h1>")))
-            .andExpect(content().string(containsString("Indicateurs</h2>")))
-            .andExpect(content().string(containsString("Territoires</h2>")))
-            .andExpect(content().string(containsString("Agir ensemble</h2>")))
-            .andExpect(content().string(containsString("Partners</h2>")))
+            .andExpect(content().string(containsString("<p>About</p>")))
+            .andExpect(content().string(containsString("<p>Indicateurs</p>")))
+            .andExpect(content().string(containsString("<p>Territoires</p>")))
+            .andExpect(content().string(containsString("<p>Agir ensemble</p>")))
+            .andExpect(content().string(containsString("<p>Partners</p>")))
             .andExpect(content().string(containsString("</html>")));
     }
 }

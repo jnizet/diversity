@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @WebMvcTest(EcogestureController.class)
 @Import({RequestDialect.class, IndicatorDialect.class, MatomoConfig.class})
-class EcogestureControllerTest {
+class EcogestureControllerTest extends ControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -193,11 +194,11 @@ class EcogestureControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Écogestes</title>")))
-               .andExpect(content().string(containsString("Ecogestures</h1>")))
-               .andExpect(content().string(containsString("Corals</h3>")))
-               .andExpect(content().string(containsString("un écogeste ?</h2>")))
-               .andExpect(content().string(containsString("Des actions concrètes</p>")))
-               .andExpect(content().string(containsString("Retrouvez d’autres écogestes sur</div>")))
+               .andExpect(content().string(containsString("<p>Ecogestures</p>")))
+               .andExpect(content().string(containsString("<p>Corals</p>")))
+               .andExpect(content().string(containsString("un écogeste ?</p>")))
+               .andExpect(content().string(containsString("<p>Des actions concrètes</p>")))
+               .andExpect(content().string(containsString("<p>Retrouvez d’autres écogestes sur</p>")))
                .andExpect(content().string(containsString("</html>")));
     }
 
@@ -207,13 +208,13 @@ class EcogestureControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Protect corals</title>")))
-               .andExpect(content().string(containsString("Corals</h1>")))
-               .andExpect(content().string(containsString("Understand</h2>")))
+               .andExpect(content().string(containsString("<p>Corals</p>")))
+               .andExpect(content().string(containsString("<p>Understand</p>")))
                .andExpect(content().string(containsString("href=\"/indicateurs/deforestation\"")))
-               .andExpect(content().string(containsString("<div class=\"indicateur-number-small\">24")))
-               .andExpect(content().string(containsString("<div class=\"text-big\">arbres")))
-               .andExpect(content().string(containsString("Action</h2>")))
-               .andExpect(content().string(containsString("Agir pour la science</h2>")))
+               .andExpect(content().string(containsString("<div class=\"indicateur-number-small\"><p>24")))
+               .andExpect(content().string(containsString("<div class=\"text-big\"><p>arbres</p>")))
+               .andExpect(content().string(containsString("<p>Action</p>")))
+               .andExpect(content().string(containsString("<p>Agir pour la science</p>")))
                .andExpect(content().string(containsString("href=\"/ecogestes/plastics")))
                .andExpect(content().string(containsString("</html>")));
     }

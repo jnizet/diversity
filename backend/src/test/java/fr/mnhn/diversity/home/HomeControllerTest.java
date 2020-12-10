@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.ControllerTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,6 @@ import fr.mnhn.diversity.territory.MapService;
 import fr.mnhn.diversity.territory.MapTerritoryCard;
 import fr.mnhn.diversity.territory.Territory;
 import fr.mnhn.diversity.territory.TerritoryModel;
-import fr.mnhn.diversity.territory.Zone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @WebMvcTest(HomeController.class)
 @Import({RequestDialect.class, MatomoConfig.class})
-class HomeControllerTest {
+class HomeControllerTest extends ControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
