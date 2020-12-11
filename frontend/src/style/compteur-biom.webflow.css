@@ -680,7 +680,7 @@ blockquote {
 }
 
 .legend-wrapper.territoire {
-  right: 320px;
+  left: 0px;
 }
 
 .legend-wrapper.right {
@@ -3911,7 +3911,7 @@ blockquote {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 360px;
+  min-width: 360px;
   padding: 56px 56px 0px;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
@@ -6232,6 +6232,7 @@ blockquote {
 
   .legend-wrapper.territoire {
     right: 20px;
+    left: auto;
   }
 
   .legend-wrapper.espece {
@@ -8323,6 +8324,14 @@ blockquote {
     margin-right: 15px;
     margin-left: 15px;
     padding: 60px 30px 10px;
+  }
+
+  .fact-number {
+    font-size: 32px;
+  }
+
+  .fact-unit {
+    font-size: 19px;
   }
 
   .section-territoire-fiche {
