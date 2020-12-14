@@ -5920,6 +5920,14 @@ blockquote {
   object-fit: cover;
 }
 
+.image-wrapper {
+  position: relative;
+  height: 100%;
+  width: fit-content;
+  width: -moz-fit-content;
+
+}
+
 .image-4 {
   height: 100%;
   -webkit-box-flex: 1;

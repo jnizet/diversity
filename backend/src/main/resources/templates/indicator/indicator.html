@@ -80,10 +80,12 @@
       <section class="section-img-text">
         <div class="section-content-middle">
           <div class="push-left">
-            <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="image-6" />
-            <div class="legend-wrapper">
-              <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-              <div class="legend-text" th:text="*{understand.image.alt}"></div>
+            <div class="image-wrapper">
+              <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="image-6" />
+              <div class="legend-wrapper">
+                <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+                <div class="legend-text" th:text="*{understand.image.alt}"></div>
+              </div>
             </div>
           </div>
           <div class="push-right big">
