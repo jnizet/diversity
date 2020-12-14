@@ -17,6 +17,7 @@ import { EcogestureService } from '../ecogesture.service';
 interface FormValue {
   slug: string;
   biomId: string;
+  isRounded: boolean;
   categoryIds: Array<number>;
   ecogestureIds: Array<number>;
 }
@@ -32,6 +33,7 @@ export class EditIndicatorComponent implements OnInit {
   valuedIndicator: ValuedIndicator;
   categories: Array<IndicatorCategory>;
   ecogestures: Array<Ecogesture>;
+  isRounded: boolean;
   isFetchingValues = false;
   fetchingError = false;
   spinnerIcon = faSpinner;
@@ -56,9 +58,11 @@ export class EditIndicatorComponent implements OnInit {
       array => (array.value.filter((id: number) => id).length === 0 ? { required: true } : null)
     );
     this.ecogestureIds = fb.array([null]);
+    this.isRounded = false;
     this.form = fb.group({
       slug: ['', [Validators.required, Validators.pattern(SLUG_REGEX)]],
       biomId: ['', [Validators.required, Validators.pattern(SLUG_REGEX)]],
+      isRounded: this.isRounded,
       categoryIds: this.categoryIds,
       ecogestureIds: this.ecogestureIds
     });
@@ -74,7 +78,8 @@ export class EditIndicatorComponent implements OnInit {
         this.editedIndicator = indicator;
         const formValue: Partial<FormValue> = {
           slug: indicator.slug,
-          biomId: indicator.biomId
+          biomId: indicator.biomId,
+          isRounded: indicator.isRounded
         };
         this.form.patchValue(formValue);
         this.categoryIds.clear();
@@ -133,7 +138,8 @@ export class EditIndicatorComponent implements OnInit {
       slug: formValue.slug,
       biomId: formValue.biomId,
       categoryIds: formValue.categoryIds.filter(id => id),
-      ecogestureIds: formValue.ecogestureIds.filter(id => id)
+      ecogestureIds: formValue.ecogestureIds.filter(id => id),
+      isRounded: formValue.isRounded
     };
 
     let obs: Observable<Indicator | void>;

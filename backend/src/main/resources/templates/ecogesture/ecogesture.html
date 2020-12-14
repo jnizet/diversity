@@ -66,7 +66,7 @@
       <!-- Indicator -->
       <section class="indicateur-push" th:if="${indicator}">
         <div class="indicateur-push-content">
-          <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicator.indicatorValue)}"></div>
+          <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicator.indicatorValue, indicator.indicator.isRounded)}"></div>
           <div class="text-big" biom:markdown="${indicator.page.content.presentation.description.text}"></div>
           <a th:href="@{/indicateurs/{slug}(slug=${indicator.indicator.slug})}" class="cta-secondary">en savoir plus</a>
         </div>

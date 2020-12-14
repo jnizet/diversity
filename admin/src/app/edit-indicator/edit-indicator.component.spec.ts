@@ -27,6 +27,10 @@ class EditIndicatorComponentTester extends ComponentTester<EditIndicatorComponen
     return this.input('#slug');
   }
 
+  get isRounded() {
+    return this.input('#is-rounded');
+  }
+
   get biomId() {
     return this.input('#biom-id');
   }
@@ -195,6 +199,7 @@ describe('EditIndicatorComponent', () => {
       const expectedCommand: IndicatorCommand = {
         slug: 'especes-envahissantes',
         biomId: 'biom-41',
+        isRounded: false,
         categoryIds: [102],
         ecogestureIds: [302]
       };
@@ -218,6 +223,7 @@ describe('EditIndicatorComponent', () => {
           id: 41,
           slug: 'especes-envahissantes',
           biomId: 'biom-41',
+          isRounded: false,
           categories: [vegetation],
           ecogestures: [separateWaste]
         })
@@ -243,6 +249,12 @@ describe('EditIndicatorComponent', () => {
       // the available categories do not contain the already selected one
       expect(tester.secondCategory.optionLabels).toEqual(['', 'Vie animale']);
       tester.secondCategory.selectLabel('Vie animale');
+
+      // should select rounded option
+      expect(tester.isRounded.checked).toBe(false);
+      tester.isRounded.click();
+      expect(tester.isRounded.checked).toBe(true);
+
       // remove the first category
       expect(tester.addCategoryButton).toBeNull();
       tester.removeCategoryButton.click();
@@ -278,7 +290,8 @@ describe('EditIndicatorComponent', () => {
         slug: 'deforestation',
         biomId: 'biom-41',
         categoryIds: [102, 101],
-        ecogestureIds: [302, 301]
+        ecogestureIds: [302, 301],
+        isRounded: true
       };
       expect(indicatorService.update).toHaveBeenCalledWith(41, expectedCommand);
       expect(router.navigate).toHaveBeenCalledWith(['/indicators']);

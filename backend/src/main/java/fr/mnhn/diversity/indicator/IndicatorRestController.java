@@ -136,7 +136,7 @@ public class IndicatorRestController {
             ecogestures.add(ecogesture);
         });
 
-        return new Indicator(id, command.getBiomId(), command.getSlug(), categories, ecogestures);
+        return new Indicator(id, command.getBiomId(), command.getSlug(), command.getRounded(), categories, ecogestures);
     }
 
     @PutMapping("/{indicatorId}")

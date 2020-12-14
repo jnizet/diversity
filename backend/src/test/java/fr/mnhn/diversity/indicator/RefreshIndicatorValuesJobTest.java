@@ -31,8 +31,8 @@ class RefreshIndicatorValuesJobTest {
         mockIndicatorService = mock(IndicatorService.class);
         job = new RefreshIndicatorValuesJob(mockIndicatorRepository, mockIndicatorService);
 
-        indicator1 = new Indicator(1L, "indicator1", "slug1");
-        indicator2 = new Indicator(2L, "indicator2", "slug1");
+        indicator1 = new Indicator(1L, "indicator1", "slug1", false);
+        indicator2 = new Indicator(2L, "indicator2", "slug1", false);
 
         when(mockIndicatorRepository.list()).thenReturn(List.of(indicator1, indicator2));
 

@@ -7,6 +7,7 @@ export interface Indicator {
   slug: string;
   categories: Array<IndicatorCategory>;
   ecogestures: Array<Ecogesture>;
+  isRounded: boolean;
 }
 
 export interface IndicatorValue {
@@ -25,4 +26,5 @@ export interface IndicatorCommand {
   slug: string;
   categoryIds: Array<number>;
   ecogestureIds: Array<number>;
+  isRounded: boolean;
 }

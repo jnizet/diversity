@@ -81,7 +81,7 @@ class IndicatorRestControllerTest {
         ecogesture = new Ecogesture(43L, "trier-ses-dechets");
         when(mockEcogestureRepository.findById(ecogesture.getId())).thenReturn(Optional.of(ecogesture));
 
-        indicator = new Indicator(43L, "biom_43", "deforestation", List.of(category), List.of(ecogesture));
+        indicator = new Indicator(43L, "biom_43", "deforestation", false, List.of(category), List.of(ecogesture));
         when(mockIndicatorRepository.findById(indicator.getId())).thenReturn(Optional.of(indicator));
         when(mockIndicatorRepository.findByBiomId(indicator.getBiomId())).thenReturn(Optional.of(indicator));
         when(mockIndicatorRepository.findBySlug(indicator.getSlug())).thenReturn(Optional.of(indicator));
@@ -193,6 +193,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_67",
             "surface-forêts",
+            false,
             List.of(category.getId()),
             List.of(ecogesture.getId())
         );
@@ -207,7 +208,8 @@ class IndicatorRestControllerTest {
             )
         );
 
-        Indicator createdIndicator = new Indicator(256L, command.getBiomId(), command.getSlug(), List.of(category), List.of(ecogesture));
+        Indicator createdIndicator = new Indicator(256L, command.getBiomId(), command.getSlug(),
+            false, List.of(category), List.of(ecogesture));
         when(mockIndicatorRepository.create(any())).thenReturn(createdIndicator);
 
         mockMvc.perform(post("/api/indicators")
@@ -233,6 +235,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             indicator.getBiomId(),
             "surface-forêts",
+            false,
             List.of(category.getId()),
             List.of(ecogesture.getId())
         );
@@ -246,6 +249,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_12",
             indicator.getSlug(),
+            false,
             List.of(category.getId()),
             List.of(ecogesture.getId())
         );
@@ -259,6 +263,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_92",
             "surface-forêts",
+            false,
             List.of(),
             List.of()
         );
@@ -299,11 +304,12 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldThrowWhenUpdatingWithAlreadyExistingBiomId() {
-        Indicator otherIndicator = new Indicator(indicator.getBiomId(), "other", List.of(), List.of());
+        Indicator otherIndicator = new Indicator(indicator.getBiomId(), "other", false,  List.of(), List.of());
         when(mockIndicatorRepository.findByBiomId(otherIndicator.getBiomId())).thenReturn(Optional.of(otherIndicator));
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             indicator.getBiomId(),
             "surface-forets",
+            false,
             List.of(),
             List.of()
         );
@@ -317,6 +323,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             indicator.getBiomId(),
             "surface-forets",
+            false,
             List.of(),
             List.of()
         );
@@ -329,11 +336,12 @@ class IndicatorRestControllerTest {
 
     @Test
     void shouldThrowWhenUpdatingWithAlreadyExistingSlug() {
-        Indicator otherIndicator = new Indicator("other", indicator.getSlug(), List.of(), List.of());
+        Indicator otherIndicator = new Indicator("other", indicator.getSlug(), false, List.of(), List.of());
         when(mockIndicatorRepository.findBySlug(otherIndicator.getSlug())).thenReturn(Optional.of(otherIndicator));
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "biom_92",
             indicator.getSlug(),
+            false,
             List.of(),
             List.of()
         );
@@ -347,6 +355,7 @@ class IndicatorRestControllerTest {
         IndicatorCommandDTO command = new IndicatorCommandDTO(
             "other",
             indicator.getSlug(),
+            false,
             List.of(),
             List.of()
         );

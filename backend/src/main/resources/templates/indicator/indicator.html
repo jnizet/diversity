@@ -13,7 +13,7 @@
     <meta
       th:ref="og"
       property="og:description"
-      th:attr="content=${#indicators.formatValue(outremerIndicatorValue) + ' ' + page.content.presentation.description.text}"
+      th:attr="content=${#indicators.formatValue(outremerIndicatorValue, indicator.isRounded) + ' ' + page.content.presentation.description.text}"
     />
     <meta
       th:ref="og"
@@ -28,7 +28,7 @@
         <div class="half indicateur-h1-wrapper">
           <div class="col-4 indicateur-h1-content">
             <h1 class="indicateur-h1">
-              <span class="indicateur-h1-number" biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue)}">60</span>
+              <span class="indicateur-h1-number" biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue, indicator.isRounded)}">60</span>
               <span class="h1-porcent" biom:markdown="${outremerIndicatorValue.unit}">%</span>
               <span class="h1-content" biom:markdown="*{presentation.description.text}"
                 >espèces sur les 100 considérées comme les plus envahissantes au monde se trouvent en outre-mer.</span
@@ -145,7 +145,7 @@
             <!-- TODO deal with bassins when it's worth it -->
             <div class="swiper-wrapper indicateur-wrapper">
               <div data-bassin="1" class="swiper-slide indicateur-slide" th:each="card: ${territoryCards}">
-                <div class="indicateur-slide-number" biom:markdown="${#indicators.formatValue(card.indicatorValue)}">16</div>
+                <div class="indicateur-slide-number" biom:markdown="${#indicators.formatValue(card.indicatorValue, indicator.isRounded)}">16</div>
                 <div class="indicateur-slide-tiytle" biom:markdown="${card.territory.name}">Martinique</div>
                 <img
                   th:src="@{/assets/images/territories/indicator/{slug}.svg(slug=${card.territory.slug})}"
@@ -230,7 +230,7 @@
           <div class="push-next-before">indicateur suivant</div>
           <div class="push-next-title-wrapper">
             <div class="push-next-title col-4">
-              <span biom:markdown="${#indicators.formatValue(nextIndicatorCard.indicatorValue)}">85 117</span>
+              <span biom:markdown="${#indicators.formatValue(nextIndicatorCard.indicatorValue, nextIndicatorCard.indicator.isRounded)}">85 117</span>
               <span biom:markdown="${nextIndicatorCard.page.content.presentation.description.text}"></span>
             </div>
             <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />

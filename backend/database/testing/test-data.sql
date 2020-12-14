@@ -9,15 +9,15 @@ delete from page;
 delete from image;
 delete from app_user;
 
-insert into indicator (id, biom_id, slug) values
-    (1, '7be2a5a6-f226-4fa9-a383-79ca56ca8046', 'especes-menacees'),
-    (2, 'f2a14850-23a9-43fc-b8d2-56aebb3562f8', 'especes-envahissantes'),
-    (3, 'd99e52c9-7c71-47b4-a720-c0878d2993f7', 'especes-endemiques'),
-    (4, '8816092b-1ce3-4ae7-815d-019e99ecf545', 'deforestation'),
-    (5, 'e1c91e2e-418e-4bd2-bdfe-7e1025f0b907', 'surfaces-mangroves'),
-    (6, '10fe181c-e2b5-4267-b587-5f8c21501947', 'nouvelles-especes'),
-    (7, '298a3804-bcb0-4fdb-b3b3-31e14be2cac8', 'especes-inventoriees'),
-    (8, '0a494ee4-1c21-415e-be5d-b71e8f4b0519', 'evolution-recifs');
+insert into indicator (id, biom_id, slug, is_rounded) values
+    (1, '7be2a5a6-f226-4fa9-a383-79ca56ca8046', 'especes-menacees', false),
+    (2, 'f2a14850-23a9-43fc-b8d2-56aebb3562f8', 'especes-envahissantes', false),
+    (3, 'd99e52c9-7c71-47b4-a720-c0878d2993f7', 'especes-endemiques', false),
+    (4, '8816092b-1ce3-4ae7-815d-019e99ecf545', 'deforestation', false),
+    (5, 'e1c91e2e-418e-4bd2-bdfe-7e1025f0b907', 'surfaces-mangroves', false),
+    (6, '10fe181c-e2b5-4267-b587-5f8c21501947', 'nouvelles-especes', false),
+    (7, '298a3804-bcb0-4fdb-b3b3-31e14be2cac8', 'especes-inventoriees', false),
+    (8, '0a494ee4-1c21-415e-be5d-b71e8f4b0519', 'evolution-recifs', false);
 
 insert into indicator_value (id, indicator_id, territory, value, unit) values
     (11, 1, 'OUTRE_MER', 64, null),

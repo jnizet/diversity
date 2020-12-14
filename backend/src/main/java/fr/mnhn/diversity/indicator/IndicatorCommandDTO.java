@@ -14,18 +14,21 @@ public final class IndicatorCommandDTO {
     private final String slug;
     private final List<Long> categoryIds;
     private final List<Long> ecogestureIds;
+    private final Boolean isRounded;
+
 
     @JsonCreator
     public IndicatorCommandDTO(
         @JsonProperty("biomId") String biomId,
         @JsonProperty("slug") String slug,
+        @JsonProperty("isRounded") Boolean isRounded,
         @JsonProperty("categoryIds") List<Long> categoryIds,
-        @JsonProperty("ecogestureIds") List<Long> ecogestureIds
-    ) {
+        @JsonProperty("ecogestureIds") List<Long> ecogestureIds) {
         this.biomId = biomId;
         this.slug = slug;
         this.categoryIds = categoryIds;
         this.ecogestureIds = ecogestureIds;
+        this.isRounded = isRounded;
     }
 
     public String getBiomId() {
@@ -43,6 +46,8 @@ public final class IndicatorCommandDTO {
     public List<Long> getEcogestureIds() {
         return ecogestureIds;
     }
+
+    public Boolean getRounded() { return isRounded; }
 
     @Override
     public boolean equals(Object o) {

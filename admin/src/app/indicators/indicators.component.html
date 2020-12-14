@@ -6,13 +6,17 @@
       <div class="d-flex">
         <div><fa-icon [icon]="indicatorIcon" class="mr-2"></fa-icon></div>
         <div class="flex-grow-1 row indicator">
-          <div class="col-6 col-lg-4">
+          <div class="col-6 col-lg-3">
             <a [routerLink]="['/indicators', indicator.id, 'edit']">{{ indicator.slug }}</a>
           </div>
           <div class="col-6 col-lg-4">{{ indicator.biomId }}</div>
           <div class="col-lg-4">
             <span class="badge badge-secondary ml-2" *ngFor="let category of indicator.categories">{{ category.name }}</span>
           </div>
+        </div>
+        <div class="col-6 col-lg-1" *ngIf="indicator.isRounded">
+          <fa-icon title="L'indicateur est arrondi" [icon]="roundedIndicatorIcon" id="rounded-indicator-icon"></fa-icon>
+          <span class="sr-only">L'indicateur est arrondi'</span>
         </div>
         <div class="text-right">
           <button (click)="deleteIndicator(indicator)" type="button" class="btn btn-outline-danger btn-sm delete-indicator-button">

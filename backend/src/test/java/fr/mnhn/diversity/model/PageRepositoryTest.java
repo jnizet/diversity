@@ -45,11 +45,11 @@ class PageRepositoryTest {
                 sequenceOf(
                     DELETE_ALL,
                     insertInto("indicator")
-                        .columns("id", "biom_id", "slug")
-                        .values(1L, "indicator1", "slug1")
-                        .values(2L, "indicator2", "slug2")
-                        .values(3L, "indicator3", "slug3")
-                        .values(4L, "indicator4", "slug4")
+                        .columns("id", "biom_id", "slug", "is_rounded")
+                        .values(1L, "indicator1", "slug1", false)
+                        .values(2L, "indicator2", "slug2", false)
+                        .values(3L, "indicator3", "slug3", false)
+                        .values(4L, "indicator4", "slug4", false)
                         .build(),
                     insertInto("indicator_value")
                         .withGeneratedValue("id", ValueGenerators.sequence())

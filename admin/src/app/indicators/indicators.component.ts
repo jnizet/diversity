@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faChartLine, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faPlus, faTrash, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { switchMap, tap } from 'rxjs/operators';
 
 import { ConfirmationService } from '../confirmation.service';
@@ -18,6 +18,7 @@ export class IndicatorsComponent implements OnInit {
   indicatorIcon = faChartLine;
   createIndicatorIcon = faPlus;
   deleteIndicatorIcon = faTrash;
+  roundedIndicatorIcon = faCheckSquare;
 
   constructor(
     private indicatorService: IndicatorService,

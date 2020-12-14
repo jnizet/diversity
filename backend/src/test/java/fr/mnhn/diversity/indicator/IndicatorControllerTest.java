@@ -61,9 +61,11 @@ class IndicatorControllerTest extends ControllerTest {
 
         Ecogesture ecogesture = new Ecogesture(42L, "recifs");
 
-        Indicator invasiveSpecies = new Indicator(1L, "i1", "especes-envahissantes", List.of(category1, category2), List.of(ecogesture));
-        Indicator deforestation = new Indicator(2L, "i2", "deforestation", List.of(category2, category3), List.of());
-        Indicator notExisting = new Indicator(3L, "i3", "not-existing", List.of(category3), List.of());
+        Indicator invasiveSpecies = new Indicator(1L, "i1", "especes-envahissantes", false,
+            List.of(category1, category2), List.of(ecogesture));
+        Indicator deforestation = new Indicator(2L, "i2", "deforestation", false,
+            List.of(category2, category3), List.of());
+        Indicator notExisting = new Indicator(3L, "i3", "not-existing", false, List.of(category3), List.of());
 
         Page invasiveSpeciesPage = new Page(1L, invasiveSpecies.getSlug(), IndicatorModel.INDICATOR_PAGE_MODEL.getName(), "Espèces envahissantes", Collections.emptyList());
         when(mockPageRepository.findByNameAndModel(invasiveSpeciesPage.getName(), IndicatorModel.INDICATOR_PAGE_MODEL.getName()))

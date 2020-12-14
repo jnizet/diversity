@@ -22,6 +22,10 @@ class IndicatorsComponentTester extends ComponentTester<IndicatorsComponent> {
     return this.elements('.indicator');
   }
 
+  get roundedIndicatorIcon() {
+    return this.elements('#rounded-indicator-icon');
+  }
+
   get createLink() {
     return this.element('#create-indicator');
   }
@@ -74,14 +78,16 @@ describe('IndicatorsComponent', () => {
         biomId: 'biom_1',
         slug: 'deforestation',
         categories: [vegetation],
-        ecogestures: []
+        ecogestures: [],
+        isRounded: false
       },
       {
         id: 2,
         biomId: 'biom_2',
         slug: 'especes-menacees',
         categories: [],
-        ecogestures: []
+        ecogestures: [],
+        isRounded: true
       }
     ];
 
@@ -95,6 +101,7 @@ describe('IndicatorsComponent', () => {
     expect(tester.indicators[1]).toContainText('especes-menacees');
     expect(tester.indicators[1]).toContainText('biom_2');
     expect(tester.indicators[1]).not.toContainText('Végétation');
+    expect(tester.roundedIndicatorIcon.length).toBe(1);
     expect(tester.createLink).not.toBeNull();
   });
 
@@ -105,14 +112,16 @@ describe('IndicatorsComponent', () => {
         biomId: 'biom_1',
         slug: 'deforestation',
         categories: [vegetation],
-        ecogestures: []
+        ecogestures: [],
+        isRounded: false
       },
       {
         id: 2,
         biomId: 'biom_2',
         slug: 'especes-menacees',
         categories: [],
-        ecogestures: []
+        ecogestures: [],
+        isRounded: false
       }
     ];
 

@@ -46,9 +46,10 @@ class IndicatorRepositoryTest {
 
     @BeforeEach
     void prepare() {
-        indicator1 = new Indicator(2L, "indicator1", "slug1", List.of(category1, category2), List.of(ecogesture1, ecogesture2));
-        indicator2 = new Indicator(1L, "indicator2", "slug2", List.of(category2), List.of(ecogesture2));
-        indicator3 = new Indicator(3L, "indicator3", "slug3", List.of(), List.of());
+        indicator1 = new Indicator(2L, "indicator1", "slug1", false,
+            List.of(category1, category2), List.of(ecogesture1, ecogesture2));
+        indicator2 = new Indicator(1L, "indicator2", "slug2", false, List.of(category2), List.of(ecogesture2));
+        indicator3 = new Indicator(3L, "indicator3", "slug3", false, List.of(), List.of());
 
         DbSetup dbSetup =
                 new DbSetup(
@@ -66,10 +67,10 @@ class IndicatorRepositoryTest {
                                     .values(ecogesture2.getId(), ecogesture2.getSlug())
                                     .build(),
                                 insertInto("indicator")
-                                        .columns("id", "biom_id", "slug")
-                                        .values(1L, "indicator2", "slug2")
-                                        .values(2L, "indicator1", "slug1")
-                                        .values(3L, "indicator3", "slug3")
+                                        .columns("id", "biom_id", "slug", "is_rounded")
+                                        .values(1L, "indicator2", "slug2", false)
+                                        .values(2L, "indicator1", "slug1", false)
+                                        .values(3L, "indicator3", "slug3", false)
                                         .build(),
                                 insertInto("indicator_ecogesture")
                                     .columns("indicator_id", "ecogesture_id")
@@ -129,14 +130,15 @@ class IndicatorRepositoryTest {
 
     @Test
     void shouldCreateIndicator() {
-        Indicator indicator = new Indicator( "indicator5", "slug5", List.of(category1, category2), List.of(ecogesture1, ecogesture2));
+        Indicator indicator = new Indicator( "indicator5", "slug5", false, List.of(category1, category2), List.of(ecogesture1, ecogesture2));
 
         Indicator createdIndicator = repository.create(indicator);
 
         assertThat(createdIndicator.getId()).isNotNull();
 
         assertThat(repository.findById(createdIndicator.getId())).contains(
-            new Indicator(createdIndicator.getId(), "indicator5", "slug5", List.of(category1, category2), List.of(ecogesture1, ecogesture2))
+            new Indicator(createdIndicator.getId(), "indicator5", "slug5", false,
+                List.of(category1, category2), List.of(ecogesture1, ecogesture2))
         );
     }
 
@@ -150,18 +152,18 @@ class IndicatorRepositoryTest {
 
     @Test
     void shouldUpdateIndicator() {
-        Indicator indicator = new Indicator(2L, "indicator21", "slug21", List.of(category1), List.of(ecogesture1));
+        Indicator indicator = new Indicator(2L, "indicator21", "slug21", false, List.of(category1), List.of(ecogesture1));
 
         Indicator updatedIndicator = repository.update(indicator);
 
         assertThat(repository.findById(updatedIndicator.getId())).contains(
-            new Indicator(updatedIndicator.getId(), "indicator21", "slug21", List.of(category1), List.of(ecogesture1))
+            new Indicator(updatedIndicator.getId(), "indicator21", "slug21", false, List.of(category1), List.of(ecogesture1))
         );
     }
 
     @Test
     void shouldInsertAndGetValues() {
-        Indicator indicator = new Indicator(1L, "indicator2", "slug2");
+        Indicator indicator = new Indicator(1L, "indicator2", "slug2", false);
         IndicatorValue valueOutreMer = new IndicatorValue(278.9, "km");
         IndicatorValue valueReunion = new IndicatorValue(12.4, "km");
         IndicatorValue valueGuadeloupe = new IndicatorValue(3.8, "km");
@@ -194,15 +196,15 @@ class IndicatorRepositoryTest {
 
         assertThat(repository.getValues(indicator3).get(OUTRE_MER)).isEqualTo(newValue);
 
-        Indicator indicator = new Indicator(1L, "indicator2", "slug2");
+        Indicator indicator = new Indicator(1L, "indicator2", "slug2", false);
         assertThat(repository.updateValue(indicator, OUTRE_MER, newValue)).isFalse();
     }
 
     @Test
     void shouldGetValuesForIndicatorsAndTerritory() {
         TRACKER.skipNextLaunch();
-        Indicator indicator2 = new Indicator(1L, "indicator2", "slug2");
-        Indicator indicator3 = new Indicator(3L, "indicator3", "slug3");
+        Indicator indicator2 = new Indicator(1L, "indicator2", "slug2", false);
+        Indicator indicator3 = new Indicator(3L, "indicator3", "slug3", false);
         Set<Indicator> indicators = Set.of(indicator3, indicator2);
 
         Map<Indicator, IndicatorValue> result = repository.getValuesForIndicatorsAndTerritory(indicators, OUTRE_MER);

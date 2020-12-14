@@ -21,8 +21,8 @@ public class Indicators {
     /**
      * Formats an indicator value as a number with 0 to 2 decimal digits and, if any, the unit of the value
      */
-    public String formatValue(IndicatorValue indicatorValue) {
-        String formattedNumber = formatValueWithoutUnit(indicatorValue);
+    public String formatValue(IndicatorValue indicatorValue, boolean isRounded) {
+        String formattedNumber = formatValueWithoutUnit(indicatorValue, isRounded);
         if (StringUtils.hasText(indicatorValue.getUnit())) {
             return formattedNumber + "\u00a0" + indicatorValue.getUnit();
         }
@@ -32,13 +32,14 @@ public class Indicators {
     }
 
     /**
-     * Formats an indicator value as a number with 0 to 2 decimal digits and, if any, the unit of the value
+     * Formats an indicator value as a number with 0 to 2 decimal digits without the unit
      */
-    public String formatValueWithoutUnit(IndicatorValue indicatorValue) {
+    public String formatValueWithoutUnit(IndicatorValue indicatorValue, boolean isRounded) {
+        var maximumFractionDigit = isRounded ? 0 : 2;
         DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
         decimalFormat.setMinimumIntegerDigits(1);
         decimalFormat.setMinimumFractionDigits(0);
-        decimalFormat.setMaximumFractionDigits(2);
+        decimalFormat.setMaximumFractionDigits(maximumFractionDigit);
         return decimalFormat.format(indicatorValue.getValue());
     }
 }

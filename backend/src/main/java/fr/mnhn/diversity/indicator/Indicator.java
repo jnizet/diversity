@@ -12,23 +12,26 @@ public final class Indicator {
     private final Long id;
     private final String biomId;
     private final String slug;
+    private final Boolean isRounded;
     private final List<IndicatorCategory> categories;
     private final List<Ecogesture> ecogestures;
 
-    public Indicator(Long id, String biomId, String slug, List<IndicatorCategory> categories, List<Ecogesture> ecogestures) {
+    public Indicator(Long id, String biomId, String slug, Boolean isRounded,
+        List<IndicatorCategory> categories, List<Ecogesture> ecogestures) {
         this.id = id;
         this.biomId = biomId;
         this.slug = slug;
+        this.isRounded = isRounded;
         this.categories = categories;
         this.ecogestures = ecogestures;
     }
 
-    public Indicator(Long id, String biomId, String slug) {
-        this(id, biomId, slug, List.of(), List.of());
+    public Indicator(Long id, String biomId, String slug, Boolean isRounded) {
+        this(id, biomId, slug, isRounded, List.of(), List.of());
     }
 
-    public Indicator(String biomId, String slug, List<IndicatorCategory> categories, List<Ecogesture> ecogestures) {
-        this(null, biomId, slug, categories, ecogestures);
+    public Indicator(String biomId, String slug, Boolean isRounded, List<IndicatorCategory> categories, List<Ecogesture> ecogestures) {
+        this(null, biomId, slug, isRounded, categories, ecogestures);
     }
 
     public Long getId() {
@@ -51,6 +54,8 @@ public final class Indicator {
         return ecogestures;
     }
 
+    public Boolean getIsRounded() { return isRounded; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -64,12 +69,13 @@ public final class Indicator {
             Objects.equals(biomId, indicator.biomId) &&
             Objects.equals(slug, indicator.slug) &&
             Objects.equals(categories, indicator.categories) &&
-            Objects.equals(ecogestures, indicator.ecogestures);
+            Objects.equals(ecogestures, indicator.ecogestures) &&
+            Objects.equals(isRounded, indicator.isRounded);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, biomId, slug, categories, ecogestures);
+        return Objects.hash(id, biomId, slug, categories, ecogestures, isRounded);
     }
 
     @Override
@@ -80,6 +86,7 @@ public final class Indicator {
             ", slug='" + slug + '\'' +
             ", categories=" + categories +
             ", ecogestures=" + ecogestures +
+            ", isRounded=" + isRounded +
             '}';
     }
 }

@@ -79,7 +79,7 @@ class EcogestureControllerTest extends ControllerTest {
             .thenReturn(gesturePages);
 
         Ecogesture corals = new Ecogesture(101L, "corals");
-        Indicator indicator = new Indicator(1L,"biom-1", "deforestation", List.of(), List.of(corals));
+        Indicator indicator = new Indicator(1L,"biom-1", "deforestation", false, List.of(), List.of(corals));
         when(mockIndicatorRepository.findIndicatorsForEcogesture(corals.getSlug()))
             .thenReturn(List.of(indicator));
         when(mockIndicatorRepository.getValuesForIndicatorsAndTerritory(List.of(indicator), Territory.OUTRE_MER))
