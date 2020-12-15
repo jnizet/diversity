@@ -173,11 +173,6 @@ export class MapController extends Controller {
     this.resizing();
     $(window).on('resize', () => this.resizing());
 
-    if ($('body').hasClass('home')) {
-      this.scrolling();
-      $(document).on('scroll', () => this.scrolling());
-    }
-
     $('.swiper-fiche').each((index, element) => {
       const ficheSwiper = new Swiper(element, {
         speed: 1000,
@@ -226,18 +221,6 @@ export class MapController extends Controller {
     this.ww = $(window).width();
     this.mw = $('.map-container').width();
     this.sm = $('.section-map').offset().top;
-  }
-
-  scrolling() {
-    const scroll = $(document).scrollTop();
-
-    if (scroll + this.wh - this.sm > 0 && !this.introMap) {
-      this.introMap = true;
-      const firstActiveTerritoryIndex = this.mapData.territories.findIndex(t => t.active);
-      if (firstActiveTerritoryIndex >= 0) {
-        $('.hotspot' + firstActiveTerritoryIndex).trigger('click');
-      }
-    }
   }
 
   zoomHotspot(index: number) {
