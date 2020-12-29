@@ -80,6 +80,12 @@ public final class TextElement extends PageElement {
             return this;
         }
 
+        public Builder multiLineTitle() {
+            this.title = true;
+            this.multiLine = true;
+            return this;
+        }
+
         @Override
         public TextElement build() {
             return new TextElement(this);

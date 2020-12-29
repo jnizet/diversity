@@ -60,6 +60,10 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
         return this.text(TextElement.builder(name).describedAs(description).title());
     }
 
+    public B multiLineTitleText(String name, String description) {
+        return this.text(TextElement.builder(name).describedAs(description).multiLineTitle());
+    }
+
     @SuppressWarnings("unchecked")
     public B section(SectionElement.Builder sectionBuilder) {
         this.elements.add(sectionBuilder);

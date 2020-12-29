@@ -13,7 +13,7 @@ public final class TerritoryModel {
                      .withPathFactory(slug -> "/territoires/" + slug)
                      // Carte d'identité
                      .section(SectionElement.builder("identity").describedAs("Carte d'identité")
-                                            .titleText("title", "Titre de la présentation")
+                                            .multiLineTitleText("title", "Titre de la présentation")
                                             .text("subtitle", "Sous-titre de la présentation")
                                             .multiLineText("presentation", "Texte de la présentation")
                                             .image("image", "Illustration de la présentation")
