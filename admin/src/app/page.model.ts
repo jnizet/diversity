@@ -22,7 +22,7 @@ export interface TextElement extends BasePageElement {
 export interface SelectElement extends BasePageElement {
   type: 'SELECT';
   value: string;
-  options: {[id: string]: string};
+  options: { [id: string]: string };
 }
 
 export interface ImageElement extends BasePageElement {
@@ -88,7 +88,7 @@ export function isValidElement(element: PageElement | null): boolean {
     case 'IMAGE':
       return isValidImage(element);
     case 'SELECT':
-      return isValidSelect(element)
+      return isValidSelect(element);
   }
 }
 

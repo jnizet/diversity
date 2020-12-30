@@ -50,6 +50,10 @@
   <div *ngIf="isText(element)" class="mb-2">
     <biom-edit-text-element [submitted]="isSubmitted" formControlName="text"></biom-edit-text-element>
   </div>
+  <!-- SelectElement -->
+  <div *ngIf="isSelect(element)" class="mb-2">
+    <biom-edit-select-element [submitted]="isSubmitted" formControlName="select"></biom-edit-select-element>
+  </div>
   <!-- LinkElement -->
   <div *ngIf="isLink(element)" class="mb-2">
     <biom-edit-link-element [submitted]="isSubmitted" formControlName="link"></biom-edit-link-element>

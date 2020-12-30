@@ -35,6 +35,7 @@ import { By } from '@angular/platform-browser';
 import { ImageService } from '../image.service';
 import { HeadingDirective } from '../heading/heading.directive';
 import { NgbTestingModule } from '../ngb-testing.module';
+import { EditSelectElementComponent } from '../edit-select-element/edit-select-element.component';
 
 class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   constructor() {
@@ -219,6 +220,7 @@ describe('EditPageComponent', () => {
         EditPageComponent,
         EditPageElementComponent,
         EditTextElementComponent,
+        EditSelectElementComponent,
         EditLinkElementComponent,
         EditImageElementComponent,
         ValidationDefaultsComponent,

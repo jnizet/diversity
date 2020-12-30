@@ -7,6 +7,7 @@ import {
   ListUnitElement,
   PageElement,
   SectionElement,
+  SelectElement,
   TextElement
 } from '../page.model';
 import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
@@ -35,6 +36,10 @@ export class EditPageElementComponent implements ControlValueAccessor {
 
   isLink(element: PageElement): element is LinkElement {
     return element.type === 'LINK';
+  }
+
+  isSelect(element: PageElement): element is SelectElement {
+    return element.type === 'SELECT';
   }
 
   isImage(element: PageElement): element is ImageElement {
@@ -85,6 +90,15 @@ export class EditPageElementComponent implements ControlValueAccessor {
         const textControl = this.fb.control(element, [Validators.required, validElement]);
         this.elementGroup.addControl('text', textControl);
         textControl.valueChanges.subscribe((value: PageElement) => {
+          this.onChange(value);
+        });
+        break;
+      }
+      case 'SELECT': {
+        // the element is a select: we want a simple form with a 'select' control
+        const selectControl = this.fb.control(element, [Validators.required, validElement]);
+        this.elementGroup.addControl('select', selectControl);
+        selectControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);
         });
         break;

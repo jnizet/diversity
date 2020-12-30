@@ -30,6 +30,7 @@ import { EditLinkElementComponent } from './edit-link-element/edit-link-element.
 import { EditImageElementComponent } from './edit-image-element/edit-image-element.component';
 import { PageLinkComponent } from './home/page-link/page-link.component';
 import { HeadingDirective } from './heading/heading.directive';
+import { EditSelectElementComponent } from './edit-select-element/edit-select-element.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { HeadingDirective } from './heading/heading.directive';
     EditPageComponent,
     EditPageElementComponent,
     EditTextElementComponent,
+    EditSelectElementComponent,
     EditLinkElementComponent,
     EditImageElementComponent,
     PageLinkComponent,

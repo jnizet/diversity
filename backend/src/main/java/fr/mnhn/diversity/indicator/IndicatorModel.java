@@ -20,7 +20,7 @@ public final class IndicatorModel {
                                         .text("descriptionTerritories", "Description de l'indicateur - pages territoires")
                                         .multiSizeImage("image", "Illustration de l'indicateur")
                                         .select("sourceSelect", "Choix du logo source", Map.of("onb", "ONB", "inpn", "INPN"))
-                                        .text("onbUrl", "URL de l'indicateur sur le site de l'ONB (indiquez NA pour ne pas afficher de lien ONB)")
+                                        .text("onbUrl", "URL de redirection du logo")
                  )
                  // Comprendre l'indicateur
                  .section(SectionElement.builder("understand").describedAs("Comprendre l'indicateur")
