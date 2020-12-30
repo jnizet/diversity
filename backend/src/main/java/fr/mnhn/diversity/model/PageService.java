@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.model;
 
+import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -192,6 +193,15 @@ public class PageService {
             usedElements.add(element);
             return null;
         }
+
+        @Override
+        public Void visitSelect(SelectElement select) {
+            String name = select.getName();
+            String key = prefix + name;
+            Element element = PageUtils.getElement(page, key, ElementType.SELECT);
+            result.put(name, element);
+            usedElements.add(element);
+            return null;        }
 
         public Map<String, Object> getResult() {
             return result;

@@ -247,6 +247,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .columns("type", "key", "text", "image_id", "alt", "href", "title")
                 .values(TEXT, "carousel.title", "Découvrez la biodiversité des Outre-Mer", null, null, null, false)
                 .values(TEXT, "carousel.text", "Partez à la rencontre des espèces et des écosystèmes des territoires français d'outre-mer", null, null, null, false)
+                .values(SELECT, "carousel.select", "option1", null, null, null, false)
                 .values(IMAGE, "carousel.images.0.image", null, 1L, "Chelonia mydas ©  B. Guichard", null, false)
                 .values(IMAGE, "carousel.images.1.image", null, 2L, "Légende n°2", null, false)
                 .values(IMAGE, "carousel.images.2.image", null, 3L, "Légende n°3", null, false)

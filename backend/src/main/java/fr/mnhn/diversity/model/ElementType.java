@@ -7,5 +7,6 @@ package fr.mnhn.diversity.model;
 public enum ElementType {
     TEXT,
     IMAGE,
-    LINK
+    LINK,
+    SELECT
 }

@@ -1,4 +1,4 @@
-export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION';
+export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION' | 'SELECT';
 
 interface BasePageElement {
   type: ElementType;
@@ -17,6 +17,12 @@ export interface TextElement extends BasePageElement {
   type: 'TEXT';
   multiLine: boolean;
   text: string;
+}
+
+export interface SelectElement extends BasePageElement {
+  type: 'SELECT';
+  value: string;
+  options: {[id: string]: string};
 }
 
 export interface ImageElement extends BasePageElement {
@@ -44,10 +50,14 @@ export interface SectionElement extends ContainerElement {
   type: 'SECTION';
 }
 
-export type PageElement = TextElement | LinkElement | ImageElement | ListElement | ListUnitElement | SectionElement;
+export type PageElement = TextElement | LinkElement | ImageElement | ListElement | ListUnitElement | SectionElement | SelectElement;
 
 function isValidText(text: TextElement): boolean {
   return !!text.text;
+}
+
+function isValidSelect(select: SelectElement): boolean {
+  return !!select.value && !!select.options;
 }
 
 function isValidLink(link: LinkElement): boolean {
@@ -77,6 +87,8 @@ export function isValidElement(element: PageElement | null): boolean {
       return isValidLink(element);
     case 'IMAGE':
       return isValidImage(element);
+    case 'SELECT':
+      return isValidSelect(element)
   }
 }
 
@@ -91,7 +103,7 @@ export interface Page {
 
 export interface ElementCommand {
   key: string;
-  type: 'TEXT' | 'LINK' | 'IMAGE';
+  type: 'TEXT' | 'LINK' | 'IMAGE' | 'SELECT';
 }
 
 export interface LinkCommand extends ElementCommand {
@@ -101,6 +113,10 @@ export interface LinkCommand extends ElementCommand {
 
 export interface TextCommand extends ElementCommand {
   text: string;
+}
+
+export interface SelectCommand extends ElementCommand {
+  value: string;
 }
 
 export interface ImageCommand extends ElementCommand {
@@ -116,6 +132,11 @@ export interface PageCommand {
 
 function textElementToCommand(key: string, element: TextElement): Array<ElementCommand> {
   const command: TextCommand = { key, text: element.text, type: 'TEXT' };
+  return [command];
+}
+
+function selectElementToCommand(key: string, element: SelectElement): Array<ElementCommand> {
+  const command: SelectCommand = { key, value: element.value, type: 'SELECT' };
   return [command];
 }
 
@@ -183,6 +204,9 @@ export function elementToCommand(prefix: string, element: PageElement): Array<El
     }
     case 'SECTION': {
       return sectionElementToCommand(key, element);
+    }
+    case 'SELECT': {
+      return selectElementToCommand(key, element);
     }
     case 'LIST_UNIT': {
       return []; // should never happen as the list unit is consumed by the list

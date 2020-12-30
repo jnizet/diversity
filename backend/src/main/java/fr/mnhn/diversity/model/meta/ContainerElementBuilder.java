@@ -2,6 +2,7 @@ package fr.mnhn.diversity.model.meta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Base class for container element builders, allowing to add all kinds of page elements to a container
@@ -54,6 +55,15 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
 
     public B multiLineText(String name, String description) {
         return this.text(TextElement.builder(name).describedAs(description).multiLine());
+    }
+
+    public B select(SelectElement.Builder selectBuilder) {
+        this.elements.add(selectBuilder);
+        return (B) this;
+    }
+
+    public B select(String name, String description, Map<String, String> options) {
+        return this.select(SelectElement.builder(name, options).describedAs(description));
     }
 
     public B titleText(String name, String description) {

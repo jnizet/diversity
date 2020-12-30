@@ -9,4 +9,6 @@ public interface ElementCommandVisitor<T> {
     T visitImage(ImageCommandDTO image);
 
     T visitLink(LinkCommandDTO link);
+
+    T visitSelect(SelectCommandDTO select);
 }

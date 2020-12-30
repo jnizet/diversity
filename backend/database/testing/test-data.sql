@@ -407,6 +407,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 30, 'TEXT', 'understand.paragraphs.0.text',  'En 2007, l’Union international pour la conservation de la nature a publié une liste de 100 espèces exotiques considérées comme les plus envahissantes du monde, c’est-à-dire celles avec le plus fort potentiel de dispersion et le plus lourd impact sur leur environnement d’accueil. On y trouve notamment le rat noir (Rattus rattus), introduit dans de nombreuses îles et responsable, entre autres, du déclin des populations de nombreuses espèces d’oiseau dans les outre-mer, ou encore le Miconia (Miconia calvescens) introduit à Tahiti en 1937 et aujourd’hui très répandu sur l’île où il remplace la végétation indigène. Ce dernier a également été introduit en Nouvelle-Calédonie et découvert récemment en Martinique et en Guadeloupe. De nombreuses interventions sont réalisées pour éradiquer ces espèces ou à défaut tenter de limiter leur propagation et leurs impacts, et de nombreuses collectivités mettent en œuvre des processus de biosécurité à l’entrée des territoires afin de limiter les risques d’entrée d’espèces exotiques.', null, null, null, false),
     (nextval('page_element_seq'), 30, 'TEXT', 'territories.title',  'Nombre d’espèces exotiques envahissantes par territoires', null, null, null, false),
     (nextval('page_element_seq'), 30, 'TEXT', 'ecogestures.title', 'Que puis-je faire pour éviter l’introduction et la dispersion d’espèces exotiques envahissantes ?', null, null, null, false),
+    (nextval('page_element_seq'), 30, 'SELECT', 'presentation.sourceSelect', 'onb', null, null, null, false),
 
 --     Indicator
 --     Déforestation
@@ -422,6 +423,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 31, 'TEXT', 'understand.keyword',  'Forêts', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'territories.title',  'Déforestation par territoire', null, null, null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'ecogestures.title', 'Écogestes', null, null, null, false),
+    (nextval('page_element_seq'), 31, 'SELECT', 'presentation.sourceSelect', '', null, null, null, false),
 
 --     Zone Antilles
     (nextval('page_element_seq'), 101, 'TEXT', 'description', 'Les Antilles sont un « point chaud » de la biodiversité mondiale. Si chacun des quatre territoires français du bassin a son identité et ses spécificités, les acteurs locaux collaborent autour de problématiques partagées.', null, null, null, false);

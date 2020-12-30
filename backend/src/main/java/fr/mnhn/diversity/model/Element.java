@@ -45,6 +45,10 @@ public abstract class Element {
         return new Link(id, key, text, href);
     }
 
+    public static Select select(Long id, String key, String value) {
+        return new Select(id, key, value);
+    }
+
     public Long getId() {
         return id;
     }

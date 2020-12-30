@@ -14,7 +14,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = TextCommandDTO.class, name = "TEXT"),
     @JsonSubTypes.Type(value = LinkCommandDTO.class, name = "LINK"),
-    @JsonSubTypes.Type(value = ImageCommandDTO.class, name = "IMAGE")
+    @JsonSubTypes.Type(value = ImageCommandDTO.class, name = "IMAGE"),
+    @JsonSubTypes.Type(value = SelectCommandDTO.class, name = "SELECT")
 })
 public abstract class ElementCommandDTO {
     @NotBlank

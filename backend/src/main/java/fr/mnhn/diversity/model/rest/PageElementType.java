@@ -11,5 +11,6 @@ public enum PageElementType {
     IMAGE,
     SECTION,
     LIST_UNIT,
+    SELECT,
     LIST;
 }

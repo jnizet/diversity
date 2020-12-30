@@ -10,4 +10,5 @@ public interface PageElementVisitor<T> {
     T visitText(TextElement text);
     T visitImage(ImageElement image);
     T visitLink(LinkElement link);
+    T visitSelect(SelectElement selectElement);
 }

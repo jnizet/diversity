@@ -260,6 +260,22 @@ public class PageRepository {
     }
 
     /**
+     * Creates a new {@link Select}
+     */
+    private Select createSelect(Long pageId, Select select) {
+        Map<String, Object> paramMap = Map.of(
+            "page_id", pageId,
+            "type", select.getType().name(),
+            "key", select.getKey(),
+            "value", select.getValue()
+        );
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into page_element (id, page_id, type, key, text) values (nextval('page_element_seq'), :page_id, :type, :key, :value)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+        return new Select(id, select.getKey(), select.getValue());
+    }
+
+    /**
      * Creates a new {@link Link}
      */
     private Link createLink(Long pageId, Link link) {
@@ -317,6 +333,9 @@ public class PageRepository {
                         break;
                     case LINK:
                         elements.add(Element.link(elementId, key, rs.getString("text"), rs.getString("href")));
+                        break;
+                    case SELECT:
+                        elements.add(Element.select(elementId, key, rs.getString("text")));
                         break;
                     default:
                         throw new IllegalStateException("Unknown element type: " + type);
@@ -382,6 +401,11 @@ public class PageRepository {
         @Override
         public Link visitLink(Link link) {
             return createLink(pageId, link);
+        }
+
+        @Override
+        public Select visitSelect(Select select) {
+            return createSelect(pageId, select);
         }
     }
 }

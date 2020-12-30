@@ -2,6 +2,8 @@ package fr.mnhn.diversity.model.rest;
 
 import static fr.mnhn.diversity.common.PageModels.ALL_PAGE_MODELS_BY_NAME;
 
+import fr.mnhn.diversity.model.Select;
+import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -212,6 +214,21 @@ public class PageRestController {
             return null;
         }
 
+        @Override
+        public Void visitSelect(SelectElement select) {
+            String name = select.getName();
+            String key = prefix + name;
+            if (page != null) {
+                Select value = (Select) PageUtils.getElement(page, key, ElementType.SELECT);
+                SelectElementDTO selectElementDTO = new SelectElementDTO(select, value);
+                elements.add(selectElementDTO);
+            }
+            else {
+                elements.add(new SelectElementDTO(select, new Select(null, key, "")));
+            }
+            return null;
+        }
+
         public List<PageElementDTO> getElements() {
             return elements;
         }
@@ -268,6 +285,11 @@ public class PageRestController {
         @Override
         public Element visitLink(LinkCommandDTO link) {
             return new Link(null, link.getKey(), link.getText(), link.getHref());
+        }
+
+        @Override
+        public Element visitSelect(SelectCommandDTO select) {
+            return new Select(null, select.getKey(), select.getValue());
         }
     }
 }

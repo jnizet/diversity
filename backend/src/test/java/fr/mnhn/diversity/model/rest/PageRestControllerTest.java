@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.model.Select;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,7 @@ class PageRestControllerTest {
     private ArgumentCaptor<Page> pageArgumentCaptor;
 
     private Text title;
+    private Select select;
     private Text carouselTitle;
     private Link firstCarouselLink;
     private Image firstCarouselImage;
@@ -84,17 +86,19 @@ class PageRestControllerTest {
                                                                   .link("link", "Lien du slide")
                                                                   .image("image", "Image du slide")
                                                    )
+                                                   .select("select", "un select", Map.of("option1", "option1 label", "option2", "option2 label"))
                                  )
                                  .build();
         controller.setModelsByName(Map.of(homePageModel.getName(), homePageModel));
 
         title = new Text(101L, "title", "Portail de la diversité");
+        select = new Select(107L, "carousel.select", "options1");
         carouselTitle = new Text(102L, "carousel.title", "Apprendre en s'amusant");
         firstCarouselLink = new Link(103L, "carousel.slides.0.link", "Raison 1", "https://raison1.fr");
         firstCarouselImage = new Image(104L, "carousel.slides.0.image", 1L, "Raison 1", true);
         secondCarouselLink = new Link(105L, "carousel.slides.1.link", "Raison 2", "https://raison2.fr");
         secondCarouselImage = new Image(106L, "carousel.slides.1.image", 2L, "Raison 2", true);
-        page = new Page(43L, "home", "home", "Accueil", List.of(title, carouselTitle, firstCarouselLink, firstCarouselImage, secondCarouselLink, secondCarouselImage));
+        page = new Page(43L, "home", "home", "Accueil", List.of(title, carouselTitle, firstCarouselLink, firstCarouselImage, secondCarouselLink, secondCarouselImage, select));
         when(mockPageRepository.findById(page.getId())).thenReturn(Optional.of(page));
     }
 
@@ -113,7 +117,7 @@ class PageRestControllerTest {
                .andExpect(jsonPath("$.elements[0].multiLine").value(false))
                // carousel
                .andExpect(jsonPath("$.elements[1].type").value(PageElementType.SECTION.name()))
-               .andExpect(jsonPath("$.elements[1].elements.length()").value(2))
+               .andExpect(jsonPath("$.elements[1].elements.length()").value(3))
                // carousel title
                .andExpect(jsonPath("$.elements[1].elements[0].type").value(PageElementType.TEXT.name()))
                .andExpect(jsonPath("$.elements[1].elements[0].description").value("Titre du carousel"))
@@ -143,7 +147,11 @@ class PageRestControllerTest {
                .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[0].text").value(secondCarouselLink.getText()))
                .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].type").value(PageElementType.IMAGE.name()))
                .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].alt").value(secondCarouselImage.getAlt()))
-               .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].imageId").value(secondCarouselImage.getImageId()));
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].imageId").value(secondCarouselImage.getImageId()))
+               // select
+               .andExpect(jsonPath("$.elements[1].elements[2].type").value(PageElementType.SELECT.name()))
+               .andExpect(jsonPath("$.elements[1].elements[2].description").value("un select"))
+               .andExpect(jsonPath("$.elements[1].elements[2].value").value(select.getValue()));
     }
 
     @Test
@@ -161,7 +169,7 @@ class PageRestControllerTest {
                .andExpect(jsonPath("$.elements[0].multiLine").value(false))
                // carousel
                .andExpect(jsonPath("$.elements[1].type").value(PageElementType.SECTION.name()))
-               .andExpect(jsonPath("$.elements[1].elements.length()").value(2))
+               .andExpect(jsonPath("$.elements[1].elements.length()").value(3))
                // carousel title
                .andExpect(jsonPath("$.elements[1].elements[0].type").value(PageElementType.TEXT.name()))
                .andExpect(jsonPath("$.elements[1].elements[0].description").value("Titre du carousel"))
@@ -181,7 +189,13 @@ class PageRestControllerTest {
                .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[0].text").value(""))
                .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].type").value(PageElementType.IMAGE.name()))
                .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].alt").value(""))
-               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].imageId").doesNotExist());
+               .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].imageId").doesNotExist())
+                // select
+               .andExpect(jsonPath("$.elements[1].elements[2].type").value(PageElementType.SELECT.name()))
+               .andExpect(jsonPath("$.elements[1].elements[2].description").value("un select"))
+               .andExpect(jsonPath("$.elements[1].elements[2].name").value("select"))
+               .andExpect(jsonPath("$.elements[1].elements[2].options").isMap())
+               .andExpect(jsonPath("$.elements[1].elements[2].value").value(""));
     }
 
     @Test
@@ -213,16 +227,18 @@ class PageRestControllerTest {
     void shouldCreate() throws Exception {
         TextCommandDTO titleCommand = new TextCommandDTO("title", "Bienvenu");
         TextCommandDTO carouselTitleCommand = new TextCommandDTO("carousel.title", "Vive la bio-diversité");
+        SelectCommandDTO carouselSelectCommand = new SelectCommandDTO("carousel.select", "option2");
         ImageCommandDTO firstCarouselImageCommand = new ImageCommandDTO("carousel.slides.0.image", 3L, "Image 1", true);
         LinkCommandDTO firstCarouselLinkCommand = new LinkCommandDTO("carousel.slides.0.link", "Lien 1", "https://lien1.fr");
-        List<ElementCommandDTO> elements = List.of(titleCommand, carouselTitleCommand, firstCarouselImageCommand, firstCarouselLinkCommand);
+        List<ElementCommandDTO> elements = List.of(titleCommand, carouselTitleCommand, firstCarouselImageCommand, firstCarouselLinkCommand, carouselSelectCommand);
         PageCommandDTO command = new PageCommandDTO("Portail de la diversité !", "Home", elements);
 
         Text title = new Text(257L, titleCommand.getKey(), titleCommand.getText());
         Text carouselTitle = new Text(258L, carouselTitleCommand.getKey(), carouselTitleCommand.getText());
+        Select carouselSelect = new Select(261L, carouselSelectCommand.getKey(), carouselSelectCommand.getValue());
         Image firstCarouselImage = new Image(259L, firstCarouselImageCommand.getKey(), firstCarouselImageCommand.getImageId(), firstCarouselImageCommand.getAlt(), firstCarouselImageCommand.isMultiSize());
         Link firstCarouselLink = new Link(260L, firstCarouselLinkCommand.getKey(), firstCarouselLinkCommand.getText(), firstCarouselLinkCommand.getHref());
-        Page createdPage = new Page(256L, command.getName(), "home", command.getTitle(), List.of(title, carouselTitle, firstCarouselImage, firstCarouselLink));
+        Page createdPage = new Page(256L, command.getName(), "home", command.getTitle(), List.of(title, carouselTitle, firstCarouselImage, firstCarouselLink, carouselSelect));
         when(mockPageRepository.create(any())).thenReturn(createdPage);
 
         mockMvc.perform(post("/api/pages/models/home")
@@ -236,6 +252,7 @@ class PageRestControllerTest {
         assertThat(pageToCreate.getTitle()).isEqualTo("Portail de la diversité !");
         List<Element> elementsToCreate = pageToCreate.getElements().values().stream().sorted(Comparator.comparing(Element::getKey)).collect(Collectors.toList());
         assertThat(elementsToCreate).containsExactly(
+            new Select(null, "carousel.select", "option2"),
             new Image(null, "carousel.slides.0.image", 3L, "Image 1", true),
             new Link(null, "carousel.slides.0.link", "Lien 1", "https://lien1.fr"),
             new Text(null, "carousel.title", "Vive la bio-diversité"),
