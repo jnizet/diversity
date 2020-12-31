@@ -78,7 +78,7 @@ class IndicatorControllerTest extends ControllerTest {
                         "description", text("espèces sur les 100..."),
                         "image", image(1L),
                         "logoUrl", text("https://google.com"),
-                        "sourceSelect", "onb"
+                        "sourceSelect", select("onb")
                     ),
                     "understand", Map.of(
                         "image", image(2L),

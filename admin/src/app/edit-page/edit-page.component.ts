@@ -52,7 +52,6 @@ export class EditPageComponent implements OnInit {
       // and the page model (same entity, but with all values populated with empty object)
       // allowing to display all fields, even these without values
       // (for example it allows to add an empty list unit to an empty list)
-      console.log(this.mode);
       forkJoin([this.pageService.getValues(pageId), this.pageService.getModel(modelName)]).subscribe(([page, model]) => {
         this.editedPage = page;
         page.elements.forEach(element => {
@@ -62,7 +61,6 @@ export class EditPageComponent implements OnInit {
           title: page.title
         } as FormValue);
         this.pageModel = model;
-        console.log(model);
       });
     } else {
       const pageName = this.route.snapshot.queryParamMap.get('name');

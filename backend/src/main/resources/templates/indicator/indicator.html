@@ -55,8 +55,8 @@
         </div>
         <div class="half back-indicateur" th:if="*{#strings.startsWith(presentation.logoUrl.text, 'http')}">
           <a th:href="*{presentation.logoUrl.text}" target="_blank" class="link-onb w-inline-block">
-            <img th:if="*{#strings.equals(presentation.sourceSelect,'onb')}" th:src="@{/assets/images/logo_ONB.jpg}" loading="lazy" width="200" alt="" />
-            <img th:if="*{#strings.equals(presentation.sourceSelect,'inpn')}" th:src="@{/assets/images/logo-inpn.jpg}" loading="lazy" width="200" alt="" />
+            <img th:if="*{#strings.equals(presentation.sourceSelect.value,'onb')}" th:src="@{/assets/images/logo_ONB.jpg}" loading="lazy" width="200" alt="" />
+            <img th:if="*{#strings.equals(presentation.sourceSelect.value,'inpn')}" th:src="@{/assets/images/logo_inpn.jpg}" loading="lazy" width="200" alt="" />
           </a>
         </div>
       </div>
