@@ -77,7 +77,8 @@ class IndicatorControllerTest extends ControllerTest {
                     "presentation", Map.of(
                         "description", text("espèces sur les 100..."),
                         "image", image(1L),
-                        "onbUrl", text("https://google.com")
+                        "logoUrl", text("https://google.com"),
+                        "sourceSelect", "onb"
                     ),
                     "understand", Map.of(
                         "image", image(2L),
@@ -202,7 +203,8 @@ class IndicatorControllerTest extends ControllerTest {
                             "category", text("Leisure"),
                             "description", text("Description"),
                             "image", image(1L)
-                        )
+
+                    )
                     )
                 )
             );
@@ -223,6 +225,7 @@ class IndicatorControllerTest extends ControllerTest {
                .andExpect(content().string(containsString("14")))
                .andExpect(content().string(containsString("Eviter les espèces envahissantes")))
                .andExpect(content().string(containsString("Protect the corals")))
+               .andExpect(content().string(containsString("logo_ONB.jpg")))
                .andExpect(content().string(containsString("2\u00a0000\u00a0km2")))
                .andExpect(content().string(containsString("de forêt...")))
                .andExpect(content().string(containsString("</html>")));
