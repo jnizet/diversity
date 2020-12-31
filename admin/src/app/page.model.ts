@@ -57,7 +57,8 @@ function isValidText(text: TextElement): boolean {
 }
 
 function isValidSelect(select: SelectElement): boolean {
-  return !!select.value && !!select.options;
+  console.log(select.value, select.options);
+  return !!select.options;
 }
 
 function isValidLink(link: LinkElement): boolean {

@@ -96,7 +96,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
       }
       case 'SELECT': {
         // the element is a select: we want a simple form with a 'select' control
-        const selectControl = this.fb.control(element, [Validators.required, validElement]);
+        const selectControl = this.fb.control(element, [validElement]);
         this.elementGroup.addControl('select', selectControl);
         selectControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);

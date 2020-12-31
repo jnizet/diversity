@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { SelectElement } from '../page.model';
-import { ControlValueAccessor, FormBuilder, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
  * Form element allowing to select a value for a select element of a page.
@@ -21,7 +21,7 @@ export class EditSelectElementComponent implements ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   constructor(private fb: FormBuilder) {
-    this.selectControl = this.fb.control('', Validators.required);
+    this.selectControl = this.fb.control('');
     this.selectControl.valueChanges.subscribe((value: string) => {
       if (this.selectControl.valid) {
         this.onChange({ ...this.editedSelectElement, value });
