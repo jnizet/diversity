@@ -47,7 +47,7 @@ describe('Territory', () => {
   it('should navigate to first indicator', () => {
     cy.visit('/territoires/reunion');
 
-    cy.get('.indicator-card').contains('65').closest('.indicator-card').contains('En savoir plus').click();
+    cy.get('.indicator-card').contains('40').closest('.indicator-card').contains('En savoir plus').click();
 
     cy.get('h1').should('contain', '65');
   });
