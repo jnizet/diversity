@@ -102,7 +102,7 @@ public class TerritoryController {
         List<Page> indicatorPages = pageRepository.findRandomIndicatorPagesForTerritory(2, territory);
         Set<String> indicatorSlugs = indicatorPages.stream().map(Page::getName).collect(Collectors.toSet());
         Map<String, IndicatorValue> outremerValuesByIndicatorSlug =
-            indicatorRepository.getValuesForIndicatorSlugsAndTerritory(indicatorSlugs, Territory.OUTRE_MER);
+            indicatorRepository.getValuesForIndicatorSlugsAndTerritory(indicatorSlugs, territory);
 
         return indicatorPages.stream()
                              .map(page -> pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, page))

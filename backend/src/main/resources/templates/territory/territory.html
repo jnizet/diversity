@@ -150,8 +150,9 @@
       <section th:if="${indicatorCards.size() > 0}" class="section-territoire-indicateur">
         <div class="territoire-indicateur-wrapper">
           <div class="indicateur-push-content left-1 indicator-card">
+            <div class="text-big" biom:markdown="${'En '+ territory.name}"></div>
             <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicatorCards[0].indicatorValue, true)}"></div>
-            <div class="text-big" biom:markdown="${indicatorCards[0].page.content.presentation.description.text}"></div>
+            <div class="text-big" biom:markdown="${indicatorCards[0].page.content.presentation.descriptionTerritories.text}"></div>
             <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[0].page.name})}" class="cta-secondary">En savoir plus</a>
           </div>
         </div>
@@ -291,8 +292,9 @@
           </div>
         </div>
         <div th:if="${indicatorCards.size() > 1}" class="push-right indicator-card">
+          <div class="text-big" biom:markdown="${'En '+ territory.name}"></div>
           <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicatorCards[1].indicatorValue, true)}"></div>
-          <div class="text-big" biom:markdown="${indicatorCards[1].page.content.presentation.description.text}"></div>
+          <div class="text-big" biom:markdown="${indicatorCards[1].page.content.presentation.descriptionTerritories.text}"></div>
           <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[1].page.name})}" class="cta-secondary">En savoir plus</a>
         </div>
       </section>

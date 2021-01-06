@@ -175,12 +175,12 @@ class TerritoryControllerTest extends ControllerTest {
             )
         );
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, i1Page)).thenReturn(
-            new PageContent(i1Page, Map.of("presentation", Map.of("description", text("i1 desc"))))
+            new PageContent(i1Page, Map.of("presentation", Map.of("descriptionTerritories", text("i1 desc"))))
         );
         when(mockPageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL, i2Page)).thenReturn(
-            new PageContent(i2Page, Map.of("presentation", Map.of("description", text("i2 desc"))))
+            new PageContent(i2Page, Map.of("presentation", Map.of("descriptionTerritories", text("i2 desc"))))
         );
-        when(mockIndicatorRepository.getValuesForIndicatorSlugsAndTerritory(Set.of("i1", "i2"), Territory.OUTRE_MER)).thenReturn(
+        when(mockIndicatorRepository.getValuesForIndicatorSlugsAndTerritory(Set.of("i1", "i2"), Territory.REUNION)).thenReturn(
             Map.of(
                 "i1", new IndicatorValue(10, "%"),
                 "i2", new IndicatorValue(20, "%")

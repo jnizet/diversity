@@ -15,7 +15,8 @@ public final class IndicatorModel {
                  .withPathFactory(slug -> "/indicateurs/" + slug)
                  // Présentation
                  .section(SectionElement.builder("presentation").describedAs("Présentation de l'indicateur")
-                                        .text("description", "Description de l'indicateur")
+                                        .text("description", "Description de l'indicateur - pages indicateurs")
+                                        .text("descriptionTerritories", "Description de l'indicateur - pages territoires")
                                         .multiSizeImage("image", "Illustration de l'indicateur")
                                         .text("onbUrl", "URL de l'indicateur sur le site de l'ONB (indiquez NA pour ne pas afficher de lien ONB)")
                  )

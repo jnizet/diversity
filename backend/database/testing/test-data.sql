@@ -394,6 +394,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
 --     Indicator
 --     Espèces envahissantes
     (nextval('page_element_seq'), 30, 'TEXT', 'presentation.description',  'des espèces considérées comme les plus envahissantes au monde se trouvent en outre-mer.', null, null, null, false),
+    (nextval('page_element_seq'), 30, 'TEXT', 'presentation.descriptionTerritories','des espèces considérées comme les plus envahissantes au monde se trouvent ici...', null, null, null, false),
     (nextval('page_element_seq'), 30, 'IMAGE', 'presentation.image',  null, 104, 'Espèces envahissantes', null, false),
     (nextval('page_element_seq'), 30, 'TEXT', 'presentation.onbUrl',  'http://indicateurs-biodiversite.naturefrance.fr/fr/indicateurs/nombre-despeces-en-outremer-parmi-les-plus-envahissantes-au-monde', null, null, null, false),
     (nextval('page_element_seq'), 30, 'IMAGE', 'understand.image',  null, 110, 'Espèces envahissantes', null, false),
@@ -410,6 +411,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
 --     Indicator
 --     Déforestation
     (nextval('page_element_seq'), 31, 'TEXT', 'presentation.description',  'de la forêt disparaît...', null, null, null, false),
+    (nextval('page_element_seq'), 31, 'TEXT', 'presentation.descriptionTerritories',  'de la forêt du territoire disparaît...', null, null, null, false),
     (nextval('page_element_seq'), 31, 'IMAGE', 'presentation.image',  null, 11, 'Forêt', null, false),
     (nextval('page_element_seq'), 31, 'TEXT', 'presentation.onbUrl',  'http://indicateurs-biodiversite.naturefrance.fr/fr/indicateurs/nombre-despeces-en-outremer-parmi-les-plus-envahissantes-au-monde', null, null, null, false),
     (nextval('page_element_seq'), 31, 'IMAGE', 'understand.image',  null, 110, 'Forêt', null, false),
