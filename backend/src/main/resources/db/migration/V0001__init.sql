@@ -9,7 +9,6 @@ create table indicator (
     id      BIGINT primary key,
     slug    VARCHAR not null,
     biom_id VARCHAR not null,
-    is_rounded BOOLEAN not null,
     constraint indicator_slug_un unique (slug),
     constraint indicator_biom_id_un unique (biom_id)
 );
