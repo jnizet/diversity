@@ -21,7 +21,7 @@
         <div class="section-top-wrapper">
           <div class="col-4">
             <h1 class="section-top-title" biom:markdown="*{carousel.title.text}">Découvrez la biodiversité des outre-mer</h1>
-            <p biom:markdown="*{carousel.text.text}">Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer</p>
+            <div class="top-paragraph" biom:markdown="*{carousel.text.text}">Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer</div>
             <a th:href="@{/territoires}" biom:markdown="*{carousel.territoriesButton.text}" class="cta-primary yellow">
               découvrir les territoires
             </a>
@@ -53,12 +53,12 @@
         <div class="section-content">
           <h2 class="section-title col-3" biom:markdown="*{presentation.title.text}">Le compteur de biodiversité Outre-Mer</h2>
           <div class="col-5">
-            <p class="apropos-paragraph preserve-lines" biom:markdown="*{presentation.text.text}">
+            <div class="apropos-paragraph preserve-lines top-paragraph" biom:markdown="*{presentation.text.text}">
               Les territoires d’outre-mer présentent une biodiversité particulièrement riche et variée, mais fragilisée par les activités
               humaines. La mission du compteur est de donner une vision d’ensemble des enjeux liés à la biodiversité en outre-mer afin que
               chacun, résident ou voyageur de passage, puisse s’informer et s’impliquer à son échelle pour la préservation de cette
               biodiversité exceptionnelle.
-            </p>
+            </div>
             <div class="swiper-container swiper-apropos">
               <ul role="list" class="swiper-wrapper apropos-list w-list-unstyled">
                 <li class="swiper-slide apropos-item">
@@ -68,9 +68,9 @@
                       <div class="apropos-item-title">Indicateurs</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" biom:markdown="*{presentation.indicators.text}">
+                    <div class="apropos-item-text top-paragraph" biom:markdown="*{presentation.indicators.text}">
                       Des chiffres clefs pour surveiller l’activité des territoires
-                    </p>
+                    </div>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -80,9 +80,9 @@
                       <div class="apropos-item-title">Éco-gestes</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" biom:markdown="*{presentation.ecogestures.text}">
+                    <div class="apropos-item-text top-paragraph" biom:markdown="*{presentation.ecogestures.text}">
                       Des gestes simples à mettre en place dans notre quotidien
-                    </p>
+                    </div>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -92,7 +92,7 @@
                       <div class="apropos-item-title">Sciences participatives</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" biom:markdown="*{presentation.science.text}">Contribuez à la mise à jour de la base de donnée</p>
+                    <div class="apropos-item-text top-paragraph" biom:markdown="*{presentation.science.text}">Contribuez à la mise à jour de la base de donnée</div>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -102,9 +102,9 @@
                       <div class="apropos-item-title">Territoires</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <p class="apropos-item-text" biom:markdown="*{presentation.territories.text}">
+                    <div class="apropos-item-text top-paragraph" biom:markdown="*{presentation.territories.text}">
                       Participer avec les acteurs locaux à la préservation des Outres-mer
-                    </p>
+                    </div>
                   </a>
                 </li>
               </ul>
@@ -135,11 +135,11 @@
           <div class="col-5">
             <h2 class="section-title col-3" biom:markdown="*{testimony.title.text}">Une biodiversité unique et fragile, protégeons-la !</h2>
             <div class="left-1">
-              <p biom:markdown="*{testimony.text.text}">
+              <div class="top-paragraph" biom:markdown="*{testimony.text.text}">
                 La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l’impactent. Les
                 indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
                 évolution.
-              </p>
+              </div>
               <blockquote biom:markdown="*{testimony.quote.text}">
                 Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l’eau, de l’air
                 mais aussi de la qualité de vie.
@@ -174,12 +174,12 @@
             <h3 class="section-title" biom:markdown="*{science.title.text}">
               La photo-identification de serpents de mer par un groupe de plongeuses amatrices
             </h3>
-            <p class="col-4" biom:markdown="*{science.text.text}">
+            <div class="col-4 top-paragraph" biom:markdown="*{science.text.text}">
               Surnommées les « grand-mères fantastiques », un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de
               l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud
               de Nouméa. Leurs photographies très régulières ont permis de recenser 250 individus différents de ce serpent dont on pensait
               la présence anecdotique.
-            </p>
+            </div>
             <a th:href="@{/sciences-participatives}" class="cta-primary">en savoir plus</a>
           </div>
         </div>

@@ -13,8 +13,8 @@
     <main class="main">
       <div class="section-error">
         <h1 class="error-page-title" biom:markdown="${status}">404</h1>
-        <p class="error-page-text" th:if="${status == 404}">La page que vous avez demandée semble introuvable.</p>
-        <p class="error-page-text" th:if="${status != 404}">Erreur inattendue: <span biom:markdown="${error}">.</span></p>
+        <div class="error-page-text top-paragraph" th:if="${status == 404}">La page que vous avez demandée semble introuvable.</div>
+        <div class="error-page-text top-paragraph" th:if="${status != 404}">Erreur inattendue: <span biom:markdown="${error}">.</span></div>
         <a th:href="@{/}" class="cta-primary blue">Page d'accueil</a>
       </div>
       <div th:if="${trace}" style="padding: 0 30px; width: 100%; overflow-x: scroll">

@@ -24,12 +24,12 @@
         <div class="section-top-wrapper">
           <div class="section-top-content">
             <h1 class="section-top-title" biom:markdown="*{title.text}">Compter la biodiversité, oui mais comment ?</h1>
-            <p class="section-top-text preserve-lines" biom:markdown="*{presentation.text}">
+            <div class="section-top-text preserve-lines top-paragraph" biom:markdown="*{presentation.text}">
               Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son
               évolution. De nombreux paramètres sont étudiés : effectifs des populations, état de santé des écosystèmes, taux de pollutions,
               etc. Ils renseignent ainsi l’état de la biodiversité à un instant précis, mais également l’état des connaissances et des
               moyens scientifiques actuels.
-            </p>
+            </div>
           </div>
         </div>
         <div class="legend-wrapper">
@@ -102,7 +102,7 @@
             <h3 class="section-title" biom:markdown="*{understand.title.text}"></h3>
             <div class="left-1">
               <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="img-full-width margin-bottom hide-desktop" />
-              <p class="preserve-lines" biom:markdown="*{understand.description.text}"></p>
+              <div class="preserve-lines top-paragraph" biom:markdown="*{understand.description.text}"></div>
             </div>
           </div>
           <div class="col-5 left-1">
@@ -122,13 +122,13 @@
         </div>
         <div class="col-4 onb-text">
           <h2 class="heading" biom:markdown="*{onb.title.text}">L’observatoire national de la biodiversité</h2>
-          <p class="preserve-lines" biom:markdown="*{onb.description.text}"></p>
+          <div class="preserve-lines top-paragraph" biom:markdown="*{onb.description.text}"></div>
           <a th:href="*{onb.link.href}" biom:markdown="*{onb.link.text}" class="cta-secondary"></a>
         </div>
       </section>
       <section class="section-citation" id="quote">
         <img th:src="@{/assets/images/quote.svg}" loading="lazy" alt="" class="image" />
-        <p biom:markdown="*{quote.text}"></p>
+        <div class="top-paragraph" biom:markdown="*{quote.text}"></div>
       </section>
       <section class="section-apprendre" id="learn">
         <div class="section-decoration-text apprendre">apprendre</div>
@@ -144,7 +144,7 @@
                 <div class="apprendre-title" biom:markdown="${question.question.text}"></div>
               </div>
               <div class="apprendre-bottom" data-target="question-item.answer">
-                <p class="preserve-lines" biom:markdown="${question.answer.text}"></p>
+                <div class="preserve-lines" biom:markdown="${question.answer.text}"></div>
                 <blockquote biom:markdown="${question.quote.text}"></blockquote>
               </div>
             </li>

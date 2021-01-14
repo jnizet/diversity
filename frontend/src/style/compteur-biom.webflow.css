@@ -13,7 +13,11 @@ h2 {
   font-weight: bold;
 }
 
-p {
+em {
+  font-family: Poppins, sans-serif;
+}
+
+top-paragraph > p {
   margin-bottom: 30px;
 }
 
@@ -6096,7 +6100,7 @@ blockquote {
 }
 
 @media screen and (max-width: 991px) {
-  p {
+  top-paragraph > p {
     margin-bottom: 20px;
   }
 

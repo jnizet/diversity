@@ -29,7 +29,7 @@
         <div class="section-top-wrapper">
           <div class="section-top-content">
             <h1 class="section-top-title" biom:markdown="*{title.text}"></h1>
-            <p class="section-top-text" biom:markdown="*{presentation.text}"></p>
+            <div class="section-top-text top-paragraph" biom:markdown="*{presentation.text}"></div>
           </div>
         </div>
         <img biom:image="*{image}" sizes="100vw" class="img-full anim-zoom" />
@@ -40,7 +40,7 @@
         <div class="section-content">
           <h2 class="section-title top-title" biom:markdown="*{question.text}"></h2>
           <div class="col-5">
-            <p class="preserve-lines" biom:markdown="*{answer.text}"></p>
+            <div class="preserve-lines top-paragraph" biom:markdown="*{answer.text}"></div>
           </div>
         </div>
         <div class="section-decoration-text ecogeste">ecogeste</div>
@@ -82,7 +82,7 @@
       <!-- Quote -->
       <section class="section-citation">
         <img th:src="@{assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote" />
-        <p biom:markdown="*{quote.text}"></p>
+        <div class="top-paragraph" biom:markdown="*{quote.text}"></div>
         <div class="section-decoration-text agir">agir</div>
       </section>
 

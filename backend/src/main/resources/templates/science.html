@@ -28,10 +28,10 @@
         <div class="section-top-wrapper">
           <div class="section-top-content">
             <h1 class="section-top-title" biom:markdown="*{header.title.text}">Que sont les sciences participatives ?</h1>
-            <p class="section-top-text" biom:markdown="*{header.subtitle.text}">
+            <div class="section-top-text top-paragraph" biom:markdown="*{header.subtitle.text}">
               Les sciences participatives permettent à tous les curieux de la nature, du débutant à l’expérimenté, de contribuer à la
               recherche sur la biodiversité en fournissant aux scientifiques un grand nombre de données de terrain.
-            </p>
+            </div>
           </div>
         </div>
         <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
@@ -41,11 +41,11 @@
         <div class="section-content">
           <h2 class="section-title top-title" biom:markdown="*{presentation.title.text}">Sciences faites par des non-professionnels</h2>
           <div class="col-5">
-            <p class="preserve-lines" biom:markdown="*{presentation.description.text}">
+            <div class="preserve-lines top-paragraph" biom:markdown="*{presentation.description.text}">
               Au-delà de la simple définition « sciences faites par des non-professionnels », l’Institut de formation et de recherche en
               éducation à l’environnement (Ifrée) distingue 3 catégories de programmes participatifs selon leurs objectifs, permettant de
               mieux comprendre ce que sont réellement les Sciences Participatives.
-            </p>
+            </div>
           </div>
         </div>
         <div class="section-decoration-text ecogeste">participatives</div>
@@ -54,11 +54,11 @@
         <div class="col-3">
           <div th:each="paragraph: *{paragraphs}">
             <div class="text-big" biom:markdown="${paragraph.title.text}">Les bases de données collaboratives</div>
-            <p class="text-science preserve-lines" biom:markdown="${paragraph.text.text}">
+            <div class="text-science preserve-lines top-paragraph" biom:markdown="${paragraph.text.text}">
               Il s’agit de projet d’inventaires et de signalements destinés aux amateurs sachant identifier les taxons observés. Les
               débutants y sont les bienvenus. L’objet principal est de partager de la connaissance, éventuellement mobilisable a posteriori
               dans unprojet de recherche ou dans un objectif de conservation.
-            </p>
+            </div>
           </div>
         </div>
         <div class="left-1 right-n1">
@@ -87,10 +87,10 @@
               <div class="swiper-slide science-exemple-wrapper" th:each="project: *{examples.projects}">
                 <div class="science-exmple-content">
                   <div class="text-big" biom:markdown="${project.title.text}">Un projet original en Nouvelle-Calédonie</div>
-                  <p class="text-science preserve-lines" biom:markdown="${project.description.text}">
+                  <div class="text-science preserve-lines top-paragraph" biom:markdown="${project.description.text}">
                     Un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie
                     pour étudier un serpent de mer méconnu, l’Hydrophis major, dans la baie des Citrons, au sud de Nouméa.
-                  </p>
+                  </div>
                   <a th:href="${project.more.href}" class="cta-primary yellow" biom:markdown="${project.more.text}">en savoir plus</a>
                 </div>
                 <div class="col-7 left-1">
@@ -108,19 +108,19 @@
                   <div class="exemple-wrapper col-7">
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Objet de l’étude</h4>
-                      <p biom:markdown="${project.subject.text}">
+                      <div class="top-paragraph" biom:markdown="${project.subject.text}">
                         Suivi des populations d’oiseaux communs par échantillonnages ponctuels simples le long de parcours prédéfinis
-                      </p>
+                      </div>
                     </div>
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Acteur</h4>
-                      <p biom:markdown="${project.actor.text}">Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)</p>
+                      <div class="top-paragraph" biom:markdown="${project.actor.text}">Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)</div>
                     </div>
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Public visé</h4>
-                      <p biom:markdown="${project.target.text}">
+                      <div class="top-paragraph" biom:markdown="${project.target.text}">
                         Ornithologues à titre bénévole ou dans un cadre professionnels (Agents de zones protégées)
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>

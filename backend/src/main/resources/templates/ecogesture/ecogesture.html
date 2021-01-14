@@ -29,7 +29,7 @@
         <div class="section-top-wrapper">
           <div class="ecogeste-top-content">
             <h1 class="section-top-title" biom:markdown="*{presentation.name.text}"></h1>
-            <p class="col-3" biom:markdown="*{presentation.description.text}"></p>
+            <div class="col-3 top-paragraph" biom:markdown="*{presentation.description.text}"></div>
             <div class="ecogeste-thematique" biom:markdown="*{presentation.category.text}"></div>
           </div>
         </div>
@@ -56,7 +56,7 @@
         <div class="section-content">
           <h2 class="section-title col-3" biom:markdown="*{understand.title.text}"></h2>
           <div class="col-5">
-            <p class="preserve-lines" biom:markdown="*{understand.text.text}"></p>
+            <div class="preserve-lines top-paragraph" biom:markdown="*{understand.text.text}"></div>
             <blockquote biom:markdown="*{understand.quote.text}"></blockquote>
           </div>
         </div>
@@ -94,7 +94,7 @@
               <div class="action-img-wrapper">
                 <img th:src="@{/images/{imageId}/image(imageId=*{icon.imageId})}" th:alt="*{icon.alt}" />
               </div>
-              <p class="text-big" biom:markdown="*{description.text}"></p>
+              <div class="text-big top-paragraph" biom:markdown="*{description.text}"></div>
             </li>
           </ul>
         </div>
@@ -105,7 +105,7 @@
       <section class="section-agir">
         <h2 class="section-title col-3" biom:markdown="${act.content.title.text}"></h2>
         <div class="col-5">
-          <p biom:markdown="${act.content.description.text}"></p>
+          <div class="top-paragraph" biom:markdown="${act.content.description.text}"></div>
           <div class="agir-divider"></div>
           <div class="agir-block">
             <div class="col-1">
