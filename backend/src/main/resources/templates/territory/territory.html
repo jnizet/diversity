@@ -300,8 +300,17 @@
             <div class="legend-text" biom:markdown="*{ecosystems.image.alt}"></div>
           </div>
         </div>
-        <div th:if="${indicatorCards.size() > 1}" class="push-right indicator-card">
-          <div class="text-big" biom:markdown="${'En '+ territory.name}"></div>
+        <div th:if="${indicatorCards.size() > 1}" th:switch="${territory.slug}" class="push-right indicator-card">
+          <div th:case="reunion" class="text-big" biom:markdown="${'A la '+ territory.name}"></div>
+          <div th:case="saint-martin" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
+          <div th:case="wallis-et-futuna" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
+          <div th:case="mayotte" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
+          <div th:case="saint-barthelemy" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
+          <div th:case="iles-subantarctiques" class="text-big" biom:markdown="${'Aux '+ territory.name}"></div>
+          <div th:case="iles-eparses" class="text-big" biom:markdown="${'Aux '+ territory.name}"></div>
+          <div th:case="clipperton" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
+          <div th:case="saint-pierre-et-miquelon" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
+          <div th:case="*" class="text-big" biom:markdown="${'En '+ territory.name}"></div>
           <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicatorCards[1].indicatorValue, true)}"></div>
           <div class="text-big" biom:markdown="${indicatorCards[1].page.content.presentation.descriptionTerritories.text}"></div>
           <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[1].page.name})}" class="cta-secondary">En savoir plus</a>
