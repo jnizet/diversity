@@ -1,23 +1,67 @@
-image: circleci/openjdk:11-browsers
+stages:
+  - test
+  - build
+  - publish
+  - deploy
 
 variables:
   POSTGRES_HOST_AUTH_METHOD: trust
+  DOCKER_COMPOSE_PATH: "/apps/odata-inpn/docker"
+
+.stage:
+  image: outils-patrinat.mnhn.fr/nexus/java-ci:jdk15-gradle6.8.0
+  only:
+    - main@gitlab-org/gitlab
+  cache:
+    key:
+      files:
+        - build.gradle
+    paths:
+      - admin/node_modules
+      - frontend/node_modules
+      - backernd/build
+      - .gradle
+  before_script:
+  - "which ssh-agent || ( apt update && apt install openssh-client -y )"
+  - eval $(ssh-agent -s)
+  - 'id gitlab-runner || (useradd gitlab-runner && mkdir /home/gitlab-runner && chown -R gitlab-runner:gitlab-runner /home/gitlab-runner)'
+  - dir=$(pwd)
+  - chown -R gitlab-runner:gitlab-runner $dir
+  - su gitlab-runner -c "cd $dir"
+  - mkdir -p ~/.ssh
+  - eval $(ssh-agent -s)
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - export GRADLE_USER_HOME=`pwd`/.gradle
 
 test:
+  tags:
+    - gradle
   stage: test
+  image: circleci/openjdk:11-browsers
+  except:
+    - main@gitlab-org/gitlab
   services:
     - name: postgres:12.2-alpine
       alias: postgres
     - name: mailhog/mailhog@sha256:98c7e2e6621c897ad86f31610d756d76b8ee622c354c28a76f4ed49fb6ed996f
       alias: mailhog
   script:
-    # install postgresql client
     - sudo apt-get install -y postgresql-client
-    # create the test db before running the tests
     - psql -h postgres -U postgres -f backend/database/setup/database.sql
-    # run tests and build
-    # that should not be necessary, but we need to run it as sudo,
-    # because Yarn can't install otherwise, with a privilege issue.
-    # As we run as sudo, we can't rely on environment variable to know if we are on CI or not
-    # so we need to manually pass the CI property, used in the gradle config
     - sudo ./gradlew check build --no-daemon -PCI=true
+
+build:
+  tags:
+    - gradle
+  stage: build
+  extends: .stage
+  script:
+    - su gitlab-runner -c "gradle --build-cache assemble"
+
+publish_docker:
+  stage: publish
+  extends: .stage
+  tags:
+    - gradle
+  script:
+    - su gitlab-runner -c "gradle -PdockerUsername='$NEXUS_CREDS_USR' -PdockerPassword='$NEXUS_CREDS_PSW' -DsendCredentialsOverHttp=true jib"

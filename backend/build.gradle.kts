@@ -1,6 +1,13 @@
 plugins {
     java
     id("org.springframework.boot")
+    id("com.google.cloud.tools.jib") version "2.6.0"
+}
+
+buildscript {
+    dependencies {
+        classpath("com.google.cloud.tools:jib-spring-boot-extension-gradle:0.1.0")
+    }
 }
 
 group = "fr.mnhn"
@@ -85,5 +92,41 @@ tasks {
             listOf(((project.findProperty("password") ?: throw GradleException("No property password found. Use -Ppassword=...")) as String))
         }
         argumentProviders.add(argumentProvider)
+    }
+
+    jib {
+        from {
+            image = "adoptopenjdk:11-jre-openj9"
+        }
+        to {
+            image = "outils-patrinat.mnhn.fr/biom"
+            tags = setOf("latest")
+            auth {
+                username = project.properties["dockerUsername"] as String?
+                password =  project.properties["dockerPassword"] as String?
+            }
+        }
+        container {
+            jvmFlags = listOf("-Xmx4g", "-Xms128m", "-Xscmx128m", "-Xscmaxaot100m", "-Xshareclasses:cacheDir=/opt/shareclasses")
+            mainClass = "fr.mnhn.diversity.DiversityApplication"
+        }
+        setAllowInsecureRegistries(true)
+        pluginExtensions {
+            pluginExtension {
+                implementation = "com.google.cloud.tools.jib.gradle.extension.springboot.JibSpringBootExtension"
+            }
+        }
+        extraDirectories {
+            paths{
+                 path {
+                     setFrom(project(":frontend").file("build/dist"))
+                     into = "/app/classes/static"
+                 }
+                 path {
+                     setFrom(project(":admin").file("dist"))
+                     into = "/app/classes/static"
+                 }
+            }
+        }
     }
 }
