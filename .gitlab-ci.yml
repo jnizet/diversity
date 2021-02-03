@@ -11,7 +11,7 @@ variables:
 .stage:
   image: outils-patrinat.mnhn.fr/nexus/java-ci:jdk15-gradle6.8.0
   only:
-    - main@gitlab-org/gitlab
+    - main@biom/diversity
   cache:
     key:
       files:
@@ -39,7 +39,7 @@ test:
   stage: test
   image: circleci/openjdk:11-browsers
   except:
-    - main@gitlab-org/gitlab
+    - main@biom/diversity
   services:
     - name: postgres:12.2-alpine
       alias: postgres
