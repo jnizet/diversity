@@ -6,7 +6,7 @@ stages:
 
 variables:
   POSTGRES_HOST_AUTH_METHOD: trust
-  DOCKER_COMPOSE_PATH: "/apps/odata-inpn/docker"
+  DOCKER_COMPOSE_PATH: "/apps/docker"
 
 .stage:
   image: outils-patrinat.mnhn.fr/nexus/java-ci:jdk15-gradle6.8.0
@@ -66,3 +66,20 @@ publish_docker:
   script:
     - su gitlab-runner -c "gradle --build-cache assemble"
     - su gitlab-runner -c "gradle -PdockerUsername='$NEXUS_CREDS_USR' -PdockerPassword='$NEXUS_CREDS_PSW' -DsendCredentialsOverHttp=true jib"
+
+deploy_test:
+  stage: deploy
+  extends: .stage
+  environment:
+    name: test
+    url: https://"$BIOM_TEST_SERVER_URL"
+  tags:
+    - gradle
+  script:
+    - ssh-add <(echo "$PATRINAT_CI_SSH_KEY")
+    - touch  ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-keyscan -v "$BIOM_TEST_SERVER_URL" >> ~/.ssh/known_hosts
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$BIOM_TEST_SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml down -v
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$BIOM_TEST_SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml pull
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$BIOM_TEST_SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml up -d
