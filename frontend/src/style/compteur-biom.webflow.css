@@ -1392,6 +1392,15 @@ blockquote {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.footer-logos-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 40px;
 }
 
 .col-2 {
@@ -1968,6 +1977,10 @@ blockquote {
   padding-top: 8px;
   -webkit-transition: all 400ms ease;
   transition: all 400ms ease;
+}
+
+.home-link {
+  padding-bottom: 10px;
 }
 
 .footer-logo-link:hover {
@@ -7731,6 +7744,10 @@ blockquote {
     padding-top: 50px;
     padding-right: 30px;
     padding-left: 30px;
+  }
+
+  .footer-logos-wrapper {
+    padding: 0px;
   }
 
   .col-2 {

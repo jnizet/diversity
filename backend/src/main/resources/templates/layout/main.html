@@ -120,10 +120,13 @@
 
     <footer class="footer" data-controller="contact">
       <div class="footer-wrapper">
-        <div class="col-2">
-          <a th:href="@{/}" class="footer-logo-link w-inline-block">
+        <div class="col-2 footer-logos-wrapper">
+          <a th:href="@{/}" class="footer-logo-link w-inline-block home-link">
             <span class="sr-only">Accueil</span>
             <img th:src="@{/assets/images/logo_noir.svg}" loading="lazy" alt="" />
+          </a>
+          <a href="https://naturefrance.fr/" class="footer-logo-link w-inline-block">
+            <img th:src="@{/assets/images/logo-nature-france.jpg}" loading="lazy" alt="" />
           </a>
         </div>
         <div class="footer-nav">
@@ -168,7 +171,6 @@
       </div>
       <div th:replace="~{layout/search-popin::search-popin}"></div>
       <div th:replace="~{layout/contact-popin::contact-popin}"></div>
-      <div th:replace="~{layout/cookies::cookies}"></div>
     </footer>
 
     <script th:src="@{/bundle.js}"></script>
