@@ -225,7 +225,7 @@ class IndicatorControllerTest extends ControllerTest {
                .andExpect(content().string(containsString("14")))
                .andExpect(content().string(containsString("Eviter les espèces envahissantes")))
                .andExpect(content().string(containsString("Protect the corals")))
-               .andExpect(content().string(containsString("logo_ONB.jpg")))
+               .andExpect(content().string(containsString("logo_ONB.png")))
                .andExpect(content().string(containsString("2\u00a0000\u00a0km2")))
                .andExpect(content().string(containsString("de forêt...")))
                .andExpect(content().string(containsString("</html>")));
