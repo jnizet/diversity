@@ -26,20 +26,16 @@ describe('Ecogesture home', () => {
 
     // ecogestures
     // only 6 displayed
-    cy.get('.ecogeste-item:visible').should('have.length', 6);
+    cy.get('.ecogeste-item:visible').should('have.length', 4);
     // but 13 in total
     cy.get('.ecogeste-item').should('have.length', 13);
     cy.get('#see-more').should('be.visible');
 
     // click on See more
     cy.get('#see-more').click({ force: true });
-    // 12 displayed
-    cy.get('.ecogeste-item:visible').should('have.length', 12);
-
-    // click on See more again
-    cy.get('#see-more').click();
-    // 13 displayed
+    // display all
     cy.get('.ecogeste-item:visible').should('have.length', 13);
+
     cy.get('#see-more').should('not.be.visible');
   });
 });

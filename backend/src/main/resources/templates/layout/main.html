@@ -101,9 +101,13 @@
               >Indicateurs</a
             ><img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
           </li>
-          <li class="nav-link-item">
-            <a th:href="@{/agir-ensemble}" class="nav-link" th:classappend="${selectedMenu == 'act' ? 'w--current' : ''}">Agir ensemble</a
-            ><img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
+          <li class="nav-link-item act-nav-link-item">
+            <a th:href="@{/agir-ensemble}" class="act-nav-link" th:classappend="${selectedMenu == 'act' ? 'w--current' : ''}">Agir ensemble</a
+            >
+            <div class="sub-nav-menu-items">
+              <a th:href="@{/ecogestes}" class="sub-nav-menu-item">Ecogestes</a>
+              <a th:href="@{/sciences-participatives}" class="sub-nav-menu-item">Sciences participatives</a>
+            </div>
           </li>
           <li class="nav-link-item">
             <a th:href="@{/apropos}" class="nav-link" th:classappend="${selectedMenu == 'about' ? 'w--current' : ''}">À propos</a

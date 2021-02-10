@@ -56,7 +56,6 @@
             th:each="card,iterStat: ${ecogestureCards}"
             th:href="@{/ecogestes/{gesture}(gesture=${card.name})}"
             class="ecogeste-link left-1 w-inline-block"
-            th:classappend="${iterStat.odd ? 'first-push' : ''}"
           >
             <div class="ecogeste-bkg-wrapper">
               <img
