@@ -99,7 +99,7 @@ tasks {
             image = "adoptopenjdk:11-jre-openj9"
         }
         to {
-            image = "outils-patrinat.mnhn.fr/biom"
+            image = "outils-patrinat.mnhn.fr/biom-" + project.properties["dockerEnvironmentTag"] as String?
             tags = setOf("latest")
             auth {
                 username = project.properties["dockerUsername"] as String?

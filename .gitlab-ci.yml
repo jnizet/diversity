@@ -65,7 +65,7 @@ build:
     - gradle
   script:
     - su gitlab-runner -c "gradle --build-cache assemble"
-    - su gitlab-runner -c "gradle -PdockerEnvironementTag='$ENV_TAG' -PdockerUsername='$NEXUS_CREDS_USR' -PdockerPassword='$NEXUS_CREDS_PSW' -DsendCredentialsOverHttp=true jib"
+    - su gitlab-runner -c "gradle -PdockerEnvironmentTag='$ENV_TAG' -PdockerUsername='$NEXUS_CREDS_USR' -PdockerPassword='$NEXUS_CREDS_PSW' -DsendCredentialsOverHttp=true jib"
 
 publish_test:
   only:
