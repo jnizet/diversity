@@ -150,6 +150,12 @@ class IndicatorControllerTest extends ControllerTest {
                 "image", image(1L),
                 "link", link("lien")
             ),
+            "inpn", Map.of(
+                "title", text("INPN"),
+                "description", text("inpn description"),
+                "image", image(1L),
+                "link", link("inpn")
+            ),
             "quote", text("Citation"),
             "questions", List.of(
                 Map.of(

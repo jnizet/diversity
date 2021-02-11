@@ -67,6 +67,12 @@ public final class IndicatorModel {
                                    .multiLineText("description", "Description de l'observatoire'")
                                    .link("link", "Lien vers l'observatoire")
                  )
+                .section(
+                     SectionElement.builder("inpn").describedAs("Inventaire national du patrimoine naturel")
+                                   .titleText("title", "Titre")
+                                   .multiLineText("description", "Description de l'inventaire'")
+                                   .link("link", "Lien vers l'inventaire")
+                 )
                  .titleText("quote", "Citation")
                  .list(
                      ListElement.builder("questions").describedAs("Questions pour apprendre")

@@ -116,14 +116,26 @@
           <div class="section-decoration-text temoignage">comprendre</div>
         </div>
       </section>
-      <section class="section-onb" id="onb">
-        <div class="col-5 onb-img">
-          <img th:src="@{/assets/images/logo_ONB.png}" loading="lazy" width="320" alt="" class="img-multiply logo-onb" />
+      <section class="section-indicator-sources" id="onb">
+        <div class="indicator-source-container">
+          <div class="col-5 onb-img">
+            <img th:src="@{/assets/images/logo_ONB.png}" loading="lazy" height="200" alt="" class="img-multiply logo-onb" />
+          </div>
+          <div class="col-4 onb-text">
+            <h2 class="heading" biom:markdown="*{onb.title.text}">L’observatoire national de la biodiversité</h2>
+            <div class="preserve-lines top-paragraph" biom:markdown="*{onb.description.text}"></div>
+            <a th:href="*{onb.link.href}" biom:markdown="*{onb.link.text}" class="cta-secondary"></a>
+          </div>
         </div>
-        <div class="col-4 onb-text">
-          <h2 class="heading" biom:markdown="*{onb.title.text}">L’observatoire national de la biodiversité</h2>
-          <div class="preserve-lines top-paragraph" biom:markdown="*{onb.description.text}"></div>
-          <a th:href="*{onb.link.href}" biom:markdown="*{onb.link.text}" class="cta-secondary"></a>
+        <div class="indicator-source-container">
+          <div class="col-5 inpn-img">
+            <img th:src="@{/assets/images/logo_inpn.jpg}" loading="lazy" height="120" alt="" class="img-multiply logo-inpn" />
+          </div>
+          <div class="col-4 inpn-text">
+            <h2 class="heading" biom:markdown="*{inpn.title.text}">L’observatoire national de la biodiversité</h2>
+            <div class="preserve-lines top-paragraph" biom:markdown="*{inpn.description.text}"></div>
+            <a th:href="*{inpn.link.href}" biom:markdown="*{inpn.link.text}" class="cta-secondary"></a>
+          </div>
         </div>
       </section>
       <section class="section-citation" id="quote">
