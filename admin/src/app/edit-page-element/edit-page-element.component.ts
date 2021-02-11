@@ -12,6 +12,7 @@ import {
 } from '../page.model';
 import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { atLeastOneElement, validElement, validList } from '../validators';
+import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'biom-edit-page-element',
@@ -25,6 +26,10 @@ export class EditPageElementComponent implements ControlValueAccessor {
   isSubmitted: boolean;
   element: PageElement;
   elementGroup: FormGroup;
+
+  moveUpItemIcon = faAngleUp;
+  moveDownItemIcon = faAngleDown;
+
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
 
@@ -162,6 +167,30 @@ export class EditPageElementComponent implements ControlValueAccessor {
   removeListUnit(element: ListElement, unitIndex: number) {
     element.elements.splice(unitIndex, 1);
     this.elementsArray.removeAt(unitIndex);
+  }
+
+  moveUpListUnit(element: ListElement, unitIndex: number) {
+    [element.elements[unitIndex], element.elements[unitIndex - 1]] = [element.elements[unitIndex - 1], element.elements[unitIndex]];
+
+    const formArrayElement = this.elementsArray.at(unitIndex);
+    const formArrayElementToSwapWith = this.elementsArray.at(unitIndex - 1);
+
+    this.elementsArray.removeAt(unitIndex - 1);
+    this.elementsArray.removeAt(unitIndex - 1);
+    this.elementsArray.insert(unitIndex - 1, formArrayElement);
+    this.elementsArray.insert(unitIndex, formArrayElementToSwapWith);
+  }
+
+  moveDownListUnit(element: ListElement, unitIndex: number) {
+    [element.elements[unitIndex], element.elements[unitIndex + 1]] = [element.elements[unitIndex + 1], element.elements[unitIndex]];
+
+    const formArrayElement = this.elementsArray.at(unitIndex);
+    const formArrayElementToSwapWith = this.elementsArray.at(unitIndex + 1);
+
+    this.elementsArray.removeAt(unitIndex);
+    this.elementsArray.removeAt(unitIndex);
+    this.elementsArray.insert(unitIndex, formArrayElementToSwapWith);
+    this.elementsArray.insert(unitIndex + 1, formArrayElement);
   }
 
   get elementsArray() {

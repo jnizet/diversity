@@ -71,6 +71,14 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
     return this.button('.remove-unit');
   }
 
+  get firstMoveUpUnitButton() {
+    return this.button('.move-up-unit');
+  }
+
+  get firstMoveDownUnitButton() {
+    return this.button('.move-down-unit');
+  }
+
   get sectionHeading() {
     return this.element('h3');
   }

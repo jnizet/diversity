@@ -33,9 +33,29 @@
           [elementModel]="getElementModel(listElement.name)"
           [level]="level + 1"
         ></biom-edit-page-element>
-        <button type="button" class="btn btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
-          Enlever l'élément de la liste
-        </button>
+        <div class="list-element-buttons-controller">
+          <button type="button" class="btn btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
+            Enlever l'élément de la liste
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-primary move-up-unit"
+            (click)="moveUpListUnit(element, unitIndex)"
+            [disabled]="unitIndex == 0"
+          >
+            <fa-icon [icon]="moveUpItemIcon"></fa-icon>
+            <span class="sr-only">Remonter l'élément dans la liste</span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-primary move-down-unit"
+            (click)="moveDownListUnit(element, unitIndex)"
+            [disabled]="unitIndex + 1 >= element.elements.length"
+          >
+            <fa-icon [icon]="moveDownItemIcon"></fa-icon>
+            <span class="sr-only">Redescendre l'élément dans la liste</span>
+          </button>
+        </div>
       </div>
     </div>
     <val-errors [control]="elementsArray" label="La liste">
