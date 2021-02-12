@@ -194,7 +194,7 @@ class TerritoryControllerTest extends ControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Territoire - La Réunion</title>")))
-               .andExpect(content().string(containsString("<p>Réunion</p>")))
+               .andExpect(content().string(containsString("<p>La Réunion</p>")))
                .andExpect(content().string(containsString("<p>Une bien jolie île</p>")))
                .andExpect(content().string(containsString("<p>presentation</p>")))
                .andExpect(content().string(containsString("<p>Interests</p>")))
@@ -215,7 +215,7 @@ class TerritoryControllerTest extends ControllerTest {
                .andExpect(content().string(containsString("<p>Risks</p>")))
                .andExpect(content().string(containsString("<p>Risk1</p>")))
                .andExpect(content().string(containsString("<p>risk1</p>")))
-               .andExpect(content().string(containsString("<p>Saint-Pierre-Et-Miquelon</p>")))
+               .andExpect(content().string(containsString("<p>Saint-Pierre-et-Miquelon</p>")))
                .andExpect(content().string(containsString("</html>")));
     }
 
@@ -248,7 +248,7 @@ class TerritoryControllerTest extends ControllerTest {
                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                .andExpect(content().string(containsString("<title>Territoires</title>")))
                .andExpect(content().string(containsString("<p>Découvrez les territoires</p>")))
-               .andExpect(content().string(containsString("<p>Réunion</p>")))
+               .andExpect(content().string(containsString("<p>La Réunion</p>")))
                .andExpect(content().string(containsString("<p>presentation of reunion</p>")))
                .andExpect(content().string(containsString("</html>")));
     }

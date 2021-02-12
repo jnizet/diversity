@@ -63,7 +63,7 @@ public enum Territory {
         null
     ),
     REUNION(
-        "Réunion",
+        "La Réunion",
         "Réunion",
         "reunion",
         new MapCoordinates(290, 615),
@@ -105,7 +105,7 @@ public enum Territory {
         null
     ),
     SAINT_PIERRE_ET_MIQUELON(
-        "Saint-Pierre-Et-Miquelon",
+        "Saint-Pierre-et-Miquelon",
         "Saint-Pierre-et-Miquelon",
         "saint-pierre-et-miquelon",
         new MapCoordinates(1181, 348),

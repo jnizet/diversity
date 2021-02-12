@@ -12,9 +12,9 @@ describe('Territory home', () => {
 
   it('should display territories in map', () => {
     cy.visit('/territoires');
-    cy.contains('.nav-slide', 'Réunion');
-    cy.contains('.nav-slide', 'Saint-Pierre-Et-Miquelon').click();
-    cy.contains('h4', 'Saint-Pierre-Et-Miquelon');
+    cy.contains('.nav-slide', 'La Réunion');
+    cy.contains('.nav-slide', 'Saint-Pierre-et-Miquelon').click();
+    cy.contains('h4', 'Saint-Pierre-et-Miquelon');
 
     cy.contains('.active a', 'Découvrir ce portrait').click({ force: true });
     cy.title().should('eq', 'Saint Pierre et Miquelon');
@@ -34,6 +34,6 @@ describe('Territory home', () => {
     cy.visit('/territoires');
     cy.get('.hotspot7 .hotspot-circle').click({ force: true });
 
-    cy.contains('h4', 'Saint-Pierre-Et-Miquelon');
+    cy.contains('h4', 'Saint-Pierre-et-Miquelon');
   });
 });
