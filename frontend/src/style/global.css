@@ -97,8 +97,11 @@ blockquote:before {
 }
 
 .sticky .nav-link,
+.sticky .act-nav-link,
 .dark-nav .nav-link,
-.error-page .nav-link {
+.dark-nav .act-nav-link,
+.error-page .nav-link,
+.error-page .act-nav-link {
   color: #122c33;
 }
 
