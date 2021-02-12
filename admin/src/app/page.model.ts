@@ -17,6 +17,7 @@ export interface TextElement extends BasePageElement {
   type: 'TEXT';
   multiLine: boolean;
   text: string;
+  optional: boolean;
 }
 
 export interface SelectElement extends BasePageElement {
@@ -53,11 +54,10 @@ export interface SectionElement extends ContainerElement {
 export type PageElement = TextElement | LinkElement | ImageElement | ListElement | ListUnitElement | SectionElement | SelectElement;
 
 function isValidText(text: TextElement): boolean {
-  return !!text.text;
+  return !text.optional ? !!text.text : true;
 }
 
 function isValidSelect(select: SelectElement): boolean {
-  console.log(select.value, select.options);
   return !!select.options;
 }
 

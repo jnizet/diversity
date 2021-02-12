@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class TextCommandDTO extends ElementCommandDTO {
 
-    @NotBlank
     private final String text;
 
     @JsonCreator
@@ -16,7 +15,7 @@ public final class TextCommandDTO extends ElementCommandDTO {
         @JsonProperty("text") String text
     ) {
         super(key);
-        this.text = text;
+        this.text = text == null ? "" : text;
     }
 
     @Override

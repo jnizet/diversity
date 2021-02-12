@@ -23,7 +23,7 @@ public final class EcogestureModel {
                               .describedAs("Présentation de l'écogeste, et informations affichées sur sa vignette dans la page d'accueil des écogestes")
                               .titleText("name", "Nom de l'écogeste")
                               .text("category", "Catégorie de l'écogeste")
-                              .text("description", "Description de l'écogeste")
+                              .optionalText("description", "Description de l'écogeste")
                               .image("image", "Illustration de l'écogeste")
                               .document("file", "Fiche technique de l'écogeste")
                  )

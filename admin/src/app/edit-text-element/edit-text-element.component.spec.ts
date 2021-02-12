@@ -23,7 +23,8 @@ class DummyFormComponent {
     name: 'title',
     description: 'Home title',
     multiLine: false,
-    text: 'Welcome'
+    text: 'Welcome',
+    optional: false
   };
   form = new FormGroup({
     textElement: new FormControl(this.textElement)

@@ -92,7 +92,8 @@ export class EditPageElementComponent implements ControlValueAccessor {
     switch (element.type) {
       case 'TEXT': {
         // the element is a text: we want a simple form with a 'text' control
-        const textControl = this.fb.control(element, [Validators.required, validElement]);
+        const validators = (element as TextElement).optional ? [validElement] : [Validators.required, validElement];
+        const textControl = this.fb.control(element, validators);
         this.elementGroup.addControl('text', textControl);
         textControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);

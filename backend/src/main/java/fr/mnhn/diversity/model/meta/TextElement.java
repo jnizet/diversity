@@ -8,16 +8,22 @@ import java.util.Objects;
  */
 public final class TextElement extends PageElement {
     private final boolean multiLine;
+    private final boolean isOptional;
     private final boolean title;
 
     public TextElement(Builder builder) {
         super(builder.name, builder.description);
         this.multiLine = builder.multiLine;
         this.title = builder.title;
+        this.isOptional = builder.isOptional;
     }
 
     public boolean isMultiLine() {
         return multiLine;
+    }
+
+    public boolean isOptional() {
+        return isOptional;
     }
 
     public boolean isTitle() {
@@ -42,18 +48,19 @@ public final class TextElement extends PageElement {
         }
         TextElement that = (TextElement) o;
         return multiLine == that.multiLine &&
-            title == that.title;
+            title == that.title && isOptional == that.isOptional();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), multiLine, title);
+        return Objects.hash(super.hashCode(), multiLine, title, isOptional);
     }
 
     @Override
     public String toString() {
         return "TextElement{" +
-            "multiLine=" + multiLine +
+            "isOptional=" + isOptional +
+            ", multiLine=" + multiLine +
             ", title=" + title +
             "} " + super.toString();
     }
@@ -65,6 +72,7 @@ public final class TextElement extends PageElement {
     public static class Builder extends BaseBuilder<Builder> implements PageElementBuilder {
         private boolean multiLine = false;
         private boolean title = false;
+        private boolean isOptional = false;
 
         public Builder(String name) {
             super(name);
@@ -77,6 +85,11 @@ public final class TextElement extends PageElement {
 
         public Builder title() {
             this.title = true;
+            return this;
+        }
+
+        public Builder isOptional() {
+            this.isOptional = true;
             return this;
         }
 

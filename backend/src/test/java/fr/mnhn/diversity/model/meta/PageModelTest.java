@@ -19,6 +19,7 @@ class PageModelTest {
                 .section(SectionElement.builder("welcomeSection")
                                        .describedAs("Welcome section")
                                        .multiLineText("paragraph", "Paragraph")
+                                       .optionalText("optional text", "an optional text")
                 )
                 .list(ListElement.builder("list")
                                  .describedAs("Some list")
@@ -40,11 +41,15 @@ class PageModelTest {
 
         SectionElement section = (SectionElement) home.getElements().get(1);
         assertThat(section.getName()).isEqualTo("welcomeSection");
-        assertThat(section.getElements()).hasSize(1);
+        assertThat(section.getElements()).hasSize(2);
 
         TextElement paragraph = (TextElement) section.getElements().get(0);
         assertThat(paragraph.getName()).isEqualTo("paragraph");
         assertThat(paragraph.isMultiLine()).isTrue();
+
+        TextElement optionalText = (TextElement) section.getElements().get(1);
+        assertThat(optionalText.getName()).isEqualTo("optional text");
+        assertThat(optionalText.isOptional()).isTrue();
 
         ListElement list = (ListElement) home.getElements().get(2);
         assertThat(list.getDescription()).isEqualTo("Some list");
