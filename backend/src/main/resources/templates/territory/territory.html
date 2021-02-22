@@ -150,7 +150,7 @@
       <section th:if="${indicatorCards.size() > 0}" class="section-territoire-indicateur">
         <div class="territoire-indicateur-wrapper">
           <div th:switch="${territory.slug}" class="indicateur-push-content left-1 indicator-card">
-            <div th:case="reunion" class="text-big" biom:markdown="${'A la '+ territory.name}"></div>
+            <div th:case="reunion" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
             <div th:case="saint-martin" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
             <div th:case="wallis-et-futuna" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
             <div th:case="mayotte" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
@@ -301,7 +301,7 @@
           </div>
         </div>
         <div th:if="${indicatorCards.size() > 1}" th:switch="${territory.slug}" class="push-right indicator-card">
-          <div th:case="reunion" class="text-big" biom:markdown="${'A la '+ territory.name}"></div>
+          <div th:case="reunion" class="text-big" biom:markdown="${'A  '+ territory.name}"></div>
           <div th:case="saint-martin" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
           <div th:case="wallis-et-futuna" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
           <div th:case="mayotte" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
