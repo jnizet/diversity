@@ -79,6 +79,7 @@ public class TerritoryController {
             "indicatorCards", indicatorCards,
             "nextTerritoryCard", nextTerritoryCard == null ? false : nextTerritoryCard
         );
+        Collections.shuffle((List)((PageContent) model.get("page")).getContent().get("species"));
         return new ModelAndView("territory/territory", model);
     }
 

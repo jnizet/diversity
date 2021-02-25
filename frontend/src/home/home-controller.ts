@@ -7,6 +7,7 @@ export class HomeController extends Controller {
     new Swiper('.swiper-top', {
       speed: 1000,
       effect: 'fade',
+      simulateTouch: false,
       fadeEffect: {
         crossFade: true
       },

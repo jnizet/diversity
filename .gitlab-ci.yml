@@ -46,6 +46,7 @@ test:
     - name: mailhog/mailhog@sha256:98c7e2e6621c897ad86f31610d756d76b8ee622c354c28a76f4ed49fb6ed996f
       alias: mailhog
   script:
+    - sudo apt-get update
     - sudo apt-get install -y postgresql-client
     - psql -h postgres -U postgres -f backend/database/setup/database.sql
     - sudo ./gradlew check build --no-daemon -PCI=true

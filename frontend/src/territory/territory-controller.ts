@@ -71,12 +71,14 @@ export class TerritoryController extends Controller {
       freeMode: true,
       freeModeMomentum: true,
       grabCursor: true,
+      simulateTouch: false,
       touchRatio: 2
     });
 
     new Swiper('.swiper-espece', {
       speed: 1000,
       effect: 'fade',
+      simulateTouch: false,
       fadeEffect: {
         crossFade: true
       },
@@ -97,6 +99,7 @@ export class TerritoryController extends Controller {
     new Swiper('.swiper-ecosysteme', {
       speed: 1000,
       effect: 'fade',
+      simulateTouch: false,
       fadeEffect: {
         crossFade: true
       },

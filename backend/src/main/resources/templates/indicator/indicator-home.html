@@ -55,7 +55,7 @@
                   data-target="indicators.category"
                   data-action="click->indicators#categoryClicked"
                   th:attr="data-id=${category.id}"
-                  biom:markdown="${category.name}"
+                  th:text="${category.name}"
                 ></button>
               </li>
             </ul>

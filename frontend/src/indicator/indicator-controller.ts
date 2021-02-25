@@ -9,6 +9,7 @@ export class IndicatorController extends Controller {
       slidesPerView: 'auto',
       spaceBetween: 60,
       watchOverflow: true,
+      simulateTouch: false,
       navigation: {
         prevEl: '.swiper-prev',
         nextEl: '.swiper-next'

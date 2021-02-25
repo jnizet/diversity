@@ -179,6 +179,7 @@ export class MapController extends Controller {
         loop: true,
         grabCursor: true,
         touchRatio: 2,
+        simulateTouch: false,
         autoplay: {
           delay: 3000
         },
@@ -200,6 +201,7 @@ export class MapController extends Controller {
       grabCursor: true,
       freeMode: true,
       slidesPerView: 'auto',
+      simulateTouch: false,
       breakpoints: {
         320: {
           direction: 'horizontal',
@@ -335,6 +337,8 @@ export class MapController extends Controller {
   }
 
   backWorld() {
+    $('.bassin-text-wrapper').fadeOut();
+
     $('.territoire-fiche-item').removeClass('active');
     $('.section-map').removeClass('map-zoom map-zoom-bassin');
     $('.zoomin').removeClass('zoomin');

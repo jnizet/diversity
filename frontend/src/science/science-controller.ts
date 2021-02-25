@@ -10,6 +10,7 @@ export class ScienceController extends Controller {
       effect: 'fade',
       freeMode: true,
       loop: true,
+      simulateTouch: false,
       fadeEffect: {
         crossFade: true
       },
