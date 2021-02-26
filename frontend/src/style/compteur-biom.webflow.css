@@ -5,6 +5,10 @@ body {
   line-height: 24px;
 }
 
+a {
+  color: #3071ad;
+}
+
 h2 {
   margin-top: 20px;
   margin-bottom: 10px;
@@ -155,7 +159,9 @@ blockquote {
   background-color: #f3f5f7;
   color: #fff;
 }
-
+.section-top a {
+  color: #c6d3e3;
+}
 .logo-link {
   position: relative;
   -webkit-transition: all 400ms ease;
@@ -769,6 +775,9 @@ blockquote {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+legend-text a {
+  color: #c6d3e3;
+}
 
 .swiper-pagination {
   position: absolute;
@@ -1373,6 +1382,9 @@ blockquote {
   justify-content: center;
   color: #fff;
 }
+.full-img-wrapper > p > a {
+  color: #c6d3e3;
+}
 
 .col-4 {
   position: relative;
@@ -1971,7 +1983,9 @@ blockquote {
   border-bottom: 1px solid #3c9eaf;
   color: #fff;
 }
-
+.apprendre-item a {
+  color: #c6d3e3;
+}
 .apprendre-top {
   position: relative;
   margin-bottom: 0px;
@@ -2489,6 +2503,10 @@ blockquote {
   color: #fff;
 }
 
+.section-list-territoire a {
+  color: #c6d3e3;
+}
+
 .indicateur-h1 {
   margin-top: 0px;
   margin-bottom: 60px;
@@ -2663,6 +2681,10 @@ blockquote {
   -ms-flex-align: start;
   align-items: flex-start;
   color: #fff;
+}
+
+.ecogeste-wrapper a {
+  color: #c6d3e3;
 }
 
 .ecogeste-wrapper.highlight {
@@ -2973,6 +2995,10 @@ blockquote {
   color: #fff;
 }
 
+.section-agir-science a {
+  color: #c6d3e3;
+}
+
 .science-push-wrapper {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3167,6 +3193,10 @@ blockquote {
   color: #fff;
 }
 
+.section-agir a {
+  color: #c6d3e3;
+}
+
 .agir-divider {
   border-top: 1px solid #3c9eaf;
 }
@@ -3277,6 +3307,10 @@ blockquote {
   background-color: #1f4a6a;
   background-image: linear-gradient(45deg, #1f4a6a, #4281a3);
   color: #fff;
+}
+
+.section-partenaires  a {
+  color: #c6d3e3;
 }
 
 .partner-wrapper {
@@ -3501,6 +3535,10 @@ blockquote {
   background-image: linear-gradient(45deg, #1f4a6a, #4281a3);
   color: #fff;
   text-decoration: none;
+}
+
+.section-science-exemple  a {
+  color: #c6d3e3;
 }
 
 .col-11 {
@@ -3959,6 +3997,10 @@ blockquote {
   color: #fff;
 }
 
+.section-top-territoire  a {
+  color: #c6d3e3;
+}
+
 .section {
   width: 360px;
   min-height: 500px;
@@ -3986,6 +4028,10 @@ blockquote {
   background-color: #1f4a6a;
   background-image: linear-gradient(45deg, #1f4a6a, #4281a3);
   color: #fff;
+}
+
+.territoire-side  a {
+  color: #c6d3e3;
 }
 
 .section-territoire-fiche {
@@ -4034,6 +4080,10 @@ blockquote {
   background-image: linear-gradient(45deg, #1f4a6a, #4281a3);
   color: #fff;
   text-decoration: none;
+}
+
+.section-espece a {
+  color: #c6d3e3;
 }
 
 .science-exmple-content {
@@ -5049,6 +5099,10 @@ blockquote {
   text-transform: uppercase;
 }
 
+.hotspot-text  a {
+  color: #c6d3e3;
+}
+
 .hotspot-text.bassin-text {
   bottom: 80px;
 }
@@ -5144,6 +5198,10 @@ blockquote {
   color: #fff;
 }
 
+.bassin-text-wrapper a {
+  color: #c6d3e3;
+}
+
 .bassin-text-title {
   margin-bottom: 10px;
   font-size: 14px;
@@ -5231,6 +5289,10 @@ blockquote {
   -ms-flex-align: center;
   align-items: center;
   color: #fff;
+}
+
+.territoire-fiche-wrapper a {
+  color: #c6d3e3;
 }
 
 .territoire-fiche-title {
@@ -6153,6 +6215,10 @@ blockquote {
 
 .lieu-img-wrapper {
   width: 100%;
+}
+
+p > a:visited {
+  color: #5f9ea0;
 }
 
 @media screen and (max-width: 991px) {

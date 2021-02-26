@@ -28,8 +28,7 @@
         <div class="half indicateur-h1-wrapper">
           <div class="col-4 indicateur-h1-content">
             <h1 class="indicateur-h1">
-              <span class="indicateur-h1-number" biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue, indicator.isRounded)}">60</span>
-              <span class="h1-porcent" biom:markdown="${outremerIndicatorValue.unit}">%</span>
+              <span class="indicateur-h1-number" biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue, indicator.isRounded) + ' ' + outremerIndicatorValue.unit}">60%</span>
               <span class="h1-content" biom:markdown="*{presentation.description.text}"
                 >espèces sur les 100 considérées comme les plus envahissantes au monde se trouvent en outre-mer.</span
               >
