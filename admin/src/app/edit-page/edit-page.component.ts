@@ -76,7 +76,14 @@ export class EditPageComponent implements OnInit {
     }
   }
 
+  scrollTo(elementId: string) {
+    const el = document.getElementById(`page-element--${elementId}`);
+    el.scrollIntoView({ behavior: 'smooth', inline: 'nearest' });
+  }
+
   savePage() {
+    console.log(this.editedPage.elements);
+
     this.submitted = true;
     if (this.pageForm.invalid) {
       animate(this.saveButton.nativeElement, classBasedAnimation('shake')).subscribe();

@@ -1,31 +1,39 @@
-<div *ngIf="editedPage">
-  <h1>
-    {{ mode === 'update' ? 'Modifier' : 'Créer' }} la page
-    <small>
-      <code>{{ editedPage.name }}</code>
-    </small>
-  </h1>
-
-  <form [formGroup]="pageForm" (ngSubmit)="savePage()">
-    <div class="form-group">
-      <label for="title">Titre de la page</label>
-      <input id="title" class="form-control" formControlName="title" />
-      <val-errors controlName="title" label="Le titre"></val-errors>
-    </div>
-    <div formGroupName="elements">
-      <div *ngFor="let element of editedPage.elements">
-        <biom-edit-page-element
-          [formControlName]="element.name"
-          [submitted]="submitted"
-          [elementModel]="getElementModel(element.name)"
-          [level]="2"
-        ></biom-edit-page-element>
+<div class="row" *ngIf="editedPage">
+  <div class="col-md-3 mt-5">
+    <div class="sticky-top">
+      <h5>VOLET DE NAVIGATION</h5>
+      <div class="ml-5 my-4" *ngFor="let element of editedPage.elements">
+        <a role="button" name="index--{{ element.name }}" (click)="scrollTo(element.name)">{{ element.description }}</a>
       </div>
     </div>
-
-    <div class="mb-1">
-      <button #saveButton type="submit" class="btn btn-primary mr-2" id="save-button">Enregistrer</button>
-      <a class="btn btn-danger" routerLink="/">Annuler</a>
-    </div>
-  </form>
+  </div>
+  <div class="col-md-9">
+    <h1>
+      {{ mode === 'update' ? 'Modifier' : 'Créer' }} la page
+      <small>
+        <code>{{ editedPage.name }}</code>
+      </small>
+    </h1>
+    <form [formGroup]="pageForm" (ngSubmit)="savePage()">
+      <div class="form-group">
+        <label for="title">Titre de la page</label>
+        <input id="title" class="form-control" formControlName="title" />
+        <val-errors controlName="title" label="Le titre"></val-errors>
+      </div>
+      <div formGroupName="elements">
+        <div *ngFor="let element of editedPage.elements" id="page-element--{{ element.name }}">
+          <biom-edit-page-element
+            [formControlName]="element.name"
+            [submitted]="submitted"
+            [elementModel]="getElementModel(element.name)"
+            [level]="2"
+          ></biom-edit-page-element>
+        </div>
+      </div>
+      <div class="mb-1">
+        <button #saveButton type="submit" class="btn btn-primary mr-2" id="save-button">Enregistrer</button>
+        <a class="btn btn-danger" routerLink="/">Annuler</a>
+      </div>
+    </form>
+  </div>
 </div>
