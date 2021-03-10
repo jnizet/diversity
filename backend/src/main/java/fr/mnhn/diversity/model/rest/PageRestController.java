@@ -2,7 +2,9 @@ package fr.mnhn.diversity.model.rest;
 
 import static fr.mnhn.diversity.common.PageModels.ALL_PAGE_MODELS_BY_NAME;
 
+import fr.mnhn.diversity.model.Checkbox;
 import fr.mnhn.diversity.model.Select;
+import fr.mnhn.diversity.model.meta.CheckboxElement;
 import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -229,6 +231,21 @@ public class PageRestController {
             return null;
         }
 
+        @Override
+        public Void visitCheckbox(CheckboxElement checkbox) {
+            String name = checkbox.getName();
+            String key = prefix + name;
+            if (page != null) {
+                Checkbox value = (Checkbox) PageUtils.getElement(page, key, ElementType.CHECKBOX);
+                CheckboxElementDTO checkboxElementDTO = new CheckboxElementDTO(checkbox, value);
+                elements.add(checkboxElementDTO);
+            }
+            else {
+                elements.add(new CheckboxElementDTO(checkbox, new Checkbox(null, key, false)));
+            }
+            return null;
+        }
+
         public List<PageElementDTO> getElements() {
             return elements;
         }
@@ -290,6 +307,11 @@ public class PageRestController {
         @Override
         public Element visitSelect(SelectCommandDTO select) {
             return new Select(null, select.getKey(), select.getValue());
+        }
+
+        @Override
+        public Element visitCheckbox(CheckboxCommandDTO checkbox) {
+            return new Checkbox(null, checkbox.getKey(), checkbox.getValue());
         }
     }
 }

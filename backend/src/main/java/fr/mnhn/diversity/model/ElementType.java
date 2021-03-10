@@ -8,5 +8,6 @@ public enum ElementType {
     TEXT,
     IMAGE,
     LINK,
-    SELECT
+    SELECT,
+    CHECKBOX
 }

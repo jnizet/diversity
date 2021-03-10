@@ -49,6 +49,10 @@ public abstract class Element {
         return new Select(id, key, value);
     }
 
+    public static Checkbox checkbox(Long id, String key, boolean value) {
+        return new Checkbox(id, key, value);
+    }
+
     public Long getId() {
         return id;
     }

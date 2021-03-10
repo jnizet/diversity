@@ -8,4 +8,5 @@ public interface ElementVisitor<T> {
     T visitImage(Image image);
     T visitLink(Link link);
     T visitSelect(Select select);
+    T visitCheckbox(Checkbox checkbox);
 }

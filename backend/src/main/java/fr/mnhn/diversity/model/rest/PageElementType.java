@@ -12,5 +12,6 @@ public enum PageElementType {
     SECTION,
     LIST_UNIT,
     SELECT,
+    CHECKBOX,
     LIST;
 }

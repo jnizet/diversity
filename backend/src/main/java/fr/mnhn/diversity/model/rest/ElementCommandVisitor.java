@@ -11,4 +11,6 @@ public interface ElementCommandVisitor<T> {
     T visitLink(LinkCommandDTO link);
 
     T visitSelect(SelectCommandDTO select);
+
+    T visitCheckbox(CheckboxCommandDTO checkbox);
 }

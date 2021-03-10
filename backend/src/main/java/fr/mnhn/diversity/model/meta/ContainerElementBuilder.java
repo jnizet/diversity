@@ -61,6 +61,15 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
         return this.text(TextElement.builder(name).describedAs(description).multiLine());
     }
 
+    public B checkbox(CheckboxElement.Builder selectBuilder) {
+        this.elements.add(selectBuilder);
+        return (B) this;
+    }
+
+    public B checkbox(String name, String description) {
+        return this.checkbox(CheckboxElement.builder(name).describedAs(description));
+    }
+
     public B select(SelectElement.Builder selectBuilder) {
         this.elements.add(selectBuilder);
         return (B) this;

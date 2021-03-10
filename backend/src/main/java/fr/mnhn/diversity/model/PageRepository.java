@@ -276,6 +276,22 @@ public class PageRepository {
     }
 
     /**
+     * Creates a new {@link Select}
+     */
+    private Checkbox createCheckbox(Long pageId, Checkbox checkbox) {
+        Map<String, Object> paramMap = Map.of(
+            "page_id", pageId,
+            "type", checkbox.getType().name(),
+            "key", checkbox.getKey(),
+            "value", checkbox.getValue()
+        );
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update("insert into page_element (id, page_id, type, key, text) values (nextval('page_element_seq'), :page_id, :type, :key, :value)", new MapSqlParameterSource(paramMap), keyHolder);
+        Long id = (Long) keyHolder.getKeys().get("id");
+        return new Checkbox(id, checkbox.getKey(), checkbox.getValue());
+    }
+
+    /**
      * Creates a new {@link Link}
      */
     private Link createLink(Long pageId, Link link) {
@@ -336,6 +352,9 @@ public class PageRepository {
                         break;
                     case SELECT:
                         elements.add(Element.select(elementId, key, rs.getString("text")));
+                        break;
+                    case CHECKBOX:
+                        elements.add(Element.checkbox(elementId, key, rs.getBoolean("text")));
                         break;
                     default:
                         throw new IllegalStateException("Unknown element type: " + type);
@@ -406,6 +425,11 @@ public class PageRepository {
         @Override
         public Select visitSelect(Select select) {
             return createSelect(pageId, select);
+        }
+
+        @Override
+        public Checkbox visitCheckbox(Checkbox checkbox) {
+            return createCheckbox(pageId, checkbox);
         }
     }
 }

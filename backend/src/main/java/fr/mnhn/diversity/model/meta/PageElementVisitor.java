@@ -11,4 +11,5 @@ public interface PageElementVisitor<T> {
     T visitImage(ImageElement image);
     T visitLink(LinkElement link);
     T visitSelect(SelectElement selectElement);
+    T visitCheckbox(CheckboxElement checkboxElement);
 }

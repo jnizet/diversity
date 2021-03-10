@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.model;
 
+import fr.mnhn.diversity.model.meta.CheckboxElement;
 import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -201,7 +202,18 @@ public class PageService {
             Element element = PageUtils.getElement(page, key, ElementType.SELECT);
             result.put(name, element);
             usedElements.add(element);
-            return null;        }
+            return null;
+        }
+
+        @Override
+        public Void visitCheckbox(CheckboxElement select) {
+            String name = select.getName();
+            String key = prefix + name;
+            Element element = PageUtils.getElement(page, key, ElementType.CHECKBOX);
+            result.put(name, element);
+            usedElements.add(element);
+            return null;
+        }
 
         public Map<String, Object> getResult() {
             return result;
