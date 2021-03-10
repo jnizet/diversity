@@ -1,4 +1,4 @@
-export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION' | 'SELECT';
+export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION' | 'SELECT' | 'CHECKBOX';
 
 interface BasePageElement {
   type: ElementType;
@@ -26,12 +26,15 @@ export interface SelectElement extends BasePageElement {
   options: { [id: string]: string };
 }
 
+export interface CheckboxElement extends BasePageElement {
+  type: 'CHECKBOX';
+  value: string;
+  options: { [id: string]: string };
+}
+
 export interface ImageElement extends BasePageElement {
   type: 'IMAGE';
-  multiSize: boolean;
-  document: boolean;
-  imageId: number;
-  alt: string;
+  value: boolean;
 }
 
 export interface ContainerElement extends BasePageElement {
