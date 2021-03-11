@@ -139,6 +139,7 @@ class IndicatorControllerTest extends ControllerTest {
             "title", text("Tous les indicateurs"),
             "presentation", text("Presentation"),
             "image", image(1L),
+            "shadowed", checkbox(true),
             "understand", Map.of(
                 "title", text("Comprendre"),
                 "description", text("Comprendre description"),

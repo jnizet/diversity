@@ -33,7 +33,8 @@
             <div class="ecogeste-thematique" biom:markdown="*{presentation.category.text}"></div>
           </div>
         </div>
-        <img biom:image="*{presentation.image}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
+        <img biom:image="*{presentation.image}" loading="lazy" sizes="100vw" class="img-full" />
+        <img th:if="*{presentation.shadowed.value}" biom:image="*{presentation.image}" sizes="100vw" class="img-full shadowed-img" />
         <div class="section-top-side">
           <a th:href="@{/images/{imageId}/document(imageId=*{presentation.file.imageId})}" class="share-link file w-inline-block">
             <img th:src="@{/assets/images/pdf.svg}" loading="lazy" width="18" alt="" />

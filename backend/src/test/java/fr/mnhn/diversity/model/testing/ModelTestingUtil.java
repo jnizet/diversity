@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.model.testing;
 
+import fr.mnhn.diversity.model.Checkbox;
 import fr.mnhn.diversity.model.Element;
 import fr.mnhn.diversity.model.Image;
 import fr.mnhn.diversity.model.Link;
@@ -17,6 +18,10 @@ public class ModelTestingUtil {
 
     public static Select select(String value) {
         return Element.select(0L, "value", value);
+    }
+
+    public static Checkbox checkbox(Boolean value) {
+        return Element.checkbox(0L, "value", value);
     }
 
     public static Image image(Long imageId) {

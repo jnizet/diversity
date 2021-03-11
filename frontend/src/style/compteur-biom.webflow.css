@@ -1255,18 +1255,9 @@ legend-text a {
   object-fit: cover;
 }
 
-.section-top-title > p::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: inherit;
-  background-attachment: fixed;
-  -webkit-filter: blur(12px);
-  filter: blur(12px);
-  transform: scale(2) translateY(20px) translateX(-40px) rotate(45deg);
+.shadowed-img {
+  filter: brightness(50%);
+  mask: radial-gradient(circle at left bottom, black 30%, transparent 70%);
 }
 
 .img-full.anim-zoom.dark {

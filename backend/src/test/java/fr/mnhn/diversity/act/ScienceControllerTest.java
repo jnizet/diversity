@@ -58,7 +58,8 @@ class ScienceControllerTest extends ControllerTest {
                     "header", Map.of(
                         "title", text("Sciences participatives"),
                         "subtitle", text("Hello"),
-                        "background", image(401L)
+                        "background", image(401L),
+                        "shadowed", checkbox(true)
                     ),
                     "presentation", Map.of(
                         "title", text("Presentation"),

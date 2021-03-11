@@ -98,7 +98,8 @@ class EcogestureControllerTest extends ControllerTest {
                     "name", text("Deforestation"),
                     "presentation", Map.of(
                         "description", text("arbres"),
-                        "image", image(1L)
+                        "image", image(1L),
+                        "shadowed", checkbox(true)
                     )
                 )
             )
@@ -115,7 +116,8 @@ class EcogestureControllerTest extends ControllerTest {
                 Map.of(
                     "presentation", Map.of(
                         "name", text("Plastics"),
-                        "image", image(1L)
+                        "image", image(1L),
+                        "shadowed", checkbox(true)
                     )
                 )
             ));
@@ -146,6 +148,7 @@ class EcogestureControllerTest extends ControllerTest {
                 "category", text("Leisure"),
                 "description", text("Description"),
                 "image", image(1L),
+                "shadowed", checkbox(true),
                 "file", image(2L)
             ),
             "understand", Map.of(
@@ -172,6 +175,7 @@ class EcogestureControllerTest extends ControllerTest {
             "title", text("Ecogestures"),
             "presentation", text("Presentation"),
             "image", image(1L),
+            "shadowed", checkbox(true),
             "question", text("Qu'est-ce qu'un écogeste ?"),
             "answer", text("Les territoires d'outre-mer"),
             "quote", text("Des actions concrètes"),

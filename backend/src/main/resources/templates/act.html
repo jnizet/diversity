@@ -34,7 +34,8 @@
             </div>
           </div>
         </div>
-        <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full anim-zoom" />
+        <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full" />
+        <img th:if="*{header.shadowed.value}" biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full shadowed-img" />
       </section>
 
       <section class="section-agir-intro">

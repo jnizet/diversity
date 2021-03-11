@@ -57,7 +57,8 @@ class AboutControllerTest extends ControllerTest {
                     "header", Map.of(
                         "title", text("About"),
                         "subtitle", text("Hello"),
-                        "background", image(1L)
+                        "background", image(1L),
+                        "shadowed", checkbox(true)
                     ),
                     "goal1", Map.of(
                         "title", text("Indicateurs"),

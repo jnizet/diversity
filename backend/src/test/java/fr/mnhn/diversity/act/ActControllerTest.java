@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.act;
 
+import static fr.mnhn.diversity.model.testing.ModelTestingUtil.checkbox;
 import static fr.mnhn.diversity.model.testing.ModelTestingUtil.image;
 import static fr.mnhn.diversity.model.testing.ModelTestingUtil.text;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -65,7 +66,8 @@ class ActControllerTest extends ControllerTest {
                     "header", Map.of(
                         "title", text("Agir ensemble"),
                         "subtitle", text("Hello"),
-                        "background", image(201L)
+                        "background", image(201L),
+                        "shadowed", checkbox(true)
                     ),
                     "ecogestures", Map.of(
                         "title", text("Ecogestes"),

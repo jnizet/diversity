@@ -32,7 +32,8 @@
             <div class="section-top-text top-paragraph" biom:markdown="*{presentation.text}"></div>
           </div>
         </div>
-        <img biom:image="*{image}" sizes="100vw" class="img-full anim-zoom" />
+        <img biom:image="*{image}" sizes="100vw" class="img-full" />
+        <img th:if="*{shadowed.value}" biom:image="*{image}" sizes="100vw" class="img-full shadowed-img" />
       </section>
 
       <!-- Intro -->
