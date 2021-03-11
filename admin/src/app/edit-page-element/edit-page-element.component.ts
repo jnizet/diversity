@@ -8,6 +8,7 @@ import {
   PageElement,
   SectionElement,
   SelectElement,
+  CheckboxElement,
   TextElement
 } from '../page.model';
 import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
@@ -45,6 +46,10 @@ export class EditPageElementComponent implements ControlValueAccessor {
 
   isSelect(element: PageElement): element is SelectElement {
     return element.type === 'SELECT';
+  }
+
+  isCheckbox(element: PageElement): element is CheckboxElement {
+    return element.type === 'CHECKBOX';
   }
 
   isImage(element: PageElement): element is ImageElement {
@@ -105,6 +110,15 @@ export class EditPageElementComponent implements ControlValueAccessor {
         const selectControl = this.fb.control(element, [validElement]);
         this.elementGroup.addControl('select', selectControl);
         selectControl.valueChanges.subscribe((value: PageElement) => {
+          this.onChange(value);
+        });
+        break;
+      }
+      case 'CHECKBOX': {
+        // the element is a checkbox: we want a simple form with a 'checkbox' control
+        const checkboxControl = this.fb.control(element, [validElement]);
+        this.elementGroup.addControl('checkbox', checkboxControl);
+        checkboxControl.valueChanges.subscribe((value: PageElement) => {
           this.onChange(value);
         });
         break;

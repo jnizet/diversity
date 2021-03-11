@@ -28,13 +28,15 @@ export interface SelectElement extends BasePageElement {
 
 export interface CheckboxElement extends BasePageElement {
   type: 'CHECKBOX';
-  value: string;
-  options: { [id: string]: string };
+  value: boolean;
 }
 
 export interface ImageElement extends BasePageElement {
   type: 'IMAGE';
-  value: boolean;
+  multiSize: boolean;
+  document: boolean;
+  imageId: number;
+  alt: string;
 }
 
 export interface ContainerElement extends BasePageElement {
@@ -54,7 +56,15 @@ export interface SectionElement extends ContainerElement {
   type: 'SECTION';
 }
 
-export type PageElement = TextElement | LinkElement | ImageElement | ListElement | ListUnitElement | SectionElement | SelectElement;
+export type PageElement =
+  | TextElement
+  | LinkElement
+  | ImageElement
+  | ListElement
+  | ListUnitElement
+  | SectionElement
+  | SelectElement
+  | CheckboxElement;
 
 function isValidText(text: TextElement): boolean {
   return !text.optional ? !!text.text : true;
@@ -62,6 +72,10 @@ function isValidText(text: TextElement): boolean {
 
 function isValidSelect(select: SelectElement): boolean {
   return !!select.options;
+}
+
+function isValidCheckbox(checkbox: CheckboxElement): boolean {
+  return typeof checkbox.value === 'boolean';
 }
 
 function isValidLink(link: LinkElement): boolean {
@@ -93,6 +107,8 @@ export function isValidElement(element: PageElement | null): boolean {
       return isValidImage(element);
     case 'SELECT':
       return isValidSelect(element);
+    case 'CHECKBOX':
+      return isValidCheckbox(element);
   }
 }
 
@@ -107,7 +123,7 @@ export interface Page {
 
 export interface ElementCommand {
   key: string;
-  type: 'TEXT' | 'LINK' | 'IMAGE' | 'SELECT';
+  type: 'TEXT' | 'LINK' | 'IMAGE' | 'SELECT' | 'CHECKBOX';
 }
 
 export interface LinkCommand extends ElementCommand {
@@ -121,6 +137,10 @@ export interface TextCommand extends ElementCommand {
 
 export interface SelectCommand extends ElementCommand {
   value: string;
+}
+
+export interface CheckboxCommand extends ElementCommand {
+  value: boolean;
 }
 
 export interface ImageCommand extends ElementCommand {
@@ -141,6 +161,11 @@ function textElementToCommand(key: string, element: TextElement): Array<ElementC
 
 function selectElementToCommand(key: string, element: SelectElement): Array<ElementCommand> {
   const command: SelectCommand = { key, value: element.value, type: 'SELECT' };
+  return [command];
+}
+
+function checkboxElementToCommand(key: string, element: CheckboxElement): Array<ElementCommand> {
+  const command: CheckboxCommand = { key, value: element.value, type: 'CHECKBOX' };
   return [command];
 }
 
@@ -211,6 +236,9 @@ export function elementToCommand(prefix: string, element: PageElement): Array<El
     }
     case 'SELECT': {
       return selectElementToCommand(key, element);
+    }
+    case 'CHECKBOX': {
+      return checkboxElementToCommand(key, element);
     }
     case 'LIST_UNIT': {
       return []; // should never happen as the list unit is consumed by the list

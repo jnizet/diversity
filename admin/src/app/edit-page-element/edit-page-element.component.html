@@ -82,4 +82,8 @@
   <div *ngIf="isImage(element)" class="mb-2">
     <biom-edit-image-element [submitted]="isSubmitted" formControlName="image"></biom-edit-image-element>
   </div>
+  <!-- CheckboxElement -->
+  <div *ngIf="isCheckbox(element)" class="mb-2">
+    <biom-edit-checkbox-element [submitted]="isSubmitted" formControlName="checkbox"></biom-edit-checkbox-element>
+  </div>
 </div>
