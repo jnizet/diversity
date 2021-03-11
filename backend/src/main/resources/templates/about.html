@@ -35,7 +35,7 @@
           </div>
         </div>
         <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full" />
-        <img th:if="*{header.shadowed}" biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full shadowed-img" />
+        <img th:if="*{header.shadowed.value}" biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full shadowed-img" />
       </section>
 
       <section class="section-apropos-left">

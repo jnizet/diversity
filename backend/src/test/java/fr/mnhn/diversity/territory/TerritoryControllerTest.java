@@ -117,6 +117,7 @@ class TerritoryControllerTest extends ControllerTest {
                                 Map.entry("subtitle", text("Une bien jolie île")),
                                 Map.entry("presentation", text("presentation")),
                                 Map.entry("image", image(1L)),
+                                Map.entry("shadowed", checkbox(true)),
                                 Map.entry("area", text("234")),
                                 Map.entry("marineArea", text("345")),
                                 Map.entry("population", text("45678")),
@@ -144,7 +145,8 @@ class TerritoryControllerTest extends ControllerTest {
                     "identity", Map.of(
                         "title", text("Saint-Pierre-Et-Miquelon"),
                         "presentation", text("presentation"),
-                        "image", image(1L)
+                        "image", image(1L),
+                        "shadowed", checkbox(true)
                     )
                 )
             )

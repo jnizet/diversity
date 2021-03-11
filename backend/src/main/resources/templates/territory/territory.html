@@ -39,6 +39,7 @@
           </div>
         </div>
         <img biom:image="*{identity.image}" loading="lazy" sizes="100vw" class="img-full" />
+        <img th:if="*{identity.shadowed.value}" biom:image="*{identity.image}" loading="lazy" sizes="100vw" class="shadowed-img" />
       </section>
 
       <section class="section-territoire-fiche">
