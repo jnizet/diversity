@@ -1151,6 +1151,27 @@ a {
     height: 2px;
   }
 
+  .act-nav-link:after {
+    content: '';
+    position: absolute;
+    width: 0px;
+    height: 2px;
+    background-color: #ffcf3f;
+    top: 18px;
+    left: -17px;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+
+  .act-nav-link.w--current:after {
+    width: 24px;
+    height: 2px;
+  }
+
   blockquote:before {
     content: '';
     width: 30px;

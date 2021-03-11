@@ -1,8 +1,8 @@
 describe('Act together', () => {
   it('should have a header, title and footer', () => {
     cy.visit('/');
-    cy.contains('Agir ensemble').click();
-
+    cy.contains('Agir ensemble').trigger('mouseover');
+    cy.contains('Découvrir').click({force: true});
     cy.get('header').should('contain', 'Territoires');
     cy.get('h1').should('contain', 'Agir ensemble pour une biodiversité unique mais fragile');
     cy.get('footer').should('contain', 'Territoires');

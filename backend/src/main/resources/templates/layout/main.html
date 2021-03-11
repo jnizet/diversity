@@ -102,9 +102,11 @@
             ><img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
           </li>
           <li class="nav-link-item act-nav-link-item">
-            <a th:href="@{/agir-ensemble}" class="act-nav-link" th:classappend="${selectedMenu == 'act' ? 'w--current' : ''}">Agir ensemble</a
+            <a class="act-nav-link" th:classappend="${selectedMenu == 'act' ? 'w--current' : ''}">Agir ensemble</a
             >
+            <img th:src="@{/assets/images/chevron-menu.svg}" loading="lazy" alt="" class="chevron-menu" />
             <div class="sub-nav-menu-items">
+              <a th:href="@{/agir-ensemble}" class="sub-nav-menu-item">Découvrir</a>
               <a th:href="@{/ecogestes}" class="sub-nav-menu-item">Ecogestes</a>
               <a th:href="@{/sciences-participatives}" class="sub-nav-menu-item">Sciences participatives</a>
             </div>

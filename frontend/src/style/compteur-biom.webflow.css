@@ -215,16 +215,14 @@ blockquote {
   text-transform: uppercase;
 }
 
-.act-nav-link:hover {
-  color: hsla(0, 0%, 100%, 0.75);
-}
-
-.act-nav-link-item:hover > .sub-nav-menu-items {
-  display: flex;
+.act-nav-link-item:hover > .sub-nav-menu-items.desktop {
+  height: 121px;
 }
 
 .sub-nav-menu-items {
-  display: none;
+  display: flex;
+  height:0px;
+  overflow: hidden;
   position: absolute;
   flex-direction: column;
   border-left: #ffcf3f;
@@ -232,6 +230,7 @@ blockquote {
   border-left-style: solid;
   margin-left: 1.6vw;
   padding-left: 0.1vw;
+  transition: height 0.5s ease-in-out;
 }
 .sub-nav-menu-item {
   color: #000000;
@@ -7656,6 +7655,53 @@ p > a:visited {
     font-size: 14px;
     line-height: 40px;
     font-weight: 500;
+  }
+
+  .act-nav-link {
+    width: 100%;
+    margin-right: 0vw;
+    margin-left: 0vw;
+    color: #122c33;
+    font-size: 14px;
+    line-height: 40px;
+    font-weight: 500;
+  }
+
+  .act-nav-link-item.mobile-open > .act-nav-link {
+    margin-top: 7px;
+    line-height: 26px;
+  }
+
+  .act-nav-link-item.mobile-open > .act-nav-link:after {
+    top: 11px;
+  }
+
+  .sub-nav-menu-items {
+    border-left-style: none;
+    margin-left: 0;
+    padding-left: 6.0vw;
+    position: relative;
+  }
+
+  .act-nav-link-item.mobile-open > .sub-nav-menu-items {
+    display: flex;
+    height: 71px;
+    position: relative;
+  }
+
+  .act-nav-link-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .act-nav-link-item > .chevron-menu{
+    top: 14px;
+    right: 32px;
+    transition: transform 1s ease-in-out;
+  }
+
+  .act-nav-link-item.mobile-open > .chevron-menu{
+    transform: rotate(90deg);
   }
 
   .swiper-container.swiper-apropos {

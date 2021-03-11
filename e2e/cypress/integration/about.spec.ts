@@ -25,7 +25,8 @@ describe('About', () => {
   it('should navigate to act together', () => {
     cy.visit('/');
     cy.contains('À propos').click();
-    cy.contains('Agir ensemble').click();
+    cy.contains('Agir ensemble').trigger('mouseover');
+    cy.contains('Découvrir').click({force: true});
     cy.title().should('eq', 'Agir ensemble');
   });
 });

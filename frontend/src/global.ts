@@ -8,6 +8,7 @@ export function initialize() {
 
   $(document).ready(function () {
     let memo_scroll: number, wh: number, ww: number, nv: number;
+    let actSubMenuOpen = false;
     let deco_y: Array<any> = [];
 
     resizing();
@@ -17,6 +18,22 @@ export function initialize() {
 
     $(document).scroll(scrolling);
     $(window).resize(resizing);
+
+    if (window.matchMedia('(max-width: 480px)').matches) {
+      $('.act-nav-link-item').on('click', () => {
+        if(!actSubMenuOpen){
+          $('.act-nav-link-item').addClass('mobile-open');
+          actSubMenuOpen = true;
+        }
+        else {
+          $('.act-nav-link-item').removeClass('mobile-open');
+          actSubMenuOpen = false;
+        }
+      });
+    }
+    else {
+      $('.sub-nav-menu-items').addClass('desktop');
+    }
 
     function resizing() {
       wh = $(window).innerHeight();
