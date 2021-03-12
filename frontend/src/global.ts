@@ -11,6 +11,12 @@ export function initialize() {
     let actSubMenuOpen = false;
     let deco_y: Array<any> = [];
 
+    $(document.links)
+      .filter(function () {
+        return this.hostname != window.location.hostname;
+      })
+      .attr('target', '_blank');
+
     resizing();
     $('.section-top').css('height', wh);
 
@@ -21,17 +27,15 @@ export function initialize() {
 
     if (window.matchMedia('(max-width: 480px)').matches) {
       $('.act-nav-link-item').on('click', () => {
-        if(!actSubMenuOpen){
+        if (!actSubMenuOpen) {
           $('.act-nav-link-item').addClass('mobile-open');
           actSubMenuOpen = true;
-        }
-        else {
+        } else {
           $('.act-nav-link-item').removeClass('mobile-open');
           actSubMenuOpen = false;
         }
       });
-    }
-    else {
+    } else {
       $('.sub-nav-menu-items').addClass('desktop');
     }
 

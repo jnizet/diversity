@@ -26,7 +26,7 @@ describe('About', () => {
     cy.visit('/');
     cy.contains('À propos').click();
     cy.contains('Agir ensemble').trigger('mouseover');
-    cy.contains('Découvrir').click({force: true});
+    cy.contains('Découvrir').click({ force: true });
     cy.title().should('eq', 'Agir ensemble');
   });
 });
