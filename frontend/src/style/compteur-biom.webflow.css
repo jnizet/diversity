@@ -8453,7 +8453,16 @@ p > a:visited {
   }
 
   .link-onb {
-    width: 120px;
+    width: 100px;
+  }
+
+  .indicator-sources {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .indicator-sources > span {
+    font-size: 10px;
   }
 
   .next-img {

@@ -52,9 +52,10 @@
             <a th:href="@{/indicateurs}" class="cta-secondary">Voir tous les indicateurs</a>
           </div>
         </div>
-        <div class="half back-indicateur" th:if="*{#strings.startsWith(presentation.logoUrl.text, 'http')}">
+        <div class="half back-indicateur indicator-sources" th:if="*{#strings.startsWith(presentation.logoUrl.text, 'http')}">
+          <span>Source des données</span>
           <a th:href="*{presentation.logoUrl.text}" target="_blank" class="link-onb w-inline-block">
-            <img th:if="*{#strings.equals(presentation.sourceSelect.value,'onb')}" th:src="@{/assets/images/logo_ONB.png}" loading="lazy" width="200" alt="" />
+            <img th:if="*{#strings.equals(presentation.sourceSelect.value,'onb')}" th:src="@{/assets/images/logo_ONB.png}" loading="lazy" width="100" alt="" />
             <img th:if="*{#strings.equals(presentation.sourceSelect.value,'inpn')}" th:src="@{/assets/images/logo-inpn.png}" loading="lazy" width="200" alt="" />
           </a>
         </div>
