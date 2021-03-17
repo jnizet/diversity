@@ -92,7 +92,10 @@ publish_preprod:
     ENV_TAG: "prod"
   extends: .publish_docker
 
-.prepare:
+.deploy:
+  stage: deploy
+  tags:
+    - gradle
   extends: .stage
   script:
     - ssh-add <(echo "$PATRINAT_CI_SSH_KEY")
@@ -103,19 +106,13 @@ publish_preprod:
     - git clone git@ic-prod1.patnat.mnhn.fr:biom/biom-backup.git
     - cd biom-backup
     - git checkout $BRANCH_NAME
-    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" mkdir -p /apps/postgresql
-    - scp -r $SERVER_URL@"$PATRINAT_CI_USER":~/biom-backup/docker /apps/
-    - scp -r $SERVER_URL@"$PATRINAT_CI_USER":~/biom-backup/postgresql/setup /apps/postgresql/
-    - (ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" test -d /apps/postgresql/data)
-        || scp -r $SERVER_URL@"$PATRINAT_CI_USER":~/biom-backup/ /apps/diversity
-
-
-.deploy:
-  stage: deploy
-  tags:
-    - gradle
-  extends: .prepare
-  script:
+    - sed -i "s/DB_PWD/$DB_PASSWORD/" docker/docker-compose.yml
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/postgresql
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/docker
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/diversity
+    - scp -r ~/biom-backup/docker  $PATRINAT_CI_USER@"$SERVER_URL":/apps/
+    - scp -r ~/biom-backup/postgresql/setup  $PATRINAT_CI_USER@"$SERVER_URL":/apps/postgresql
+    - (ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" test -d /apps/postgresql/data) || scp -r ~/biom-backup/diversity $PATRINAT_CI_USER@"$SERVER_URL":/apps
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml down -v
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml pull
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml up -d
