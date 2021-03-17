@@ -32,6 +32,9 @@ variables:
     - eval $(ssh-agent -s)
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     - export GRADLE_USER_HOME=`pwd`/.gradle
+    - git config --global user.email "gitlab-ci@mnhn.fr"
+    - git config --global user.name "gitlab-ci"
+
 
 test:
   tags:
@@ -89,19 +92,30 @@ publish_preprod:
     ENV_TAG: "prod"
   extends: .publish_docker
 
-.deploy:
-  stage: deploy
+.prepare:
   extends: .stage
-  environment:
-    name: test
-    url: https://"$BIOM_TEST_SERVER_URL"
-  tags:
-    - gradle
   script:
     - ssh-add <(echo "$PATRINAT_CI_SSH_KEY")
     - touch  ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - ssh-keyscan -v "$SERVER_URL" >> ~/.ssh/known_hosts
+    - cd ~
+    - git clone git@ic-prod1.patnat.mnhn.fr:biom/biom-backup.git
+    - cd biom-backup
+    - git checkout $BRANCH_NAME
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" mkdir -p /apps/postgresql
+    - scp -r $SERVER_URL@"$PATRINAT_CI_USER":~/biom-backup/docker /apps/
+    - scp -r $SERVER_URL@"$PATRINAT_CI_USER":~/biom-backup/postgresql/setup /apps/postgresql/
+    - (ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" test -d /apps/postgresql/data)
+        || scp -r $SERVER_URL@"$PATRINAT_CI_USER":~/biom-backup/ /apps/diversity
+
+
+.deploy:
+  stage: deploy
+  tags:
+    - gradle
+  extends: .prepare
+  script:
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml down -v
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml pull
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml up -d
@@ -114,6 +128,7 @@ deploy-test:
     url: https://"$BIOM_TEST_SERVER_URL"
   variables:
     SERVER_URL: $BIOM_TEST_SERVER_URL
+    BRANCH_NAME: "dev"
   extends: .deploy
 
 deploy-preprod:
@@ -124,4 +139,16 @@ deploy-preprod:
     url: https://"$BIOM_PREPROD_SERVER_URL"
   variables:
     SERVER_URL: $BIOM_PREPROD_SERVER_URL
+    BRANCH_NAME: "release"
+  extends: .deploy
+
+deploy-prod:
+  only:
+    - main@biom/diversity
+  environment:
+    name: prod
+    url: https://"$BIOM_PROD_SERVER_URL"
+  variables:
+    SERVER_URL: $BIOM_PROD_SERVER_URL
+    BRANCH_NAME: "prod"
   extends: .deploy
