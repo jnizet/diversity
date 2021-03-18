@@ -2884,6 +2884,43 @@ legend-text a {
   transform: translate(-10%, -25%);
 }
 
+.agir-logos-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.agir-logo-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.agir-logo-description {
+  margin-top: auto;
+  text-transform: uppercase;
+}
+
+.agir-logo {
+  background: white;
+  border-radius: 10%;
+  height: 90px;
+  width: 90px;
+  margin-bottom: 20px;
+}
+
+.agir-logo.inpn {
+  padding: 15px;
+}
+
+.agir-logo.rom {
+  padding: 20px 0;
+}
+
+.agir-applications {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
 .ecogeste-push-wrapper {
   display: -webkit-box;
   display: -webkit-flex;
@@ -8308,6 +8345,11 @@ p > a:visited {
     margin-bottom: 30px;
   }
 
+  .text-big.col-2.agir-logos-title {
+    margin-top: 12px;
+    margin-bottom: 40px;
+  }
+
   .indicateur-number-small {
     margin-bottom: 0px;
     font-size: 60px;
@@ -8338,9 +8380,16 @@ p > a:visited {
   .agir-block {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+  }
+
+  .agir-logo-container {
+    margin-bottom: 30px;
+  }
+
+  .application-icon {
+    max-width: 70%;
   }
 
   .col-1 {
@@ -8835,6 +8884,10 @@ p > a:visited {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
+  }
+
+  .agir-logos-container {
+    flex-direction: column;
   }
 
   .lieu-title-wrapper {

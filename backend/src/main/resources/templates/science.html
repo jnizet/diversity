@@ -147,12 +147,21 @@
             <div class="agir-divider"></div>
             <div class="agir-block exemple">
               <div class="col-1">
-                <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
+                <img class="application-icon" th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
               </div>
-              <div class="text-big col-2" biom:markdown="*{application.subtitle.text}">J'agis en ligne</div>
-              <a th:href="*{application.downloadLink.href}" class="cta-secondary yellow" biom:markdown="*{application.downloadLink.text}">
-                Je télécharge l'application INPN Espaces
-              </a>
+              <div class="agir-applications">
+                <div class="text-big col-2 agir-logos-title" biom:markdown="*{application.subtitle.text}">J'agis en ligne</div>
+                <div class="agir-logos-container">
+                  <a href=" https://inpn.mnhn.fr/informations/inpn-especes" class="cta-secondary yellow agir-logo-container">
+                    <img th:src="@{/assets/images/app_mobile_inpn_especes.png}" loading="lazy" alt="" class="agir-logo inpn"/>
+                    <span class="agir-logo-description">Inpn espéce</span>
+                  </a>
+                  <a href="https://rom.pole-tropical.org/home"  class="cta-secondary yellow agir-logo-container">
+                    <img th:src="@{/assets/images/logo-rom.png}" loading="lazy" alt="" class="agir-logo rom"/>
+                    <span class="agir-logo-description">Réseau d'observation des mangroves</span>
+                  </a>
+                </div>
+              </div>
             </div>
             <div class="agir-divider"></div>
           </div>
