@@ -37,7 +37,7 @@
           <div class="legend-text" biom:markdown="*{image.alt}"></div>
         </div>
         <img biom:image="*{image}" loading="lazy" sizes="100vw" class="img-full" />
-        <img th:if="*{shadowed}" biom:image="*{image}" loading="lazy" sizes="100vw" class="img-full shadowed-img" />
+        <img th:if="*{shadowed.value}" biom:image="*{image}" loading="lazy" sizes="100vw" class="img-full shadowed-img" />
       </section>
       <section class="section-indicateur-list" data-controller="indicators">
         <div class="indicateur-list-wrapper">
