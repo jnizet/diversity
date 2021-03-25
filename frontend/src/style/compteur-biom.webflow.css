@@ -216,7 +216,7 @@ blockquote {
 }
 
 .act-nav-link-item:hover > .sub-nav-menu-items.desktop {
-  height: 121px;
+  height: auto;
 }
 
 .sub-nav-menu-items {
