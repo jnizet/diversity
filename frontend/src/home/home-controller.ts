@@ -30,11 +30,9 @@ export class HomeController extends Controller {
       on: {
         transitionStart: function (this: any) {
           $('.timer').removeClass('full');
-          $('.swiper-top .img-full').eq(this.activeIndex).addClass('anim-zoom').removeClass('anim-paused');
         },
         transitionEnd: function (this: any) {
           $('.timer').addClass('full');
-          $('.swiper-top .img-full').eq(this.previousIndex).addClass('anim-paused');
         }
       }
     });

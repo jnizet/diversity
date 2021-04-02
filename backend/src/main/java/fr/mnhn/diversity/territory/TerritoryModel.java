@@ -17,7 +17,7 @@ public final class TerritoryModel {
                                             .text("subtitle", "Sous-titre de la présentation")
                                             .multiLineText("presentation", "Texte de la présentation")
                                             .image("image", "Illustration de la présentation")
-                                            .checkbox("shadowed", "Ajouter une ombre sur le cotés gauche de la photo")
+                                            .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
                                             .text("area", "Superficie terrestre en km2")
                                             .text("marineArea", "Superficie marine en km2")
                                             .text("population", "Nombre d'habitants")

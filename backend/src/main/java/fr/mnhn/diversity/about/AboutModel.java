@@ -16,7 +16,7 @@ public final class AboutModel {
                  .withPath("/apropos")
                  .section(SectionElement.builder("header").describedAs("En-tête")
                                         .multiSizeImage("background", "Image de fond de l'en-tête")
-                                        .checkbox("shadowed", "Ajouter une ombre sur le cotés gauche de la photo")
+                                        .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
                                         .titleText("title", "Titre de la page")
                                         .multiLineText("subtitle", "Sous-titre de la page")
                  )

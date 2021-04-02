@@ -25,7 +25,7 @@ public final class EcogestureModel {
                               .text("category", "Catégorie de l'écogeste")
                               .optionalText("description", "Description de l'écogeste")
                               .image("image", "Illustration de l'écogeste")
-                              .checkbox("shadowed", "Ajouter une ombre sur le cotés gauche de la photo")
+                              .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
                               .document("file", "Fiche technique de l'écogeste")
                  )
                  .section(SectionElement
@@ -57,7 +57,7 @@ public final class EcogestureModel {
                  .text("title", "Titre de la page")
                  .multiLineText("presentation", "Présentation des écogestes")
                  .image("image", "Illustration")
-                 .checkbox("shadowed", "Ajouter une ombre sur le cotés gauche de la photo")
+                 .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
                  .text("question", "Question de présentation")
                  .multiLineText("answer", "Réponse")
                  .text("quote", "Citation pour agir")

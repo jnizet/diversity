@@ -71,7 +71,6 @@ export class TerritoryController extends Controller {
       freeMode: true,
       freeModeMomentum: true,
       grabCursor: true,
-      simulateTouch: false,
       touchRatio: 2
     });
 

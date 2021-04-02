@@ -19,7 +19,7 @@ public final class HomeModel {
                      .multiLineText("text", "Texte du carousel, affiché sur chaque slide")
                      .list(ListElement.builder("images").describedAs("Les photos affichées par le carousel")
                          .multiSizeImage("image", "Photo")
-                         .checkbox("shadowed", "Ajouter une ombre sur le cotés gauche de la photo")
+                         .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
                      )
                      .text("territoriesButton", "Bouton découvrir les territoires") // internal and thus hard-coded href
                  )

@@ -19,7 +19,7 @@ public final class IndicatorModel {
                                         .text("description", "Description de l'indicateur - pages indicateurs")
                                         .text("descriptionTerritories", "Description de l'indicateur - pages territoires")
                                         .multiSizeImage("image", "Illustration de l'indicateur")
-                                        .checkbox("shadowed", "Ajouter une ombre sur le cotés gauche de la photo")
+                                        .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
                                         .select("sourceSelect", "Choix du logo source", Map.of("onb", "ONB", "inpn", "INPN"))
                                         .text("logoUrl", "URL de redirection du logo")
                  )
@@ -56,7 +56,7 @@ public final class IndicatorModel {
                  .text("title", "Titre de la page")
                  .multiLineText("presentation", "Présentation des indicateurs")
                  .image("image", "Illustration")
-                 .checkbox("shadowed", "Ajouter une ombre sur le cotés gauche de la photo")
+                 .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
                  .section(
                      SectionElement.builder("understand").describedAs("Comprendre")
                                    .titleText("title", "Titre de la section")
