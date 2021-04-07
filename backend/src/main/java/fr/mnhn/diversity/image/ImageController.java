@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
  * from the content type of the image.
  * @author JB Nizet
  */
+
+@CrossOrigin
 @RestController
 @RequestMapping("/images")
 @Transactional
