@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
   ContainerElement,
   ImageElement,
@@ -13,7 +13,8 @@ import {
 } from '../page.model';
 import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { atLeastOneElement, validElement, validList } from '../validators';
-import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleUp, faAngleDown, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { PageService } from '../page.service';
 
 @Component({
   selector: 'biom-edit-page-element',
@@ -21,20 +22,30 @@ import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./edit-page-element.component.scss'],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EditPageElementComponent), multi: true }]
 })
-export class EditPageElementComponent implements ControlValueAccessor {
+export class EditPageElementComponent implements ControlValueAccessor, OnInit {
   @Input() elementModel: PageElement;
   @Input() level: number;
+  @Input() pageName: string;
+  @Input() pageModelName: string;
   isSubmitted: boolean;
   element: PageElement;
   elementGroup: FormGroup;
 
   moveUpItemIcon = faAngleUp;
   moveDownItemIcon = faAngleDown;
+  transferData = faArrowDown;
+
+  isInstatiate = false;
 
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private pageService: PageService) {}
+
+  ngOnInit() {
+    this.elementGroup = this.fb.group({}, [Validators.required, validElement]);
+    this.elementGroup.statusChanges.subscribe(() => this.onTouched());
+  }
 
   isText(element: PageElement): element is TextElement {
     return element.type === 'TEXT';
@@ -92,8 +103,6 @@ export class EditPageElementComponent implements ControlValueAccessor {
   writeValue(element: PageElement): void {
     this.element = element;
     this.elementGroup = this.fb.group({}, [Validators.required, validElement]);
-    this.elementGroup.statusChanges.subscribe(() => this.onTouched());
-
     switch (element.type) {
       case 'TEXT': {
         // the element is a text: we want a simple form with a 'text' control
@@ -101,6 +110,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
         const textControl = this.fb.control(element, validators);
         this.elementGroup.addControl('text', textControl);
         textControl.valueChanges.subscribe((value: PageElement) => {
+          console.log(value);
           this.onChange(value);
         });
         break;
@@ -144,6 +154,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
       case 'LIST_UNIT': {
         // the element is a section or a list unit: we want a form control for each element of the section
         element.elements.forEach(sectionElement => {
+          sectionElement.source = element.source;
           const sectionElementControl = this.fb.control(sectionElement, [Validators.required, validElement]);
           this.elementGroup.addControl(sectionElement.name, sectionElementControl);
         });
@@ -157,6 +168,7 @@ export class EditPageElementComponent implements ControlValueAccessor {
         const elementsArray = this.fb.array([], [Validators.required, validList, atLeastOneElement]);
         this.elementGroup.addControl('elements', elementsArray);
         element.elements.forEach(listUnit => {
+          listUnit.source = element.source;
           elementsArray.push(this.fb.control(listUnit, [Validators.required, validElement]));
         });
         elementsArray.valueChanges.subscribe((value: PageElement) => {
@@ -210,5 +222,14 @@ export class EditPageElementComponent implements ControlValueAccessor {
 
   get elementsArray() {
     return this.elementGroup ? (this.elementGroup.get('elements') as FormArray) : null;
+  }
+
+  importSectionData() {
+    this.pageService.importPageValue(this.pageName, this.pageModelName).subscribe(page => {
+      (page.elements.find(e => e.type === 'SECTION' && e.name === this.element.name) as SectionElement)?.elements.forEach(element => {
+        element.source = 'IMPORTED';
+        this.elementGroup.controls[element.name].setValue(element);
+      });
+    });
   }
 }

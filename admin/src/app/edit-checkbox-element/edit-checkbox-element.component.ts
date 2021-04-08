@@ -49,7 +49,6 @@ export class EditCheckboxElementComponent implements ControlValueAccessor {
 
   writeValue(element: CheckboxElement): void {
     this.editedCheckboxElement = element;
-    console.log(element.value);
     this.checkboxControl.setValue(element.value);
   }
 }

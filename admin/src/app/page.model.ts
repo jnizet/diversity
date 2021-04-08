@@ -1,10 +1,11 @@
 export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION' | 'SELECT' | 'CHECKBOX';
-
+export type SourceType = 'IMPORTED' | undefined;
 interface BasePageElement {
   type: ElementType;
   id: number;
   name: string;
   description: string;
+  source?: SourceType;
 }
 
 export interface LinkElement extends BasePageElement {

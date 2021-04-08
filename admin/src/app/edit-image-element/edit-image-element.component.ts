@@ -60,6 +60,14 @@ export class EditImageElementComponent {
   }
 
   writeValue(element: ImageElement): void {
+    if (element.source === 'IMPORTED') {
+      this.imageService
+        .downloadImage(`https://preprod.biodiversite-outre-mer.fr/images/${element.imageId}/image`)
+        .subscribe((blob: Blob) => {
+          const file = new File([blob], element.imageId.toString(), { lastModified: new Date().getMilliseconds(), type: 'image/jpeg' });
+          return this.upload(file);
+        });
+    }
     this.editedImageElement = element;
     this.imageGroup.setValue(
       {
@@ -111,17 +119,19 @@ export class EditImageElementComponent {
     this.imageGroup.get('imageId').markAsTouched();
   }
 
-  upload(event: Event) {
+  onUpload(event: Event) {
     this.uploading = true;
 
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput.files[0];
+    this.upload(file);
+    fileInput.value = '';
+  }
 
+  upload(file: File) {
     this.imageService
       .createImage(file, this.editedImageElement.multiSize, this.editedImageElement.document)
       .pipe(finalize(() => (this.uploading = false)))
       .subscribe(image => this.imageGroup.patchValue({ imageId: image.id }));
-
-    fileInput.value = '';
   }
 }

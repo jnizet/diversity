@@ -66,7 +66,7 @@
       <val-errors controlName="alt" label="La légende"></val-errors>
     </div>
   </div>
-  <input type="file" [accept]="acceptedFiles" class="d-none" (change)="upload($event)" #imageFileInput />
+  <input type="file" [accept]="acceptedFiles" class="d-none" (change)="onUpload($event)" #imageFileInput />
 </div>
 
 <ng-template #imageModalContent let-modal>

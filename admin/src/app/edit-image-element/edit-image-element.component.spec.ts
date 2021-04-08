@@ -212,7 +212,7 @@ describe('EditImageElementComponent', () => {
       }
     } as unknown) as Event;
 
-    spyOn(tester.editImageComponent, 'chooseImage').and.callFake(() => tester.editImageComponent.upload(fakeFileEvent));
+    spyOn(tester.editImageComponent, 'chooseImage').and.callFake(() => tester.editImageComponent.onUpload(fakeFileEvent));
     tester.chooseImageButton.click();
     expect(tester.imageDiv).toBeNull();
     expect(tester.uploading).not.toBeNull();
@@ -245,7 +245,7 @@ describe('EditImageElementComponent', () => {
       }
     } as unknown) as Event;
 
-    spyOn(tester.editImageComponent, 'chooseImage').and.callFake(() => tester.editImageComponent.upload(fakeFileEvent));
+    spyOn(tester.editImageComponent, 'chooseImage').and.callFake(() => tester.editImageComponent.onUpload(fakeFileEvent));
     tester.chooseImageButton.click();
     expect(tester.documentDiv).toBeNull();
     expect(tester.uploading).not.toBeNull();
@@ -276,7 +276,7 @@ describe('EditImageElementComponent', () => {
         files: [file]
       }
     } as unknown) as Event;
-    tester.editImageComponent.upload(fakeFileEvent);
+    tester.editImageComponent.onUpload(fakeFileEvent);
     tester.detectChanges();
 
     expect(tester.formValue.imageElement.imageId).toBe(54);

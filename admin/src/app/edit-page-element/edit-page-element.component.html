@@ -1,7 +1,19 @@
 <div *ngIf="element" [formGroup]="elementGroup">
   <!-- SectionElement -->
   <div class="mb-5 pl-3 left-border" *ngIf="isSection(element)">
-    <biom-heading [level]="level" [title]="element.description"></biom-heading>
+    <div class="d-flex justify-content-between">
+      <biom-heading [level]="level" [title]="element.description"></biom-heading>
+      <button
+        type="button"
+        class="btn btn-outline-primary move-down-unit"
+        data-toggle="tooltip"
+        title="Importé les valeurs de la préprod"
+        (click)="importSectionData()"
+      >
+        <fa-icon [icon]="transferData"></fa-icon>
+        <span class="sr-only">Importé les valeurs de la préprod</span>
+      </button>
+    </div>
     <div *ngFor="let sectionElement of element.elements">
       <biom-edit-page-element
         [formControlName]="sectionElement.name"

@@ -15,4 +15,8 @@ export class ImageService {
     const params = { multisize: `${multiSize}`, document: `${document}` };
     return this.http.post<Image>('/api/images', body, { params });
   }
+
+  downloadImage(url: string) {
+    return this.http.get(url, { responseType: 'blob' });
+  }
 }

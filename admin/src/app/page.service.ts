@@ -34,4 +34,8 @@ export class PageService {
   getPageLinks(): Observable<PageLinks> {
     return this.http.get<PageLinks>('/api/pages/links');
   }
+
+  importPageValue(pageName: string, pageModel: string): Observable<Page> {
+    return this.http.get<Page>(`/api/pages/import/${pageModel}/${pageName}`);
+  }
 }

@@ -8,12 +8,15 @@
     </div>
   </div>
   <div class="col-md-9">
-    <h1>
-      {{ mode === 'update' ? 'Modifier' : 'Créer' }} la page
-      <small>
-        <code>{{ editedPage.name }}</code>
-      </small>
-    </h1>
+    <div class="d-flex justify-content-between">
+      <h1>
+        {{ mode === 'update' ? 'Modifier' : 'Créer' }} la page
+        <small>
+          <code>{{ editedPage.name }}</code>
+        </small>
+      </h1>
+      <button (click)="import()" class="btn btn-primary my-2" id="import-button">Importer</button>
+    </div>
     <form [formGroup]="pageForm" (ngSubmit)="savePage()">
       <div class="form-group">
         <label for="title">Titre de la page</label>
@@ -24,6 +27,8 @@
         <div *ngFor="let element of editedPage.elements" id="page-element--{{ element.name }}">
           <biom-edit-page-element
             [formControlName]="element.name"
+            [pageName]="editedPage.name"
+            [pageModelName]="editedPage.modelName"
             [submitted]="submitted"
             [elementModel]="getElementModel(element.name)"
             [level]="2"

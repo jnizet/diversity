@@ -76,14 +76,24 @@ export class EditPageComponent implements OnInit {
     }
   }
 
+  import() {
+    this.pageService.importPageValue(this.editedPage.name, this.editedPage.modelName).subscribe(page => {
+      this.pageForm.patchValue({
+        title: page.title
+      } as FormValue);
+      page.elements.forEach(element => {
+        element.source = 'IMPORTED';
+        this.elementsGroup.controls[element.name].patchValue(element);
+      });
+    });
+  }
+
   scrollTo(elementId: string) {
     const el = document.getElementById(`page-element--${elementId}`);
     el.scrollIntoView({ behavior: 'smooth', inline: 'nearest' });
   }
 
   savePage() {
-    console.log(this.editedPage.elements);
-
     this.submitted = true;
     if (this.pageForm.invalid) {
       animate(this.saveButton.nativeElement, classBasedAnimation('shake')).subscribe();
