@@ -107,6 +107,8 @@ publish_preprod:
     - cd biom-backup
     - git checkout $BRANCH_NAME
     - sed -i "s/DB_PWD/$DB_PASSWORD/" docker/docker-compose.yml
+    - sed -i "s/IMPORT_SOURCE/$IMPORT_SOURCE/" docker/docker-compose.yml
+    - sed -i "s/IMPORT_SOURCE_TOKEN/$IMPORT_SOURCE_TOKEN/" docker/docker-compose.yml
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/postgresql
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/docker
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/diversity

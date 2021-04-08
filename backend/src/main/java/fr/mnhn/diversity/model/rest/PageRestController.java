@@ -104,6 +104,23 @@ public class PageRestController {
         return new PageValuesDTO(page.getId(), page.getTitle(), page.getName(), model.getName(), model.getDescription(), visitor.getElements());
     }
 
+    @GetMapping("/{pageModel}/{pageName}")
+    public PageValuesDTO getPageValues(@PathVariable("pageModel") String pageModel, @PathVariable("pageName") String pageName) {
+        Page page = pageRepository.findByNameAndModel(pageName, pageModel)
+            .orElseThrow(NotFoundException::new);
+        PageModel model = modelsByName.get(pageModel);
+        PageValuesPopulatorVisitor visitor = new PageValuesPopulatorVisitor(page, "");
+        for (PageElement pageElement : model.getElements()) {
+            pageElement.accept(visitor);
+        }
+        return new PageValuesDTO(page.getId(), page.getTitle(), page.getName(), model.getName(), model.getDescription(), visitor.getElements());
+    }
+
+    @GetMapping("import/{pageModel}/{pageName}")
+    public String getImportedPageValues(@PathVariable("pageModel") String pageModel, @PathVariable("pageName") String pageName) {
+        var pageValues = pageService.getPageDataFromImportDataSource(pageModel, pageName).block();
+        return pageValues;
+    }
     /**
      * Returns a DTO containing:
      * - the metadata of the specified page

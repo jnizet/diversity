@@ -36,6 +36,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import reactor.core.publisher.Mono;
 
 
 /**
@@ -100,6 +101,7 @@ class PageRestControllerTest {
         secondCarouselImage = new Image(106L, "carousel.slides.1.image", 2L, "Raison 2", true);
         page = new Page(43L, "home", "home", "Accueil", List.of(title, carouselTitle, firstCarouselLink, firstCarouselImage, secondCarouselLink, secondCarouselImage, select));
         when(mockPageRepository.findById(page.getId())).thenReturn(Optional.of(page));
+        when(mockPageRepository.findByNameAndModel(page.getName(),page.getModelName())).thenReturn(Optional.of(page));
     }
 
     @Test
@@ -153,6 +155,78 @@ class PageRestControllerTest {
                .andExpect(jsonPath("$.elements[1].elements[2].description").value("un select"))
                .andExpect(jsonPath("$.elements[1].elements[2].value").value(select.getValue()));
     }
+
+    @Test
+    void shouldGetByNameAndModel() throws Exception {
+        mockMvc.perform(get("/api/pages/home/home"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(page.getId()))
+            .andExpect(jsonPath("$.title").value(page.getTitle()))
+            .andExpect(jsonPath("$.elements.length()").value(2))
+            // titre
+            .andExpect(jsonPath("$.elements[0].type").value(PageElementType.TEXT.name()))
+            .andExpect(jsonPath("$.elements[0].description").value("Titre"))
+            .andExpect(jsonPath("$.elements[0].name").value(title.getKey()))
+            .andExpect(jsonPath("$.elements[0].text").value(title.getText()))
+            .andExpect(jsonPath("$.elements[0].multiLine").value(false))
+            // carousel
+            .andExpect(jsonPath("$.elements[1].type").value(PageElementType.SECTION.name()))
+            .andExpect(jsonPath("$.elements[1].elements.length()").value(3))
+            // carousel title
+            .andExpect(jsonPath("$.elements[1].elements[0].type").value(PageElementType.TEXT.name()))
+            .andExpect(jsonPath("$.elements[1].elements[0].description").value("Titre du carousel"))
+            .andExpect(jsonPath("$.elements[1].elements[0].name").value("title"))
+            .andExpect(jsonPath("$.elements[1].elements[0].text").value(carouselTitle.getText()))
+            .andExpect(jsonPath("$.elements[1].elements[0].type").value(PageElementType.TEXT.name()))
+            // 2 slides
+            .andExpect(jsonPath("$.elements[1].elements[1].type").value(PageElementType.LIST.name()))
+            .andExpect(jsonPath("$.elements[1].elements[1].description").value("Slides du carousel"))
+            .andExpect(jsonPath("$.elements[1].elements[1].name").value("slides"))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements.length()").value(2))
+            // each slide has a link and an image
+            // first slide
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].type").value(PageElementType.LIST_UNIT.name()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements.length()").value(2))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[0].type").value(PageElementType.LINK.name()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[0].href").value(firstCarouselLink.getHref()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[0].text").value(firstCarouselLink.getText()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].type").value(PageElementType.IMAGE.name()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].alt").value(firstCarouselImage.getAlt()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[0].elements[1].imageId").value(firstCarouselImage.getImageId()))
+            // second slide
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].type").value(PageElementType.LIST_UNIT.name()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements.length()").value(2))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[0].type").value(PageElementType.LINK.name()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[0].href").value(secondCarouselLink.getHref()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[0].text").value(secondCarouselLink.getText()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].type").value(PageElementType.IMAGE.name()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].alt").value(secondCarouselImage.getAlt()))
+            .andExpect(jsonPath("$.elements[1].elements[1].elements[1].elements[1].imageId").value(secondCarouselImage.getImageId()))
+            // select
+            .andExpect(jsonPath("$.elements[1].elements[2].type").value(PageElementType.SELECT.name()))
+            .andExpect(jsonPath("$.elements[1].elements[2].description").value("un select"))
+            .andExpect(jsonPath("$.elements[1].elements[2].value").value(select.getValue()));
+    }
+
+    @Test
+    void shouldGetPageDataFromImportSources() throws Exception {
+        when(mockPageService.getPageDataFromImportDataSource(page.getModelName(), page.getName())).thenReturn(
+            Mono.just("{\"id\":1030,\"title\":\"Mentions légales\",\"name\":\"mentions-legales\",\"modelName\":\"legal-terms\",\"description\":null,\"elements\":[{\"type\":\"TEXT\",\"name\":\"title\",\"description\":\"Titre\",\"id\":14288,\"text\":\"Mentions légales\",\"multiLine\":false,\"optional\":false},{\"type\":\"LIST\",\"name\":\"paragraphs\",\"description\":\"Paragraphes\",\"elements\":[{\"type\":\"LIST_UNIT\",\"name\":\"paragraphs\",\"description\":\"Paragraphes\",\"elements\":[{\"type\":\"TEXT\",\"name\":\"title\",\"description\":\"Titre du paragraphe\",\"id\":14284,\"text\":\"Conception et édition\",\"multiLine\":false,\"optional\":false},{\"type\":\"TEXT\",\"name\":\"text\",\"description\":\"Texte du paragraphe\",\"id\":14290,\"text\":\"**Editeur**\\nMuséum national d'Histoire naturelle\\nUMS Patrimoine Naturel \\nCP41, 36 rue Geoffroy saint-Hilaire\\n75005 Paris\\n\\n**Conception et hébergement**\\nAgence Ninja Squad\\nwww.ninja-squad.fr\\n\\nJean-Baptiste Giffard\\nwww.digitaldesigner.cool\\n\\nSite hébergé par le Muséum national d’Histoire naturelle\\n\\n**Création graphique**\\nDesign graphique réalisé par : \\nAmélie Bracq\\nEdouard Sastre\\n\\n**Création et mise à jour du contenu**\\nLe contenu éditorial du site est produit et mis à jour par l’Unité Mixte de Service Patrimoine Naturel (UMS PatriNat) du MNHN.\",\"multiLine\":true,\"optional\":false}]},{\"type\":\"LIST_UNIT\",\"name\":\"paragraphs\",\"description\":\"Paragraphes\",\"elements\":[{\"type\":\"TEXT\",\"name\":\"title\",\"description\":\"Titre du paragraphe\",\"id\":14287,\"text\":\"Conditions générales d’utilisation\",\"multiLine\":false,\"optional\":false},{\"type\":\"TEXT\",\"name\":\"text\",\"description\":\"Texte du paragraphe\",\"id\":14285,\"text\":\"**Informations contenues dans le site**\\nLe portail Compteur de biodiversité outre-mer est un site informatif. \\nIl a pour objectif de présenter la biodiversité des territoires ultra-marins français et des actions et initiatives menées pour la protection de ces écosystèmes.\\nAucune information contenue sur le site ne saurait posséder ou être interprétée comme ayant une quelconque valeur contractuelle. Les textes à caractère scientifique publiés dans le site sont valables à la date de leur publication et ne sauraient engager leurs auteurs dans le futur.\\nToute information contenue sur le site peut être modifiée, à tout moment sans préavis, par le Muséum national d’histoire naturelle. Les informations contenues sur le site ne constituent pas une offre de services ou de produits ni une sollicitation commerciale de quelque nature que ce soit, ni une recommandation ou un conseil. Le Muséum national d’histoire naturelle ne sera pas tenu responsable pour toute décision prise ou non sur la base d’une information contenue sur le site, ni pour l’utilisation qui pourrait en être faite par un tiers. Ces informations ne sauraient engager la responsabilité du Muséum national d’histoire naturelle.\\n\\n**Propriété intellectuelle**\\nL’ensemble du site « Compteur de biodiversité outre-mer » relève de la législation française et internationale sur le droit d’auteur et la propriété intellectuelle.\\nTous les éléments présentés sur ce site (textes, photographies, vidéos, créations graphiques, illustrations) sont soumis à la législation relative au droit des informations publiques et sont couverts par le droit d'auteur. Ces éléments restent la propriété exclusive du Muséum national d’Histoire naturelle et/ou de ses auteurs.\\nLa reproduction de tout ou partie de ce site sur un support électronique quel qu’il soit est formellement interdite sauf autorisation expresse du directeur de la publication. La reproduction de ce site sur un support papier est autorisée pour des fins personnelles, associatives ou professionnelles et sous réserve du respect des trois conditions suivantes :\\n• gratuité de la diffusion ;\\n• respect de l’intégrité des documents reproduits : pas de modification ni altération d’aucune sorte ;\\n• citation claire et lisible de la source indiquant le nom \\\"Muséum national d’Histoire naturelle\\\", l’adresse internet du site web du MNHN : www.mnhn.fr et la mention : \\\"© sur www.mnhn.fr - Reproduction interdite – Tous droits réservés\\\".\\nToutes diffusions ou utilisations à des fins commerciales ou publicitaires des informations sont strictement interdites. Pour d’autres utilisations envisagées, veuillez nous consulter.\\n\\n**Crédits photographiques**\\nToutes les photographies présentes sur le site sont créditées de leurs auteurs et de la licence associée à leur utilisation si elle est mentionnée.\\nLes contenus sous licence Creative Commons ont une mention spécifique avec le type de licence qui permet à l’utilisateur d’aller consulter les conditions d’utilisation de l’image concernée. \\nExemple :\\n(CC BY-NC-SA 3.0)\",\"multiLine\":true,\"optional\":false}]},{\"type\":\"LIST_UNIT\",\"name\":\"paragraphs\",\"description\":\"Paragraphes\",\"elements\":[{\"type\":\"TEXT\",\"name\":\"title\",\"description\":\"Titre du paragraphe\",\"id\":14289,\"text\":\"Mentions relatives à l’utilisation de cookies\",\"multiLine\":false,\"optional\":false},{\"type\":\"TEXT\",\"name\":\"text\",\"description\":\"Texte du paragraphe\",\"id\":14286,\"text\":\"**Outils de mesure d’audience**\\nLe site utilise l’outil d’analyse Matomo. Les traceurs de mesures d’audience issus de Matomo ne nécessitent pas de recueil préalable du consentement de l’utilisateur du fait qu’ils servent uniquement à produire des données statistiques anonymes.\\nPour en savoir plus :\\nhttps://fr.matomo.org/privacy/\\n\\n**Politique de confidentialité et RGPD**\\nLe Muséum national d’Histoire naturelle porte la plus grande attention à vos données à caractère personnel et s’engage à les protéger.\\nIl s'engage à ce que la collecte et le traitement de données à caractère personnel, effectués à partir du présent site, soient conformes à la loi n°78-17 du 6 janvier 1978 modifiée relative à l'informatique, aux fichiers et aux libertés ainsi qu’au Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 applicable le 25 mai 2018. \\n\\n**Données personnelles**\\nSauf stipulation contraire directement mentionnée, aucune donnée personnelle n’est collectée ni traitée sur le portail « Compteur de biodiversité outre-mer ».\",\"multiLine\":true,\"optional\":false}]}]}]}"));
+        mockMvc.perform(get("/api/pages/import/home/home"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value("1030"))
+            .andExpect(jsonPath("$.title").value("Mentions légales"))
+            .andExpect(jsonPath("$.elements.length()").value(2))
+            // titre
+            .andExpect(jsonPath("$.elements[0].type").value(PageElementType.TEXT.name()))
+            .andExpect(jsonPath("$.elements[0].description").value("Titre"))
+            .andExpect(jsonPath("$.elements[0].name").value("title"))
+            .andExpect(jsonPath("$.elements[0].text").value("Mentions légales"))
+            .andExpect(jsonPath("$.elements[0].multiLine").value(false))
+            // carousel
+            .andExpect(jsonPath("$.elements[1].type").value(PageElementType.LIST.name()))
+            .andExpect(jsonPath("$.elements[1].elements.length()").value(3));
+       }
 
     @Test
     void shouldGetModel() throws Exception {

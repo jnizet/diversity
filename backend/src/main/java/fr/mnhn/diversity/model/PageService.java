@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.model;
 
+import fr.mnhn.diversity.common.api.ImportDataSource;
 import fr.mnhn.diversity.model.meta.CheckboxElement;
 import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
@@ -18,7 +19,11 @@ import fr.mnhn.diversity.model.meta.PageElementVisitor;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
 import fr.mnhn.diversity.model.meta.TextElement;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import reactor.core.publisher.Mono;
 
 /**
  * A service allowing to populate a page from a persistent Page instance and its PageModel
@@ -26,6 +31,25 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PageService {
+
+    private final WebClient webClient;
+    private final String token;
+
+    public PageService(@ImportDataSource WebClient webClient, @ImportDataSource String token) {
+        this.webClient = webClient;
+        this.token = token;
+    }
+
+
+    public Mono<String> getPageDataFromImportDataSource(String pageModel, String pageName){
+        return webClient
+            .get()
+            .uri("/api/pages/{pageModel}/{pageName}", pageModel, pageName)
+            .accept(MediaType.APPLICATION_JSON)
+            .header("Authorization","Bearer " + token)
+            .retrieve()
+            .bodyToMono(String.class);
+    }
 
     /**
      * Returns a {@link PageContent} containing the information of the given page, and its content, structured as
