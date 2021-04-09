@@ -136,9 +136,7 @@ class EcogestureControllerTest extends ControllerTest {
                 "title", text("Agir pour la science"),
                 "description", text("description"),
                 "firstActionName", text("Action 1"),
-                "firstActionLink", link("Lien action 1"),
-                "secondActionName", text("Action 2"),
-                "secondActionLink", link("Lien action 2")
+                "firstActionLink", link("Lien action 1")
                 )
             ));
 

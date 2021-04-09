@@ -110,21 +110,13 @@
           <div class="agir-divider"></div>
           <div class="agir-block">
             <div class="col-1">
-              <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
-            </div>
-            <div class="text-big col-2" biom:markdown="${act.content.firstActionName.text}"></div>
-            <a th:href="${act.content.firstActionLink.href}" class="cta-secondary yellow" biom:markdown="${act.content.firstActionLink.text}"></a>
-          </div>
-          <div class="agir-divider"></div>
-          <div class="agir-block">
-            <div class="col-1">
               <img th:src="@{/assets/images/icon-agir-2.svg}" loading="lazy" alt="" />
             </div>
-            <div class="text-big col-2" biom:markdown="${act.content.secondActionName.text}"></div>
+            <div class="text-big col-2" biom:markdown="${act.content.firstActionName.text}"></div>
             <a
-              th:href="${act.content.secondActionLink.href}"
+              th:href="${act.content.firstActionLink.href}"
               class="cta-secondary yellow"
-              biom:markdown="${act.content.secondActionLink.text}"
+              biom:markdown="${act.content.firstActionLink.text}"
             ></a>
           </div>
           <div class="agir-divider"></div>
