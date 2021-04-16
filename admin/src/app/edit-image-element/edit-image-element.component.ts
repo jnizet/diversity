@@ -80,7 +80,7 @@ export class EditImageElementComponent {
         .pipe(finalize(() => (this.uploading = false)))
         .subscribe(image => {
           this.imageService.setImageLoadingToFalse(this.editedImageElement.id);
-          return this.imageGroup.patchValue({ imageId: image.id });
+          return this.imageGroup.patchValue({ imageId: image.id, alt: element.alt });
         });
     } else {
       this.updateElement(element);
