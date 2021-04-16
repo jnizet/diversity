@@ -57,7 +57,7 @@ public enum Territory {
     ),
     WALLIS_ET_FUTUNA(
         "Wallis et Futuna",
-        "Wallis et Futuna",
+        "Wallis-et-Futuna",
         "wallis-et-futuna",
         new MapCoordinates(747, 580),
         null
@@ -78,21 +78,21 @@ public enum Territory {
     ),
     ILES_SUBANTARCTIQUES(
         "Îles sub-antarctiques",
-        "TAAF : Îles sub-antarctiques",
+        "TAAF : Îles Subantarctiques",
         "iles-subantarctiques",
         new MapCoordinates(367, 687),
         null
     ),
     ILES_EPARSES(
         "Îles Éparses",
-        "TAAF : Îles éparses",
+        "TAAF : Îles Éparses",
         "iles-eparses",
         new MapCoordinates(237, 621),
         null
     ),
     CLIPPERTON(
         "Clipperton",
-        "Île de Clipperton",
+        "Clipperton",
         "clipperton",
         new MapCoordinates(992, 501),
         null
@@ -113,7 +113,7 @@ public enum Territory {
     ),
     TERRE_ADELIE(
         "Terre Adélie",
-        "TAAF : Terre-Adélie",
+        "TAAF : Terre Adélie",
         "terre-adelie",
         new MapCoordinates(611, 804),
         null

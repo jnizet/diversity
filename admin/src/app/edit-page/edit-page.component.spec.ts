@@ -211,7 +211,7 @@ describe('EditPageComponent', () => {
 
   function prepare(route: ActivatedRoute) {
     pageService = jasmine.createSpyObj<PageService>('PageService', ['getValues', 'getModel', 'update', 'create']);
-    imageService = jasmine.createSpyObj<ImageService>('ImageService', ['createImage']);
+    imageService = jasmine.createSpyObj<ImageService>('ImageService', ['createImage'], { importedImages: [] });
     toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
 
     TestBed.configureTestingModule({
@@ -307,14 +307,14 @@ describe('EditPageComponent', () => {
           files: [file]
         }
       } as unknown) as Event;
-      tester.editImageComponents[0].componentInstance.upload(fakeFileEvent);
+      tester.editImageComponents[0].componentInstance.onUpload(fakeFileEvent);
       tester.link1TextInput.fillWith('Nouveau lien 1');
       tester.link1HrefInput.fillWith('https://lien1.org');
       // add another unit
       tester.addUnitButton.click();
       expect(tester.elements('input').length).toBe(10); // title + 1 text + 2 links (2 inputs) + 2 images (2 inputs)
       tester.image2AltInput.fillWith('Image 2');
-      tester.editImageComponents[1].componentInstance.upload(fakeFileEvent);
+      tester.editImageComponents[1].componentInstance.onUpload(fakeFileEvent);
       tester.link2TextInput.fillWith('Nouveau lien 2');
       tester.link2HrefInput.fillWith('https://lien2.org');
 

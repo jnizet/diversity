@@ -7,6 +7,7 @@ import { ToastService } from '../toast.service';
 import { forkJoin, Observable } from 'rxjs';
 import { validElement } from '../validators';
 import { animate, classBasedAnimation } from '../animation';
+import { ImageService } from '../image.service';
 
 interface FormValue {
   title: string;
@@ -34,6 +35,7 @@ export class EditPageComponent implements OnInit {
     fb: FormBuilder,
     private pageService: PageService,
     private toastService: ToastService,
+    private imageService: ImageService,
     private router: Router
   ) {
     this.elementsGroup = fb.group({}, Validators.required);
@@ -133,5 +135,13 @@ export class EditPageComponent implements OnInit {
 
   getElementModel(name: string): PageElement {
     return this.pageModel.elements.find(el => el.name === name);
+  }
+
+  get imageImported() {
+    return this.imageService.importedImages;
+  }
+
+  get imageImportedLabel() {
+    return `${this.imageImported.filter(image => !image.isLoading).length}/${this.imageImported.length} images importé depuis la préprod`;
   }
 }

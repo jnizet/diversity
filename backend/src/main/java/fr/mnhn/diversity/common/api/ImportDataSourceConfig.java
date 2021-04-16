@@ -3,6 +3,7 @@ package fr.mnhn.diversity.common.api;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -21,7 +22,13 @@ public class ImportDataSourceConfig {
     @Bean
     @ImportDataSource
     public WebClient importWebClient(WebClient.Builder builder) {
-        return builder.baseUrl(importDataSourceProperties.getBaseUrl()).build();
+        builder.baseUrl(importDataSourceProperties.getBaseUrl());
+        builder.exchangeStrategies(ExchangeStrategies.builder()
+            .codecs(configurer -> configurer
+                .defaultCodecs()
+                .maxInMemorySize(16 * 1024 * 1024))
+            .build());
+        return builder.build();
     }
 
     @Bean

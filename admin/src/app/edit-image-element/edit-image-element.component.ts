@@ -59,16 +59,7 @@ export class EditImageElementComponent {
     this.onTouched = fn;
   }
 
-  writeValue(element: ImageElement): void {
-    if (element.source === 'IMPORTED') {
-      this.imageService
-        .downloadImage(`https://preprod.biodiversite-outre-mer.fr/images/${element.imageId}/image`)
-        .subscribe((blob: Blob) => {
-          const file = new File([blob], element.imageId.toString(), { lastModified: new Date().getMilliseconds(), type: 'image/jpeg' });
-          return this.upload(file);
-        });
-    }
-    this.editedImageElement = element;
+  updateElement(element: ImageElement) {
     this.imageGroup.setValue(
       {
         imageId: element.imageId,
@@ -76,6 +67,24 @@ export class EditImageElementComponent {
       },
       { emitEvent: false }
     );
+    this.uploading = false;
+  }
+
+  writeValue(element: ImageElement): void {
+    this.editedImageElement = element;
+    if (element.source === 'IMPORTED') {
+      this.uploading = true;
+      this.imageService.addImportedImage(element.id);
+      this.imageService
+        .importImage(element.imageId, element.multiSize, element.document)
+        .pipe(finalize(() => (this.uploading = false)))
+        .subscribe(image => {
+          this.imageService.setImageLoadingToFalse(this.editedImageElement.id);
+          return this.imageGroup.patchValue({ imageId: image.id });
+        });
+    } else {
+      this.updateElement(element);
+    }
   }
 
   get imageUrl() {
@@ -124,14 +133,12 @@ export class EditImageElementComponent {
 
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput.files[0];
-    this.upload(file);
-    fileInput.value = '';
-  }
-
-  upload(file: File) {
     this.imageService
       .createImage(file, this.editedImageElement.multiSize, this.editedImageElement.document)
       .pipe(finalize(() => (this.uploading = false)))
-      .subscribe(image => this.imageGroup.patchValue({ imageId: image.id }));
+      .subscribe(image => {
+        return this.imageGroup.patchValue({ imageId: image.id });
+      });
+    fileInput.value = '';
   }
 }

@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.image;
 
+import fr.mnhn.diversity.common.api.ImportDataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -8,7 +9,10 @@ import java.nio.file.Path;
 import fr.mnhn.diversity.model.ImageSize;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 /**
  * Service used to handle stored images
@@ -17,9 +21,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImageStorageService {
     private final Path imageDirectory;
+    private final WebClient webClient;
 
-    public ImageStorageService(ImageProperties imageProperties) {
+    public ImageStorageService(ImageProperties imageProperties, @ImportDataSource WebClient webClient
+    ) {
         this.imageDirectory = imageProperties.getDirectory();
+        this.webClient = webClient;
+    }
+
+    public Mono<ResponseEntity<Resource>> getImageBytesFromImportDataSource(Long imageId){
+        return webClient
+            .get()
+            .uri("/images/{pageModel}/image", imageId)
+            .retrieve()
+            .toEntity(Resource.class);
     }
 
     public boolean imageExists(Image image) {

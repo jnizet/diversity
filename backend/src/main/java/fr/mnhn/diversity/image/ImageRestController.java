@@ -18,6 +18,8 @@ import fr.mnhn.diversity.model.ImageSize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +60,30 @@ public class ImageRestController {
         saveImage(multiSize, file, image);
 
         return new ImageDTO(image);
+    }
+
+    @GetMapping("import/{imageId}/image")
+    public ImageDTO getImportImageBytes(@PathVariable("imageId") Long imageId,
+                                        @RequestParam(value = "multisize", defaultValue = "false") boolean multiSize,
+                                        @RequestParam(value = "document", defaultValue = "false") boolean document
+    ) throws IOException {
+        var file = imageStorageService.
+            getImageBytesFromImportDataSource(imageId).block();
+        MediaType contentType = file.getHeaders().getContentType();
+        Image image = new Image(null, contentType.toString(), "copy-" + imageId);
+        image = imageRepository.create(image);
+
+        if(multiSize){
+            List<ResizedImage> resizedImages = resize(file.getBody().getInputStream().readAllBytes());
+            for (ResizedImage resizedImage : resizedImages) {
+                imageStorageService.saveMultiSizeImage(image, resizedImage.getSize(), new ByteArrayInputStream(resizedImage.getBytes()));
+            }
+        }
+        else {
+            imageStorageService.saveImage(image, file.getBody().getInputStream());
+        }
+        return new ImageDTO(image);
+
     }
 
     private ImageType getAndValidateImageType(boolean multiSize, boolean document, MultipartFile file) {
@@ -104,19 +130,18 @@ public class ImageRestController {
     }
 
     private void saveMultiSizeImage(MultipartFile file, Image image) throws IOException {
-        List<ResizedImage> resizedImages = resize(file);
+        List<ResizedImage> resizedImages = resize(file.getBytes());
         for (ResizedImage resizedImage : resizedImages) {
             imageStorageService.saveMultiSizeImage(image, resizedImage.getSize(), new ByteArrayInputStream(resizedImage.getBytes()));
         }
     }
 
-    private List<ResizedImage> resize(MultipartFile file) throws IOException {
-        byte[] originalImageBytes = file.getBytes();
-        BufferedImage sourceBufferedImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
+    private List<ResizedImage> resize(byte[] file) throws IOException {
+        BufferedImage sourceBufferedImage = ImageIO.read(new ByteArrayInputStream(file));
         List<ResizedImage> result = new ArrayList<>();
         for (ImageSize imageSize : ImageSize.values()) {
             if (imageSize.getWidth() >= sourceBufferedImage.getWidth()) {
-                result.add(new ResizedImage(originalImageBytes, imageSize));
+                result.add(new ResizedImage(file, imageSize));
             } else {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 ImageIO.write(doResize(sourceBufferedImage, imageSize.getWidth()), "jpg", out);
