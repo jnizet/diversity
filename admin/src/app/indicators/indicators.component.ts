@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faChartLine, faPlus, faTrash, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faPlus, faTrash, faCheckSquare, faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { switchMap, tap } from 'rxjs/operators';
 
 import { ConfirmationService } from '../confirmation.service';
@@ -19,7 +19,9 @@ export class IndicatorsComponent implements OnInit {
   createIndicatorIcon = faPlus;
   deleteIndicatorIcon = faTrash;
   roundedIndicatorIcon = faCheckSquare;
-
+  moveUpItemIcon = faAngleUp;
+  moveDownItemIcon = faAngleDown;
+  isLoading = false;
   constructor(
     private indicatorService: IndicatorService,
     private confirmationService: ConfirmationService,
@@ -27,7 +29,7 @@ export class IndicatorsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.indicatorService.list().subscribe(indicators => (this.indicators = indicators));
+    this.indicatorService.list().subscribe(indicators => (this.indicators = indicators.sort((a, b) => a.rank - b.rank)));
   }
 
   deleteIndicator(indicator: Indicator) {
@@ -39,6 +41,26 @@ export class IndicatorsComponent implements OnInit {
         switchMap(() => this.indicatorService.list())
       )
       .subscribe(indicators => (this.indicators = indicators));
+  }
+
+  isInLastPosition(index: number) {
+    return index === this.indicators.length - 1;
+  }
+
+  moveUp(indicatorIndex: number) {
+    this.isLoading = true;
+    this.indicatorService.swap(this.indicators[indicatorIndex].id, this.indicators[indicatorIndex - 1].id).subscribe(indicators => {
+      this.indicators = indicators.sort((a, b) => a.rank - b.rank);
+      this.isLoading = false;
+    });
+  }
+
+  moveDown(indicatorIndex: number) {
+    this.isLoading = true;
+    this.indicatorService.swap(this.indicators[indicatorIndex].id, this.indicators[indicatorIndex + 1].id).subscribe(indicators => {
+      this.indicators = indicators.sort((a, b) => a.rank - b.rank);
+      this.isLoading = false;
+    });
   }
 
   categories(indicator: Indicator) {

@@ -81,7 +81,7 @@ class IndicatorRestControllerTest {
         ecogesture = new Ecogesture(43L, "trier-ses-dechets");
         when(mockEcogestureRepository.findById(ecogesture.getId())).thenReturn(Optional.of(ecogesture));
 
-        indicator = new Indicator(43L, "biom_43", "deforestation", false, List.of(category), List.of(ecogesture));
+        indicator = new Indicator(43L, "biom_43", "deforestation", false, 1, List.of(category), List.of(ecogesture));
         when(mockIndicatorRepository.findById(indicator.getId())).thenReturn(Optional.of(indicator));
         when(mockIndicatorRepository.findByBiomId(indicator.getBiomId())).thenReturn(Optional.of(indicator));
         when(mockIndicatorRepository.findBySlug(indicator.getSlug())).thenReturn(Optional.of(indicator));
@@ -194,6 +194,7 @@ class IndicatorRestControllerTest {
             "biom_67",
             "surface-forêts",
             false,
+            1,
             List.of(category.getId()),
             List.of(ecogesture.getId())
         );
@@ -209,7 +210,8 @@ class IndicatorRestControllerTest {
         );
 
         Indicator createdIndicator = new Indicator(256L, command.getBiomId(), command.getSlug(),
-            false, List.of(category), List.of(ecogesture));
+            false,1,
+            List.of(category), List.of(ecogesture));
         when(mockIndicatorRepository.create(any())).thenReturn(createdIndicator);
 
         mockMvc.perform(post("/api/indicators")
@@ -236,6 +238,7 @@ class IndicatorRestControllerTest {
             indicator.getBiomId(),
             "surface-forêts",
             false,
+            1,
             List.of(category.getId()),
             List.of(ecogesture.getId())
         );
@@ -250,6 +253,7 @@ class IndicatorRestControllerTest {
             "biom_12",
             indicator.getSlug(),
             false,
+            1,
             List.of(category.getId()),
             List.of(ecogesture.getId())
         );
@@ -264,6 +268,7 @@ class IndicatorRestControllerTest {
             "biom_92",
             "surface-forêts",
             false,
+            1,
             List.of(),
             List.of()
         );
@@ -310,6 +315,7 @@ class IndicatorRestControllerTest {
             indicator.getBiomId(),
             "surface-forets",
             false,
+            1,
             List.of(),
             List.of()
         );
@@ -324,6 +330,7 @@ class IndicatorRestControllerTest {
             indicator.getBiomId(),
             "surface-forets",
             false,
+            1,
             List.of(),
             List.of()
         );
@@ -342,6 +349,7 @@ class IndicatorRestControllerTest {
             "biom_92",
             indicator.getSlug(),
             false,
+            1,
             List.of(),
             List.of()
         );
@@ -356,6 +364,7 @@ class IndicatorRestControllerTest {
             "other",
             indicator.getSlug(),
             false,
+            1,
             List.of(),
             List.of()
         );

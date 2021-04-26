@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class IndicatorRepository {
 
-    private static final String INDICATOR_QUERY = "select indicator.id, indicator.biom_id, indicator.slug, indicator.is_rounded," +
+    private static final String INDICATOR_QUERY = "select indicator.id, indicator.biom_id, indicator.slug, indicator.is_rounded, indicator.rank," +
         " cat.id as category_id, cat.name as category_name," +
         " eco.id as ecogesture_id, eco.slug as ecogesture_slug from indicator" +
         " left outer join indicator_ecogesture ind_eco on indicator.id = ind_eco.indicator_id" +
@@ -75,8 +75,9 @@ public class IndicatorRepository {
             "isRounded", indicator.getIsRounded()
         );
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update("insert into indicator (id, biom_id, slug, is_rounded) values (nextval('indicator_seq'), :biomId, :slug, :isRounded)", new MapSqlParameterSource(paramMap), keyHolder);
+        jdbcTemplate.update("insert into indicator (id, biom_id, slug, is_rounded, rank) values (nextval('indicator_seq'), :biomId, :slug, :isRounded, nextval('indicator_rank_seq'))", new MapSqlParameterSource(paramMap), keyHolder);
         Long id = (Long) keyHolder.getKeys().get("id");
+        Integer rank = (Integer) keyHolder.getKeys().get("rank");
 
         // add the categories
         indicator.getCategories().forEach(category -> {
@@ -96,7 +97,7 @@ public class IndicatorRepository {
             jdbcTemplate.update("insert into indicator_ecogesture (indicator_id, ecogesture_id) values (:id, :ecogesture_id)", ecogestureParamMap);
         });
 
-        return new Indicator(id, indicator.getBiomId(), indicator.getSlug(), indicator.getIsRounded(), indicator.getCategories(), indicator.getEcogestures());
+        return new Indicator(id, indicator.getBiomId(), indicator.getSlug(), indicator.getIsRounded(), rank, indicator.getCategories(), indicator.getEcogestures());
     }
 
     /**
@@ -108,9 +109,10 @@ public class IndicatorRepository {
             "id", indicator.getId(),
             "biomId", indicator.getBiomId(),
             "slug", indicator.getSlug(),
-            "isRounded", indicator.getIsRounded()
+            "isRounded", indicator.getIsRounded(),
+            "rank", indicator.getRank()
         );
-        jdbcTemplate.update("update indicator set biom_id = :biomId, slug = :slug, is_rounded = :isRounded where id = :id", paramMap);
+        jdbcTemplate.update("update indicator set biom_id = :biomId, slug = :slug, is_rounded = :isRounded, rank = :rank where id = :id", paramMap);
 
         // update the categories
         removeCategoriesFromIndicator(indicator.getId());
@@ -133,7 +135,19 @@ public class IndicatorRepository {
         });
 
         return new Indicator(indicator.getId(), indicator.getBiomId(), indicator.getSlug(),
-            indicator.getIsRounded(), indicator.getCategories(), indicator.getEcogestures());
+            indicator.getIsRounded(), indicator.getRank(), indicator.getCategories(), indicator.getEcogestures());
+    }
+
+    public void swapRanks(Long indicatorId, Long indicatorIdToSwapWith) {
+        // update the indicator
+        Map<String, Object> paramMap = Map.of(
+            "id", indicatorId,
+            "idToSwapWith", indicatorIdToSwapWith
+        );
+        jdbcTemplate.update("update indicator ind" +
+                                " set rank = ind_old.rank" +
+                                " from indicator ind_old" +
+                                " where (ind.id, ind_old.id) in ((:id, :idToSwapWith), (:idToSwapWith, :id))", paramMap);
     }
 
     /**
@@ -307,7 +321,8 @@ public class IndicatorRepository {
             String biomId = rs.getString("biom_id");
             String slug = rs.getString("slug");
             Boolean isRounded = rs.getBoolean("is_rounded");
-            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId, slug, isRounded));
+            Integer rank = rs.getInt("rank");
+            indicatorsById.computeIfAbsent(indicatorId, id -> new Indicator(indicatorId, biomId, slug, isRounded, rank));
             HashSet<IndicatorCategory> categoriesForIndicator = categoriesByIndicatorId.computeIfAbsent(indicatorId,
                                                                                                      id -> new HashSet<>());
             long categoryId = rs.getLong("category_id");
@@ -331,6 +346,7 @@ public class IndicatorRepository {
                                                              indicator.getBiomId(),
                                                              indicator.getSlug(),
                                                              indicator.getIsRounded(),
+                                                             indicator.getRank(),
                                                              categoriesByIndicatorId.get(indicator.getId())
                                                                                     .stream()
                                                                                     .sorted(Comparator.comparing(IndicatorCategory::getName))

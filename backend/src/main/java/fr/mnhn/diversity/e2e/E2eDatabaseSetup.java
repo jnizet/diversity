@@ -104,9 +104,9 @@ public class E2eDatabaseSetup implements CommandLineRunner {
 
         Operation indicators =
             insertInto("indicator")
-                .columns("id", "biom_id", "slug", "is_rounded")
-                .values(1, "i1", "especes-envahissantes", false)
-                .values(2, "i2", "deforestation", false)
+                .columns("id", "biom_id", "slug", "is_rounded", "rank")
+                .values(1, "i1", "especes-envahissantes", false, 1)
+                .values(2, "i2", "deforestation", false, 2)
                 .build();
 
         Operation indicatorCategories =

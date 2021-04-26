@@ -14,10 +14,11 @@ public final class IndicatorDTO {
     private final String biomId;
     private final String slug;
     private final Boolean isRounded;
+    private final Integer rank;
     private final List<IndicatorCategoryDTO> categories;
     private final List<EcogestureDTO> ecogestures;
 
-    public IndicatorDTO(Long id, String biomId, String slug, Boolean isRounded,
+    public IndicatorDTO(Long id, String biomId, String slug, Boolean isRounded, Integer rank,
         List<IndicatorCategoryDTO> categories, List<EcogestureDTO> ecogestures) {
         this.id = id;
         this.biomId = biomId;
@@ -25,6 +26,7 @@ public final class IndicatorDTO {
         this.isRounded = isRounded;
         this.categories = categories;
         this.ecogestures = ecogestures;
+        this.rank =  rank;
     }
 
     public IndicatorDTO(Indicator indicator) {
@@ -32,7 +34,9 @@ public final class IndicatorDTO {
             indicator.getId(),
             indicator.getBiomId(),
             indicator.getSlug(),
-            indicator.getIsRounded(), indicator.getCategories().stream().map(IndicatorCategoryDTO::new).collect(Collectors.toList()),
+            indicator.getIsRounded(),
+            indicator.getRank(),
+            indicator.getCategories().stream().map(IndicatorCategoryDTO::new).collect(Collectors.toList()),
             indicator.getEcogestures().stream().map(EcogestureDTO::new).collect(Collectors.toList())
         );
     }
@@ -59,6 +63,10 @@ public final class IndicatorDTO {
         return ecogestures;
     }
 
+    public Integer getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,12 +77,13 @@ public final class IndicatorDTO {
             Objects.equals(slug, that.slug) &&
             Objects.equals(categories, that.categories) &&
             Objects.equals(ecogestures, that.ecogestures) &&
-            Objects.equals(isRounded, that.isRounded);
+            Objects.equals(isRounded, that.isRounded) &&
+            Objects.equals(rank, that.rank);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, biomId, slug, categories, ecogestures, isRounded);
+        return Objects.hash(id, biomId, slug, categories, ecogestures, isRounded, rank);
     }
 
     @Override
@@ -86,6 +95,7 @@ public final class IndicatorDTO {
             ", categories=" + categories +
             ", ecogestures=" + ecogestures +
             ", isRounded=" + isRounded +
+            ", rank=" + rank +
             '}';
     }
 }

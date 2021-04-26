@@ -79,7 +79,8 @@ describe('IndicatorsComponent', () => {
         slug: 'deforestation',
         categories: [vegetation],
         ecogestures: [],
-        isRounded: false
+        isRounded: false,
+        rank: 1
       },
       {
         id: 2,
@@ -87,7 +88,8 @@ describe('IndicatorsComponent', () => {
         slug: 'especes-menacees',
         categories: [],
         ecogestures: [],
-        isRounded: true
+        isRounded: true,
+        rank: 2
       }
     ];
 
@@ -113,7 +115,8 @@ describe('IndicatorsComponent', () => {
         slug: 'deforestation',
         categories: [vegetation],
         ecogestures: [],
-        isRounded: false
+        isRounded: false,
+        rank: 1
       },
       {
         id: 2,
@@ -121,7 +124,8 @@ describe('IndicatorsComponent', () => {
         slug: 'especes-menacees',
         categories: [],
         ecogestures: [],
-        isRounded: false
+        isRounded: false,
+        rank: 2
       }
     ];
 

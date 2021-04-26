@@ -224,6 +224,7 @@ describe('EditIndicatorComponent', () => {
           slug: 'especes-envahissantes',
           biomId: 'biom-41',
           isRounded: false,
+          rank: 1,
           categories: [vegetation],
           ecogestures: [separateWaste]
         })

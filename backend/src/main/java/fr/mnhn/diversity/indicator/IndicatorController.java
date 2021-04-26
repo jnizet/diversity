@@ -97,7 +97,7 @@ public class IndicatorController {
         // so we get all the indicator pages, and find the associated indicator by its name, which is supposed to be
         // the slug of the indicator
         Map<String, Indicator> indicatorsBySlug =
-            indicatorRepository.list().stream().collect(Collectors.toMap(Indicator::getSlug, Function.identity()));
+            indicatorRepository.list().stream().sorted(Comparator.comparingInt(Indicator::getRank)).collect(Collectors.toMap(Indicator::getSlug, Function.identity()));
         List<Page> indicatorPages = pageRepository.findByModel(IndicatorModel.INDICATOR_PAGE_MODEL.getName());
 
         Map<Indicator, IndicatorValue> valuesByIndicator =
@@ -110,6 +110,7 @@ public class IndicatorController {
                                                               pageService.buildPageContent(IndicatorModel.INDICATOR_PAGE_MODEL,
                                                                                            indicatorPage),
                                                               valuesByIndicator.get(indicatorsBySlug.get(indicatorPage.getName()))))
+                         .sorted(Comparator.comparingInt(indicatorCards -> indicatorCards.indicator.getRank()))
                          .collect(Collectors.toList());
     }
 

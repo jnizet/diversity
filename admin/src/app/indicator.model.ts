@@ -8,6 +8,7 @@ export interface Indicator {
   categories: Array<IndicatorCategory>;
   ecogestures: Array<Ecogesture>;
   isRounded: boolean;
+  rank: number;
 }
 
 export interface IndicatorValue {

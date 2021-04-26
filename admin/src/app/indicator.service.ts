@@ -13,6 +13,10 @@ export class IndicatorService {
     return this.http.get<Array<Indicator>>('/api/indicators');
   }
 
+  swap(indicatorId: number, indicatorToSwapWith: number): Observable<Array<Indicator>> {
+    return this.http.get<Array<Indicator>>(`/api/indicators/${indicatorId}/swap/${indicatorToSwapWith}`, {});
+  }
+
   get(indicatorId: number): Observable<Indicator> {
     return this.http.get<Indicator>(`/api/indicators/${indicatorId}`);
   }

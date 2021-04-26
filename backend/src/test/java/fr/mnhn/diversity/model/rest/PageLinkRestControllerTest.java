@@ -61,8 +61,8 @@ class PageLinkRestControllerTest {
 
         when(mockIndicatorRepository.list()).thenReturn(
             List.of(
-                new Indicator(52L, "biom-11", "i1", false),
-                new Indicator(64L, "biom-12", "i2", false)
+                new Indicator(52L, "biom-11", "i1", false, 1),
+                new Indicator(64L, "biom-12", "i2", false, 2)
             )
         );
 

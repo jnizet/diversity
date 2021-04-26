@@ -15,6 +15,7 @@ public final class IndicatorCommandDTO {
     private final List<Long> categoryIds;
     private final List<Long> ecogestureIds;
     private final Boolean isRounded;
+    private final Integer rank;
 
 
     @JsonCreator
@@ -22,6 +23,7 @@ public final class IndicatorCommandDTO {
         @JsonProperty("biomId") String biomId,
         @JsonProperty("slug") String slug,
         @JsonProperty("isRounded") Boolean isRounded,
+        @JsonProperty("rank") Integer rank,
         @JsonProperty("categoryIds") List<Long> categoryIds,
         @JsonProperty("ecogestureIds") List<Long> ecogestureIds) {
         this.biomId = biomId;
@@ -29,6 +31,7 @@ public final class IndicatorCommandDTO {
         this.categoryIds = categoryIds;
         this.ecogestureIds = ecogestureIds;
         this.isRounded = isRounded;
+        this.rank = rank;
     }
 
     public String getBiomId() {
@@ -49,6 +52,8 @@ public final class IndicatorCommandDTO {
 
     public Boolean getRounded() { return isRounded; }
 
+    public Integer getRank() { return rank; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,7 +67,7 @@ public final class IndicatorCommandDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(biomId, slug, categoryIds, ecogestureIds);
+        return Objects.hash(biomId, slug, categoryIds, ecogestureIds, rank);
     }
 
     @Override
@@ -72,6 +77,7 @@ public final class IndicatorCommandDTO {
             ", slug='" + slug + '\'' +
             ", categoryIds=" + categoryIds +
             ", ecogestureIds=" + ecogestureIds +
+            ", rank=" + rank +
             '}';
     }
 }

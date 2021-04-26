@@ -15,7 +15,7 @@ public class ImportDataSourceProperties {
      */
     private String baseUrl = "https://test.biodiversite-outre-mer.fr";
 
-    private String token = "";
+    private String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMTE1NTI5M30.XRZ0DrLeaQm5hLi-8jOWYv5vMrNtzU1ctUPzrA3vABA";
 
     public ImportDataSourceProperties(String baseUrl, String token) {
         this.token = token;

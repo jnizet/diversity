@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -136,7 +137,7 @@ public class IndicatorRestController {
             ecogestures.add(ecogesture);
         });
 
-        return new Indicator(id, command.getBiomId(), command.getSlug(), command.getRounded(), categories, ecogestures);
+        return new Indicator(id, command.getBiomId(), command.getSlug(), command.getRounded(), command.getRank(), categories, ecogestures);
     }
 
     @PutMapping("/{indicatorId}")
@@ -162,6 +163,21 @@ public class IndicatorRestController {
                                       IndicatorModel.INDICATOR_PAGE_MODEL.getName(),
                                       updatedIndicator.getSlug());
         }
+    }
+
+    @GetMapping("/{indicatorId}/swap/{indicatorIdToSwapWith}")
+    public List<IndicatorDTO> swap(@PathVariable("indicatorId") Long indicatorId,
+        @PathVariable("indicatorIdToSwapWith") Long indicatorIdToSwapWith
+        ) {
+        Indicator indicator = indicatorRepository.findById(indicatorId)
+            .orElseThrow(NotFoundException::new);
+        Indicator indicatorToSwapWith = indicatorRepository.findById(indicatorIdToSwapWith)
+            .orElseThrow(NotFoundException::new);
+        indicatorRepository.swapRanks(indicatorId, indicatorIdToSwapWith);
+        return this.indicatorRepository.list()
+            .stream()
+            .map(IndicatorDTO::new)
+            .collect(Collectors.toList());
     }
 
     private void fetchAndStoreIndicatorValues(Indicator indicator) {

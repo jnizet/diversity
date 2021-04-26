@@ -46,8 +46,8 @@ class EcogestureRepositoryTest {
                         .values(3L, "slug3")
                         .build(),
                     insertInto("indicator")
-                        .columns("id", "biom_id", "slug", "is_rounded")
-                        .values(1L, "i1", "especes-envahissantes", false)
+                        .columns("id", "biom_id", "slug", "is_rounded", "rank")
+                        .values(1L, "i1", "especes-envahissantes", false, 1)
                         .build(),
                     insertInto("indicator_ecogesture")
                         .columns("indicator_id", "ecogesture_id")
