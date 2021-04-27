@@ -1,6 +1,7 @@
 package fr.mnhn.diversity.indicator;
 
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -137,11 +138,15 @@ public class IndicatorController {
     }
 
     private List<TerritoryCard> getTerritoryCards(Map<Territory, IndicatorValue> valuesByTerritory) {
-        return valuesByTerritory.entrySet()
+        var a =  EnumSet.complementOf(EnumSet.of(Territory.OUTRE_MER))
+            .stream()
+            .sorted(Comparator.comparing(Territory::getName))
+            .map(territory -> new TerritoryCard(territory, valuesByTerritory.get(territory)))
+            .collect(Collectors.toList());
+        return EnumSet.complementOf(EnumSet.of(Territory.OUTRE_MER))
                 .stream()
-                .filter(entry -> entry.getKey() != Territory.OUTRE_MER)
-                .sorted(Map.Entry.comparingByKey())
-                .map(entry -> new TerritoryCard(entry.getKey(), entry.getValue()))
+                .sorted(Comparator.comparing(Territory::getName))
+                .map(territory -> new TerritoryCard(territory, valuesByTerritory.get(territory)))
                 .collect(Collectors.toList());
     }
 

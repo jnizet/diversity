@@ -146,12 +146,13 @@
             <!-- TODO deal with bassins when it's worth it -->
             <div class="swiper-wrapper indicateur-wrapper">
               <div data-bassin="1" class="swiper-slide indicateur-slide" th:each="card: ${territoryCards}">
-                <div class="indicateur-slide-number" biom:markdown="${#indicators.formatValue(card.indicatorValue, indicator.isRounded)}">16</div>
+                <div th:if="${card.indicatorValue != null}" class="indicateur-slide-number" biom:markdown="${#indicators.formatValue(card.indicatorValue, indicator.isRounded)}">16</div>
+                <div th:if="${card.indicatorValue == null}" class="indicateur-slide-no-data">Aucune donnée</div>
                 <div class="indicateur-slide-tiytle" biom:markdown="${card.territory.name}">Martinique</div>
                 <img
                   th:src="@{/assets/images/territories/indicator/{slug}.svg(slug=${card.territory.slug})}"
+                  alt=" "
                   loading="lazy"
-                  th:alt="${card.territory.name}"
                   class="indicateur-map"
                 />
               </div>

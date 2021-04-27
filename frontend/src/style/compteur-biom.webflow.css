@@ -3700,6 +3700,19 @@ legend-text a {
   font-weight: 600;
 }
 
+
+.indicateur-slide-no-data {
+  position: relative;
+  bottom: 24px;
+  z-index: 2;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  font-size: 15px;
+  line-height: 56px;
+  font-weight: 300;
+}
+
 .indicateur-slide-tiytle {
   position: relative;
   z-index: 2;
@@ -5685,7 +5698,7 @@ legend-text a {
   margin-top: 9px;
   margin-bottom: 30px;
   color: #b9cbdd;
-  font-size: 70px;
+  font-size: 55px;
   line-height: 60px;
   font-weight: 600;
 }
@@ -6252,6 +6265,13 @@ legend-text a {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+.espece-right-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 560px;
 }
 
 .lieu-img-wrapper {
