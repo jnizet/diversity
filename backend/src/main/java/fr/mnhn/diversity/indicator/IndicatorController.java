@@ -138,11 +138,6 @@ public class IndicatorController {
     }
 
     private List<TerritoryCard> getTerritoryCards(Map<Territory, IndicatorValue> valuesByTerritory) {
-        var a =  EnumSet.complementOf(EnumSet.of(Territory.OUTRE_MER))
-            .stream()
-            .sorted(Comparator.comparing(Territory::getName))
-            .map(territory -> new TerritoryCard(territory, valuesByTerritory.get(territory)))
-            .collect(Collectors.toList());
         return EnumSet.complementOf(EnumSet.of(Territory.OUTRE_MER))
                 .stream()
                 .sorted(Comparator.comparing(Territory::getName))

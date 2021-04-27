@@ -62,19 +62,22 @@ class HomeControllerTest extends ControllerTest {
                 page,
                 Map.of(
                     "carousel", Map.of(
-                        "title", text("Hello"),
-                        "images", List.of(
+                        "carouselElements", List.of(
                             Map.of(
+                                "title", text("Hello"),
+                                "text", text("carousel text"),
+                                "button", link("carousel button"),
                                 "image", multiSizeImage(1L),
                                 "shadowed", checkbox(true)
                             ),
                             Map.of(
+                                "title", text("Hello"),
+                                "text", text("carousel text"),
+                                "button", link("carousel button"),
                                 "image", multiSizeImage(2L),
                                 "shadowed", checkbox(true)
                             )
-                        ),
-                        "text", text("carousel text"),
-                        "territoriesButton", text("carousel button")
+                        )
                     ),
                     "presentation", Map.of(
                         "title", text("Presentation"),
