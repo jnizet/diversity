@@ -138,9 +138,12 @@ public class IndicatorController {
     }
 
     private List<TerritoryCard> getTerritoryCards(Map<Territory, IndicatorValue> valuesByTerritory) {
+        if(valuesByTerritory.size() <= 1) {
+            return List.of();
+        }
         return EnumSet.complementOf(EnumSet.of(Territory.OUTRE_MER))
                 .stream()
-                .sorted(Comparator.comparing(Territory::getName))
+                .sorted(byCustomOrder)
                 .map(territory -> new TerritoryCard(territory, valuesByTerritory.get(territory)))
                 .collect(Collectors.toList());
     }
@@ -228,4 +231,27 @@ public class IndicatorController {
             return page;
         }
     }
+
+    Comparator<Territory> byCustomOrder = new Comparator<Territory>() {
+        private final List<String> biomKeyOrder = List.of(
+            "TER975",
+            "TER971",
+            "TER972",
+            "TER977",
+            "TER978",
+            "TER973",
+            "TER988",
+            "TER987",
+            "TER986",
+            "TER974",
+            "TER976",
+            "TER984B",
+            "TER984A",
+            "TER984C",
+            "TER989");
+        @Override
+        public int compare(Territory o1, Territory o2) {
+            return biomKeyOrder.indexOf(o1.getBiomKey()) - biomKeyOrder.indexOf(o2.getBiomKey());
+        }
+    };
 }

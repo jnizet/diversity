@@ -272,7 +272,7 @@ class IndicatorServiceTest {
                 "        \"resourcesPath\": null,\n" +
                 "        \"values\": [\n" +
                 "          {\n" +
-                "            \"hold\": \"Nouvelle-Calédonie\",\n" +
+                "            \"hold\": \"TER988\",\n" +
                 "            \"period\": \"2015\",\n" +
                 "            \"thematic\": \"Taux de boisement\",\n" +
                 "            \"metric\": [\n" +
@@ -284,7 +284,7 @@ class IndicatorServiceTest {
                 "            ]\n" +
                 "          },\n" +
                 "          {\n" +
-                "            \"hold\": \"Guadeloupe\",\n" +
+                "            \"hold\": \"TER971\",\n" +
                 "            \"period\": \"2015\",\n" +
                 "            \"thematic\": \"Taux de boisement\",\n" +
                 "            \"metric\": [\n" +
@@ -296,7 +296,7 @@ class IndicatorServiceTest {
                 "            ]\n" +
                 "          },\n" +
                 "          {\n" +
-                "            \"hold\": \"La Réunion\",\n" +
+                "            \"hold\": \"TER974\",\n" +
                 "            \"period\": \"2015\",\n" +
                 "            \"thematic\": \"Taux de boisement\",\n" +
                 "            \"metric\": [\n" +
@@ -308,7 +308,7 @@ class IndicatorServiceTest {
                 "            ]\n" +
                 "          },\n" +
                 "          {\n" +
-                "            \"hold\": \"Martinique\",\n" +
+                "            \"hold\": \"TER972\",\n" +
                 "            \"period\": \"2015\",\n" +
                 "            \"thematic\": \"Taux de boisement\",\n" +
                 "            \"metric\": [\n" +
@@ -320,7 +320,7 @@ class IndicatorServiceTest {
                 "            ]\n" +
                 "          },\n" +
                 "          {\n" +
-                "            \"hold\": \"Saint-Pierre-et-Miquelon\",\n" +
+                "            \"hold\": \"TER975\",\n" +
                 "            \"period\": \"2015\",\n" +
                 "            \"thematic\": \"Taux de boisement\",\n" +
                 "            \"metric\": [\n" +

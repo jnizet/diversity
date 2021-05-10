@@ -2,9 +2,13 @@ package fr.mnhn.diversity.territory;
 
 import static fr.mnhn.diversity.territory.Zone.*;
 
+import java.util.Comparator;
+import java.util.List;
+
 /**
  * An enum representing all the available territories
  */
+
 public enum Territory {
     OUTRE_MER(
         "Outre-mer",
@@ -15,105 +19,105 @@ public enum Territory {
     ),
     GUADELOUPE(
         "Guadeloupe",
-        "Guadeloupe",
+        "TER971",
         "guadeloupe",
         new MapCoordinates(1166, 484),
         ANTILLES
     ),
     MARTINIQUE(
         "Martinique",
-        "Martinique",
+        "TER972",
         "martinique",
         new MapCoordinates(1167, 489),
         ANTILLES
     ),
     SAINT_MARTIN(
         "Saint-Martin",
-        "Saint-Martin",
+        "TER978",
         "saint-martin",
         new MapCoordinates(1156, 473),
         ANTILLES
     ),
     SAINT_BARTHELEMY(
         "Saint-Barthélemy",
-        "Saint-Barthélemy",
+        "TER977",
         "saint-barthelemy",
         new MapCoordinates(1158, 474),
         ANTILLES
     ),
     NOUVELLE_CALEDONIE(
         "Nouvelle-Calédonie",
-        "Nouvelle-Calédonie",
+        "TER988",
         "nouvelle-caledonie",
         new MapCoordinates(684, 615),
         null
     ),
     POLYNESIE_FRANCAISE(
         "Polynésie française",
-        "Polynésie française",
+        "TER987",
         "polynesie",
         new MapCoordinates(855, 597),
         null
     ),
     WALLIS_ET_FUTUNA(
         "Wallis et Futuna",
-        "Wallis-et-Futuna",
+        "TER986",
         "wallis-et-futuna",
         new MapCoordinates(747, 580),
         null
     ),
     REUNION(
         "La Réunion",
-        "Réunion",
+        "TER974",
         "reunion",
         new MapCoordinates(290, 615),
         null
     ),
     MAYOTTE(
         "Mayotte",
-        "Mayotte",
+        "TER976",
         "mayotte",
         new MapCoordinates(254, 585),
         null
     ),
     ILES_SUBANTARCTIQUES(
         "Îles sub-antarctiques",
-        "TAAF : Îles Subantarctiques",
+        "TER984A",
         "iles-subantarctiques",
         new MapCoordinates(367, 687),
         null
     ),
     ILES_EPARSES(
         "Îles Éparses",
-        "TAAF : Îles Éparses",
+        "TER984B",
         "iles-eparses",
         new MapCoordinates(237, 621),
         null
     ),
     CLIPPERTON(
         "Clipperton",
-        "Clipperton",
+        "TER989",
         "clipperton",
         new MapCoordinates(992, 501),
         null
     ),
     GUYANE(
         "Guyane",
-        "Guyane française",
+        "TER973",
         "guyane",
         new MapCoordinates(1195, 525),
         null
     ),
     SAINT_PIERRE_ET_MIQUELON(
         "Saint-Pierre-et-Miquelon",
-        "Saint-Pierre-et-Miquelon",
+        "TER975",
         "saint-pierre-et-miquelon",
         new MapCoordinates(1181, 348),
         null
     ),
     TERRE_ADELIE(
         "Terre Adélie",
-        "TAAF : Terre Adélie",
+        "TER984C",
         "terre-adelie",
         new MapCoordinates(611, 804),
         null
