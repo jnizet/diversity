@@ -1,6 +1,5 @@
 stages:
   - test
-  - build
   - publish
   - deploy
 
@@ -54,14 +53,6 @@ test:
     - psql -h postgres -U postgres -f backend/database/setup/database.sql
     - sudo ./gradlew check build --no-daemon -PCI=true
 
-build:
-  tags:
-    - gradle
-  stage: build
-  extends: .stage
-  script:
-    - su gitlab-runner -c "gradle --build-cache assemble"
-
 .publish_docker:
   stage: publish
   extends: .stage
@@ -85,7 +76,7 @@ publish_preprod:
     ENV_TAG: "release"
   extends: .publish_docker
 
-.publish_prod:
+publish_prod:
   only:
     - main@biom/diversity
   variables:
