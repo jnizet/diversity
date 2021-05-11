@@ -397,6 +397,8 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(CHECKBOX, "shadowed", true, null, null, null, false)
                 .values(TEXT, "firstActionName", "J’agis en ligne", null, null, null, false)
                 .values(LINK, "firstActionLink", "Je télécharge l’application INPN Espaces", null, null, "https://google.com", false)
+                .values(TEXT, "secondActionName", "Je donne de mon temps", null, null, null, false)
+                .values(LINK, "secondActionLink", "Tous les programmes de sciences participatives", null, null, "/sciences-participatives", false)
                 .build();
 
         Operation territoryHomeElements =

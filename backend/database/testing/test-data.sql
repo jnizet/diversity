@@ -165,6 +165,8 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 51, 'TEXT', 'description', 'La majorité des territoires d’outre-mer français sont situés dans des régions particulièrement riches en espèces, notamment en espèces endémiques, ce qu’on appelle des points chauds de la biodiversité', null, null, null, true),
     (nextval('page_element_seq'), 51, 'TEXT', 'firstActionName', 'J’agis en ligne', null, null, null, false),
     (nextval('page_element_seq'), 51, 'LINK', 'firstActionLink', 'Je télécharge l’application INPN Espaces', null, null, 'https://google.com', false),
+    (nextval('page_element_seq'), 51, 'TEXT', 'secondActionName', 'Je donne de mon temps', null, null, null, false),
+    (nextval('page_element_seq'), 51, 'LINK', 'secondActionLink', 'Tous les programmes de sciences participatives', null, null, '/sciences-participatives', false),
 
 --     Ecogesture "Recifs coralliens"
     (nextval('page_element_seq'), 3, 'TEXT', 'presentation.name', 'Protégeons les récifs coralliens', null, null, null, true),

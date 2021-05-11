@@ -47,6 +47,7 @@ describe('Ecogesture', () => {
     cy.visit('/ecogestes/recifs');
     cy.get('.section-agir').should('contain', 'Agir pour la science');
     cy.get('.section-agir').should('contain', 'J’agis en ligne');
+    cy.get('.section-agir').should('contain', 'Je donne de mon temps');
   });
 
   it('should have a link to the next ecogesture', () => {

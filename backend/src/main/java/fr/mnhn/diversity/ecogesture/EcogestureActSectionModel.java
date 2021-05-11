@@ -17,5 +17,7 @@ public class EcogestureActSectionModel {
                  .multiLineText("description", "Description de la section 'Agir pour la science'")
                  .text("firstActionName", "Nom de la première action")
                  .link("firstActionLink", "Lien de la première action")
+                 .text("secondActionName", "Nom de la seconde action")
+                 .link("secondActionLink", "Lien de la seconde action")
                  .build();
 }
