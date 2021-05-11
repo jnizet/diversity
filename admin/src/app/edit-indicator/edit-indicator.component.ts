@@ -20,6 +20,7 @@ interface FormValue {
   isRounded: boolean;
   categoryIds: Array<number>;
   ecogestureIds: Array<number>;
+  rank: number;
 }
 
 @Component({
@@ -34,6 +35,7 @@ export class EditIndicatorComponent implements OnInit {
   categories: Array<IndicatorCategory>;
   ecogestures: Array<Ecogesture>;
   isRounded: boolean;
+  rank: number;
   isFetchingValues = false;
   fetchingError = false;
   spinnerIcon = faSpinner;
@@ -64,7 +66,8 @@ export class EditIndicatorComponent implements OnInit {
       biomId: ['', [Validators.required, Validators.pattern(SLUG_REGEX)]],
       isRounded: this.isRounded,
       categoryIds: this.categoryIds,
-      ecogestureIds: this.ecogestureIds
+      ecogestureIds: this.ecogestureIds,
+      rank: this.rank
     });
   }
 
@@ -79,7 +82,8 @@ export class EditIndicatorComponent implements OnInit {
         const formValue: Partial<FormValue> = {
           slug: indicator.slug,
           biomId: indicator.biomId,
-          isRounded: indicator.isRounded
+          isRounded: indicator.isRounded,
+          rank: indicator.rank
         };
         this.form.patchValue(formValue);
         this.categoryIds.clear();
@@ -134,12 +138,14 @@ export class EditIndicatorComponent implements OnInit {
     }
 
     const formValue: FormValue = this.form.value;
+    console.log(this.form.value);
     const command: IndicatorCommand = {
       slug: formValue.slug,
       biomId: formValue.biomId,
       categoryIds: formValue.categoryIds.filter(id => id),
       ecogestureIds: formValue.ecogestureIds.filter(id => id),
-      isRounded: formValue.isRounded
+      isRounded: formValue.isRounded,
+      rank: formValue.rank
     };
 
     let obs: Observable<Indicator | void>;

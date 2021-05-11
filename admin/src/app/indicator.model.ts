@@ -28,4 +28,5 @@ export interface IndicatorCommand {
   categoryIds: Array<number>;
   ecogestureIds: Array<number>;
   isRounded: boolean;
+  rank?: number;
 }

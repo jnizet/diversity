@@ -197,6 +197,7 @@ describe('EditIndicatorComponent', () => {
       tester.saveButton.click();
 
       const expectedCommand: IndicatorCommand = {
+        rank: null,
         slug: 'especes-envahissantes',
         biomId: 'biom-41',
         isRounded: false,
@@ -288,6 +289,7 @@ describe('EditIndicatorComponent', () => {
       tester.saveButton.click();
 
       const expectedCommand: IndicatorCommand = {
+        rank: 1,
         slug: 'deforestation',
         biomId: 'biom-41',
         categoryIds: [102, 101],
