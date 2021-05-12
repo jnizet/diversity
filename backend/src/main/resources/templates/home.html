@@ -125,7 +125,7 @@
 
       <section class="section-citation">
         <img th:src="@{/assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote" />
-        <p>Les Outre-Mer regroupent 80% de la biodiversité française, réinventons notre façon de vivre et de voyager</p>
+        <p biom:markdown="*{presentation.quote.text}">Les Outre-Mer regroupent 80% de la biodiversité française, réinventons notre façon de vivre et de voyager</p>
       </section>
 
       <section th:replace="~{map/map::map (variant='home')}"></section>
