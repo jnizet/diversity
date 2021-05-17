@@ -325,23 +325,6 @@ class IndicatorRestControllerTest {
     }
 
     @Test
-    void shouldNotThrowWhenUpdatingWithTheSameBiomId() {
-        IndicatorCommandDTO command = new IndicatorCommandDTO(
-            indicator.getBiomId(),
-            "surface-forets",
-            false,
-            1,
-            List.of(),
-            List.of()
-        );
-        assertThatCode(() -> controller.update(indicator.getId(), command)).doesNotThrowAnyException();
-
-        // it should not update the values as the BIOM ID is the same
-        verify(mockIndicatorRepository, never()).deleteValues(any(), anySet());
-        verify(mockIndicatorService, never()).indicator(anyString());
-    }
-
-    @Test
     void shouldThrowWhenUpdatingWithAlreadyExistingSlug() {
         Indicator otherIndicator = new Indicator("other", indicator.getSlug(), false, List.of(), List.of());
         when(mockIndicatorRepository.findBySlug(otherIndicator.getSlug())).thenReturn(Optional.of(otherIndicator));

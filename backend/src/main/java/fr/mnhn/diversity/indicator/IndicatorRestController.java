@@ -152,11 +152,8 @@ public class IndicatorRestController {
         Indicator updatedIndicator = copyCommandToIndicator(indicatorId, command);
         indicatorRepository.update(updatedIndicator);
 
-        // if new biom ID
-        if (!indicator.getBiomId().equals(updatedIndicator.getBiomId())) {
-            indicatorRepository.deleteValues(updatedIndicator, Set.of(Territory.values()));
-            fetchAndStoreIndicatorValues(updatedIndicator);
-        }
+        indicatorRepository.deleteValues(updatedIndicator, Set.of(Territory.values()));
+        fetchAndStoreIndicatorValues(updatedIndicator);
 
         if (!indicator.getSlug().equals(updatedIndicator.getSlug())) {
             pageRepository.updateName(indicator.getSlug(),
@@ -181,7 +178,6 @@ public class IndicatorRestController {
     }
 
     private void fetchAndStoreIndicatorValues(Indicator indicator) {
-        // fetch the new values for the indicator
         Map<Territory, IndicatorValue> indicatorValues = getValuedIndicatorForBiomId(indicator.getBiomId()).getValues();
         indicatorValues.forEach((territory, indicatorValue) -> {
             boolean updated = indicatorRepository.updateValue(indicator, territory, indicatorValue);
