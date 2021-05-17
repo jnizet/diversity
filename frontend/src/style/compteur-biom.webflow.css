@@ -3259,6 +3259,20 @@ legend-text a {
   align-items: center;
 }
 
+.agir-action-1-content {
+  max-width: 485px;
+}
+
+.multi-action {
+  justify-content: start;
+}
+
+.agir-icon-1 {
+  margin-bottom: 182px;
+  margin-right: 20px;
+  width: 40px;
+}
+
 .agir-block.exemple {
   padding-right: 40px;
   padding-left: 40px;
@@ -6271,7 +6285,8 @@ legend-text a {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 560px;
+  max-width: 580px;
+  padding-left: 30px;
 }
 
 .lieu-img-wrapper {
@@ -8367,6 +8382,11 @@ p > a:visited {
   .text-big.col-2 {
     margin-top: 30px;
     margin-bottom: 30px;
+  }
+
+  .agir-block > .text-big.col-2 {
+    margin: 0px;
+    padding: 0 15px;
   }
 
   .text-big.col-2.agir-logos-title {

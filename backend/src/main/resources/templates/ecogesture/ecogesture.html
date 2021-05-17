@@ -108,12 +108,23 @@
         <div class="col-5">
           <div class="top-paragraph" biom:markdown="${act.content.description.text}"></div>
           <div class="agir-divider"></div>
-          <div class="agir-block">
-            <div class="col-1">
+          <div class="agir-block multi-action">
+            <div class="col-1 agir-icon-1">
               <img th:src="@{/assets/images/icon-agir-1.svg}" loading="lazy" alt="" />
             </div>
-            <div class="text-big col-2" biom:markdown="${act.content.firstActionName.text}"></div>
-            <a th:href="${act.content.firstActionLink.href}" class="cta-secondary yellow" biom:markdown="${act.content.firstActionLink.text}"></a>
+            <div class="agir-action-1-content col-2">
+              <div class="text-big" biom:markdown="${act.content.firstActionName.text}"></div>
+              <div class="agir-logos-container">
+                <a href=" https://inpn.mnhn.fr/informations/inpn-especes" class="cta-secondary yellow agir-logo-container">
+                  <img th:src="@{/assets/images/app_mobile_inpn_especes.png}" loading="lazy" alt="" class="agir-logo inpn"/>
+                  <span class="agir-logo-description">INPN Espèces</span>
+                </a>
+                <a href="https://rom.pole-tropical.org/home"  class="cta-secondary yellow agir-logo-container">
+                  <img th:src="@{/assets/images/logo-rom.png}" loading="lazy" alt="" class="agir-logo rom"/>
+                  <span class="agir-logo-description">Réseau d'observation des mangroves</span>
+                </a>
+              </div>
+            </div>
           </div>
           <div class="agir-divider"></div>
           <div class="agir-block">
