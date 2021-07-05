@@ -9,8 +9,6 @@ variables:
 
 .stage:
   image: outils-patrinat.mnhn.fr/nexus/java-ci:jdk15-gradle6.8.0
-  only:
-    - main@biom/diversity
   cache:
     key:
       files:
@@ -99,12 +97,15 @@ publish_prod:
     - git checkout $BRANCH_NAME
     - sed -i "s/DB_PWD/$DB_PASSWORD/" docker/docker-compose.yml
     - sed -i "s/IMPORT_SOURCE_TOKEN/$IMPORT_SOURCE_TOKEN/" docker/docker-compose.yml
-    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/postgresql
-    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/docker
-    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -m777 -p /apps/diversity
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -p -m777 /apps
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -p -m777 /apps/postgresql
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -p -m777 /apps/diversity
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -p -m777 /apps/docker
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -p -m777 /apps/postgresql/setup
+    - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo mkdir -p -m777 /apps/diversity/data
     - scp -r ~/biom-backup/docker  $PATRINAT_CI_USER@"$SERVER_URL":/apps/
-    - scp -r ~/biom-backup/postgresql/setup  $PATRINAT_CI_USER@"$SERVER_URL":/apps/postgresql
-    - (ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" test -d /apps/postgresql/data) || scp -r ~/biom-backup/diversity $PATRINAT_CI_USER@"$SERVER_URL":/apps
+    - scp -r ~/biom-backup/postgresql/setup  $PATRINAT_CI_USER@"$SERVER_URL":/apps/postgresql/
+    - (ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" test -d /apps/postgresql/data) || scp -r ~/biom-backup/diversity/data $PATRINAT_CI_USER@"$SERVER_URL":/apps/diversity/
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml down -v
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml pull
     - ssh -o stricthostkeychecking=no $PATRINAT_CI_USER@"$SERVER_URL" sudo docker-compose -f $DOCKER_COMPOSE_PATH/docker-compose.yml up -d
