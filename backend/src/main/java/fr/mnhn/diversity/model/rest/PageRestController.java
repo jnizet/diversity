@@ -5,6 +5,8 @@ import static fr.mnhn.diversity.common.PageModels.ALL_PAGE_MODELS_BY_NAME;
 import fr.mnhn.diversity.model.Checkbox;
 import fr.mnhn.diversity.model.Select;
 import fr.mnhn.diversity.model.meta.CheckboxElement;
+import fr.mnhn.diversity.model.meta.MultiListElement;
+import fr.mnhn.diversity.model.meta.MultiListTemplateElement;
 import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,6 +164,53 @@ public class PageRestController {
             elements.add(sectionElementDTO);
             return null;
         }
+
+        @Override
+        public Void visitMultiListElement(MultiListElement section) {
+            List<PageElementDTO> theList = new ArrayList<>();
+
+            String name = section.getName();
+            String key = prefix + name;
+            PageValuesPopulatorVisitor templateVisitor = new PageValuesPopulatorVisitor(null, "");
+
+            var usedTemplates = page != null ? section.getTemplates().stream().filter(t ->
+                page.getElements().keySet().stream().anyMatch(e ->
+                    e.contains(t.getName()) && e.contains(key)
+                )
+            ).collect(Collectors.toList()) : section.getElements();
+
+            var index = 0;
+            if(usedTemplates.size() > 0){
+                for (PageElement listElement : usedTemplates) {
+                    String elementsPrefix = key + "." + index + ".";
+                    PageValuesPopulatorVisitor listVisitor = new PageValuesPopulatorVisitor(page, elementsPrefix);
+                    listElement.accept(listVisitor);
+                    theList.addAll(listVisitor.getElements());
+                    index++;
+                }
+            }
+
+            for (PageElement element : section.getTemplates()) {
+                element.accept(templateVisitor);
+            }
+
+            MultiListElementDTO sectionElementDTO = new MultiListElementDTO(section, theList, templateVisitor.getElements());
+            elements.add(sectionElementDTO);
+            return null;
+        }
+
+        @Override
+        public Void visitMultiListTemplateElement(
+            MultiListTemplateElement multiListTemplateElement) {
+            String name = multiListTemplateElement.getName();
+            String key = prefix + name;
+            PageValuesPopulatorVisitor sectionVisitor = new PageValuesPopulatorVisitor(page, key + ".");
+            for (PageElement element : multiListTemplateElement.getElements()) {
+                element.accept(sectionVisitor);
+            }
+            MultiListTemplateElementDTO sectionElementDTO = new MultiListTemplateElementDTO(multiListTemplateElement, sectionVisitor.getElements());
+            elements.add(sectionElementDTO);
+            return null;        }
 
         @Override
         public Void visitList(ListElement list) {

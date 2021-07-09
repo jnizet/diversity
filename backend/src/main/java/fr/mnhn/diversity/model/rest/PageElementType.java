@@ -11,6 +11,7 @@ public enum PageElementType {
     IMAGE,
     SECTION,
     LIST_UNIT,
+    MULTI_LIST,
     SELECT,
     CHECKBOX,
     LIST;

@@ -15,7 +15,7 @@ public final class ListElementDTO extends PageElementDTO {
         this.elements = elements;
     }
 
-    public List<ListUnitElementDTO> getElements() {
+    public List<?> getElements() {
         return elements;
     }
 }

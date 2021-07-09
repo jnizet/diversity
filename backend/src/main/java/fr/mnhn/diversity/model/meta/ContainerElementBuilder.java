@@ -98,4 +98,9 @@ public class ContainerElementBuilder<B extends ContainerElementBuilder<B>> exten
         this.elements.add(listBuilder);
         return (B) this;
     }
+
+    public B list(MultiListElement.Builder listBuilder) {
+        this.elements.add(listBuilder);
+        return (B) this;
+    }
 }

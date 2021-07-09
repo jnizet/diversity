@@ -1,12 +1,16 @@
 package fr.mnhn.diversity.model.meta;
 
+import fr.mnhn.diversity.model.meta.TextElement.Builder;
+import java.util.Objects;
+
 /**
  * A list element of a page model. Such an element can be repeated 0 to N times inside the actual page instance,
  * and all the elements of the list must have the same elements, described in this model
  * @author JB Nizet
  */
 public final class ListElement extends ContainerElement {
-    private ListElement(ListElement.Builder builder) {
+
+    private ListElement(Builder builder) {
         super(builder.name, builder.description, builder.elements);
     }
 
@@ -34,4 +38,5 @@ public final class ListElement extends ContainerElement {
             return new ListElement(this);
         }
     }
+
 }

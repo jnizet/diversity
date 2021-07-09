@@ -2,6 +2,8 @@ package fr.mnhn.diversity.model;
 
 import fr.mnhn.diversity.common.api.ImportDataSource;
 import fr.mnhn.diversity.model.meta.CheckboxElement;
+import fr.mnhn.diversity.model.meta.MultiListElement;
+import fr.mnhn.diversity.model.meta.MultiListTemplateElement;
 import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,10 +21,11 @@ import fr.mnhn.diversity.model.meta.PageElementVisitor;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
 import fr.mnhn.diversity.model.meta.TextElement;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 import reactor.core.publisher.Mono;
 
 /**
@@ -132,6 +135,81 @@ public class PageService {
         }
 
         @Override
+        public Void visitMultiListElement(MultiListElement list) {
+            // start by adding the empty list to the result
+            List<Object> theList = new ArrayList<>();
+            result.put(list.getName(), theList);
+
+            // if the list model has no element (which should never happen), there is nothing to add to the list
+            if (list.getTemplates().isEmpty()) {
+                return null;
+            }
+
+            // look for a child element which is not a list nor a section (i.e. a leaf element). This element would
+            // thus have the keys
+            // ....listName.0.elementName,
+            // ....listName.1.elementName
+            // etc.
+            list.getTemplates().stream().filter(PageElement::isLeaf).findAny().ifPresentOrElse(leafElement -> {
+                // if we have such a leaf element, we loop until we don't find a key named ....listName.N.elementName
+                String listKey = prefix + list.getName();
+                String leafElementName = leafElement.getName();
+                boolean stop = false;
+                for (int i = 0; !stop; i++) {
+                    String elementsPrefix = listKey + "." + i + ".";
+                    String leafElementKey = elementsPrefix;
+                    if (!page.getElements().containsKey(leafElementKey)) {
+                        // the key is not found, so we there is no element to add to the list anymore
+                        stop = true;
+                    } else {
+                        PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix, usedElements);
+                        for (PageElement element : list.getElements()) {
+                            element.accept(listVisitor);
+                        }
+                        theList.add(listVisitor.getResult());
+                    }
+                }
+            }, () -> {
+                // there is no leaf element. This should happen very rarely: it means there are only sections or lists
+                // in the list. Since those only exist in the model, to structure the page, but not in the database
+                // as page elements, we have to find the biggest value of N in the keys looking like like
+                // ....listName.N....
+                // This is less efficient because we have to iterate through the
+                // entries of the map
+                String listKey = prefix + list.getName();
+                String keyPrefix = listKey + ".";
+                var usedTemplates = list.getTemplates().stream().filter(t ->
+                    page.getElements().keySet().stream().anyMatch(e ->
+                        e.contains(t.getName()) && e.contains(keyPrefix)
+                    )
+                ).collect(Collectors.toList());
+                var index = 0;
+                for (PageElement element : usedTemplates) {
+                    String elementsPrefix = keyPrefix + index + ".";
+                    PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix, usedElements);
+                    element.accept(listVisitor);
+                    theList.add(listVisitor.getResult());
+                    index ++;
+                }
+            });
+
+            return null;
+        }
+
+        @Override
+        public Void visitMultiListTemplateElement(
+            MultiListTemplateElement multiListTemplateElement) {
+            String name = multiListTemplateElement.getName();
+            String key = prefix + name;
+            PagePopulatorVisitor sectionVisitor = new PagePopulatorVisitor(page,key + ".", usedElements);
+            for (PageElement element : multiListTemplateElement.getElements()) {
+                element.accept(sectionVisitor);
+            }
+            result.put(name, sectionVisitor.getResult());
+            return null;
+        }
+
+        @Override
         public Void visitList(ListElement list) {
             // start by adding the empty list to the result
             List<Object> theList = new ArrayList<>();
@@ -180,6 +258,8 @@ public class PageService {
                     String elementsPrefix = keyPrefix + i + ".";
                     PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix, usedElements);
                     for (PageElement element : list.getElements()) {
+                        var a  = page;
+                        var b = element;
                         element.accept(listVisitor);
                     }
                     theList.add(listVisitor.getResult());
