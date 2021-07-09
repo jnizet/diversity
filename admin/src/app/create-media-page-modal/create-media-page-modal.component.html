@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <label>{{ message }}</label>
+    <input class="form-control" id="name" name="name" #name />
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="activeModal.close(name.value)" id="yes-button">Valider</button>
+  <button type="button" class="btn btn-primary" (click)="activeModal.dismiss()" id="no-button">Annuler</button>
+</div>

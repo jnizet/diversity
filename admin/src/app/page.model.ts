@@ -1,4 +1,4 @@
-export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION' | 'SELECT' | 'CHECKBOX';
+export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION' | 'SELECT' | 'CHECKBOX' | 'MULTI_LIST';
 export type SourceType = 'IMPORTED' | undefined;
 interface BasePageElement {
   type: ElementType;
@@ -53,6 +53,12 @@ export interface ListElement extends ContainerElement {
   elements: Array<ListUnitElement>;
 }
 
+export interface MultiListElement extends ContainerElement {
+  type: 'MULTI_LIST';
+  elements: Array<ListUnitElement>;
+  templates: Array<ListUnitElement>;
+}
+
 export interface SectionElement extends ContainerElement {
   type: 'SECTION';
 }
@@ -65,6 +71,7 @@ export type PageElement =
   | ListUnitElement
   | SectionElement
   | SelectElement
+  | MultiListElement
   | CheckboxElement;
 
 function isValidText(text: TextElement): boolean {
@@ -87,7 +94,7 @@ function isValidImage(image: ImageElement): boolean {
   return !!image.imageId && !!image.alt;
 }
 
-function isValidCollection(collection: ListElement | ListUnitElement | SectionElement): boolean {
+function isValidCollection(collection: ListElement | ListUnitElement | SectionElement | MultiListElement): boolean {
   return collection.elements.length > 0 && !collection.elements.some(element => !isValidElement(element));
 }
 
@@ -98,6 +105,7 @@ export function isValidElement(element: PageElement | null): boolean {
   switch (element.type) {
     case 'LIST':
     case 'LIST_UNIT':
+    case 'MULTI_LIST':
     case 'SECTION':
       return isValidCollection(element);
     case 'TEXT':
@@ -186,7 +194,7 @@ function sectionElementToCommand(key: string, element: SectionElement): Array<El
   return commands;
 }
 
-function listElementToCommand(key: string, element: ListElement): Array<ElementCommand> {
+function listElementToCommand(key: string, element: ListElement | MultiListElement): Array<ElementCommand> {
   // a list has "list units" as elements.
   // for each list unit we build a command, with a key composed of the list name and the current index.
   // for example:
@@ -213,6 +221,37 @@ function listElementToCommand(key: string, element: ListElement): Array<ElementC
   return commands;
 }
 
+function multilistElementToCommand(key: string, element: ListElement | MultiListElement): Array<ElementCommand> {
+  // a list has "list units" as elements.
+  // for each list unit we build a command, with a key composed of the list name and the current index.
+  // for example:
+  // {
+  //   name: "slides",
+  //   elements: [
+  //     { elements: [ { name: "image", ... }, { name: "link", ...} ],
+  //     { elements: [ { name: "image", ... }, { name: "link", ...} ],
+  //   ]
+  // }
+  // returns:
+  // [
+  //   { type: "IMAGE", key: "slides.0.image" },
+  //   { type: "LINK", key: "slides.0.link" },
+  //   { type: "IMAGE", key: "slides.1.image" },
+  //   { type: "LINK", key: "slides.1.link" },
+  // ]
+  console.log(element);
+  const commands: Array<ElementCommand> = [];
+  element.elements.forEach((listUnitElement, index) => {
+    const unitName = listUnitElement.name;
+    listUnitElement.elements.forEach(unitElement => {
+      console.log({ unitElement });
+      commands.push(...elementToCommand(`${key}.${index}.${unitName}.`, unitElement));
+    });
+  });
+  console.log(commands);
+  return commands;
+}
+
 /**
  * Builds an array of commands for the given page element at the specified key.
  * Leaf elements return an array with a single element, whereas lists and sections returns an array with several ones.
@@ -228,6 +267,9 @@ export function elementToCommand(prefix: string, element: PageElement): Array<El
     }
     case 'LINK': {
       return linkElementToCommand(key, element);
+    }
+    case 'MULTI_LIST': {
+      return multilistElementToCommand(key, element);
     }
     case 'LIST': {
       return listElementToCommand(key, element);
@@ -260,4 +302,6 @@ export interface PageLinks {
   territoryPageLinks: Array<PageLink>;
   zonePageLinks: Array<PageLink>;
   ecogesturePageLinks: Array<PageLink>;
+  interviewPageLinks: Array<PageLink>;
+  articlePageLinks: Array<PageLink>;
 }

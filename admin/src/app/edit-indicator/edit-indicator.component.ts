@@ -138,7 +138,6 @@ export class EditIndicatorComponent implements OnInit {
     }
 
     const formValue: FormValue = this.form.value;
-    console.log(this.form.value);
     const command: IndicatorCommand = {
       slug: formValue.slug,
       biomId: formValue.biomId,

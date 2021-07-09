@@ -9,7 +9,8 @@ import {
   SectionElement,
   SelectElement,
   CheckboxElement,
-  TextElement
+  TextElement,
+  MultiListElement
 } from '../page.model';
 import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { atLeastOneElement, validElement, validList } from '../validators';
@@ -75,6 +76,10 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
     return element.type === 'LIST';
   }
 
+  isMultiList(element: PageElement): element is MultiListElement {
+    return element.type === 'MULTI_LIST';
+  }
+
   isSection(element: PageElement): element is SectionElement {
     return element.type === 'SECTION';
   }
@@ -110,7 +115,6 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
         const textControl = this.fb.control(element, validators);
         this.elementGroup.addControl('text', textControl);
         textControl.valueChanges.subscribe((value: PageElement) => {
-          console.log(value);
           this.onChange(value);
         });
         break;
@@ -163,6 +167,7 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
         });
         break;
       }
+      case 'MULTI_LIST':
       case 'LIST': {
         // the element is a list: we want a form array with a form control for each unit of the list
         const elementsArray = this.fb.array([], [Validators.required, validList, atLeastOneElement]);
@@ -180,7 +185,11 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
   }
 
   getElementModel(name: string): PageElement {
-    return (this.elementModel as ContainerElement).elements.find(el => el.name === name);
+    return (this.elementModel as ContainerElement)?.elements.find(el => el.name === name);
+  }
+
+  getMultiListElementModel(name: string): PageElement {
+    return (this.elementModel as MultiListElement).templates.find(el => el.name === name);
   }
 
   addListUnit(element: ListElement) {
@@ -191,12 +200,18 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
     element.elements.push(listUnitElement);
   }
 
-  removeListUnit(element: ListElement, unitIndex: number) {
+  addMultiListUnit(element: MultiListElement, template: ListUnitElement) {
+    // push it to the list elements
+    element.elements.push(template);
+    this.elementsArray.push(this.fb.control(template, [Validators.required, validElement]));
+  }
+
+  removeListUnit(element: ListElement | MultiListElement, unitIndex: number) {
     element.elements.splice(unitIndex, 1);
     this.elementsArray.removeAt(unitIndex);
   }
 
-  moveUpListUnit(element: ListElement, unitIndex: number) {
+  moveUpListUnit(element: ListElement | MultiListElement, unitIndex: number) {
     [element.elements[unitIndex], element.elements[unitIndex - 1]] = [element.elements[unitIndex - 1], element.elements[unitIndex]];
 
     const formArrayElement = this.elementsArray.at(unitIndex);
@@ -208,7 +223,7 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
     this.elementsArray.insert(unitIndex, formArrayElementToSwapWith);
   }
 
-  moveDownListUnit(element: ListElement, unitIndex: number) {
+  moveDownListUnit(element: ListElement | MultiListElement, unitIndex: number) {
     [element.elements[unitIndex], element.elements[unitIndex + 1]] = [element.elements[unitIndex + 1], element.elements[unitIndex]];
 
     const formArrayElement = this.elementsArray.at(unitIndex);

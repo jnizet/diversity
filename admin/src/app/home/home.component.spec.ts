@@ -32,6 +32,12 @@ class HomeComponentTester extends ComponentTester<HomeComponent> {
   get ecogestureLinks() {
     return this.elements('ul')[4].elements('biom-page-link');
   }
+  get articlePageLinks() {
+    return this.elements('ul')[5].elements('biom-page-link');
+  }
+  get interviewPageLinks() {
+    return this.elements('ul')[6].elements('biom-page-link');
+  }
 }
 
 describe('HomeComponent', () => {
@@ -80,6 +86,22 @@ describe('HomeComponent', () => {
             modelName: 'ecogesture',
             title: 'Ecogeste 1'
           }
+        ],
+        articlePageLinks: [
+          {
+            id: 12,
+            name: 'e1',
+            modelName: 'article',
+            title: 'Article 1'
+          }
+        ],
+        interviewPageLinks: [
+          {
+            id: 15,
+            name: 'e1',
+            modelName: 'interview',
+            title: 'Interview 1'
+          }
         ]
       })
     );
@@ -108,5 +130,11 @@ describe('HomeComponent', () => {
 
     expect(tester.ecogestureLinks.length).toBe(1);
     expect(tester.ecogestureLinks[0]).toContainText('Ecogeste 1');
+
+    expect(tester.articlePageLinks.length).toBe(1);
+    expect(tester.articlePageLinks[0]).toContainText('Article 1');
+
+    expect(tester.interviewPageLinks.length).toBe(1);
+    expect(tester.interviewPageLinks[0]).toContainText('Interview 1');
   });
 });

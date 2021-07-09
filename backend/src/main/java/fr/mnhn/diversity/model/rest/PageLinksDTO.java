@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.model.rest;
 
+import fr.mnhn.diversity.model.meta.ListElement;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,17 +13,25 @@ public final class PageLinksDTO {
     private final List<PageLinkDTO> territoryPageLinks;
     private final List<PageLinkDTO> zonePageLinks;
     private final List<PageLinkDTO> ecogesturePageLinks;
+    private final List<PageLinkDTO> interviewPageLinks;
+    private final List<PageLinkDTO> articlePageLinks;
+
 
     public PageLinksDTO(List<PageLinkDTO> staticPageLinks,
                         List<PageLinkDTO> indicatorPageLinks,
                         List<PageLinkDTO> territoryPageLinks,
                         List<PageLinkDTO> zonePageLinks,
+                        List<PageLinkDTO> interviewPageLinks,
+                        List<PageLinkDTO> articlePageLinks,
                         List<PageLinkDTO> ecogesturePageLinks) {
         this.staticPageLinks = staticPageLinks;
         this.indicatorPageLinks = indicatorPageLinks;
         this.territoryPageLinks = territoryPageLinks;
         this.zonePageLinks = zonePageLinks;
         this.ecogesturePageLinks = ecogesturePageLinks;
+        this.interviewPageLinks = interviewPageLinks;
+        this.articlePageLinks = articlePageLinks;
+
     }
 
     public List<PageLinkDTO> getStaticPageLinks() {
@@ -45,6 +54,10 @@ public final class PageLinksDTO {
         return ecogesturePageLinks;
     }
 
+    public List<PageLinkDTO> getInterviewPageLinks() { return  interviewPageLinks; }
+
+    public List<PageLinkDTO> getArticlePageLinks() { return  articlePageLinks; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -58,6 +71,8 @@ public final class PageLinksDTO {
             Objects.equals(indicatorPageLinks, that.indicatorPageLinks) &&
             Objects.equals(territoryPageLinks, that.territoryPageLinks) &&
             Objects.equals(zonePageLinks, that.zonePageLinks) &&
+            Objects.equals(interviewPageLinks, that.interviewPageLinks) &&
+            Objects.equals(articlePageLinks, that.articlePageLinks) &&
             Objects.equals(ecogesturePageLinks, that.ecogesturePageLinks);
     }
 
@@ -67,6 +82,8 @@ public final class PageLinksDTO {
                             indicatorPageLinks,
                             territoryPageLinks,
                             zonePageLinks,
+                            interviewPageLinks,
+                            articlePageLinks,
                             ecogesturePageLinks);
     }
 
@@ -77,6 +94,8 @@ public final class PageLinksDTO {
             ", indicatorPageLinks=" + indicatorPageLinks +
             ", territoryPageLinks=" + territoryPageLinks +
             ", zonePageLinks=" + zonePageLinks +
+            ", interviewPageLinks=" + interviewPageLinks +
+            ", articlePageLinks=" + articlePageLinks +
             ", ecogesturePageLinks=" + ecogesturePageLinks +
             '}';
     }

@@ -32,6 +32,7 @@ import { PageLinkComponent } from './home/page-link/page-link.component';
 import { HeadingDirective } from './heading/heading.directive';
 import { EditSelectElementComponent } from './edit-select-element/edit-select-element.component';
 import { EditCheckboxElementComponent } from './edit-checkbox-element/edit-checkbox-element.component';
+import { CreateMediaPageModalComponent } from './create-media-page-modal/create-media-page-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { EditCheckboxElementComponent } from './edit-checkbox-element/edit-check
     HomeComponent,
     IndicatorCategoriesComponent,
     ConfirmationModalComponent,
+    CreateMediaPageModalComponent,
     ToastsComponent,
     NavbarComponent,
     EditIndicatorCategoryComponent,

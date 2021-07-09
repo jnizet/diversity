@@ -1,5 +1,8 @@
 package fr.mnhn.diversity.model.rest;
 
+import fr.mnhn.diversity.media.article.ArticleModel;
+import fr.mnhn.diversity.media.interview.InterviewModel;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,8 @@ public class PageLinkRestController {
             getIndicatorLinks(),
             getTerritoryLinks(),
             getZoneLinks(),
+            getInterviewLinks(),
+            getArticleLinks(),
             getEcogestureLinks()
         );
     }
@@ -88,6 +93,26 @@ public class PageLinkRestController {
                                                 territory.getSlug(),
                                                 pageModel))
                       .collect(Collectors.toList());
+    }
+
+    private List<PageLinkDTO> getInterviewLinks() {
+        PageModel pageModel = InterviewModel.INTERVIEW_PAGE_MODEL;
+        Map<String, BasicPage> pagesByName = getPageByName(pageModel);
+        return pagesByName.entrySet().stream()
+            .map(page -> getLink(page.getValue(),
+                page.getKey(),
+                pageModel))
+            .collect(Collectors.toList());
+    }
+
+    private List<PageLinkDTO> getArticleLinks() {
+        PageModel pageModel = ArticleModel.ARTICLE_PAGE_MODEL;
+        Map<String, BasicPage> pagesByName = getPageByName(pageModel);
+        return pagesByName.entrySet().stream()
+            .map(page -> getLink(page.getValue(),
+                page.getKey(),
+                pageModel))
+            .collect(Collectors.toList());
     }
 
     private List<PageLinkDTO> getZoneLinks() {

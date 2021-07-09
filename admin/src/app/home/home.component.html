@@ -1,7 +1,7 @@
 <h1>Administration des pages</h1>
 
 <div class="row" *ngIf="pageLinks$ | async as pageLinks">
-  <div class="col-md-3">
+  <div class="col-md-2">
     <h2>Pages statiques</h2>
     <ul class="list-unstyled">
       <li *ngFor="let pageLink of pageLinks.staticPageLinks">
@@ -9,7 +9,7 @@
       </li>
     </ul>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <h2>Indicateurs</h2>
     <ul class="list-unstyled">
       <li *ngFor="let pageLink of pageLinks.indicatorPageLinks">
@@ -17,7 +17,7 @@
       </li>
     </ul>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <h2>Territoires</h2>
     <ul class="list-unstyled">
       <li *ngFor="let pageLink of pageLinks.territoryPageLinks">
@@ -31,12 +31,39 @@
       </li>
     </ul>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <h2>Éco-gestes</h2>
     <ul class="list-unstyled">
       <li *ngFor="let pageLink of pageLinks.ecogesturePageLinks">
         <biom-page-link [pageLink]="pageLink"></biom-page-link>
       </li>
     </ul>
+  </div>
+  <div class="col-md-2">
+    <h2>Média</h2>
+    <div class="d-flex flex-row justify-content-around">
+      <div>
+        <h3>Articles</h3>
+        <ul class="list-unstyled">
+          <li *ngFor="let pageLink of pageLinks.articlePageLinks">
+            <biom-page-link [pageLink]="pageLink"></biom-page-link>
+          </li>
+          <a class="btn btn-outline-secondary" id="create-article" role="button" (click)="openMediaModal('article')">
+            <span>Créer un nouvel article</span>
+          </a>
+        </ul>
+      </div>
+      <div>
+        <h3>Entretiens</h3>
+        <ul class="list-unstyled">
+          <li *ngFor="let pageLink of pageLinks.interviewPageLinks">
+            <biom-page-link [pageLink]="pageLink"></biom-page-link>
+          </li>
+          <button type="button" class="btn btn-outline-secondary" id="create-interview" role="button" (click)="openMediaModal('interview')">
+            <span>Créer un nouvel entretien</span>
+          </button>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
