@@ -22,11 +22,11 @@ public final class InterviewModel {
             .withPathFactory(slug -> "/interview/" + slug)
             .section(SectionElement
                 .builder("presentation")
-                .describedAs("Présentation de l’article/entretien")
+                .describedAs("Présentation de l’entretien")
                 .titleText("name", "Titre principal")
                 .text("author", "Auteur")
-                .text("publication", "Description de l'écogeste")
-                .image("image", "Illustration de l'écogeste")
+                .text("date", "Date de publication")
+                .image("image", "Image d’illustration")
                 .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
             )
             .section(SectionElement
@@ -38,7 +38,7 @@ public final class InterviewModel {
             .section(SectionElement
                 .builder("body")
                 .describedAs("Corps de l'interview")
-                .text("introduction", " Introduction de l’interview")
+                .multiLineText("introduction", " Introduction de l’entretien")
                 .list(
                     MultiListElement.builder("bodyElements")
                         .templates( List.of(

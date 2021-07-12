@@ -24,14 +24,13 @@ public final class ArticleModel {
                 .describedAs("Présentation de l’article")
                 .titleText("name", "Titre principal")
                 .text("author", "Date de publication")
-                .text("publication", "Description de l'écogeste")
                 .image("image", "Image d’illustration")
                 .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
             )
             .section(SectionElement
                 .builder("body")
                 .describedAs("Corps de l'article")
-                .text("introduction", " Introduction de l’article")
+                .multiLineText("introduction", " Introduction de l’article")
                 .list(
                     MultiListElement.builder("titre_question")
                         .templates( List.of(
