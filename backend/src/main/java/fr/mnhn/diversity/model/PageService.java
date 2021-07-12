@@ -178,19 +178,18 @@ public class PageService {
                 // entries of the map
                 String listKey = prefix + list.getName();
                 String keyPrefix = listKey + ".";
-                var usedTemplates = list.getTemplates().stream().filter(t ->
-                    page.getElements().keySet().stream().anyMatch(e ->
+                list.getTemplates().stream().forEach(t ->
+                    page.getElements().keySet().stream().filter(e ->
                         e.contains(t.getName()) && e.contains(keyPrefix)
-                    )
-                ).collect(Collectors.toList());
-                var index = 0;
-                for (PageElement element : usedTemplates) {
-                    String elementsPrefix = keyPrefix + index + ".";
-                    PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix, usedElements);
-                    element.accept(listVisitor);
-                    theList.add(listVisitor.getResult());
-                    index ++;
-                }
+                    ).forEach( e -> {
+                        var index = e.substring(keyPrefix.length(),keyPrefix.length() + 1);
+                        String elementsPrefix = keyPrefix + index + ".";
+                        PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page,
+                            elementsPrefix, usedElements);
+                        t.accept(listVisitor);
+                        theList.add(listVisitor.getResult());
+                    })
+                );
             });
 
             return null;

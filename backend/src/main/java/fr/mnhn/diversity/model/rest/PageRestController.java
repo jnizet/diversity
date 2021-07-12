@@ -9,8 +9,10 @@ import fr.mnhn.diversity.model.meta.MultiListElement;
 import fr.mnhn.diversity.model.meta.MultiListTemplateElement;
 import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import fr.mnhn.diversity.common.exception.BadRequestException;
@@ -167,34 +169,37 @@ public class PageRestController {
 
         @Override
         public Void visitMultiListElement(MultiListElement section) {
-            List<PageElementDTO> theList = new ArrayList<>();
-
+            Map<Integer, List<PageElementDTO>> elementsByIndex =new HashMap<>();
+            List<String> alreadyVisitIndex = new ArrayList<>();
             String name = section.getName();
-            String key = prefix + name;
+            String key = prefix + name  + "." ;
             PageValuesPopulatorVisitor templateVisitor = new PageValuesPopulatorVisitor(null, "");
 
-            var usedTemplates = page != null ? section.getTemplates().stream().filter(t ->
-                page.getElements().keySet().stream().anyMatch(e ->
-                    e.contains(t.getName()) && e.contains(key)
-                )
-            ).collect(Collectors.toList()) : section.getElements();
-
-            var index = 0;
-            if(usedTemplates.size() > 0){
-                for (PageElement listElement : usedTemplates) {
-                    String elementsPrefix = key + "." + index + ".";
-                    PageValuesPopulatorVisitor listVisitor = new PageValuesPopulatorVisitor(page, elementsPrefix);
-                    listElement.accept(listVisitor);
-                    theList.addAll(listVisitor.getElements());
-                    index++;
-                }
+            if(page != null) {
+                section.getTemplates().stream().forEach(t ->
+                    page.getElements().keySet().stream().filter(e ->
+                        e.contains(t.getName()) && e.contains(prefix)
+                    ).forEach(e -> {
+                        var index = e.substring(key.length(), key.length() + 1);
+                        String elementsPrefix = key + index + ".";
+                        if(!alreadyVisitIndex.contains(elementsPrefix)) {
+                            alreadyVisitIndex.add(elementsPrefix);
+                            PageValuesPopulatorVisitor listVisitor = new PageValuesPopulatorVisitor(
+                                page, elementsPrefix);
+                            t.accept(listVisitor);
+                            elementsByIndex.put(Integer.parseInt(index), listVisitor.getElements());
+                        }
+                    }));
             }
 
             for (PageElement element : section.getTemplates()) {
                 element.accept(templateVisitor);
             }
 
-            MultiListElementDTO sectionElementDTO = new MultiListElementDTO(section, theList, templateVisitor.getElements());
+            Map<Integer, List<PageElementDTO>> elementsByIndexSorted = new TreeMap<>(elementsByIndex);
+
+            MultiListElementDTO sectionElementDTO = new MultiListElementDTO(section, elementsByIndexSorted.values().stream().flatMap(List::stream).collect(
+                Collectors.toList()), templateVisitor.getElements());
             elements.add(sectionElementDTO);
             return null;
         }
@@ -210,7 +215,8 @@ public class PageRestController {
             }
             MultiListTemplateElementDTO sectionElementDTO = new MultiListTemplateElementDTO(multiListTemplateElement, sectionVisitor.getElements());
             elements.add(sectionElementDTO);
-            return null;        }
+            return null;
+        }
 
         @Override
         public Void visitList(ListElement list) {

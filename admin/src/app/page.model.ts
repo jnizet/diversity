@@ -248,7 +248,6 @@ function multilistElementToCommand(key: string, element: ListElement | MultiList
       commands.push(...elementToCommand(`${key}.${index}.${unitName}.`, unitElement));
     });
   });
-  console.log(commands);
   return commands;
 }
 
