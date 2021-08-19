@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='dark-nav', selectedMenu='about')}"
+>
+<head>
+  <title th:text="${page.title}">À propos</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <meta th:ref="og" property="og:title" th:attr="content=${page.content.presentation.name}" />
+  <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.name}" />
+  <meta
+    th:ref="og"
+    property="og:image"
+    th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.presentation.image})}"
+  />
+</head>
+<body>
+<main class="main" th:object="${page.content}" data-controller="interview">
+  <div class="section-decoration-text interview">interview</div>
+  <section class="section-top-interview">
+    <div class="interview-h1-wrapper">
+      <div class="interview-h1-content">
+        <h1>
+          <span class="interview-h1" biom:markdown="*{presentation.name.text}">placeholder</span>
+        </h1>
+        <span class="interview-content" biom:markdown="*{'Propos recueillis par ' + presentation.author.text + ' - Publié le' + presentation.date.text}"
+        >Paru le 12/01/2003</span
+        >
+      </div>
+    </div>
+    <div class="interview-presentation-picture-wrapper">
+      <img biom:image="*{presentation.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="media-img-full-height" />
+      <div class="legend-wrapper">
+        <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+        <div class="legend-text" biom:markdown="*{presentation.image.alt}">Chelonia mydas ©  B. Guichard</div>
+      </div>
+    </div>
+  </section>
+  <section class="section-interview-body">
+    <div class="interviewee-informations-wrapper">
+      <img biom:image="*{interviewee.photo}" loading="lazy" class="interview-interviewee-photo"/>
+      <span class="interviewee-info"> Interviewé: </span>
+      <span class="interviewee-info"  biom:markdown="*{interviewee.presentation.text}"></span>
+    </div>
+    <div class="interview-body-element-wrapper">
+      <span class="interview-introduction"  biom:markdown="*{body.introduction.text}"></span>
+    </div>
+    <div th:each="element: *{#media.orderMediaList(body.bodyElements)}">
+      <div  th:if="${#media.getContentType(element) == 'paragraph'}"  class="interview-body-element-wrapper">
+        <span class="interview-paragraph"  biom:markdown="${element.paragraph.paragraphText.text}"></span>
+      </div>
+      <div  th:if="${#media.getContentType(element) == 'image'}"  class="interview-body-element-wrapper image-wrapper">
+        <img biom:image="${element.image.imageElement}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="interview-img" />
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" biom:markdown="${element.image.imageElement.alt}">Chelonia mydas ©  B. Guichard</div>
+        </div>
+      </div>
+      <div  th:if="${#media.getContentType(element) == 'questionAnswer'}"  class="interview-body-element-wrapper">
+        <h3 class="interview-question"  biom:markdown="${'Q: ' + element.questionAnswer.question.text}"></h3>
+        <span class="interview-paragraph"  biom:markdown="${element.questionAnswer.response.text}"></span>
+      </div>
+      <div  th:if="${#media.getContentType(element) == 'citation'}"  class="interview-citation-wrapper">
+        <img src="/assets/images/quote.svg" loading="lazy" alt="" class="interview-citation-quote">
+        <span class="interview-citation"  biom:markdown="${element.citation.citationElement.text}"></span>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

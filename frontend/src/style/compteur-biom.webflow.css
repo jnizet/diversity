@@ -1058,6 +1058,10 @@ legend-text a {
   opacity: 0.5;
 }
 
+.section-decoration-text.interview {
+  top: 70%;
+}
+
 .section-decoration-text.article {
   top: 70%;
 }
@@ -2350,11 +2354,13 @@ legend-text a {
   min-height: 800px;
 }
 
+.section-top-interview,
 .section-top-article {
   width: 100%;
   margin-bottom: 30px;
 }
 
+.interview-h1-wrapper,
 .article-h1-wrapper {
   position: absolute;
   right: 0px;
@@ -2364,6 +2370,8 @@ legend-text a {
   min-height: 809px;
   background: #F3F5F7;
 }
+
+.interview-h1,
 .article-h1 {
   font-family: Poppins;
   font-style: normal;
@@ -2372,6 +2380,7 @@ legend-text a {
   line-height: 50px;
 }
 
+.interview-presentation-picture-wrapper,
 .article-presentation-picture-wrapper {
   margin-left: 50%;
   transform: translate(-50%, 0px);
@@ -2379,6 +2388,7 @@ legend-text a {
   width:80%;
 }
 
+.section-interview-body,
 .section-article-body {
   display: flex;
   width: 100%;
@@ -2386,10 +2396,12 @@ legend-text a {
   flex-direction: column;
 }
 
+.interview-body-element-wrapper,
 .article-body-element-wrapper {
   margin: 0 240px 20px;
 }
 
+.interview-introduction,
 .article-introduction {
   font-family: Poppins;
   font-style: normal;
@@ -2400,6 +2412,13 @@ legend-text a {
   color: #276F87;
 }
 
+
+.interview-img,
+.interview-question > p,
+.interview-paragraph > p,
+.interview-paragraph > h1,
+.interview-paragraph > h2,
+.interview-introduction > p,
 .article-img,
 .article-question > p,
 .article-paragraph > p,
@@ -2419,6 +2438,7 @@ legend-text a {
   min-height: 569px;
 }
 
+.interview-paragraph,
 .article-paragraph {
   font-family: Poppins;
   font-style: normal;
@@ -2429,6 +2449,7 @@ legend-text a {
   color: #000000;
 }
 
+.interview-citation,
 .article-citation {
   font-family: Poppins;
   font-style: normal;
@@ -2437,12 +2458,14 @@ legend-text a {
   line-height: 40px;
 }
 
+.interview-citation > p,
 .article-citation > p {
   background: linear-gradient(20.03deg, #1F4A6A 5.98%, #4281A3 89.01%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+.interview-citation-wrapper,
 .article-citation-wrapper {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -2451,6 +2474,7 @@ legend-text a {
   padding-right: 25px;
 }
 
+.interview-question,
 .article-question {
   font-family: Poppins;
   font-style: normal;
@@ -2459,8 +2483,23 @@ legend-text a {
   line-height: 32px;
 }
 
+.interview-citation-quote,
 .article-citation-quote {
   margin-right: 7%;
+}
+
+.interview-interviewee-photo {
+  width: 184px;
+  height: 184px;
+  border-radius: 50%;
+}
+
+.interviewee-informations-wrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-position: center;
 }
 
 .half {
