@@ -1058,6 +1058,10 @@ legend-text a {
   opacity: 0.5;
 }
 
+.section-decoration-text.article {
+  top: 70%;
+}
+
 .section-decoration-text.ecosysteme {
   top: -66px;
 }
@@ -2344,6 +2348,119 @@ legend-text a {
   height: 50vw;
   max-height: 800px;
   min-height: 800px;
+}
+
+.section-top-article {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.article-h1-wrapper {
+  position: absolute;
+  right: 0px;
+  top: 150px;
+  padding: 3% 10%;
+  width: 83%;
+  min-height: 809px;
+  background: #F3F5F7;
+}
+.article-h1 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 50px;
+}
+
+.article-presentation-picture-wrapper {
+  margin-left: 50%;
+  transform: translate(-50%, 0px);
+  margin-top: 415px;
+  width:80%;
+}
+
+.section-article-body {
+  display: flex;
+  width: 100%;
+  max-width: 1440px;
+  flex-direction: column;
+}
+
+.article-body-element-wrapper {
+  margin: 0 240px 20px;
+}
+
+.article-introduction {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #276F87;
+}
+
+.article-img,
+.article-question > p,
+.article-paragraph > p,
+.article-paragraph > h1,
+.article-paragraph > h2,
+.article-introduction > p {
+  margin-left: 240px;
+}
+
+.media-img-full-height {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  max-height: 900px;
+  min-height: 569px;
+}
+
+.article-paragraph {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 26px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #000000;
+}
+
+.article-citation {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 40px;
+}
+
+.article-citation > p {
+  background: linear-gradient(20.03deg, #1F4A6A 5.98%, #4281A3 89.01%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.article-citation-wrapper {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  padding-left: 240px;
+  padding-right: 25px;
+}
+
+.article-question {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.article-citation-quote {
+  margin-right: 7%;
 }
 
 .half {
