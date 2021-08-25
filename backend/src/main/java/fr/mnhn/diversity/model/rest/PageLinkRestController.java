@@ -1,8 +1,8 @@
 package fr.mnhn.diversity.model.rest;
 
+import fr.mnhn.diversity.media.MediaModel;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +69,8 @@ public class PageLinkRestController {
             getStaticLink(EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_NAME, EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL),
             getStaticLink(ActModel.ACT_PAGE_NAME, ActModel.ACT_PAGE_MODEL),
             getStaticLink(ActModel.SCIENCE_PAGE_NAME, ActModel.SCIENCE_PAGE_MODEL),
-            getStaticLink(LegalTermsModel.LEGAL_TERMS_PAGE_NAME, LegalTermsModel.LEGAL_TERMS_PAGE_MODEL)
+            getStaticLink(LegalTermsModel.LEGAL_TERMS_PAGE_NAME, LegalTermsModel.LEGAL_TERMS_PAGE_MODEL),
+            getStaticLink(MediaModel.MEDIA_PAGE_NAME, MediaModel.MEDIA_PAGE_MODEL)
         );
     }
 

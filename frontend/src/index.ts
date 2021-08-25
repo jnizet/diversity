@@ -11,12 +11,14 @@ import { EcogesturesController } from './ecogestures/ecogestures-controller';
 import { IndicatorController } from './indicator/indicator-controller';
 import { MapController } from './map/map-controller';
 import { TerritoryController } from './territory/territory-controller';
+import { MediaController } from './media/media-controller';
 
 const application = Application.start();
 application.register('contact', ContactController);
 application.register('search', SearchController);
 application.register('indicators', IndicatorsController);
 application.register('indicator', IndicatorController);
+application.register('media', MediaController);
 application.register('home', HomeController);
 application.register('question-item', QuestionItemController);
 application.register('about', AboutController);

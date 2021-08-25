@@ -2494,12 +2494,113 @@ legend-text a {
   border-radius: 50%;
 }
 
+.meddia-h1-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.meddia-h1-content{
+  width: 720px;
+}
+
 .interviewee-informations-wrapper {
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-position: center;
+}
+
+.media-h1{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 50px;
+  max-width: 480px;
+}
+
+.media-article-author > p {
+  margin-top: 14px;
+  margin-bottom: 40px;
+}
+
+.media-list {
+  display: flex;
+}
+
+.media-swiper-navigation{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-height: 360px;
+  margin-top: 40px;
+}
+.media-swiper{
+  height: 48px;
+  width: 48px;
+  margin: 10px;
+}
+
+.media-interviews-section,
+.media-articles-section {
+ margin-left:120px;
+ margin-top: 70px;
+ width: 1440px;
+}
+
+.media-interviews-section-title,
+.media-articles-section-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 40px;
+}
+
+.miniature-wrapper {
+  margin-bottom: 16px;
+  height: 360px;
+  width: 360px;
+  overflow: hidden;
+  position: relative;
+}
+
+.miniature-title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.miniature-title {
+  overflow: hidden;
+  height: 100px;
+  text-overflow: ellipsis;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.miniature-date {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.media-miniature {
+  cursor: pointer;
+  max-width: 360px;
+  margin: 40px;
+}
+
+.miniature-img {
+  height: 100%;
+  max-width: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .half {

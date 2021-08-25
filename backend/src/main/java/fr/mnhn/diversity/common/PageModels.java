@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.common;
 
+import fr.mnhn.diversity.media.MediaModel;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
 import java.util.List;
@@ -27,6 +28,7 @@ public final class PageModels {
                 AboutModel.ABOUT_PAGE_MODEL,
                 ActModel.ACT_PAGE_MODEL,
                 ActModel.SCIENCE_PAGE_MODEL,
+                MediaModel.MEDIA_PAGE_MODEL,
                 LegalTermsModel.LEGAL_TERMS_PAGE_MODEL,
                 TerritoryModel.TERRITORY_HOME_PAGE_MODEL,
                 TerritoryModel.TERRITORY_PAGE_MODEL,

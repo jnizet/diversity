@@ -81,7 +81,7 @@ class PageLinkRestControllerTest {
         int antillesIndex = Arrays.asList(Zone.values()).indexOf(Zone.ANTILLES) - 1;
         mockMvc.perform(get("/api/pages/links"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.staticPageLinks.length()").value(9))
+               .andExpect(jsonPath("$.staticPageLinks.length()").value(10))
                .andExpect(jsonPath("$.staticPageLinks[0].id").value(1L))
                .andExpect(jsonPath("$.staticPageLinks[0].name").value(HomeModel.HOME_PAGE_NAME))
                .andExpect(jsonPath("$.staticPageLinks[0].modelName").value(HomeModel.HOME_PAGE_MODEL.getName()))
