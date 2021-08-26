@@ -36,10 +36,12 @@
       </div>
     </div>
     <div class="half">
-      <img biom:image="*{article.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="img-full-height" />
-      <div class="legend-wrapper">
-        <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-        <div class="legend-text" biom:markdown="*{article.image.alt}">Chelonia mydas ©  B. Guichard</div>
+      <div class="image-wrapper">
+        <img biom:image="*{article.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="img-full-height" />
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" biom:markdown="*{article.image.alt}">Chelonia mydas ©  B. Guichard</div>
+        </div>
       </div>
     </div>
   </section>

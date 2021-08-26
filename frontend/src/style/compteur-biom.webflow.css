@@ -7896,6 +7896,48 @@ p > a:visited {
 
 @media screen and (max-width: 479px) {
 
+  .meddia-h1-content {
+    margin: 90px 20px 30px;
+  }
+
+  .section-top-indicateur {
+    min-height: 600px;
+  }
+
+  .media-interviews-section,
+  .media-articles-section {
+    margin-left: 0;
+    margin-top: 0;
+    width: 360px;
+  }
+
+  .media-swiper-navigation {
+    display: none;
+  }
+
+  .media-miniature {
+    max-width: 213px;
+  }
+
+  .miniature-title {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 26px;
+    height: 78px;
+  }
+
+  .miniature-title > p{
+    margin: 0;
+  }
+
+  .miniature-wrapper {
+    margin-bottom: 16px;
+    height: 213px;
+    width: 213px;
+    overflow: hidden;
+    position: relative;
+  }
+
   section-top-interview,
   .section-top-article {
     width: 100%;

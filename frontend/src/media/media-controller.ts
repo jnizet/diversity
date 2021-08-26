@@ -6,8 +6,7 @@ export class MediaController extends Controller {
     new Swiper('.articles-list', {
       speed: 1000,
       keyboard: true,
-      slidesPerView: 2,
-      spaceBetween: 60,
+      slidesPerView: 'auto',
       simulateTouch: false,
       navigation: {
         prevEl: '.article-swiper-prev',
