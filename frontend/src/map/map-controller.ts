@@ -201,7 +201,6 @@ export class MapController extends Controller {
       grabCursor: true,
       freeMode: true,
       slidesPerView: 'auto',
-      simulateTouch: false,
       breakpoints: {
         320: {
           direction: 'horizontal',

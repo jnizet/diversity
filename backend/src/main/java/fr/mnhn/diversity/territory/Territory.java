@@ -60,7 +60,7 @@ public enum Territory {
         null
     ),
     WALLIS_ET_FUTUNA(
-        "Wallis et Futuna",
+        "Wallis-et-Futuna",
         "TER986",
         "wallis-et-futuna",
         new MapCoordinates(747, 580),
@@ -81,7 +81,7 @@ public enum Territory {
         null
     ),
     ILES_SUBANTARCTIQUES(
-        "Îles sub-antarctiques",
+        "Terres australes françaises",
         "TER984A",
         "iles-subantarctiques",
         new MapCoordinates(367, 687),
