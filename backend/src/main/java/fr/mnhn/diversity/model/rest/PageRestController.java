@@ -180,7 +180,7 @@ public class PageRestController {
                     page.getElements().keySet().stream().filter(e ->
                         e.contains(t.getName()) && e.contains(prefix)
                     ).forEach(e -> {
-                        var index = e.substring(key.length(), key.length() + 1);
+                        var index = e.substring(key.length(), e.length() - 1).split("\\.")[0];
                         String elementsPrefix = key + index + ".";
                         if(!alreadyVisitIndex.contains(elementsPrefix)) {
                             alreadyVisitIndex.add(elementsPrefix);

@@ -182,7 +182,7 @@ public class PageService {
                     page.getElements().keySet().stream().filter(e ->
                         e.contains(t.getName()) && e.contains(keyPrefix)
                     ).forEach( e -> {
-                        var index = e.substring(keyPrefix.length(),keyPrefix.length() + 1);
+                        var index = e.substring(keyPrefix.length(), e.length() - 1).split("\\.")[0];
                         String elementsPrefix = keyPrefix + index + ".";
                         PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page,
                             elementsPrefix, usedElements);
