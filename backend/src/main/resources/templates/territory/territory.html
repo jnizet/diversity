@@ -86,7 +86,12 @@
                 <div class="fact-top-wrapper">
                   <div class="fact-number" biom:markdown="*{identity.population.text}">6274</div>
                 </div>
-                <div class="fact-text">habitants en <span biom:markdown="*{identity.populationYear.text}">2017</span></div>
+                <div class="fact-text">habitants
+                  <span  th:if="*{identity.population.text != '0'}" biom:markdown="*{'en ' + identity.populationYear.text}">2017
+                  </span>
+                  <span  th:if="*{identity.population.text == '0'}">permanents
+                  </span>
+                </div>
               </div>
             </div>
             <div class="fact-slide">
@@ -255,7 +260,7 @@
                   lesquelles on trouve des sphaignes, des mousses, ainsi que des orchidées.  
                 </div>
               </div>
-              <div class="col-6 left-1 right-n1">
+              <div class="col-6 left-1 right-n1 ecosysteme-img-wrapper">
                 <img
                   biom:image="${ecosystem.image}"
                   loading="lazy"
