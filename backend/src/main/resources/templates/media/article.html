@@ -47,11 +47,13 @@
         <div  th:if="${#media.getContentType(element) == 'paragraph'}"  class="article-body-element-wrapper">
           <span class="article-paragraph"  biom:markdown="${element.paragraph.paragraphText.text}"></span>
         </div>
-        <div  th:if="${#media.getContentType(element) == 'image'}"  class="article-body-element-wrapper image-wrapper">
-          <img biom:image="${element.image.imageElement}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="article-img" />
-          <div class="legend-wrapper">
-            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" biom:markdown="${element.image.imageElement.alt}">Chelonia mydas ©  B. Guichard</div>
+        <div  th:if="${#media.getContentType(element) == 'image'}"  class="article-body-element-wrapper article-img-element">
+          <div class="image-wrapper">
+            <img biom:image="${element.image.imageElement}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="article-img" />
+            <div class="legend-wrapper">
+              <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+              <div class="legend-text" biom:markdown="${element.image.imageElement.alt}">Chelonia mydas ©  B. Guichard</div>
+            </div>
           </div>
         </div>
         <div  th:if="${#media.getContentType(element) == 'questionAnswer'}"  class="article-body-element-wrapper">
