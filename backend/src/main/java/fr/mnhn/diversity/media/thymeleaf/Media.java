@@ -24,7 +24,10 @@ public class Media {
     Comparator<HashMap<String, HashMap<String, Element>>> mediaElementComparator = new Comparator<HashMap<String, HashMap<String, Element>>>() {
         @Override
         public int compare(HashMap<String, HashMap<String, Element>> i1, HashMap<String, HashMap<String, Element>> i2) {
-            return i1.values().iterator().next().values().iterator().next().getKey().compareTo(i2.values().iterator().next().values().iterator().next().getKey());
+            return Integer.compareUnsigned(
+                    Integer.parseInt(i1.values().iterator().next().values().iterator().next().getKey().split("\\.")[2]),
+                    Integer.parseInt(i2.values().iterator().next().values().iterator().next().getKey().split("\\.")[2])
+            );
         }
     };
 
