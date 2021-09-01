@@ -7775,7 +7775,7 @@ p > a:visited {
   .territoire-nav {
     top: 0px;
     width: 100%;
-    height: 120px;
+    height: 140px;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
@@ -9459,5 +9459,9 @@ p > a:visited {
     display: flex;
     max-width: 280px;
     margin-bottom: 60px;
+  }
+
+  .map-zoom {
+    height: 1000px !important;;
   }
 }
