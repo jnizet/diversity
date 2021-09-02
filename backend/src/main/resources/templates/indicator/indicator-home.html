@@ -107,12 +107,18 @@
             </div>
           </div>
           <div class="col-5 left-1">
-            <img
-              biom:image="*{understand.image}"
-              loading="lazy"
-              sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 42vw"
-              class="img-full-width only-desktop"
-            />
+            <div class="image-wrapper">
+              <img
+                biom:image="*{understand.image}"
+                loading="lazy"
+                sizes="(max-width: 479px) 87vw, (max-width: 767px) 92vw, (max-width: 991px) 94vw, 42vw"
+                class="img-full-width only-desktop"
+              />
+              <div class="legend-wrapper">
+                <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+                <div class="legend-text" biom:markdown="*{understand.image.alt}"></div>
+              </div>
+            </div>
           </div>
           <div class="section-decoration-text temoignage">comprendre</div>
         </div>
