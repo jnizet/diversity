@@ -7904,6 +7904,10 @@ p > a:visited {
   .fact-slide {
     max-width: 300px;
   }
+
+  .section-ecosysteme {
+    height: auto;
+  }
 }
 
 @media screen and (max-width: 767px) {
