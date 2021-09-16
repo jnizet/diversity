@@ -1,0 +1,16 @@
+<h1>{{ mode === 'update' ? 'Modifier' : 'Créer' }} une catégorie d'indicateur</h1>
+
+<div class="content mt-2">
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input class="form-control" formControlName="name" id="name" />
+      <val-errors controlName="name" label="Le nom"></val-errors>
+    </div>
+
+    <div>
+      <button class="btn btn-primary mr-2" id="save-button">Enregistrer</button>
+      <a routerLink="/media-categories" class="btn btn-danger">Annuler</a>
+    </div>
+  </form>
+</div>

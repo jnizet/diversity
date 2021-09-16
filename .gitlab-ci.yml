@@ -37,7 +37,7 @@ test:
   tags:
     - gradle
   stage: test
-  image: circleci/openjdk:11-browsers
+  image: circleci/openjdk:11.0.2-browsers
   except:
     - main@biom/diversity
   services:
@@ -46,7 +46,7 @@ test:
     - name: mailhog/mailhog@sha256:98c7e2e6621c897ad86f31610d756d76b8ee622c354c28a76f4ed49fb6ed996f
       alias: mailhog
   script:
-    - sudo apt-get --allow-releaseinfo-change update
+    - sudo apt-get update
     - sudo apt-get install -y postgresql-client
     - psql -h postgres -U postgres -f backend/database/setup/database.sql
     - sudo ./gradlew check build --no-daemon -PCI=true

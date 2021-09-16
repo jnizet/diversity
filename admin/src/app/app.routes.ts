@@ -9,6 +9,8 @@ import { AuthenticationGuard } from './authentication.guard';
 import { EcogesturesComponent } from './ecogestures/ecogestures.component';
 import { EditEcogestureComponent } from './edit-ecogesture/edit-ecogesture.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
+import { MediaCategoriesComponent } from './media-categories/media-categories.component';
+import { EditMediaCategoryComponent } from './edit-media-category/edit-media-category.component';
 
 export const APP_ROUTES: Routes = [
   { path: 'login', component: AuthenticationComponent },
@@ -28,6 +30,20 @@ export const APP_ROUTES: Routes = [
           {
             path: ':indicatorCategoryId/edit',
             component: EditIndicatorCategoryComponent
+          }
+        ]
+      },
+      {
+        path: 'media-categories',
+        children: [
+          { path: '', component: MediaCategoriesComponent },
+          {
+            path: 'new',
+            component: EditMediaCategoryComponent
+          },
+          {
+            path: ':media/edit',
+            component: EditMediaCategoryComponent
           }
         ]
       },

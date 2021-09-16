@@ -11,11 +11,13 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { APP_ROUTES } from './app.routes';
 import { IndicatorCategoriesComponent } from './indicator-categories/indicator-categories.component';
+import { MediaCategoriesComponent } from './media-categories/media-categories.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { ToastsComponent } from './toasts/toasts.component';
 import { ErrorInterceptorService } from './error-interceptor.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EditIndicatorCategoryComponent } from './edit-indicator-category/edit-indicator-category.component';
+import { EditMediaCategoryComponent } from './edit-media-category/edit-media-category.component';
 import { ValidationDefaultsComponent } from './validation-defaults/validation-defaults.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
 import { EditIndicatorComponent } from './edit-indicator/edit-indicator.component';
@@ -39,11 +41,13 @@ import { CreateMediaPageModalComponent } from './create-media-page-modal/create-
     AppComponent,
     HomeComponent,
     IndicatorCategoriesComponent,
+    MediaCategoriesComponent,
     ConfirmationModalComponent,
     CreateMediaPageModalComponent,
     ToastsComponent,
     NavbarComponent,
     EditIndicatorCategoryComponent,
+    EditMediaCategoryComponent,
     ValidationDefaultsComponent,
     IndicatorsComponent,
     EditIndicatorComponent,
