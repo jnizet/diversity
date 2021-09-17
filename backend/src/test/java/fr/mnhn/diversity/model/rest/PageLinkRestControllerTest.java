@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.media.MediaCategoryRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,9 @@ class PageLinkRestControllerTest {
 
     @MockBean
     private PageRepository mockPageRepository;
+
+    @MockBean
+    private MediaCategoryRepository mockMediaCategoryRepository;
 
     @MockBean
     private IndicatorRepository mockIndicatorRepository;

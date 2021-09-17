@@ -2,6 +2,7 @@ package fr.mnhn.diversity.model.rest;
 
 import static fr.mnhn.diversity.common.PageModels.ALL_PAGE_MODELS_BY_NAME;
 
+import fr.mnhn.diversity.media.MediaRepository;
 import fr.mnhn.diversity.model.Checkbox;
 import fr.mnhn.diversity.model.Select;
 import fr.mnhn.diversity.model.meta.CheckboxElement;
@@ -43,6 +44,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,11 +57,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class PageRestController {
 
     private final PageRepository pageRepository;
+    private final MediaRepository mediaRepository;
     private final PageService pageService;
     private Map<String, PageModel> modelsByName;
 
-    public PageRestController(PageRepository pageRepository, PageService pageService) {
+    public PageRestController(PageRepository pageRepository,
+        MediaRepository mediaRepository, PageService pageService) {
         this.pageRepository = pageRepository;
+        this.mediaRepository = mediaRepository;
         this.pageService = pageService;
         modelsByName = ALL_PAGE_MODELS_BY_NAME;
     }
@@ -340,7 +345,9 @@ public class PageRestController {
 
     @PostMapping("/models/{modelName}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PageValuesDTO create(@PathVariable("modelName") String modelName, @Validated @RequestBody PageCommandDTO command) {
+    public PageValuesDTO create(@PathVariable("modelName") String modelName,
+        @RequestParam(value = "categories", required = false) List<Long> categories,
+        @Validated @RequestBody PageCommandDTO command) {
         if (!modelsByName.containsKey(modelName)) {
             throw new BadRequestException("invalid model name");
         }
@@ -351,6 +358,11 @@ public class PageRestController {
         pageService.validatePageContent(modelsByName.get(page.getModelName()), page);
 
         page = pageRepository.create(page);
+
+        if(categories != null){
+            mediaRepository.updateCategories(page.getId(), categories);
+        }
+
         // rebuild the DTO
         PageModel model = modelsByName.get(modelName);
         PageValuesPopulatorVisitor visitor = new PageValuesPopulatorVisitor(page, "");

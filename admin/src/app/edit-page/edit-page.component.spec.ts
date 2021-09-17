@@ -254,7 +254,7 @@ describe('EditPageComponent', () => {
       const route = fakeRoute({
         snapshot: fakeSnapshot({
           params: { modelName: 'home' },
-          queryParams: { name: 'accueil' }
+          queryParams: { name: 'accueil', categories: '1001,1002' }
         })
       });
       prepare(route);
@@ -341,7 +341,7 @@ describe('EditPageComponent', () => {
         name: 'accueil',
         elements: [titleCommand, image1Command, link1Command, image2Command, link2Command]
       };
-      expect(pageService.create).toHaveBeenCalledWith('home', expectedCommand);
+      expect(pageService.create).toHaveBeenCalledWith('home', expectedCommand, '1001,1002');
       expect(router.navigate).toHaveBeenCalledWith(['/']);
       expect(toastService.success).toHaveBeenCalledWith(`La page a été créée`);
     });

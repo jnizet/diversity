@@ -2,12 +2,47 @@
   <h4 class="modal-title">{{ title }}</h4>
 </div>
 <div class="modal-body">
-  <div class="form-group">
+  <div [formGroup]="form" class="form-group">
     <label>{{ message }}</label>
-    <input class="form-control" id="name" name="name" #name />
+    <input class="form-control" id="name" formControlName="name" [readonly]="isreadonly" #name />
+    <val-errors controlName="name" label="Le nom">
+      <ng-template valError="required">Le champ est requis</ng-template>
+    </val-errors>
+    <!-- Categories (at least one, at most no care) -->
+    <div class="form-group" formArrayName="categoryIds">
+      <label>Catégories de l'indicateur</label>
+      <div class="form-row" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
+        <select class="form-control custom-select col-9" [formControlName]="index" [id]="'category-' + index">
+          <option [ngValue]="null"></option>
+          <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+        <div class="col-3">
+          <button type="button" class="btn btn-link add-category-button" (click)="addCategory()">
+            <span class="sr-only">Ajouter une catégorie</span>
+            <fa-icon [icon]="addIcon"></fa-icon>
+          </button>
+          <!-- Remove a category if more than 1 -->
+          <button
+            *ngIf="categoryIds.controls.length > 1"
+            type="button"
+            class="btn btn-link remove-category-button"
+            (click)="removeCategory(index)"
+          >
+            <span class="sr-only">Supprimer une catégorie</span>
+            <fa-icon [icon]="removeIcon"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <small id="categories-hint" class="form-text text-muted">Au moins une catégorie, au maximum deux.</small>
+      <val-errors [control]="categoryIds" label="La catégorie">
+        <ng-template valError="required">Au moins une catégorie est nécessaire.</ng-template>
+      </val-errors>
+    </div>
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="activeModal.close(name.value)" id="yes-button">Valider</button>
+  <button type="button" class="btn btn-danger" (click)="closeModal()" id="yes-button">Valider</button>
   <button type="button" class="btn btn-primary" (click)="activeModal.dismiss()" id="no-button">Annuler</button>
 </div>

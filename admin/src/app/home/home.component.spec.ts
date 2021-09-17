@@ -6,6 +6,7 @@ import { PageLinkComponent } from './page-link/page-link.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageService } from '../page.service';
+import { MediaService } from '../media.service';
 import { of } from 'rxjs';
 
 class HomeComponentTester extends ComponentTester<HomeComponent> {
@@ -106,10 +107,16 @@ describe('HomeComponent', () => {
       })
     );
 
+    const mediaService = jasmine.createSpyObj<MediaService>('MediaService', ['update']);
+    mediaService.update.and.returnValue(of());
+
     TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule],
       declarations: [HomeComponent, PageLinkComponent],
-      providers: [{ provide: PageService, useValue: pageService }]
+      providers: [
+        { provide: PageService, useValue: pageService },
+        { provide: MediaService, useValue: mediaService }
+      ]
     });
     tester = new HomeComponentTester();
     tester.detectChanges();
@@ -130,11 +137,5 @@ describe('HomeComponent', () => {
 
     expect(tester.ecogestureLinks.length).toBe(1);
     expect(tester.ecogestureLinks[0]).toContainText('Ecogeste 1');
-
-    expect(tester.articlePageLinks.length).toBe(1);
-    expect(tester.articlePageLinks[0]).toContainText('Article 1');
-
-    expect(tester.interviewPageLinks.length).toBe(1);
-    expect(tester.interviewPageLinks[0]).toContainText('Interview 1');
   });
 });

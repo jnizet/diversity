@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.model.rest;
 
+import fr.mnhn.diversity.media.MediaCategoryRepository;
 import fr.mnhn.diversity.media.MediaModel;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
@@ -37,13 +38,16 @@ public class PageLinkRestController {
     private final PageRepository pageRepository;
     private final IndicatorRepository indicatorRepository;
     private final EcogestureRepository ecogestureRepository;
+    private final MediaCategoryRepository mediaCategoryRepository;
 
     public PageLinkRestController(PageRepository pageRepository,
                                   IndicatorRepository indicatorRepository,
-                                  EcogestureRepository ecogestureRepository) {
+                                  EcogestureRepository ecogestureRepository,
+                                  MediaCategoryRepository mediaCategoryRepository) {
         this.pageRepository = pageRepository;
         this.indicatorRepository = indicatorRepository;
         this.ecogestureRepository = ecogestureRepository;
+        this.mediaCategoryRepository = mediaCategoryRepository;
     }
 
     @GetMapping
@@ -100,7 +104,7 @@ public class PageLinkRestController {
         PageModel pageModel = InterviewModel.INTERVIEW_PAGE_MODEL;
         Map<String, BasicPage> pagesByName = getPageByName(pageModel);
         return pagesByName.entrySet().stream()
-            .map(page -> getLink(page.getValue(),
+            .map(page -> getMediaLink(page.getValue(),
                 page.getKey(),
                 pageModel))
             .collect(Collectors.toList());
@@ -110,7 +114,7 @@ public class PageLinkRestController {
         PageModel pageModel = ArticleModel.ARTICLE_PAGE_MODEL;
         Map<String, BasicPage> pagesByName = getPageByName(pageModel);
         return pagesByName.entrySet().stream()
-            .map(page -> getLink(page.getValue(),
+            .map(page -> getMediaLink(page.getValue(),
                 page.getKey(),
                 pageModel))
             .collect(Collectors.toList());
@@ -154,6 +158,15 @@ public class PageLinkRestController {
             return new PageLinkDTO(pageName, pageModel.getName());
         } else {
             return new PageLinkDTO(page);
+        }
+    }
+
+    private PageLinkDTO getMediaLink(BasicPage page, String pageName, PageModel pageModel) {
+        if (page == null) {
+            return new PageLinkDTO(pageName, pageModel.getName());
+        } else {
+            var categories = mediaCategoryRepository.findByPageId(page.getId());
+            return new MediaPageLinkDTO(page, categories);
         }
     }
 }

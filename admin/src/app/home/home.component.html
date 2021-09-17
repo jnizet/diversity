@@ -46,9 +46,12 @@
         <h3>Articles</h3>
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.articlePageLinks">
-            <biom-page-link [pageLink]="pageLink"></biom-page-link>
+            <span *ngIf="pageLink.id">
+              <fa-icon [icon]="pageIcon" class="mr-2"></fa-icon>
+              <a href="#" (click)="openEditMediaModal('article', pageLink)">{{ pageLink.title }}</a>
+            </span>
           </li>
-          <a class="btn btn-outline-secondary" id="create-article" role="button" (click)="openMediaModal('article')">
+          <a class="btn btn-outline-secondary" id="create-article" role="button" (click)="openCreateMediaModal('article')">
             <span>Créer un nouvel article</span>
           </a>
         </ul>
@@ -57,9 +60,18 @@
         <h3>Entretiens</h3>
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.interviewPageLinks">
-            <biom-page-link [pageLink]="pageLink"></biom-page-link>
+            <span *ngIf="pageLink.id">
+              <fa-icon [icon]="pageIcon" class="mr-2"></fa-icon>
+              <a href="#" (click)="openEditMediaModal('interview', pageLink)">{{ pageLink.title }}</a>
+            </span>
           </li>
-          <button type="button" class="btn btn-outline-secondary" id="create-interview" role="button" (click)="openMediaModal('interview')">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            id="create-interview"
+            role="button"
+            (click)="openCreateMediaModal('interview')"
+          >
             <span>Créer un nouvel entretien</span>
           </button>
         </ul>

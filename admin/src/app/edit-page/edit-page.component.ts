@@ -26,6 +26,7 @@ export class EditPageComponent implements OnInit {
   elementsGroup: FormGroup;
   pageModel: Page;
   submitted = false;
+  categories?: string;
 
   @ViewChild('saveButton')
   saveButton: ElementRef<HTMLButtonElement>;
@@ -48,6 +49,7 @@ export class EditPageComponent implements OnInit {
   ngOnInit(): void {
     const modelName = this.route.snapshot.paramMap.get('modelName');
     const pageId = +this.route.snapshot.paramMap.get('pageId');
+
     if (pageId) {
       this.mode = 'update';
       // in edit mode, we fetch page with the current values
@@ -65,6 +67,7 @@ export class EditPageComponent implements OnInit {
         this.pageModel = model;
       });
     } else {
+      this.categories = this.route.snapshot.queryParamMap.get('categories');
       const pageName = this.route.snapshot.queryParamMap.get('name');
       // in creation mode, we only fetch the page model with empty values
       this.pageService.getModel(modelName).subscribe(model => {
@@ -119,11 +122,12 @@ export class EditPageComponent implements OnInit {
       name: this.editedPage.name,
       elements: elementCommands
     };
+
     let obs: Observable<Page | void>;
     if (this.mode === 'update') {
       obs = this.pageService.update(this.editedPage.id, command);
     } else {
-      obs = this.pageService.create(this.pageModel.modelName, command);
+      obs = this.pageService.create(this.pageModel.modelName, command, this.categories);
     }
 
     obs.subscribe({

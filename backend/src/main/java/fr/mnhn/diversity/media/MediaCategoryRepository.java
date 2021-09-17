@@ -75,6 +75,15 @@ public class MediaCategoryRepository {
     }
 
     /**
+     * Finds  {@link MediaCategory}s by associate to a media page
+     */
+    public List<MediaCategory> findByPageId(Long pageId) {
+        String sql = "select media_category.id, media_category.name from media_category "
+                + "where exists (select 1 from media_category_relation where media_page_id = :pageId and category_id = media_category.id)";
+        return jdbcTemplate.query(sql, Map.of("pageId", pageId), (rs, rowNum) -> new MediaCategory(rs.getLong("id"), rs.getString("name")));
+    }
+
+    /**
      * Deletes a {@link MediaCategory}
      */
     public void delete(MediaCategory mediaCategory) {

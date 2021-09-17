@@ -7,7 +7,7 @@ import fr.mnhn.diversity.model.BasicPage;
 /**
  * A link to a page that exist or doesn't exist yet, as shown on the admin home page
  */
-public final class PageLinkDTO {
+public class PageLinkDTO {
     /**
      * The ID of the page, if it exists
      */

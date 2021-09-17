@@ -27,8 +27,8 @@ export class PageService {
     return this.http.put<void>(`/api/pages/${pageId}`, command);
   }
 
-  create(pageModelName: string, command: PageCommand): Observable<Page> {
-    return this.http.post<Page>(`/api/pages/models/${pageModelName}`, command);
+  create(pageModelName: string, command: PageCommand, categories?: string): Observable<Page> {
+    return this.http.post<Page>(`/api/pages/models/${pageModelName}${categories ? '?categories=' + categories : ''}`, command);
   }
 
   getPageLinks(): Observable<PageLinks> {

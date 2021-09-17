@@ -1,3 +1,5 @@
+import { MediaCategory } from './media-category.model';
+
 export type ElementType = 'TEXT' | 'LINK' | 'IMAGE' | 'LIST' | 'LIST_UNIT' | 'SECTION' | 'SELECT' | 'CHECKBOX' | 'MULTI_LIST';
 export type SourceType = 'IMPORTED' | undefined;
 interface BasePageElement {
@@ -293,6 +295,10 @@ export interface PageLink {
   name: string;
   modelName: string;
   title: string | null;
+}
+
+export interface MediaPageLink extends PageLink {
+  categories: MediaCategory[];
 }
 
 export interface PageLinks {

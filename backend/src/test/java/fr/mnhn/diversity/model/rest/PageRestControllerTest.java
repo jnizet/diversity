@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import fr.mnhn.diversity.media.MediaRepository;
 import fr.mnhn.diversity.model.Select;
 import java.util.Comparator;
 import java.util.List;
@@ -50,6 +51,9 @@ class PageRestControllerTest {
 
     @MockBean
     private PageService mockPageService;
+
+    @MockBean
+    private MediaRepository mockMediaRepository;
 
     @Autowired
     private MockMvc mockMvc;
