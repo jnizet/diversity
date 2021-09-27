@@ -1718,6 +1718,76 @@ legend-text a {
   flex-wrap: wrap;
 }
 
+.filter-media-list {
+  display: flex;
+}
+
+.filter-media-title {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 26px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.filter-media-item {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.media-category-filter-list{
+  margin: 92px 0px 0px 120px;
+  display: flex;
+  justify-content: center;
+}
+
+.interview-categories,
+.article-categories {
+  display: flex;
+}
+
+.article-back-button {
+  top: 220px;
+  position: absolute;
+  left: 150px;
+  width: 106px;
+  font-size: 11px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 16px;
+  flex-direction: column;
+  display: flex;
+  color: #276F87;
+}
+
+.article-back-chevron {
+  width: 32px;
+  height: 32px;
+  filter: invert(34%) sepia(64%) saturate(453%) hue-rotate(149deg) brightness(96%) contrast(93%);
+  transform: rotate(-180deg);
+  margin-bottom: 5px;
+}
+
+.interview-category-item,
+.article-category-item {
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px 25px 8px;
+  border-radius: 50px;
+  color: #276F87;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background-color: white;
+  margin-right: 15px;
+}
+
 .filter-item {
   margin-right: 15px;
   margin-bottom: 24px;
@@ -2384,7 +2454,7 @@ legend-text a {
 .article-presentation-picture-wrapper {
   margin-left: 50%;
   transform: translate(-50%, 0px);
-  margin-top: 415px;
+  margin-top: 460px;
   width:80%;
 }
 
@@ -2564,10 +2634,9 @@ legend-text a {
   margin: 10px;
 }
 
-.media-interviews-section,
-.media-articles-section {
+.media-section {
  margin-left:120px;
- margin-top: 70px;
+ margin-top: 30px;
  width: 1440px;
 }
 
@@ -2608,6 +2677,18 @@ legend-text a {
   font-weight: normal;
   font-size: 13px;
   line-height: 20px;
+}
+
+.media-miniature > a:visited {
+  color: #122C33;
+}
+
+.media-miniature > a {
+  color: #122C33;
+}
+
+.media-miniature > a:link {
+  text-decoration: none;
 }
 
 .media-miniature {

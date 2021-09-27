@@ -1,5 +1,6 @@
 package fr.mnhn.diversity.media.article;
 
+import fr.mnhn.diversity.media.MediaCategoryRepository;
 import java.util.Map;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
@@ -22,11 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/media/article")
 public class ArticleController {
     private final PageRepository pageRepository;
+    private final MediaCategoryRepository mediaCategoryRepository;
     private final PageService pageService;
 
     public ArticleController(PageRepository pageRepository,
+        MediaCategoryRepository mediaCategoryRepository,
         PageService pageService) {
         this.pageRepository = pageRepository;
+        this.mediaCategoryRepository = mediaCategoryRepository;
         this.pageService = pageService;
     }
 
@@ -37,7 +41,8 @@ public class ArticleController {
             .orElseThrow(NotFoundException::new);
 
         Map<String, Object> model = Map.of(
-            "page", pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, page)
+            "page", pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, page),
+            "categories", mediaCategoryRepository.findByPageId(page.getId())
         );
 
         return new ModelAndView("media/article", model);

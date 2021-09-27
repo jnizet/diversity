@@ -21,7 +21,15 @@
   <main class="main" th:object="${page.content}" data-controller="article">
     <div class="section-decoration-text article">article</div>
     <section class="section-top-article">
+      <a class="article-back-button" th:href="@{/media}">
+        <img th:src="@{/assets/images/Circle.svg}" loading="lazy" alt="" class="article-back-chevron" />
+        <span>VOIR TOUS LES ARTICLES</span>
+      </a>
       <div class="article-h1-wrapper">
+        <div class="article-categories">
+          <span class="article-category-item">Article</span>
+          <span class="article-category-item" th:each="category: ${categories}" th:text="${category.name}">Article</span>
+        </div>
         <div class="article-h1-content">
           <h1>
             <span class="article-h1" biom:markdown="*{presentation.name.text}">placeholder</span>

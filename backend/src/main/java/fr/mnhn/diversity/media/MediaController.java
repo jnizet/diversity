@@ -27,12 +27,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/media")
 public class MediaController {
     private final PageRepository pageRepository;
+    private final MediaCategoryRepository mediaCategoryRepository;
     private final PageService pageService;
 
     public MediaController(PageRepository pageRepository,
-        PageService pageService
+        PageService pageService,
+        MediaCategoryRepository mediaCategoryRepository
        ) {
         this.pageRepository = pageRepository;
+        this.mediaCategoryRepository = mediaCategoryRepository;
         this.pageService = pageService;
     }
 
@@ -47,21 +50,47 @@ public class MediaController {
         return new ModelAndView("media/medias", Map.of(
             "page", pageContent,
             "articles", getArticlesContent(),
-            "interviews", getInterviewsContent()
+            "interviews", getInterviewsContent(),
+            "categories", getMediaCategories()
         ));
     }
 
-    private List<PageContent> getArticlesContent(){
+    private List<MediaCard> getArticlesContent() {
         List<Page> articles = pageRepository.findByModel(ArticleModel.ARTICLE_PAGE_MODEL.getName());
         return articles.stream()
-            .map(article -> pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, article))
+            .map(article -> new MediaCard(pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, article), this.mediaCategoryRepository.findByPageId(article.getId())))
             .collect(Collectors.toList());
     }
 
-    private List<PageContent> getInterviewsContent(){
+    private List<MediaCard> getInterviewsContent() {
         List<Page> interviews = pageRepository.findByModel(InterviewModel.INTERVIEW_PAGE_MODEL.getName());
         return interviews.stream()
-            .map(article -> pageService.buildPageContent(InterviewModel.INTERVIEW_PAGE_MODEL, article))
+            .map(interview -> new MediaCard(pageService.buildPageContent(InterviewModel.INTERVIEW_PAGE_MODEL, interview), this.mediaCategoryRepository.findByPageId(interview.getId())))
             .collect(Collectors.toList());
+    }
+
+    private List<MediaCategory> getMediaCategories() {
+        return this.mediaCategoryRepository.list()
+            .stream()
+            .collect(Collectors.toList());
+    }
+
+    private static class MediaCard {
+        private final PageContent page;
+        private final  List<MediaCategory> categories;
+
+        private MediaCard(PageContent page,
+            List<MediaCategory> categories) {
+            this.page = page;
+            this.categories = categories;
+        }
+
+        public PageContent getPage() {
+            return page;
+        }
+
+        public String getCategoryIdsAsJsonArray() {
+            return this.categories.stream().map(category -> category.getId().toString()).collect(Collectors.joining(",", "[", "]"));
+        }
     }
 }

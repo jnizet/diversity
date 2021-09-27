@@ -22,6 +22,10 @@
   <div class="section-decoration-text interview">interview</div>
   <section class="section-top-interview">
     <div class="interview-h1-wrapper">
+      <div class="interview-categories">
+        <span class="interview-category-item">Article</span>
+        <span class="interview-category-item" th:each="category: ${categories}" th:text="${category.name}">Article</span>
+      </div>
       <div class="interview-h1-content">
         <h1>
           <span class="interview-h1" biom:markdown="*{presentation.name.text}">placeholder</span>
