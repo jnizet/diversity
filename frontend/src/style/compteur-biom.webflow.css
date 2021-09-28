@@ -1058,10 +1058,8 @@ legend-text a {
   opacity: 0.5;
 }
 
-.section-decoration-text.interview {
-  top: 70%;
-}
-
+.section-decoration-text.photo-report,
+.section-decoration-text.interview,
 .section-decoration-text.article {
   top: 70%;
 }
@@ -1743,11 +1741,13 @@ legend-text a {
   justify-content: center;
 }
 
+.photo-report-categories,
 .interview-categories,
 .article-categories {
   display: flex;
 }
 
+.photo-report-back-button,
 .interview-back-button,
 .article-back-button {
   top: 220px;
@@ -1765,6 +1765,7 @@ legend-text a {
   color: #276F87;
 }
 
+.photo-report-back-chevron,
 .interview-back-chevron,
 .article-back-chevron {
   width: 32px;
@@ -1774,6 +1775,7 @@ legend-text a {
   margin-bottom: 5px;
 }
 
+.photo-report-category-item,
 .interview-category-item,
 .article-category-item {
   display: block;
@@ -2426,12 +2428,14 @@ legend-text a {
   min-height: 800px;
 }
 
+.section-top-photo-report,
 .section-top-interview,
 .section-top-article {
   width: 100%;
   margin-bottom: 30px;
 }
 
+.photo-report-h1-wrapper,
 .interview-h1-wrapper,
 .article-h1-wrapper {
   position: absolute;
@@ -2443,6 +2447,7 @@ legend-text a {
   background: #F3F5F7;
 }
 
+.photo-report-h1,
 .interview-h1,
 .article-h1 {
   font-family: Poppins;
@@ -2452,6 +2457,7 @@ legend-text a {
   line-height: 50px;
 }
 
+.photo-report-presentation-picture-wrapper,
 .interview-presentation-picture-wrapper,
 .article-presentation-picture-wrapper {
   margin-left: 50%;
@@ -2460,6 +2466,7 @@ legend-text a {
   width:80%;
 }
 
+.section-photo-report-body,
 .section-interview-body,
 .section-article-body {
   display: flex;
@@ -2468,11 +2475,13 @@ legend-text a {
   flex-direction: column;
 }
 
+.photo-report-body-element-wrapper,
 .interview-body-element-wrapper,
 .article-body-element-wrapper {
   margin: 0 240px 20px;
 }
 
+.photo-report-introduction,
 .interview-introduction,
 .article-introduction {
   font-family: Poppins;
@@ -2488,6 +2497,7 @@ legend-text a {
   width: 100%;
 }
 
+.photo-report-introduction >p,
 .interview-question > p,
 .interview-paragraph > p,
 .interview-paragraph > h1,
@@ -2500,6 +2510,34 @@ legend-text a {
 .article-introduction > p {
   margin-left: 200px;
   text-align: justify;
+}
+
+.photo-report-description > p {
+  text-align: justify;
+}
+
+
+.photo-report-body-element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-report-image-wrapper {
+  width: 85%;
+  position: relative;
+  height: fit-content;
+  height: -moz-fit-content;
+}
+
+.photo-report-img{
+  width: 100%;
+}
+
+.photo-report-description {
+  font-size: 25px;
+  width: 720px;
+  margin: 40px 0;
 }
 
 .ecosysteme-img-wrapper {
@@ -2529,6 +2567,7 @@ legend-text a {
   min-height: 569px;
 }
 
+.photo-report-description,
 .interview-paragraph,
 .article-paragraph {
   font-family: Poppins;
@@ -8042,12 +8081,11 @@ p > a:visited {
     margin-left: 10px;
   }
 
+  .photo-report-categories,
+  .interview-categories,
   .article-categories{
     margin-top: 10px;
     justify-content: center;
-  }
-
-  .article-categories {
     margin-bottom: 0px;
   }
 
@@ -8101,12 +8139,14 @@ p > a:visited {
     position: relative;
   }
 
+  section-top-photo-report,
   section-top-interview,
   .section-top-article {
     width: 100%;
     margin-bottom: 30px;
   }
 
+  .photo-report-h1-wrapper,
   .interview-h1-wrapper,
   .article-h1-wrapper {
     position: absolute;
@@ -8141,11 +8181,13 @@ p > a:visited {
     flex-direction: column;
   }
 
+  .photo-report-body-element-wrapper,
   .interview-body-element-wrapper,
   .article-body-element-wrapper {
     margin: 0 0px 20px;
   }
 
+  .photo-report-introduction,
   .interview-introduction,
   .article-introduction {
     font-family: Poppins;
@@ -8155,6 +8197,10 @@ p > a:visited {
     line-height: 32px;
     font-feature-settings: 'pnum' on, 'lnum' on;
     color: #276F87;
+  }
+
+  .photo-report-introduction >p {
+    margin: 0 20px;
   }
 
 
@@ -8183,6 +8229,7 @@ p > a:visited {
     min-height: 0px;
   }
 
+  .photo-report-description,
   .interview-paragraph,
   .article-paragraph {
     font-family: Poppins;
@@ -9471,6 +9518,10 @@ p > a:visited {
     margin-bottom: 0px;
     padding-right: 15px;
     padding-left: 15px;
+  }
+
+  .photo-report-description {
+    width: 80%
   }
 
   .swiper-pagination-espece {

@@ -1,6 +1,5 @@
 package fr.mnhn.diversity.model.rest;
 
-import fr.mnhn.diversity.model.meta.ListElement;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,15 +14,17 @@ public final class PageLinksDTO {
     private final List<PageLinkDTO> ecogesturePageLinks;
     private final List<PageLinkDTO> interviewPageLinks;
     private final List<PageLinkDTO> articlePageLinks;
+    private final List<PageLinkDTO> photoReportsPageLinks;
 
 
     public PageLinksDTO(List<PageLinkDTO> staticPageLinks,
-                        List<PageLinkDTO> indicatorPageLinks,
-                        List<PageLinkDTO> territoryPageLinks,
-                        List<PageLinkDTO> zonePageLinks,
-                        List<PageLinkDTO> interviewPageLinks,
-                        List<PageLinkDTO> articlePageLinks,
-                        List<PageLinkDTO> ecogesturePageLinks) {
+        List<PageLinkDTO> indicatorPageLinks,
+        List<PageLinkDTO> territoryPageLinks,
+        List<PageLinkDTO> zonePageLinks,
+        List<PageLinkDTO> interviewPageLinks,
+        List<PageLinkDTO> articlePageLinks,
+        List<PageLinkDTO> ecogesturePageLinks,
+        List<PageLinkDTO> photReportsPageLinks) {
         this.staticPageLinks = staticPageLinks;
         this.indicatorPageLinks = indicatorPageLinks;
         this.territoryPageLinks = territoryPageLinks;
@@ -31,7 +32,7 @@ public final class PageLinksDTO {
         this.ecogesturePageLinks = ecogesturePageLinks;
         this.interviewPageLinks = interviewPageLinks;
         this.articlePageLinks = articlePageLinks;
-
+        this.photoReportsPageLinks = photReportsPageLinks;
     }
 
     public List<PageLinkDTO> getStaticPageLinks() {
@@ -58,6 +59,10 @@ public final class PageLinksDTO {
 
     public List<PageLinkDTO> getArticlePageLinks() { return  articlePageLinks; }
 
+    public List<PageLinkDTO> getPhotoReportsPageLinks() {
+        return photoReportsPageLinks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -73,6 +78,7 @@ public final class PageLinksDTO {
             Objects.equals(zonePageLinks, that.zonePageLinks) &&
             Objects.equals(interviewPageLinks, that.interviewPageLinks) &&
             Objects.equals(articlePageLinks, that.articlePageLinks) &&
+            Objects.equals(photoReportsPageLinks, that.photoReportsPageLinks) &&
             Objects.equals(ecogesturePageLinks, that.ecogesturePageLinks);
     }
 
@@ -84,7 +90,8 @@ public final class PageLinksDTO {
                             zonePageLinks,
                             interviewPageLinks,
                             articlePageLinks,
-                            ecogesturePageLinks);
+                            ecogesturePageLinks,
+                            photoReportsPageLinks);
     }
 
     @Override
@@ -96,6 +103,7 @@ public final class PageLinksDTO {
             ", zonePageLinks=" + zonePageLinks +
             ", interviewPageLinks=" + interviewPageLinks +
             ", articlePageLinks=" + articlePageLinks +
+            ", photReportsPageLinks=" + photoReportsPageLinks +
             ", ecogesturePageLinks=" + ecogesturePageLinks +
             '}';
     }

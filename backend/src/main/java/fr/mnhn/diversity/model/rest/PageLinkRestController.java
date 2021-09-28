@@ -4,6 +4,7 @@ import fr.mnhn.diversity.media.MediaCategoryRepository;
 import fr.mnhn.diversity.media.MediaModel;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
+import fr.mnhn.diversity.media.photoReport.PhotoReportModel;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,8 @@ public class PageLinkRestController {
             getZoneLinks(),
             getInterviewLinks(),
             getArticleLinks(),
-            getEcogestureLinks()
+            getEcogestureLinks(),
+            getPhotoReportLinks()
         );
     }
 
@@ -109,6 +111,17 @@ public class PageLinkRestController {
                 pageModel))
             .collect(Collectors.toList());
     }
+
+    private List<PageLinkDTO> getPhotoReportLinks() {
+        PageModel pageModel = PhotoReportModel.PHOTO_REPORT_PAGE_MODEL;
+        Map<String, BasicPage> pagesByName = getPageByName(pageModel);
+        return pagesByName.entrySet().stream()
+            .map(page -> getMediaLink(page.getValue(),
+                page.getKey(),
+                pageModel))
+            .collect(Collectors.toList());
+    }
+
 
     private List<PageLinkDTO> getArticleLinks() {
         PageModel pageModel = ArticleModel.ARTICLE_PAGE_MODEL;

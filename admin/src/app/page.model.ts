@@ -309,4 +309,5 @@ export interface PageLinks {
   ecogesturePageLinks: Array<PageLink>;
   interviewPageLinks: Array<PageLink>;
   articlePageLinks: Array<PageLink>;
+  photoReportsPageLinks: Array<PageLink>;
 }

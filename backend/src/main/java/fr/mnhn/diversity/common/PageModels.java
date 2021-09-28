@@ -3,6 +3,7 @@ package fr.mnhn.diversity.common;
 import fr.mnhn.diversity.media.MediaModel;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
+import fr.mnhn.diversity.media.photoReport.PhotoReportModel;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -39,7 +40,8 @@ public final class PageModels {
                 EcogestureModel.ECO_GESTURE_PAGE_MODEL,
                 EcogestureActSectionModel.ECOGESTURE_ACT_SECTION_MODEL,
                 InterviewModel.INTERVIEW_PAGE_MODEL,
-                ArticleModel.ARTICLE_PAGE_MODEL
+                ArticleModel.ARTICLE_PAGE_MODEL,
+                PhotoReportModel.PHOTO_REPORT_PAGE_MODEL
         );
 
     public static final Map<String, PageModel> ALL_PAGE_MODELS_BY_NAME =

@@ -76,6 +76,26 @@
           </button>
         </ul>
       </div>
+      <div>
+        <h3>Reportage photo</h3>
+        <ul class="list-unstyled">
+          <li *ngFor="let pageLink of pageLinks.photoReportsPageLinks">
+            <span *ngIf="pageLink.id">
+              <fa-icon [icon]="pageIcon" class="mr-2"></fa-icon>
+              <a href="#" (click)="openEditMediaModal('report', pageLink)">{{ pageLink.title }}</a>
+            </span>
+          </li>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            id="create-photoReport"
+            role="button"
+            (click)="openCreateMediaModal('report')"
+          >
+            <span>Créer un nouveau reportage photo</span>
+          </button>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

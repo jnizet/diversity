@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:biom="http://www.thymeleaf.org"
+  th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='dark-nav', selectedMenu='media')}"
+>
+<head>
+  <title th:text="${page.title}">À propos</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <meta th:ref="og" property="og:title" th:attr="content=${page.content.presentation.name}" />
+  <meta th:ref="og" property="og:description" th:attr="content=${page.content.presentation.name}" />
+  <meta
+    th:ref="og"
+    property="og:image"
+    th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.presentation.image})}"
+  />
+</head>
+<body>
+<main class="main" th:object="${page.content}">
+  <div class="section-decoration-text photo-report">Reportage</div>
+  <section class="section-top-photo-report">
+    <a class="photo-report-back-button" th:href="@{/media}">
+      <img th:src="@{/assets/images/Circle.svg}" loading="lazy" alt="" class="photo-report-back-chevron" />
+      <span>VOIR TOUS LES REPORTAGES</span>
+    </a>
+    <div class="photo-report-h1-wrapper">
+      <div class="photo-report-categories">
+        <span class="photo-report-category-item">Reportage</span>
+        <span class="photo-report-category-item" th:each="category: ${categories}" th:text="${category.name}">Article</span>
+      </div>
+      <div class="photo-report-h1-content">
+        <h1>
+          <span class="photo-report-h1" biom:markdown="*{presentation.name.text}">placeholder</span>
+        </h1>
+        <span class="photo-report-content" biom:markdown="*{'Paru le ' + presentation.author.text}"
+        >Paru le 12/01/2003</span
+        >
+      </div>
+    </div>
+    <div class="photo-report-presentation-picture-wrapper">
+      <img biom:image="*{presentation.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="media-img-full-height" />
+      <div class="legend-wrapper">
+        <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+        <div class="legend-text" biom:markdown="*{presentation.image.alt}">Chelonia mydas ©  B. Guichard</div>
+      </div>
+    </div>
+  </section>
+  <section class="section-photo-report-body">
+    <div class="interviewee-informations-wrapper">
+      <img biom:image="*{photograph.photo}" loading="lazy" class="interview-interviewee-photo"/>
+      <span class="interviewee-info"> Interviewé: </span>
+      <span class="interviewee-info"  biom:markdown="*{photograph.presentation.text}"></span>
+    </div>
+    <div class="photo-report-body-element-wrapper">
+      <span class="photo-report-introduction"  biom:markdown="*{body.introduction.text}"></span>
+    </div>
+    <div th:each="photo: *{body.photos}" class="photo-report-body-element">
+      <div class="photo-report-image-wrapper">
+        <img biom:image="${photo.photo}" loading="lazy" sizes="(max-width: 1440px) 100vw, 50vw" class="photo-report-img"/>
+        <div class="legend-wrapper">
+          <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+          <div class="legend-text" biom:markdown="${photo.photo.alt}">Chelonia mydas ©  B. Guichard</div>
+        </div>
+      </div>
+      <span class="photo-report-description"  biom:markdown="${photo.description.text}"></span>
+    </div>
+  </section>
+  <a
+    th:if="${nextPage}"
+    th:href="@{/media/report/{slug}(slug=${nextPage.name})}"
+    class="section-push-next w-inline-block"
+  >
+    <div class="push-next-img">
+      <img
+        th:src="@{/images/{imageId}/image/sm(imageId=${nextPage.content.presentation.image.imageId})}"
+        th:alt="${nextPage.content.presentation.image}"
+        loading="lazy"
+        sizes="40vw"
+        class="next-img"
+      />
+    </div>
+    <div class="push-next-wrapper">
+      <div class="push-next-before">photo-report suivant</div>
+      <div class="push-next-title-wrapper">
+        <div class="push-next-title col-4" biom:markdown="${nextPage.content.presentation.name.text}"></div>
+        <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
+      </div>
+    </div>
+  </a>
+</main>
+</body>
+</html>
