@@ -1,12 +1,14 @@
 package fr.mnhn.diversity.media.article;
 
 import fr.mnhn.diversity.media.MediaCategoryRepository;
+import fr.mnhn.diversity.model.PageContent;
 import java.util.Map;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageRepository;
 import fr.mnhn.diversity.model.PageService;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,9 +44,17 @@ public class ArticleController {
 
         Map<String, Object> model = Map.of(
             "page", pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, page),
+            "nextPage", getNextArticle(page.getId()),
             "categories", mediaCategoryRepository.findByPageId(page.getId())
         );
 
         return new ModelAndView("media/article", model);
+    }
+
+    private PageContent getNextArticle(Long currentArticlePageId) {
+        return pageRepository
+            .findNextOrFirstByModel( ArticleModel.ARTICLE_PAGE_NAME, currentArticlePageId)
+            .map(nextOrFirstArticlePage ->  pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, nextOrFirstArticlePage))
+            .orElse(null);
     }
 }

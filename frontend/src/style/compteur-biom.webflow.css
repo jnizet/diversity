@@ -1748,6 +1748,7 @@ legend-text a {
   display: flex;
 }
 
+.interview-back-button,
 .article-back-button {
   top: 220px;
   position: absolute;
@@ -1764,6 +1765,7 @@ legend-text a {
   color: #276F87;
 }
 
+.interview-back-chevron,
 .article-back-chevron {
   width: 32px;
   height: 32px;

@@ -74,6 +74,28 @@
         </div>
       </div>
     </section>
+    <a
+      th:if="${nextPage}"
+      th:href="@{/media/article/{slug}(slug=${nextPage.name})}"
+      class="section-push-next w-inline-block"
+    >
+      <div class="push-next-img">
+        <img
+          th:src="@{/images/{imageId}/image/sm(imageId=${nextPage.content.presentation.image.imageId})}"
+          th:alt="${nextPage.content.presentation.image}"
+          loading="lazy"
+          sizes="40vw"
+          class="next-img"
+        />
+      </div>
+      <div class="push-next-wrapper">
+        <div class="push-next-before">article suivant</div>
+        <div class="push-next-title-wrapper">
+          <div class="push-next-title col-4" biom:markdown="${nextPage.content.presentation.name.text}"></div>
+          <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
+        </div>
+      </div>
+    </a>
   </main>
 </body>
 </html>

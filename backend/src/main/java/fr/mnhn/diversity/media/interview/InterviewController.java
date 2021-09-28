@@ -1,5 +1,7 @@
 package fr.mnhn.diversity.media.interview;
 import fr.mnhn.diversity.media.MediaCategoryRepository;
+import fr.mnhn.diversity.media.article.ArticleModel;
+import fr.mnhn.diversity.model.PageContent;
 import java.util.Map;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
@@ -41,10 +43,18 @@ public class InterviewController {
 
         Map<String, Object> model = Map.of(
             "page", pageService.buildPageContent(InterviewModel.INTERVIEW_PAGE_MODEL, page),
+            "nextPage", getNextInterview(page.getId()),
             "categories", mediaCategoryRepository.findByPageId(page.getId())
 
         );
 
         return new ModelAndView("media/interview", model);
+    }
+
+    private PageContent getNextInterview(Long currentInterviewPageId) {
+        return pageRepository
+            .findNextOrFirstByModel( InterviewModel.INTERVIEW_PAGE_NAME, currentInterviewPageId)
+            .map(nextOrFirstArticlePage ->  pageService.buildPageContent(InterviewModel.INTERVIEW_PAGE_MODEL, nextOrFirstArticlePage))
+            .orElse(null);
     }
 }
