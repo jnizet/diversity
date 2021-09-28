@@ -2592,7 +2592,7 @@ legend-text a {
 }
 
 .meddia-h1-content{
-  width: 720px;
+  width: 600px;
 }
 
 .interviewee-informations-wrapper {
@@ -8020,6 +8020,34 @@ p > a:visited {
 }
 
 @media screen and (max-width: 479px) {
+
+  .media-category-filter-list {
+    margin: 0;
+    justify-content: initial;
+  }
+
+  .filter-media-list {
+    margin-left: 10px;
+    overflow-y: scroll;
+  }
+
+  .filter-media-item {
+    margin: 0;
+  }
+
+  .media-section {
+    width: 100%;
+    margin-left: 10px;
+  }
+
+  .article-categories{
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  .article-categories {
+    margin-bottom: 0px;
+  }
 
   .interview-img-element,
   .article-img-element{
