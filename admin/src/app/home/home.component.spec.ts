@@ -103,6 +103,14 @@ describe('HomeComponent', () => {
             modelName: 'interview',
             title: 'Interview 1'
           }
+        ],
+        photoReportsPageLinks: [
+          {
+            id: 25,
+            name: 'e1',
+            modelName: 'report',
+            title: 'Report 1'
+          }
         ]
       })
     );

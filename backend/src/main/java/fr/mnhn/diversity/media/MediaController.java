@@ -2,6 +2,7 @@ package fr.mnhn.diversity.media;
 
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
+import fr.mnhn.diversity.media.photoReport.PhotoReportModel;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,6 +52,7 @@ public class MediaController {
             "page", pageContent,
             "articles", getArticlesContent(),
             "interviews", getInterviewsContent(),
+            "reports", getReportsContent(),
             "categories", getMediaCategories()
         ));
     }
@@ -59,6 +61,13 @@ public class MediaController {
         List<Page> articles = pageRepository.findByModel(ArticleModel.ARTICLE_PAGE_MODEL.getName());
         return articles.stream()
             .map(article -> new MediaCard(pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, article), this.mediaCategoryRepository.findByPageId(article.getId())))
+            .collect(Collectors.toList());
+    }
+
+    private List<MediaCard> getReportsContent() {
+        List<Page> reports = pageRepository.findByModel(PhotoReportModel.PHOTO_REPORT_PAGE_MODEL.getName());
+        return reports.stream()
+            .map(report -> new MediaCard(pageService.buildPageContent(PhotoReportModel.PHOTO_REPORT_PAGE_MODEL, report), this.mediaCategoryRepository.findByPageId(report.getId())))
             .collect(Collectors.toList());
     }
 

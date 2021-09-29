@@ -108,6 +108,28 @@
         </div>
       </div>
     </div>
+    <div class="media-interviews-section" th:if="${!reports.empty}">
+      <h1 class="media-interviews-section-title">Reportages</h1>
+      <div class="media-list">
+        <div class="swiper-container interviews-list">
+          <div class="swiper-wrapper">
+            <div class="media-miniature" th:each="miniature : ${reports}" data-target="media.media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}" th:object="${miniature.getPage().content}">
+              <a style="display:block" th:href="${'/media/report/' + miniature.getPage().name}">
+                <div class="miniature-wrapper">
+                  <img class="miniature-img" biom:image="*{presentation.image}" />
+                </div>
+                <span class="miniature-title" biom:markdown="*{presentation.name.text}"> </span>
+                <span class="miniature-date" biom:markdown="*{'Publié le ' + presentation.author.text}"> </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="media-swiper-navigation">
+          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="interview-swiper-next swiper-next media-swiper" /></div>
+          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="interview-swiper-prev swiper-prev media-swiper" /></div>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
 </body>
