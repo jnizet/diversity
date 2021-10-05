@@ -19,7 +19,6 @@
 </head>
 <body>
 <main class="main" th:object="${page.content}">
-  <div class="section-decoration-text photo-report">Reportage</div>
   <section class="section-top-photo-report">
     <a class="photo-report-back-button" th:href="@{/media}">
       <img th:src="@{/assets/images/Circle.svg}" loading="lazy" alt="" class="photo-report-back-chevron" />
@@ -50,7 +49,6 @@
   <section class="section-photo-report-body">
     <div class="interviewee-informations-wrapper">
       <img biom:image="*{photograph.photo}" loading="lazy" class="interview-interviewee-photo"/>
-      <span class="interviewee-info"> Interviewé: </span>
       <span class="interviewee-info"  biom:markdown="*{photograph.presentation.text}"></span>
     </div>
     <div class="photo-report-body-element-wrapper">
@@ -82,7 +80,7 @@
       />
     </div>
     <div class="push-next-wrapper">
-      <div class="push-next-before">photo-report suivant</div>
+      <div class="push-next-before">Reportage photo suivant</div>
       <div class="push-next-title-wrapper">
         <div class="push-next-title col-4" biom:markdown="${nextPage.content.presentation.name.text}"></div>
         <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />

@@ -79,7 +79,7 @@ public class MediaController {
     }
 
     private List<MediaCategory> getMediaCategories() {
-        return this.mediaCategoryRepository.list()
+        return this.mediaCategoryRepository.listUsedCategory()
             .stream()
             .collect(Collectors.toList());
     }

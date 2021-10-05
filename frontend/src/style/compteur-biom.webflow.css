@@ -2626,13 +2626,13 @@ legend-text a {
   border-radius: 50%;
 }
 
-.meddia-h1-wrapper {
+.media-h1-wrapper {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.meddia-h1-content{
+.media-h1-content{
   width: 600px;
 }
 
@@ -2642,7 +2642,7 @@ legend-text a {
   flex-direction: column;
   align-items: center;
   text-position: center;
-  left: 20%;
+  left: 13%;
 }
 
 .media-h1{
@@ -6711,6 +6711,160 @@ p > a:visited {
 }
 
 @media screen and (max-width: 991px) {
+
+  .media-h1-content {
+    margin-top: 160px;
+    padding-bottom: 60px;
+  }
+
+  .interview-interviewee-photo {
+    width: 184px;
+    height: 184px;
+    border-radius: 50%;
+  }
+
+  .interviewee-informations-wrapper {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-position: center;
+    left: initial;
+  }
+
+  .section-interview-body,
+  .section-article-body {
+    display: flex;
+    width: 100%;
+    max-width: 520px;
+    flex-direction: column;
+  }
+
+  .photo-report-body-element-wrapper,
+  .interview-body-element-wrapper,
+  .article-body-element-wrapper {
+    margin: 0 0px 20px;
+  }
+
+  .article-img, .interview-img {
+    padding-left: 0;
+  }
+
+  .article-img-element, .interview-img-element {
+    width: 100%
+  }
+
+  .article-presentation-picture-wrapper,
+  .interview-presentation-picture-wrapper,
+  .photo-report-presentation-picture-wrapper {
+    margin-left: 53%;
+    transform: translate(-50%);
+    margin-top: 520px;
+    width: 94%;
+  }
+
+  .article-h1-wrapper, .interview-h1-wrapper, .photo-report-h1-wrapper {
+    min-height: 751px;
+  }
+
+  .photo-report-introduction,
+  .interview-introduction,
+  .article-introduction {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #276F87;
+  }
+
+  .photo-report-introduction >p {
+    margin: 0 20px;
+  }
+
+
+  .interview-img,
+  .interview-question > p,
+  .interview-paragraph > p,
+  .interview-paragraph > h1,
+  .interview-paragraph > h2,
+  .interview-introduction > p,
+  .article-img,
+  .article-question > p,
+  .article-paragraph > p,
+  .article-paragraph > h1,
+  .article-paragraph > h2,
+  .article-introduction > p {
+    margin-left: 0px;
+  }
+
+  .media-img-full-height {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    max-height: 900px;
+    min-height: 0px;
+  }
+
+  .photo-report-description,
+  .interview-paragraph,
+  .article-paragraph {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 26px;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #000000;
+  }
+
+  .interview-citation,
+  .article-citation {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 30px;
+  }
+
+  .interview-citation > p,
+  .article-citation > p {
+    background: linear-gradient(20.03deg, #1F4A6A 5.98%, #4281A3 89.01%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .interview-citation-wrapper,
+  .article-citation-wrapper {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    padding-left: 0px;
+    padding-right: 25px;
+  }
+
+  .interview-question,
+  .article-question {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .interview-citation-quote,
+  .article-citation-quote {
+    margin-right: 7%;
+  }
+
+  .media-section {
+    width: 100%;
+    margin-left: 10px;
+  }
+
   top-paragraph > p {
     margin-bottom: 20px;
   }
@@ -8076,11 +8230,6 @@ p > a:visited {
     margin: 0;
   }
 
-  .media-section {
-    width: 100%;
-    margin-left: 10px;
-  }
-
   .photo-report-categories,
   .interview-categories,
   .article-categories{
@@ -8097,7 +8246,7 @@ p > a:visited {
     justify-content: center;
   }
 
-  .meddia-h1-content {
+  .media-h1-content {
     margin: 90px 20px 30px;
   }
 
@@ -8246,8 +8395,8 @@ p > a:visited {
     font-family: Poppins;
     font-style: normal;
     font-weight: 600;
-    font-size: 36px;
-    line-height: 40px;
+    font-size: 25px;
+    line-height: 30px;
   }
 
   .interview-citation > p,
