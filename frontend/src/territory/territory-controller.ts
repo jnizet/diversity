@@ -123,12 +123,12 @@ export class TerritoryController extends Controller {
 
   closeModal() {
     $('.zoom-modal').removeClass('zoom-modal-visible');
-    setTimeout(() => $('.zoomed-map').removeClass('zoomed-map-visible'), 10);
+    setTimeout(() => $('.zoom-modal-container').removeClass('zoom-modal-container-visible'), 100);
   }
 
   openModal() {
     $('.zoom-modal').addClass('zoom-modal-visible');
-    setTimeout(() => $('.zoomed-map').addClass('zoomed-map-visible'), 10);
+    setTimeout(() => $('.zoom-modal-container').addClass('zoom-modal-container-visible'), 100);
   }
 
   clickMap(event: Event) {

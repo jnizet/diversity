@@ -21,13 +21,15 @@
   <body>
     <main class="main" th:object="${page.content}" data-controller="territory">
       <div class="zoom-modal" data-target="territory.modal" data-action="click->territory#closeModal">
-        <img
-          biom:image="*{zoom.map}"
-          loading="lazy"
-          data-action="click->territory#clickMap"
-          sizes="100vw"
-          class="zoomed-map"
-        />
+        <div class="zoom-modal-container">
+          <img
+            biom:image="*{zoom.map}"
+            loading="lazy"
+            data-action="click->territory#clickMap"
+            sizes="100vw"
+            class="zoomed-map"
+          />
+        </div>
       </div>
       <section class="section-top-territoire">
         <div class="section-top-wrapper">
@@ -127,7 +129,7 @@
           <div class="preserve-lines top-paragraph" biom:markdown="*{zoom.callToAction.text}">
             Cliquez sur la carte thématique pour voir en un coup d’oeil les sites incontournables de Saint-Pierre-et-Miquelon.
           </div>
-          <a class="cta-secondary" th:href="@{/images/2037/image/xl}" download>télécharger la carte thématique (png)</a>
+          <a class="cta-secondary" th:href="*{'/images/' + zoom.map.imageId + '/image/xl'}" download>télécharger la carte thématique (jpg)</a>
         </div>
         <div class="zoom-img-wrapper">
           <img
