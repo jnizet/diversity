@@ -86,6 +86,7 @@ class IndicatorControllerTest extends ControllerTest {
                         "text1", text("Explication raison 1"),
                         "title2", text("Raison 1"),
                         "text2", text("Explication raison 1"),
+                        "article", link("toto"),
                         "keyword", text("Espèces"),
                         "paragraphs", List.of(
                             Map.of(
@@ -143,8 +144,9 @@ class IndicatorControllerTest extends ControllerTest {
             "understand", Map.of(
                 "title", text("Comprendre"),
                 "description", text("Comprendre description"),
-                "image", image(1L)
-            ),
+                "image", image(1L),
+                "article", link("toto")
+                ),
             "onb", Map.of(
                 "title", text("ONB"),
                 "description", text("ONB description"),

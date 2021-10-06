@@ -1032,7 +1032,7 @@ legend-text a {
 }
 
 .section-decoration-text.comprendre {
-  top: 63%;
+  top: 0%;
 }
 
 .section-decoration-text.ecogeste {
@@ -2449,6 +2449,33 @@ legend-text a {
   height: 50vw;
   max-height: 800px;
   min-height: 800px;
+}
+
+.article-link {
+  display: flex;
+  background: #F3F5F7;
+  padding: 22px 26px;
+}
+
+.article-link-introduction {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #276F87;
+  line-height: 29px;
+}
+
+.article-link-introduction > a {
+  color: #276F87;
+  text-transform: none;
+  text-decoration: none;
+  border-bottom:4px solid #FFCF3F !important;
+  color: initial !important;
 }
 
 .section-top-photo-report,

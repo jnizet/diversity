@@ -552,6 +552,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.title", "Les indicateurs, des outils pour évaluer la biodiversité", null, null, null, false)
                 .values(TEXT, "understand.description", "La conservation de la biodiversité dépend de sa connaissance et de la compréhension des phénomènes qui l'impactent. Les indicateurs sont des outils qui permettent de suivre différents paramètres de la biodiversité, pour renseigner de son évolution. De nombreux paramètres sont étudiés : effectifs des populations, état de santé des écosystèmes, taux de pollutions, etc. Cependant, ils connaissent des limites par manque de données disponibles, manque de moyens de recherche ou parce que certains paramètres sont très complexes à évaluer. Ils renseignent ainsi l'état de la biodiversité à un instant précis, mais également l'état des connaissances et des moyens scientifiques actuels.", null, null, null, false)
                 .values(IMAGE, "understand.image", null, 5, "Chelonia mydas ©  B. Guichard", null, false)
+                .values(LINK, "understand.article", "Lien article", null, null, "/media/article/toto", null)
                 .values(TEXT, "onb.title", "L'observatoire national de la biodiversité", null, null, null, false)
                 .values(TEXT, "onb.description", "Depuis 2012, l'Observatoire national de la biodiversité, actuellement piloté par l'Office français pour la biodiversité (OFB), publie des indicateurs sur l'état de la biodiversité française, avec la contribution de nombreux partenaires. Ils sont régulièrement actualisés et enrichis. Le Compteur met en lumière les indicateurs de l'ONB qui concernent les outre-mer et contribue à la création de nouveaux indicateurs pour ces territoires.", null, null, null, false)
                 .values(LINK, "onb.link", "Retrouvez les indicateurs sur le site de l'ONB", null, null, "http://indicateurs-biodiversite.naturefrance.fr", false)
@@ -586,6 +587,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.keyword",  "Espèces", null, null, null, false)
                 .values(TEXT, "understand.paragraphs.0.title",  "Une liste mondiale des espèces les plus problématiques", null, null, null, false)
                 .values(TEXT, "understand.paragraphs.0.text",  "En 2007, l’Union international pour la conservation de la nature a publié une liste de 100 espèces exotiques considérées comme les plus envahissantes du monde, c’est-à-dire celles avec le plus fort potentiel de dispersion et le plus lourd impact sur leur environnement d’accueil. On y trouve notamment le rat noir (Rattus rattus) introduit dans de nombreuses îles et responsable, entre autres, du déclin des populations de nombreuses espèces d’oiseau dans les outre-mer, ou encore le Miconia (Miconia calvescens) introduit à Tahiti en 1937 et aujourd’hui très répandu sur l’île où il remplace la végétation indigène. Ce dernier a également été introduit en Nouvelle-Calédonie et découvert récemment en Martinique et en Guadeloupe. De nombreuses interventions sont réalisées pour éradiquer ces espèces ou à défaut tenter de limiter leur propagation et leurs impacts, et de nombreuses collectivités mettent en œuvre des processus de biosécurité à l’entrée des territoires afin de limiter les risques d’entrée d’espèces exotiques.", null, null, null, false)
+                .values(LINK, "understand.article", "Lien article", null, null, "/media/article/toto", null)
                 .values(TEXT, "territories.title",  "Nombre d’espèces exotiques envahissantes par territoires", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Que puis-je faire pour éviter l’introduction et la dispersion d’espèces exotiques envahissantes ?", null, null, null, false)
                 .build();
@@ -607,6 +609,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.title2",  "Raison 2", null, null, null, false)
                 .values(TEXT, "understand.text2",  "Explication raison 2", null, null, null, false)
                 .values(TEXT, "understand.keyword",  "Forêts", null, null, null, false)
+                .values(LINK, "understand.article", "Lien article", null, null, "/media/article/toto", null)
                 .values(TEXT, "territories.title",  "Déforestation par territoire", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
                 .build();

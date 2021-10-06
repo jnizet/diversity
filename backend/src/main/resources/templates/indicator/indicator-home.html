@@ -104,6 +104,12 @@
             <div class="left-1">
               <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="img-full-width margin-bottom hide-desktop" />
               <div class="preserve-lines top-paragraph" biom:markdown="*{understand.description.text}"></div>
+              <div class="article-link" th:if="*{understand.article.text != 'aucun'}">
+                <p class="article-link-introduction">
+                  à lire aussi
+                  <a th:href="*{understand.article.href}" th:text="*{understand.article.text}"></a>
+                </p>
+              </div>
             </div>
           </div>
           <div class="col-5 left-1">

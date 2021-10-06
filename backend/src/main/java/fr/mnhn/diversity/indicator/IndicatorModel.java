@@ -28,6 +28,7 @@ public final class IndicatorModel {
                                         .multiSizeImage("image", "Illustration")
                                         .text("title1", "Titre du premier paragraphe")
                                         .multiLineText("text1", "Texte du premier paragraphe")
+                                        .link("article", "Lien vers un article (si aucun article n'est disponnible replir les champs avec la valeur 'aucun') ")
                                         .text("title2", "Titre du second paragraphe")
                                         .multiLineText("text2", "Texte du second paragraphe")
                                         .text("keyword", "Mot-clé affiché en filigrane")
@@ -61,7 +62,9 @@ public final class IndicatorModel {
                      SectionElement.builder("understand").describedAs("Comprendre")
                                    .titleText("title", "Titre de la section")
                                    .multiLineText("description", "Description de la section")
+                                   .link("article", "Lien vers un article (si aucun article n'est disponnible replir les champs avec la valeur 'aucun') ")
                                    .image("image", "Illustration")
+
                  )
                  .section(
                      SectionElement.builder("onb").describedAs("Observatoire national de la biodiversité")

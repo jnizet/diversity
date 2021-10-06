@@ -73,6 +73,12 @@
                 etc.) ou involontaires (via la multiplication des voyages internationaux, « passagers clandestins » dans les marchandises
                 échangées, dans les eaux de ballast des bateaux, etc.).
               </div>
+              <div class="article-link" th:if="*{understand.article.text != 'aucun'}">
+              <p class="article-link-introduction">
+                à lire aussi
+                <a th:href="*{understand.article.href}" th:text="*{understand.article.text}"></a>
+              </p>
+              </div>
             </div>
           </div>
         </div>
