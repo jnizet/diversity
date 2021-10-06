@@ -126,6 +126,12 @@ class TerritoryControllerTest extends ControllerTest {
                                 Map.entry("highestPoint", text("98")),
                                 Map.entry("highestPointName", text("Morne"))
                         ),
+                    "zoom", Map.ofEntries(
+                        Map.entry("title", text("La Réunion")),
+                        Map.entry("callToAction", text("Une bien jolie île")),
+                        Map.entry("map", image(1L))
+
+                    ),
                     "interests", interests,
                     "species", species,
                     "events", events,

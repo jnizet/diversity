@@ -274,6 +274,9 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
 
 --     Territory
 --     Reunion
+    (nextval('page_element_seq'),10,'TEXT','zoom.title','Les sites incontournables de Saint-Pierre-et-Miquelon',null,null,null,true),
+    (nextval('page_element_seq'),10,'TEXT','zoom.callToAction','Cliquez sur la carte thématique pour voir en un coup d’oeil les sites incontournables de Saint-Pierre-et-Miquelon.',null,null,null,false),
+    (nextval('page_element_seq'),10,'IMAGE','zoom.map',null,107,'Infographie Saint-Pierre-et-Miquelon',null,false),
     (nextval('page_element_seq'), 10, 'TEXT', 'identity.title',  'La Réunion, entre mer et montagnes', null, null, null, true),
     (nextval('page_element_seq'), 10, 'TEXT', 'identity.subtitle',  'Un climat tropical', null, null, null, true),
     (nextval('page_element_seq'), 10, 'TEXT', 'identity.presentation',  'À l''ouest de l''Océan Indien...', null, null, null, false),
@@ -329,6 +332,9 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 10, 'TEXT', 'risks.risks.0.description', 'Le territoire est pour le moment le seul d’outre-mer français à ne disposer d’aucun dispositif de protection règlementaire. Les espèces exotiques envahissantes, en particulier les mammifères terrestres qui dégradent la forêt mais également des espèces végétales telles que les Renouées ou des espèces marines comme le Crabe vert, ont des impacts potentiellement préoccupants.  La chasse, bien que permettant la régulation des mammifères introduits, est une question délicate, et freine l’augmentation des populations de plusieurs espèces d’oiseaux dont l’Eider à duvet. L’économie de l’île a été victime de la surpêche et de l’effondrement des populations de morue de Terre Neuve. Un projet de création de la réserve naturelle des Grand et Petit Colombier a été lancé en 2007, permettant de préserver ce site de nidification remarquable. Malgré un avis favorable du Conseil national de protection de la nature, ce projet a été mal perçu par les populations locales craignant des contraintes sur leurs activités traditionnelles, c’est pourquoi il n’a pour le moment pas abouti. ', null, null, null, false),
 
 --     St-Pierre-Et-Miquelon
+    (nextval('page_element_seq'),11,'TEXT','zoom.title','Les sites incontournables de Saint-Pierre-et-Miquelon',null,null,null,true),
+    (nextval('page_element_seq'),11,'TEXT','zoom.callToAction','Cliquez sur la carte thématique pour voir en un coup d’oeil les sites incontournables de Saint-Pierre-et-Miquelon.',null,null,null,false),
+    (nextval('page_element_seq'),11,'IMAGE','zoom.map',null,107,'Infographie Saint-Pierre-et-Miquelon',null,false),
     (nextval('page_element_seq'), 11, 'TEXT', 'identity.title',  'St-Pierre-et-Miquelon, des eaux très riches en biodiversité', null, null, null, true),
     (nextval('page_element_seq'), 11, 'TEXT', 'identity.subtitle',  'Un climat subarctique, froid et humide', null, null, null, true),
     (nextval('page_element_seq'), 11, 'TEXT', 'identity.presentation',  'Au sud de Terre Neuve (Canada), cet archipel est constitué de 3 îles principales : Saint-Pierre, Langlade, Miquelon. Il se situe à la confluence du courant froid du Labrador et des eaux plus chaudes du Gulf Stream, offrant des eaux riches en biodiversité. La proximité de l’océan influence les écosystèmes terrestres : dunes, prairies côtières, lagunes, marais. On y trouve également la seule forêt boréale française.', null, null, null, false),

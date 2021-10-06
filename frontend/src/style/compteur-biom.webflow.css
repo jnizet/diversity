@@ -232,12 +232,35 @@ blockquote {
   padding-left: 0.1vw;
   transition: height 0.5s ease-in-out;
 }
+
 .sub-nav-menu-item {
   color: #000000;
   background-color: rgba(255,255,255,0.5);
   text-decoration: none;
   text-transform: uppercase;
   padding: 0.5vw 1.5vw 0.4vw 0.3vw;
+}
+
+.zoom-download {
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+
+  /* identical to box height, or 143% */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+
+  /* Primary */
+  color: #3C9EAF;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 16px;
 }
 
 .sub-nav-menu-item:hover {
@@ -2540,6 +2563,7 @@ legend-text a {
   margin: 40px 0;
 }
 
+.zoom-img-wrapper,
 .ecosysteme-img-wrapper {
   height: 78%;
 }
@@ -2660,6 +2684,39 @@ legend-text a {
 
 .media-list {
   display: flex;
+}
+
+.zoom-modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 8;
+  background-color: rgba(0,0,0,0.4);
+  cursor: pointer;
+  display: none;
+}
+.zoom-modal-visible {
+  display: initial;
+}
+
+.zoomed-map {
+  top: 50%;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: initial;
+  width: 1px;
+  height: 1px;
+  transition: width 600ms, height 600ms
+}
+
+.zoomed-map-visible {
+  max-width: 1440px;
+  width: 80%;
+  max-height: 60%;
+  height: auto;
 }
 
 .media-swiper-navigation{
@@ -4483,10 +4540,11 @@ legend-text a {
 }
 
 .territoire-side {
+  z-index: 1;
   position: absolute;
   top: -60px;
   right: 0px;
-  z-index: 98;
+  z-index: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -6292,6 +6350,13 @@ legend-text a {
   opacity: 0.23;
 }
 
+.section-zoom {
+  display: flex;
+  width: 100%;
+  max-width: 1440px;
+  padding: 100px 40px 60px 80px;
+}
+
 .section-ecosysteme {
   height: 670px;
   position: relative;
@@ -6316,6 +6381,11 @@ legend-text a {
   max-width: 1440px;
 }
 
+.zoom-img {
+  cursor: zoom-in;
+}
+
+.zoom-img,
 .ecosysteme-img {
   width: 100%;
   height: 100%;
@@ -6325,6 +6395,12 @@ legend-text a {
   object-fit: cover;
 }
 
+.zoom-left {
+  width: 100%;
+  max-width: 600px;
+  padding-right: 200px;
+  min-width: 360px;
+}
 .ecosysteme-left {
   width: 100%;
   max-width: 480px;
@@ -8103,6 +8179,7 @@ p > a:visited {
     margin-bottom: 0;
   }
 
+  .zoom-left,
   .ecosysteme-left {
     max-width: 100%;
   }
@@ -8181,6 +8258,7 @@ p > a:visited {
     max-width: 300px;
   }
 
+  .section-zoom,
   .section-ecosysteme {
     height: auto;
   }
@@ -8215,6 +8293,17 @@ p > a:visited {
 }
 
 @media screen and (max-width: 479px) {
+
+  .section-zoom {
+    flex-direction: column;
+    padding: 30px 30px;
+  }
+
+  .zoom-left {
+    padding: 0;
+    max-width: none;
+    min-width: none;
+  }
 
   .media-category-filter-list {
     margin: 0;

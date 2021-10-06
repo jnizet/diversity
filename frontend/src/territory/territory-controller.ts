@@ -3,6 +3,10 @@ import Swiper from 'swiper';
 import $ from 'jquery';
 
 export class TerritoryController extends Controller {
+  static targets = ['modal'];
+
+  modalTarget: HTMLElement;
+
   connect() {
     const locationSwiper = new Swiper('.swiper-lieu', {
       speed: 1000,
@@ -115,5 +119,20 @@ export class TerritoryController extends Controller {
         bulletActiveClass: 'active'
       }
     });
+  }
+
+  closeModal() {
+    $('.zoom-modal').removeClass('zoom-modal-visible');
+    setTimeout(() => $('.zoomed-map').removeClass('zoomed-map-visible'), 10);
+  }
+
+  openModal() {
+    $('.zoom-modal').addClass('zoom-modal-visible');
+    setTimeout(() => $('.zoomed-map').addClass('zoomed-map-visible'), 10);
+  }
+
+  clickMap(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
   }
 }
