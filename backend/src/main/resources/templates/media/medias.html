@@ -9,8 +9,8 @@
   <title th:text="${page.title}">À propos</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-  <meta th:ref="og" property="og:title" th:attr="content=${page.content.article.name.text}" />
-  <meta th:ref="og" property="og:description" th:attr="content=${page.content.article.name.text}" />
+  <meta th:ref="og" property="og:title" th:attr="content=${page.content.article.title.text}" />
+  <meta th:ref="og" property="og:description" th:attr="content=${page.content.article.author.text}" />
   <meta
     th:ref="og"
     property="og:image"

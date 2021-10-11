@@ -8721,6 +8721,7 @@ p > a:visited {
   }
 
   .act-nav-link-item {
+    text-align: initial;
     flex-direction: column;
     align-items: flex-start;
   }
