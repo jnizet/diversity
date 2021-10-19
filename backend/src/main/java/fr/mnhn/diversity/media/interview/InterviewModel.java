@@ -25,7 +25,7 @@ public final class InterviewModel {
                 .describedAs("Présentation de l’entretien")
                 .titleText("name", "Titre principal")
                 .text("author", "Auteur")
-                .text("date", "Date de publication")
+                .text("date", "Date de publication (format JJ/MM/YYYY)")
                 .image("image", "Image d’illustration")
                 .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
             )

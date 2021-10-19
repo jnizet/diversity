@@ -3,6 +3,12 @@ package fr.mnhn.diversity.media;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
 import fr.mnhn.diversity.media.photoReport.PhotoReportModel;
+import fr.mnhn.diversity.model.Text;
+import fr.mnhn.diversity.model.meta.TextElement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +36,8 @@ public class MediaController {
     private final PageRepository pageRepository;
     private final MediaCategoryRepository mediaCategoryRepository;
     private final PageService pageService;
+    private final SimpleDateFormat simpleDateFormat;
+
 
     public MediaController(PageRepository pageRepository,
         PageService pageService,
@@ -38,6 +46,7 @@ public class MediaController {
         this.pageRepository = pageRepository;
         this.mediaCategoryRepository = mediaCategoryRepository;
         this.pageService = pageService;
+        this.simpleDateFormat = new SimpleDateFormat("DD/MM/YYYY");
     }
 
 
@@ -60,6 +69,15 @@ public class MediaController {
     private List<MediaCard> getArticlesContent() {
         List<Page> articles = pageRepository.findByModel(ArticleModel.ARTICLE_PAGE_MODEL.getName());
         return articles.stream()
+            .sorted(Comparator.comparing(article -> {
+                try {
+                    return simpleDateFormat
+                        .parse(((Text) ((Page)article).getElements().get("presentation.author")).getText());
+                } catch (ParseException e) {
+
+                    return new Date();
+                }
+            }).reversed())
             .map(article -> new MediaCard(pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, article), this.mediaCategoryRepository.findByPageId(article.getId())))
             .collect(Collectors.toList());
     }
@@ -67,6 +85,15 @@ public class MediaController {
     private List<MediaCard> getReportsContent() {
         List<Page> reports = pageRepository.findByModel(PhotoReportModel.PHOTO_REPORT_PAGE_MODEL.getName());
         return reports.stream()
+            .sorted(Comparator.comparing(article -> {
+                try {
+                    return simpleDateFormat
+                        .parse(((Text) ((Page)article).getElements().get("presentation.author")).getText());
+                } catch (ParseException e) {
+
+                    return new Date();
+                }
+            }).reversed())
             .map(report -> new MediaCard(pageService.buildPageContent(PhotoReportModel.PHOTO_REPORT_PAGE_MODEL, report), this.mediaCategoryRepository.findByPageId(report.getId())))
             .collect(Collectors.toList());
     }
@@ -74,6 +101,15 @@ public class MediaController {
     private List<MediaCard> getInterviewsContent() {
         List<Page> interviews = pageRepository.findByModel(InterviewModel.INTERVIEW_PAGE_MODEL.getName());
         return interviews.stream()
+            .sorted(Comparator.comparing(article -> {
+                try {
+                    return simpleDateFormat
+                        .parse(((Text) ((Page)article).getElements().get("presentation.date")).getText());
+                } catch (ParseException e) {
+
+                    return new Date();
+                }
+            }).reversed())
             .map(interview -> new MediaCard(pageService.buildPageContent(InterviewModel.INTERVIEW_PAGE_MODEL, interview), this.mediaCategoryRepository.findByPageId(interview.getId())))
             .collect(Collectors.toList());
     }

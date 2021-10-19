@@ -23,7 +23,7 @@ public final class ArticleModel {
                 .builder("presentation")
                 .describedAs("Présentation de l’article")
                 .titleText("name", "Titre principal")
-                .text("author", "Date de publication")
+                .text("author", "Date de publication (format JJ/MM/YYYY)")
                 .image("image", "Image d’illustration")
                 .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
             )
