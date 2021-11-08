@@ -121,7 +121,7 @@
         </div>
       </section>
 
-      <section class="section-zoom">
+      <section class="section-zoom" th:if="*{zoom.title.text != 'NA'}">
         <div class="zoom-left">
           <div class="section-label">Zoom sur...</div>
           <h3 class="section-title" biom:markdown="*{zoom.title.text}">Les sites incontournables de Saint-Pierre-et-
