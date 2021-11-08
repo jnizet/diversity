@@ -84,8 +84,10 @@ export class EditPageComponent implements OnInit {
         title: page.title
       } as FormValue);
       page.elements.forEach(element => {
-        element.source = 'IMPORTED';
-        this.elementsGroup.controls[element.name].patchValue(element);
+        if(this.elementsGroup.controls[element.name]) {
+          element.source = 'IMPORTED';
+          this.elementsGroup.controls[element.name].patchValue(element);
+        }
       });
     });
   }
