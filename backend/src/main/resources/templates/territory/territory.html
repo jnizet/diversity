@@ -247,7 +247,7 @@
         </div>
       </section>
 
-      <section class="section-ecosysteme" th:if="${territory.slug != 'iles-subantarctiques'}">
+      <section class="section-ecosysteme" th:if="${(territory.slug != 'iles-subantarctiques' && territory.slug != 'terre-adelie')}">
         <div class="swiper-container swiper-ecosysteme">
           <div class="swiper-wrapper">
             <div th:each="ecosystem: *{ecosystems.ecosystems}" class="swiper-slide ecosysteme-slide">
