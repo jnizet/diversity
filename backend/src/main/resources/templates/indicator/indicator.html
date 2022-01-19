@@ -5,246 +5,317 @@
   xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='indicateur-fiche', selectedMenu='indicators')}"
 >
-  <head>
-    <title th:text="${page.title}">Indicateur</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+  <title th:text="${page.title}">Indicateur</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <meta th:ref="og" property="og:title" th:attr="content=${page.title}" />
-    <meta
-      th:ref="og"
-      property="og:description"
-      th:attr="content=${#indicators.formatValue(outremerIndicatorValue, indicator.isRounded) + ' ' + page.content.presentation.description.text}"
-    />
-    <meta
-      th:ref="og"
-      property="og:image"
-      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.presentation.image.imageId})}"
-    />
-  </head>
+  <meta th:ref="og" property="og:title" th:attr="content=${page.title}"/>
+  <meta
+    th:ref="og"
+    property="og:description"
+    th:attr="content=${#indicators.formatValue(outremerIndicatorValue, indicator.isRounded) + ' ' + page.content.presentation.description.text}"
+  />
+  <meta
+    th:ref="og"
+    property="og:image"
+    th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.presentation.image.imageId})}"
+  />
+</head>
 
-  <body>
-    <main class="main" th:object="${page.content}" data-controller="indicator">
-      <section class="section-top-indicateur">
-        <div class="half indicateur-h1-wrapper">
-          <div class="col-4 indicateur-h1-content">
-            <h1 class="indicateur-h1">
-              <span class="indicateur-h1-number" biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue, indicator.isRounded) + ' ' + outremerIndicatorValue.unit}">60%</span>
-              <span class="h1-content" biom:markdown="*{presentation.description.text}"
-                >espèces sur les 100 considérées comme les plus envahissantes au monde se trouvent en outre-mer.</span
-              >
-            </h1>
-            <div class="indicateur-thematique-blue" th:each="category: ${indicator.categories}" biom:markdown="${category.name}">
-              espèces exotiques envahissantes
-            </div>
-          </div>
-        </div>
-        <div class="half">
-          <img biom:image="*{presentation.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="img-full-height" />
-          <div class="legend-wrapper">
-            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-            <div class="legend-text" biom:markdown="*{presentation.image.alt}">Chelonia mydas ©  B. Guichard</div>
-          </div>
-        </div>
-      </section>
-      <div class="section-undertop-indicateur">
-        <div class="half back-indicateur">
-          <div class="col-5">
-            <a th:href="@{/indicateurs}" class="cta-secondary">Voir tous les indicateurs</a>
-          </div>
-        </div>
-        <div class="half back-indicateur indicator-sources" th:if="*{#strings.startsWith(presentation.logoUrl.text, 'http')}">
-          <span>Source des données</span>
-          <a th:href="*{presentation.logoUrl.text}" target="_blank" class="link-onb w-inline-block">
-            <img th:if="*{#strings.equals(presentation.sourceSelect.value,'onb')}" th:src="@{/assets/images/logo_ONB.png}" loading="lazy" width="100" alt="" />
-            <img th:if="*{#strings.equals(presentation.sourceSelect.value,'inpn')}" th:src="@{/assets/images/logo-inpn.png}" loading="lazy" width="200" alt="" />
-          </a>
+<body>
+<main class="main" th:object="${page.content}" data-controller="indicators">
+  <div class="visual-modal" data-target="indicator.modal" data-action="click->indicators#closeModal">
+    <div class="visual-modal-container">
+      <img
+        biom:image="*{visual.image}"
+        loading="lazy"
+        data-action="click->indicators#clickVisual"
+        sizes="100vw"
+        class="zoomed-map"
+      />
+    </div>
+  </div>
+  <section class="section-top-indicateur">
+    <div class="half indicateur-h1-wrapper">
+      <div class="col-4 indicateur-h1-content">
+        <h1 class="indicateur-h1">
+          <span class="indicateur-h1-number"
+                biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue, indicator.isRounded) + ' ' + outremerIndicatorValue.unit}">60%</span>
+          <span class="h1-content" biom:markdown="*{presentation.description.text}"
+          >espèces sur les 100 considérées comme les plus envahissantes au monde se trouvent en outre-mer.</span
+          >
+        </h1>
+        <div class="indicateur-thematique-blue" th:each="category: ${indicator.categories}"
+             biom:markdown="${category.name}">
+          espèces exotiques envahissantes
         </div>
       </div>
-      <section class="section-text">
-        <div class="section-label">comprendre</div>
-        <div class="section-content-left">
-          <div class="col-6">
-            <h3 class="section-title col-5" biom:markdown="*{understand.title1.text}">Qu’est-ce qu’une espèce exotique envahissante ?</h3>
-            <div class="left-1">
-              <div class="preserve-lines top-paragraph" biom:markdown="*{understand.text1.text}">
-                Une espèce exotique envahissante est une espèce introduite par l’Homme hors de son territoire d’origine et qui présente, sur
-                son territoire d’introduction, une dispersion rapide et des impacts environnementaux mais également parfois sociaux et
-                économiques. Ces introductions sont parfois volontaires (pour l’agriculture, l’ornementation, comme animaux de compagnie,
-                etc.) ou involontaires (via la multiplication des voyages internationaux, « passagers clandestins » dans les marchandises
-                échangées, dans les eaux de ballast des bateaux, etc.).
-              </div>
-              <div class="article-link" th:if="*{understand.article.text != 'aucun'}">
-              <p class="article-link-introduction">
-                à lire aussi
-                <a th:href="*{understand.article.href}" th:text="*{understand.article.text}"></a>
-              </p>
-              </div>
-            </div>
-          </div>
+    </div>
+    <div class="half">
+      <img biom:image="*{presentation.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw"
+           class="img-full-height"/>
+      <div class="legend-wrapper">
+        <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt=""/>
+        <div class="legend-text" biom:markdown="*{presentation.image.alt}">Chelonia mydas ©  B.
+          Guichard
         </div>
-        <div class="section-decoration-text comprendre">comprendre</div>
-      </section>
-      <section class="section-img-text">
-        <div class="section-content-middle">
-          <div class="push-left">
-            <div class="image-wrapper">
-              <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="image-6" />
-              <div class="legend-wrapper">
-                <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                <div class="legend-text" biom:markdown="*{understand.image.alt}"></div>
-              </div>
-            </div>
-          </div>
-          <div class="push-right big">
-            <h3 class="text-title col-4"><strong biom:markdown="*{understand.title2.text}">Espèces exotiques VS espèces indigènes</strong></h3>
-            <div class="preserve-lines top-paragraph" biom:markdown="*{understand.text2.text}">
-              Si de nombreuses espèces n’arrivent pas à s’adapter ou se reproduire dans leurs territoires d’introduction, certaines
-              s’adaptent au contraire très bien, se développant en l’absence de leurs prédateurs ou parasites naturels. Elles peuvent alors
-              causer de lourds impacts, en particulier dans les îles où les écosystèmes sont plus fragiles, par compétition avec les espèces
-              indigènes, prédation, hybridation, modification des habitats, etc.
-            </div>
-          </div>
-        </div>
-        <div class="section-decoration-text espece" biom:markdown="*{understand.keyword.text}">espèces</div>
-      </section>
-      <section class="section-text" th:each=="paragraph: *{understand.paragraphs}">
-        <div class="section-content-left">
-          <div class="text-title-wrapper">
-            <h3 class="text-title col-4" biom:markdown="${paragraph.title.text}">Une liste mondiale des espèces les plus problématiques</h3>
-          </div>
-          <div class="col-9 left-1">
-            <div class="two-column preserve-lines top-paragraph" biom:markdown="${paragraph.text.text}">
-              En 2007, l’Union international pour la conservation de la nature a publié une liste de 100 espèces exotiques considérées comme
-              les plus envahissantes du monde, c’est-à-dire celles avec le plus fort potentiel de dispersion et le plus lourd impact sur
-              leur environnement d’accueil. On y trouve notamment le rat noir (Rattus rattus), introduit dans de nombreuses îles et
-              responsable, entre autres, du déclin des populations de nombreuses espèces d’oiseau dans les outre-mer, ou encore le Miconia
-              (Miconia calvescens) introduit à Tahiti en 1937 et aujourd’hui très répandu sur l’île où il remplace la végétation indigène.
-              <br /><br />Ce dernier a également été introduit en Nouvelle-Calédonie et découvert récemment en Martinique et en
-              Guadeloupe.De nombreuses interventions sont réalisées pour éradiquer ces espèces ou à défaut tenter de limiter leur
-              propagation et leurs impacts, et de nombreuses collectivités mettent en œuvre des processus de biosécurité à l’entrée des
-              territoires afin de limiter les risques d’entrée d’espèces exotiques.<br />‍<br /><br />‍
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="section-list-territoire" th:if="${!territoryCards.empty}">
-        <div class="indicateur-content">
-          <h2 class="section-swiper-title">L’indicateur par territoire</h2>
-          <div class="indicateur-filter-wrapper">
-            <div class="text-big col-3 left-1" biom:markdown="*{territories.title.text}">
-              Nombre d’espèces exotiques envahissantes par territoires
-            </div>
-            <!-- TODO deal with bassins when it's worth it -->
-            <div class="indicateur-filter" th:if="false">
-              <div class="indicateur-filter-top">
-                <div>tous les territoires</div>
-                <img th:src="@{/assets/images/arrow-down.svg}" loading="lazy" alt="" />
-              </div>
-              <div class="indicateur-filter-bottom closed">
-                <div class="indicateur-filter-text">tous les territoires</div>
-                <div class="indicateur-filter-text">Bassin Antilles françaises</div>
-                <div class="indicateur-filter-text">Bassin Pacifique</div>
-                <div class="indicateur-filter-text">Bassin Océan Indien</div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-container swiper-indicateur">
-            <!-- TODO deal with bassins when it's worth it -->
-            <div class="swiper-wrapper indicateur-wrapper">
-              <div data-bassin="1" class="swiper-slide indicateur-slide" th:each="card: ${territoryCards}">
-                <div th:if="${card.indicatorValue != null}" class="indicateur-slide-number" biom:markdown="${#indicators.formatValue(card.indicatorValue, indicator.isRounded)}">16</div>
-                <div th:if="${card.indicatorValue == null}" class="indicateur-slide-no-data">Aucune donnée</div>
-                <div class="indicateur-slide-tiytle" biom:markdown="${card.territory.name}">Martinique</div>
-                <img
-                  th:src="@{/assets/images/territories/indicator/{slug}.svg(slug=${card.territory.slug})}"
-                  alt=" "
-                  loading="lazy"
-                  class="indicateur-map"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="swiper-layout">
-            <div class="swiper-pagination-indicateur">
-              <div class="bullet-white active-white"></div>
-              <div class="bullet-white"></div>
-              <div class="bullet-white"></div>
-            </div>
-            <div class="swiper-navigation-small">
-              <div class="cta-swiper-nav">
-                <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-prev" />
-              </div>
-              <div class="cta-swiper-nav">
-                <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt="" class="swiper-next" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <div class="section-ecogeste-push" th:if="${!ecogestureCards.empty}">
-        <div class="section-content-left">
-          <div class="col-6">
-            <h3 class="section-title" biom:markdown="*{ecogestures.title.text}">
-              Que puis-je faire pour éviter l’introduction et la dispersion d’espèces exotiques envahissantes ?
-            </h3>
-            <div class="ecogeste-item"></div>
-          </div>
-          <div class="ecogeste-push-wrapper">
-            <a
-              th:each="card,iterStat: ${ecogestureCards}"
-              th:href="@{/ecogestes/{slug}(slug=${card.ecogesture.slug})}"
-              class="ecogeste-link-push w-inline-block"
-            >
-              <div class="ecogeste-bkg-wrapper">
-                <img
-                  th:src="@{/images/{imageId}/image/sm(imageId=${card.page.content.presentation.image.imageId})}"
-                  th:alt="${card.page.content.presentation.image.alt}"
-                  loading="lazy"
-                  sizes="(max-width: 479px) 87vw, (max-width: 767px) 83vw, (max-width: 991px) 480px, 42vw"
-                  class="ecogeste-bkg"
-                />
-              </div>
-              <div class="ecogeste-wrapper">
-                <div class="ecogeste-thematique" biom:markdown="${card.page.content.presentation.category.text}">biodiversité</div>
-              </div>
-              <div class="ecogeste-wrapper-bottom">
-                <h3 class="ecogeste-link-title" biom:markdown="${card.page.content.presentation.name.text}">
-                  Je protège les milieux contre l&#x27;introduction d&#x27;espèces exotiques envahissantes
-                </h3>
-              </div>
-            </a>
-          </div>
-          <div class="list-more-wrapper">
-            <a th:href="@{/ecogestes}" class="cta-primary blue">voir plus d'écogestes</a>
-          </div>
-        </div>
-        <div class="section-decoration-text ecogestes">écogestes</div>
       </div>
-      <a
-        th:if="${nextIndicatorCard}"
-        th:href="@{/indicateurs/{slug}(slug=${nextIndicatorCard.indicator.slug})}"
-        class="section-push-next w-inline-block"
-      >
-        <div class="push-next-img">
-          <img
-            th:src="@{/images/{imageId}/image/sm(imageId=${nextIndicatorCard.page.content.presentation.image.imageId})}"
-            th:alt="${nextIndicatorCard.page.content.presentation.image.alt}"
-            loading="lazy"
-            sizes="40vw"
-            class="next-img"
-          />
-        </div>
-        <div class="push-next-wrapper">
-          <div class="push-next-before">indicateur suivant</div>
-          <div class="push-next-title-wrapper">
-            <div class="push-next-title col-4">
-              <span biom:markdown="${#indicators.formatValue(nextIndicatorCard.indicatorValue, nextIndicatorCard.indicator.isRounded)}">85 117</span>
-              <span biom:markdown="${nextIndicatorCard.page.content.presentation.description.text}"></span>
-            </div>
-            <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
-          </div>
-        </div>
+    </div>
+  </section>
+  <div class="section-undertop-indicateur">
+    <div class="half back-indicateur">
+      <div class="col-5">
+        <a th:href="@{/indicateurs}" class="cta-secondary">Voir tous les indicateurs</a>
+      </div>
+    </div>
+    <div class="half back-indicateur indicator-sources"
+         th:if="*{#strings.startsWith(presentation.logoUrl.text, 'http')}">
+      <span>Source des données</span>
+      <a th:href="*{presentation.logoUrl.text}" target="_blank" class="link-onb w-inline-block">
+        <img th:if="*{#strings.equals(presentation.sourceSelect.value,'onb')}"
+             th:src="@{/assets/images/logo_ONB.png}" loading="lazy" width="100" alt=""/>
+        <img th:if="*{#strings.equals(presentation.sourceSelect.value,'inpn')}"
+             th:src="@{/assets/images/logo-inpn.png}" loading="lazy" width="200" alt=""/>
       </a>
-    </main>
-  </body>
+    </div>
+  </div>
+  <section class="section-text">
+    <div class="section-label">comprendre</div>
+    <div class="section-content-left">
+      <div class="col-6">
+        <h3 class="section-title col-5" biom:markdown="*{understand.title1.text}">Qu’est-ce qu’une
+          espèce exotique envahissante ?</h3>
+        <div class="left-1">
+          <div class="preserve-lines top-paragraph" biom:markdown="*{understand.text1.text}">
+            Une espèce exotique envahissante est une espèce introduite par l’Homme hors de son
+            territoire d’origine et qui présente, sur
+            son territoire d’introduction, une dispersion rapide et des impacts environnementaux
+            mais également parfois sociaux et
+            économiques. Ces introductions sont parfois volontaires (pour l’agriculture,
+            l’ornementation, comme animaux de compagnie,
+            etc.) ou involontaires (via la multiplication des voyages internationaux, « passagers
+            clandestins » dans les marchandises
+            échangées, dans les eaux de ballast des bateaux, etc.).
+          </div>
+          <div class="article-link" th:if="*{understand.article.text != 'aucun'}">
+            <p class="article-link-introduction">
+              à lire aussi
+              <a th:href="*{understand.article.href}" th:text="*{understand.article.text}"></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-decoration-text comprendre">comprendre</div>
+  </section>
+  <section class="section-visual-explain">
+    <div class="visual-image-wrapper">
+      <img
+        biom:image="*{visual.image}"
+        data-action="click->indicators#openModal"
+        loading="lazy"
+        sizes="(max-width: 479px) 94vw, (max-width: 991px) 90vw, 57vw"
+        class="visual-img"
+      />
+    </div>
+    <div class="visual-text-wrapper">
+      <h2 class="visual-text-title" biom:markdown="*{visual.title.text}"/>
+      <h4 class="visual-text-subtitle" biom:markdown="*{visual.subtitle.text}"/>
+      <a class="cta-secondary yellow" th:href="*{'/images/' + visual.image.imageId + '/image/xl'}" download>Télécharger l'indicateur (jpg)</a>
+    </div>
+  </section>
+  <section class="section-img-text">
+    <div class="section-content-middle">
+      <div class="push-left">
+        <div class="image-wrapper">
+          <img biom:image="*{understand.image}" loading="lazy" sizes="100vw" class="image-6"/>
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt=""/>
+            <div class="legend-text" biom:markdown="*{understand.image.alt}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="push-right big">
+        <h3 class="text-title col-4"><strong biom:markdown="*{understand.title2.text}">Espèces
+          exotiques VS espèces indigènes</strong></h3>
+        <div class="preserve-lines top-paragraph" biom:markdown="*{understand.text2.text}">
+          Si de nombreuses espèces n’arrivent pas à s’adapter ou se reproduire dans leurs
+          territoires d’introduction, certaines
+          s’adaptent au contraire très bien, se développant en l’absence de leurs prédateurs ou
+          parasites naturels. Elles peuvent alors
+          causer de lourds impacts, en particulier dans les îles où les écosystèmes sont plus
+          fragiles, par compétition avec les espèces
+          indigènes, prédation, hybridation, modification des habitats, etc.
+        </div>
+      </div>
+    </div>
+    <div class="section-decoration-text espece" biom:markdown="*{understand.keyword.text}">espèces
+    </div>
+  </section>
+  <section class="section-text" th:each=="paragraph: *{understand.paragraphs}
+  ">
+  <div class="section-content-left">
+    <div class="text-title-wrapper">
+      <h3 class="text-title col-4" biom:markdown="${paragraph.title.text}">Une liste mondiale des
+        espèces les plus problématiques</h3>
+    </div>
+    <div class="col-9 left-1">
+      <div class="two-column preserve-lines top-paragraph" biom:markdown="${paragraph.text.text}">
+        En 2007, l’Union international pour la conservation de la nature a publié une liste de 100
+        espèces exotiques considérées comme
+        les plus envahissantes du monde, c’est-à-dire celles avec le plus fort potentiel de
+        dispersion et le plus lourd impact sur
+        leur environnement d’accueil. On y trouve notamment le rat noir (Rattus rattus), introduit
+        dans de nombreuses îles et
+        responsable, entre autres, du déclin des populations de nombreuses espèces d’oiseau dans les
+        outre-mer, ou encore le Miconia
+        (Miconia calvescens) introduit à Tahiti en 1937 et aujourd’hui très répandu sur l’île où il
+        remplace la végétation indigène.
+        <br/><br/>Ce dernier a également été introduit en Nouvelle-Calédonie et découvert récemment
+        en Martinique et en
+        Guadeloupe.De nombreuses interventions sont réalisées pour éradiquer ces espèces ou à défaut
+        tenter de limiter leur
+        propagation et leurs impacts, et de nombreuses collectivités mettent en œuvre des processus
+        de biosécurité à l’entrée des
+        territoires afin de limiter les risques d’entrée d’espèces exotiques.<br/>‍<br/><br/>‍
+      </div>
+    </div>
+  </div>
+  </section>
+  <section class="section-list-territoire" th:if="${!territoryCards.empty}">
+    <div class="indicateur-content">
+      <h2 class="section-swiper-title">L’indicateur par territoire</h2>
+      <div class="indicateur-filter-wrapper">
+        <div class="text-big col-3 left-1" biom:markdown="*{territories.title.text}">
+          Nombre d’espèces exotiques envahissantes par territoires
+        </div>
+        <!-- TODO deal with bassins when it's worth it -->
+        <div class="indicateur-filter" th:if="false">
+          <div class="indicateur-filter-top">
+            <div>tous les territoires</div>
+            <img th:src="@{/assets/images/arrow-down.svg}" loading="lazy" alt=""/>
+          </div>
+          <div class="indicateur-filter-bottom closed">
+            <div class="indicateur-filter-text">tous les territoires</div>
+            <div class="indicateur-filter-text">Bassin Antilles françaises</div>
+            <div class="indicateur-filter-text">Bassin Pacifique</div>
+            <div class="indicateur-filter-text">Bassin Océan Indien</div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-container swiper-indicateur">
+        <!-- TODO deal with bassins when it's worth it -->
+        <div class="swiper-wrapper indicateur-wrapper">
+          <div data-bassin="1" class="swiper-slide indicateur-slide"
+               th:each="card: ${territoryCards}">
+            <div th:if="${card.indicatorValue != null}" class="indicateur-slide-number"
+                 biom:markdown="${#indicators.formatValue(card.indicatorValue, indicator.isRounded)}">
+              16
+            </div>
+            <div th:if="${card.indicatorValue == null}" class="indicateur-slide-no-data">Aucune
+              donnée
+            </div>
+            <div class="indicateur-slide-tiytle" biom:markdown="${card.territory.name}">Martinique
+            </div>
+            <img
+              th:src="@{/assets/images/territories/indicator/{slug}.svg(slug=${card.territory.slug})}"
+              alt=" "
+              loading="lazy"
+              class="indicateur-map"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="swiper-layout">
+        <div class="swiper-pagination-indicateur">
+          <div class="bullet-white active-white"></div>
+          <div class="bullet-white"></div>
+          <div class="bullet-white"></div>
+        </div>
+        <div class="swiper-navigation-small">
+          <div class="cta-swiper-nav">
+            <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt=""
+                 class="swiper-prev"/>
+          </div>
+          <div class="cta-swiper-nav">
+            <img th:src="@{/assets/images/Arrow.svg}" loading="lazy" width="60" height="60" alt=""
+                 class="swiper-next"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="section-ecogeste-push" th:if="${!ecogestureCards.empty}">
+    <div class="section-content-left">
+      <div class="col-6">
+        <h3 class="section-title" biom:markdown="*{ecogestures.title.text}">
+          Que puis-je faire pour éviter l’introduction et la dispersion d’espèces exotiques
+          envahissantes ?
+        </h3>
+        <div class="ecogeste-item"></div>
+      </div>
+      <div class="ecogeste-push-wrapper">
+        <a
+          th:each="card,iterStat: ${ecogestureCards}"
+          th:href="@{/ecogestes/{slug}(slug=${card.ecogesture.slug})}"
+          class="ecogeste-link-push w-inline-block"
+        >
+          <div class="ecogeste-bkg-wrapper">
+            <img
+              th:src="@{/images/{imageId}/image/sm(imageId=${card.page.content.presentation.image.imageId})}"
+              th:alt="${card.page.content.presentation.image.alt}"
+              loading="lazy"
+              sizes="(max-width: 479px) 87vw, (max-width: 767px) 83vw, (max-width: 991px) 480px, 42vw"
+              class="ecogeste-bkg"
+            />
+          </div>
+          <div class="ecogeste-wrapper">
+            <div class="ecogeste-thematique"
+                 biom:markdown="${card.page.content.presentation.category.text}">biodiversité
+            </div>
+          </div>
+          <div class="ecogeste-wrapper-bottom">
+            <h3 class="ecogeste-link-title"
+                biom:markdown="${card.page.content.presentation.name.text}">
+              Je protège les milieux contre l&#x27;introduction d&#x27;espèces exotiques
+              envahissantes
+            </h3>
+          </div>
+        </a>
+      </div>
+      <div class="list-more-wrapper">
+        <a th:href="@{/ecogestes}" class="cta-primary blue">voir plus d'écogestes</a>
+      </div>
+    </div>
+    <div class="section-decoration-text ecogestes">écogestes</div>
+  </div>
+  <a
+    th:if="${nextIndicatorCard}"
+    th:href="@{/indicateurs/{slug}(slug=${nextIndicatorCard.indicator.slug})}"
+    class="section-push-next w-inline-block"
+  >
+    <div class="push-next-img">
+      <img
+        th:src="@{/images/{imageId}/image/sm(imageId=${nextIndicatorCard.page.content.presentation.image.imageId})}"
+        th:alt="${nextIndicatorCard.page.content.presentation.image.alt}"
+        loading="lazy"
+        sizes="40vw"
+        class="next-img"
+      />
+    </div>
+    <div class="push-next-wrapper">
+      <div class="push-next-before">indicateur suivant</div>
+      <div class="push-next-title-wrapper">
+        <div class="push-next-title col-4">
+          <span
+            biom:markdown="${#indicators.formatValue(nextIndicatorCard.indicatorValue, nextIndicatorCard.indicator.isRounded)}">85 117</span>
+          <span
+            biom:markdown="${nextIndicatorCard.page.content.presentation.description.text}"></span>
+        </div>
+        <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow"/>
+      </div>
+    </div>
+  </a>
+</main>
+</body>
 </html>

@@ -1,12 +1,14 @@
 import { Controller } from 'stimulus';
 import { setElementVisible, showElement } from '../elements';
+import $ from 'jquery';
 
 export class IndicatorsController extends Controller {
-  static targets = ['all', 'category', 'indicator'];
+  static targets = ['all', 'category', 'indicator', 'modal'];
 
   allTarget: HTMLElement;
   categoryTargets: Array<HTMLElement>;
   indicatorTargets: Array<HTMLElement>;
+  modalTarget: HTMLElement;
 
   allClicked() {
     if (this.isCategorySelected(this.allTarget)) {
@@ -72,5 +74,19 @@ export class IndicatorsController extends Controller {
         setElementVisible(indicator, visible);
       });
     }
+  }
+
+  closeModal() {
+    $('.visual-modal').removeClass('visual-modal-visible');
+    setTimeout(() => $('.visual-modal-container').removeClass('visual-modal-container-visible'), 100);
+  }
+
+  openModal() {
+    $('.visual-modal').addClass('visual-modal-visible');
+    setTimeout(() => $('.visual-modal-container').addClass('visual-modal-container-visible'), 100);
+  }
+  clickVisual(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
   }
 }

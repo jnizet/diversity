@@ -95,6 +95,11 @@ class IndicatorControllerTest extends ControllerTest {
                             )
                         )
                     ),
+                    "visual", Map.of(
+                        "title", text("Titre"),
+                        "subtitle", text("Sous-titre"),
+                        "image", image(2l)
+                    ),
                     "territories", Map.of(
                         "title", text("Espèces envahissantes par territoire")
                     ),

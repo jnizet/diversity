@@ -589,6 +589,9 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.paragraphs.0.title",  "Une liste mondiale des espèces les plus problématiques", null, null, null, false)
                 .values(TEXT, "understand.paragraphs.0.text",  "En 2007, l’Union international pour la conservation de la nature a publié une liste de 100 espèces exotiques considérées comme les plus envahissantes du monde, c’est-à-dire celles avec le plus fort potentiel de dispersion et le plus lourd impact sur leur environnement d’accueil. On y trouve notamment le rat noir (Rattus rattus) introduit dans de nombreuses îles et responsable, entre autres, du déclin des populations de nombreuses espèces d’oiseau dans les outre-mer, ou encore le Miconia (Miconia calvescens) introduit à Tahiti en 1937 et aujourd’hui très répandu sur l’île où il remplace la végétation indigène. Ce dernier a également été introduit en Nouvelle-Calédonie et découvert récemment en Martinique et en Guadeloupe. De nombreuses interventions sont réalisées pour éradiquer ces espèces ou à défaut tenter de limiter leur propagation et leurs impacts, et de nombreuses collectivités mettent en œuvre des processus de biosécurité à l’entrée des territoires afin de limiter les risques d’entrée d’espèces exotiques.", null, null, null, false)
                 .values(LINK, "understand.article", "Lien article", null, null, "/media/article/toto", false)
+                .values(TEXT, "visual.title", "Titre", null, null, null, false)
+                .values(IMAGE,"visual.image",null,110,"Infographie Saint-Pierre-et-Miquelon",null,false)
+                .values(TEXT, "visual.subtitle", "Sous - Titre", null, null, null, false)
                 .values(TEXT, "territories.title",  "Nombre d’espèces exotiques envahissantes par territoires", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Que puis-je faire pour éviter l’introduction et la dispersion d’espèces exotiques envahissantes ?", null, null, null, false)
                 .build();
@@ -611,6 +614,9 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "understand.text2",  "Explication raison 2", null, null, null, false)
                 .values(TEXT, "understand.keyword",  "Forêts", null, null, null, false)
                 .values(LINK, "understand.article", "Lien article", null, null, "/media/article/toto", false)
+                .values(TEXT, "visual.title", "Titre", null, null, null, false)
+                .values(IMAGE,"visual.image",null,110,"Infographie Saint-Pierre-et-Miquelon",null,false)
+                .values(TEXT, "visual.subtitle", "Sous - Titre", null, null, null, false)
                 .values(TEXT, "territories.title",  "Déforestation par territoire", null, null, null, false)
                 .values(TEXT, "ecogestures.title", "Écogestes", null, null, null, false)
                 .build();
