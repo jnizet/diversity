@@ -279,6 +279,7 @@ public class E2eDatabaseSetup implements CommandLineRunner {
                 .values(TEXT, "testimony.quote", "Ces actions conjuguées entraînent un accroissement de la biodiversité, une amélioration de la qualité de l'eau, de l'air mais aussi de la qualité de vie.", null, null, null, false)
                 .values(IMAGE, "testimony.image", null, 5L, "Témoignage", null, false)
                 .values(TEXT, "science.title", "La photo-identification de serpents de mer par un groupe de plongeuses amatrices", null, null, null, false)
+                .values(LINK, "science.more", "Lire aussi", null, null, "/science-participative", false)
                 .values(TEXT, "science.text", "Surnommées les « grand-mères fantastiques », un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l'Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l'Hydrophis major, dans la baie des Citrons, au sud de Nouméa. Leurs photographies très régulières ont permis de recenser 250 individus différents de ce serpent dont on pensait la présence anecdotique.", null, null, null, false)
                 .values(IMAGE, "science.image", null, 6L, "Science participative", null, false)
                 .build();

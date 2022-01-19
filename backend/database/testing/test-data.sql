@@ -135,6 +135,7 @@ insert into page_element (id, page_id, type, key, text, image_id, alt, href, tit
     (nextval('page_element_seq'), 1, 'TEXT', 'science.title', 'La photo-identification de serpents de mer par un groupe de plongeuses amatrices', null, null, null, false),
     (nextval('page_element_seq'), 1, 'TEXT', 'science.text', 'Surnommées les « grand-mères fantastiques », un groupe de 7 plongeuses entre 60 et 75 ans ont collaboré avec les chercheurs de l’Université de Nouvelle-Calédonie pour étudier un serpent de mer méconnu, l''Hydrophis major, dans la baie des Citrons, au sud de Nouméa. Leurs photographies très régulières ont permis de recenser 250 individus différents de ce serpent dont on pensait la présence anecdotique.', null, null, null, false),
     (nextval('page_element_seq'), 1, 'IMAGE', 'science.image', null, 6, 'Science participative', null, false),
+    (nextval('page_element_seq'), 1, 'LINK', 'science.more', 'Lire aussi', 6, null, '/sciences-participatives', false),
 
 --     About
     (nextval('page_element_seq'), 2, 'TEXT', 'header.title', 'Pourquoi un compteur de la biodiversité en outre-mer ?', null, null, null, true),

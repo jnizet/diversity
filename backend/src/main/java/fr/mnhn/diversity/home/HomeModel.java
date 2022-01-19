@@ -42,6 +42,7 @@ public final class HomeModel {
                      .text("title", "Titre de la section")
                      .multiLineText("text", "Texte introductif")
                      .multiSizeImage("image", "Illustration")
+                     .link("more", "Bouton de la slide")
                  )
                  .build();
 

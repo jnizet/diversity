@@ -97,8 +97,9 @@ class HomeControllerTest extends ControllerTest {
                     "science", Map.of(
                         "title", text("Science"),
                         "image", multiSizeImage(5L),
-                        "text", text("science text")
-                    )
+                        "text", text("science text"),
+                        "more", link("carousel button")
+                        )
                 )
             )
         );

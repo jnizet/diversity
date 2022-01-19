@@ -46,7 +46,7 @@ public class MediaController {
         this.pageRepository = pageRepository;
         this.mediaCategoryRepository = mediaCategoryRepository;
         this.pageService = pageService;
-        this.simpleDateFormat = new SimpleDateFormat("DD/MM/YYYY");
+        this.simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     }
 
 
@@ -72,13 +72,12 @@ public class MediaController {
             .sorted(Comparator.comparing(article -> {
                 try {
                     return simpleDateFormat
-                        .parse(((Text) ((Page)article).getElements().get("presentation.author")).getText());
+                        .parse(((Text) ((Page)article).getElements().get("presentation.date")).getText());
                 } catch (ParseException e) {
-
                     return new Date();
                 }
             }).reversed())
-            .map(article -> new MediaCard(pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, article), this.mediaCategoryRepository.findByPageId(article.getId())))
+            .map(article ->  new MediaCard(pageService.buildPageContent(ArticleModel.ARTICLE_PAGE_MODEL, article), this.mediaCategoryRepository.findByPageId(article.getId())))
             .collect(Collectors.toList());
     }
 
