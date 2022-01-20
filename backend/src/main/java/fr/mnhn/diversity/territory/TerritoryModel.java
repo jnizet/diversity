@@ -30,7 +30,7 @@ public final class TerritoryModel {
                     .section(SectionElement.builder("zoom").describedAs("Zoom sur ...")
                         .titleText("title", "Titre de la section")
                         .text("callToAction", "Texte pour inviter l'utilisateur à cliquer sur laa carte")
-                        .multiSizeImage("map", "Carte du territoire")
+                        .image("map", "Carte du territoire")
                     )
                      // statistiques indiquées dans la carte
                      .list(ListElement.builder("statistics").describedAs("Informations affichées dans le zoom territoire de la carte")

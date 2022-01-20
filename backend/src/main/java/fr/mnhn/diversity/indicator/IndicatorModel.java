@@ -45,7 +45,7 @@ public final class IndicatorModel {
             .section(SectionElement.builder("visual").describedAs("Visuel de l'indicateur")
                 .text("title", "Titre de l'indicateur")
                 .text("subtitle", "Sous-titre")
-                .multiSizeImage("image", "Visuel de l'indicateur")
+                .image("image", "Visuel de l'indicateur")
             )
             // Indicateurs par territoire
             .section(SectionElement.builder("territories").describedAs("Indicateur par territoires")
