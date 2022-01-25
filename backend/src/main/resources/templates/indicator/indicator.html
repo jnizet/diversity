@@ -109,6 +109,11 @@
     <div class="section-decoration-text comprendre">comprendre</div>
   </section>
   <section class="section-visual-explain">
+    <div class="visual-text-wrapper">
+      <h3 class="section-title" biom:markdown="*{visual.title.text}"/>
+      <span class="top-paragraph" biom:markdown="*{visual.subtitle.text}"/>
+      <a class="cta-secondary" th:href="*{'/images/' + visual.image.imageId + '/image/xl'}" download>Télécharger l'image</a>
+    </div>
     <div class="visual-image-wrapper">
       <img
         biom:image="*{visual.image}"
@@ -117,11 +122,6 @@
         sizes="(max-width: 479px) 94vw, (max-width: 991px) 90vw, 57vw"
         class="visual-img"
       />
-    </div>
-    <div class="visual-text-wrapper">
-      <h2 class="visual-text-title" biom:markdown="*{visual.title.text}"/>
-      <h4 class="visual-text-subtitle" biom:markdown="*{visual.subtitle.text}"/>
-      <a class="cta-secondary yellow" th:href="*{'/images/' + visual.image.imageId + '/image/xl'}" download>Télécharger l'indicateur (jpg)</a>
     </div>
   </section>
   <section class="section-img-text">

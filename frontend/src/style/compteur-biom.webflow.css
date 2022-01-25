@@ -2901,24 +2901,8 @@ legend-text a {
   object-fit: cover;
 }
 
-.section-visual-explain {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 1200px;
-  margin-bottom: 120px;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #1f4a6a;
-  background-image: linear-gradient(45deg,#1f4a6a,#4281a3);
-  color: #fff;
-}
-
 .visual-img{
   width: 100%;
-  height: 100%;
   max-height: 720px;
   max-width: 720px;
   -o-object-fit: cover;
@@ -2927,11 +2911,11 @@ legend-text a {
 }
 
 .visual-image-wrapper {
-  width: 40%;
+  width: 60%;
 }
 
 .visual-text-wrapper {
-  width:60%;
+  width:40%;
   padding: 100px
 }
 
@@ -6430,6 +6414,7 @@ legend-text a {
   opacity: 0.23;
 }
 
+.section-visual-explain,
 .section-zoom {
   display: flex;
   width: 100%;
@@ -6867,12 +6852,6 @@ p > a:visited {
 }
 
 @media screen and (max-width: 991px) {
-
-
-  .section-visual-explain {
-    flex-direction: column;
-    justify-content: center;
-  }
 
   .visual-image-wrapper {
     width: 100%;
@@ -8380,6 +8359,7 @@ p > a:visited {
     max-width: 300px;
   }
 
+  .section-visual-explain,
   .section-zoom,
   .section-ecosysteme {
     height: auto;
@@ -8416,6 +8396,7 @@ p > a:visited {
 
 @media screen and (max-width: 479px) {
 
+  .section-visual-explain,
   .section-zoom {
     flex-direction: column;
     padding: 30px 30px;
