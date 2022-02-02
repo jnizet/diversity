@@ -23,13 +23,13 @@
 </head>
 
 <body>
-<main class="main" th:object="${page.content}" data-controller="indicators">
-  <div class="visual-modal" data-target="indicator.modal" data-action="click->indicators#closeModal">
+<main class="main" th:object="${page.content}" data-controller="indicator">
+  <div class="visual-modal" data-target="indicator.modal" data-action="click->indicator#closeModal">
     <div class="visual-modal-container">
       <img
         biom:image="*{visual.image}"
         loading="lazy"
-        data-action="click->indicators#clickVisual"
+        data-action="click->indicator#clickVisual"
         sizes="100vw"
         class="zoomed-map"
       />
@@ -117,7 +117,7 @@
     <div class="visual-image-wrapper">
       <img
         biom:image="*{visual.image}"
-        data-action="click->indicators#openModal"
+        data-action="click->indicator#openModal"
         loading="lazy"
         sizes="(max-width: 479px) 94vw, (max-width: 991px) 90vw, 57vw"
         class="visual-img"

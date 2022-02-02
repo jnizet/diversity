@@ -1,7 +1,12 @@
+import $ from 'jquery';
 import { Controller } from 'stimulus';
 import Swiper from 'swiper';
 
 export class IndicatorController extends Controller {
+  static targets = ['modal'];
+
+  modalTarget: HTMLElement;
+
   connect() {
     new Swiper('.swiper-indicateur', {
       speed: 1000,
@@ -24,5 +29,18 @@ export class IndicatorController extends Controller {
     });
   }
 
+  closeModal() {
+    $('.visual-modal').removeClass('visual-modal-visible');
+    setTimeout(() => $('.visual-modal-container').removeClass('visual-modal-container-visible'), 100);
+  }
+
+  openModal() {
+    $('.visual-modal').addClass('visual-modal-visible');
+    setTimeout(() => $('.visual-modal-container').addClass('visual-modal-container-visible'), 100);
+  }
+  clickVisual(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
   // TODO deal with bassins when it's worth it
 }
