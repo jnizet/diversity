@@ -23,13 +23,17 @@ import org.springframework.http.HttpStatus;
 public class AuthenticationFilter implements Filter {
 
     private static final String BEARER_PREFIX = "Bearer ";
+    private static final String KEY_PREFIX = "Key ";
 
     private final JwtHelper jwtHelper;
     private final UserRepository userRepository;
+    private final ApiKeyRepository apiKeyRepository;
 
-    public AuthenticationFilter(JwtHelper jwtHelper, UserRepository userRepository) {
+    public AuthenticationFilter(JwtHelper jwtHelper, UserRepository userRepository,
+        ApiKeyRepository apiKeyRepository) {
         this.jwtHelper = jwtHelper;
         this.userRepository = userRepository;
+        this.apiKeyRepository = apiKeyRepository;
     }
 
     @Override
@@ -37,10 +41,18 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-        String login = extractLoginFromToken(request);
 
+        String host = request.getRemoteHost();
+        String key = extractKey(request);
+
+        if (key != null && isReadOnlyApiFromServerRequest(request) && apiKeyRepository
+            .existsByHostAndKey(host, key)){
+            chain.doFilter(request, response);
+            return;
+        }
+        String login = extractLoginFromToken(request);
         if (isProtectedApiRequest(request) && (login == null || !userRepository.existsByLogin(login))) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value());
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized orgin: " + host);
         } else {
             chain.doFilter(request, response);
         }
@@ -49,6 +61,12 @@ public class AuthenticationFilter implements Filter {
     private boolean isProtectedApiRequest(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         return requestURI.startsWith("/api") && !requestURI.equals("/api/authentication");
+    }
+
+    private boolean isReadOnlyApiFromServerRequest(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        return requestURI.startsWith("/api") && !requestURI.equals("/api/authentication") && request.getMethod().equals("GET");
     }
 
     private String extractLoginFromToken(HttpServletRequest request) {
@@ -74,5 +92,17 @@ public class AuthenticationFilter implements Filter {
         }
 
         return header.substring(BEARER_PREFIX.length()).trim();
+    }
+
+    private String extractKey(HttpServletRequest request) {
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (header == null) {
+            return null;
+        }
+        if (!header.startsWith(KEY_PREFIX)) {
+            return null;
+        }
+
+        return header.substring(KEY_PREFIX.length()).trim();
     }
 }

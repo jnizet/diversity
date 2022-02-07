@@ -49,7 +49,7 @@ public class PageService {
             .get()
             .uri("/api/pages/{pageModel}/{pageName}", pageModel, pageName)
             .accept(MediaType.APPLICATION_JSON)
-            .header("Authorization","Bearer " + token)
+            .header("Authorization","Key " + token)
             .retrieve()
             .bodyToMono(String.class);
     }

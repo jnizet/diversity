@@ -16,9 +16,9 @@ import org.springframework.context.annotation.Configuration;
 public class SecurityConfig {
     @Bean
     public FilterRegistrationBean<AuthenticationFilter> authenticationFilterRegistration(JwtHelper jwtHelper,
-                                                                                         UserRepository userRepository) {
+                                                                                         UserRepository userRepository, ApiKeyRepository apiKeyRepository) {
         FilterRegistrationBean<AuthenticationFilter> registration = new FilterRegistrationBean<>(
-            new AuthenticationFilter(jwtHelper, userRepository)
+            new AuthenticationFilter(jwtHelper, userRepository, apiKeyRepository)
         );
         registration.setUrlPatterns(List.of("/api/*"));
         return registration;

@@ -71,7 +71,7 @@ class PageServiceTest {
         var response = service.getPageDataFromImportDataSource("legal-terms", "mentions-legales").block();
         RecordedRequest recordedRequest = server.takeRequest();
         assertThat(response).isEqualTo(body);
-        assertThat(recordedRequest.getHeader("Authorization")).isEqualTo("Bearer token");
+        assertThat(recordedRequest.getHeader("Authorization")).isEqualTo("Key token");
         assertThat(recordedRequest.getMethod()).isEqualTo("GET");
         assertThat(recordedRequest.getPath()).isEqualTo("/api/pages/legal-terms/mentions-legales");
     }

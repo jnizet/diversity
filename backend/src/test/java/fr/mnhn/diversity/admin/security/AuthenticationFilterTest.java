@@ -28,11 +28,12 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author JB Nizet
  */
 @WebMvcTest(SecurityConfig.class)
-@MockBean(value = {UserRepository.class, JwtHelper.class})
+@MockBean(value = {UserRepository.class, JwtHelper.class, ApiKeyRepository.class})
 class AuthenticationFilterTest extends ControllerTest {
 
     private JwtHelper mockJwtHelper;
     private UserRepository mockUserRepository;
+    private ApiKeyRepository mockApiKeyRepository;
     private FilterChain mockFilterChain;
 
     private AuthenticationFilter filter;
@@ -46,7 +47,7 @@ class AuthenticationFilterTest extends ControllerTest {
         mockUserRepository = mock(UserRepository.class);
         mockFilterChain = mock(FilterChain.class);
 
-        filter = new AuthenticationFilter(mockJwtHelper, mockUserRepository);
+        filter = new AuthenticationFilter(mockJwtHelper, mockUserRepository, mockApiKeyRepository);
     }
 
     @Test
