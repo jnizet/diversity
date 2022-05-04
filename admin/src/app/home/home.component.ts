@@ -3,9 +3,23 @@ import { PageService } from '../page.service';
 import { first, Observable, switchMap } from 'rxjs';
 import { MediaPageLink, PageLink, PageLinks } from '../page.model';
 import { ModalService } from '../modal.service';
-import { CreateMediaPageModalComponent } from '../create-media-page-modal/create-media-page-modal.component';
+import { CreateMediaPageModalComponent, MediaPageResult } from '../create-media-page-modal/create-media-page-modal.component';
 import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { MediaService } from '../media.service';
+import { Router } from '@angular/router';
+
+type MediaModelName = 'article' | 'interview' | 'report';
+
+function mediaModelLabel(name: MediaModelName) {
+  switch (name) {
+    case 'article':
+      return 'Article';
+    case 'interview':
+      return 'Entretien';
+    case 'report':
+      return 'Reportage photo';
+  }
+}
 
 @Component({
   selector: 'biom-home',
@@ -16,36 +30,46 @@ export class HomeComponent implements OnInit {
   pageLinks$: Observable<PageLinks>;
   pageIcon = faFile;
 
-  constructor(private pageService: PageService, private modalService: ModalService, private mediaService: MediaService) {}
+  constructor(
+    private pageService: PageService,
+    private modalService: ModalService,
+    private mediaService: MediaService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.pageLinks$ = this.pageService.getPageLinks();
   }
 
-  openCreateMediaModal(target: string) {
+  openCreateMediaModal(modelName: MediaModelName) {
     const modalRef = this.modalService.open(CreateMediaPageModalComponent, { size: 'xl', scrollable: true });
 
-    modalRef.componentInstance.title = `Créer une nouvelle page ${target}`;
-    modalRef.componentInstance.message = `Identifiant de la page ${target}`;
+    const label = mediaModelLabel(modelName);
+    modalRef.componentInstance.title = `Créer une nouvelle page ${label}`;
+    modalRef.componentInstance.message = `Identifiant de la page ${label}`;
 
-    modalRef.result
-      .pipe(first())
-      .subscribe(result =>
-        location.assign(`/admin/page-models/${target}/pages/create?name=${result.name}&categories=${result.values.join(',')}`)
-      );
+    modalRef.result.pipe(first()).subscribe((result: MediaPageResult) =>
+      this.router.navigate(['page-models', modelName, 'pages', 'create'], {
+        queryParams: {
+          name: result.name,
+          categories: `${result.values.join(',')}`
+        }
+      })
+    );
   }
 
-  openEditMediaModal(target: string, pageLink: PageLink) {
+  openEditMediaModal(modelName: MediaModelName, pageLink: PageLink) {
     const modalRef = this.modalService.open(CreateMediaPageModalComponent, { size: 'xl', scrollable: true });
 
-    modalRef.componentInstance.title = `Modifie la page ${pageLink.name}`;
-    modalRef.componentInstance.message = `Identifiant de la page`;
+    const label = mediaModelLabel(modelName);
+    modalRef.componentInstance.title = `Modifier la page ${pageLink.name}`;
+    modalRef.componentInstance.message = `Identifiant de la page ${label}`;
     modalRef.componentInstance.initalName = pageLink.name;
-    modalRef.componentInstance.isreadonly = true;
+    modalRef.componentInstance.isReadonly = true;
     modalRef.componentInstance.intialCategories = (pageLink as MediaPageLink).categories;
 
     modalRef.result
       .pipe(switchMap(result => this.mediaService.update(pageLink.id, { id: pageLink.id, categoriesId: result.values })))
-      .subscribe(() => location.assign(`/admin/page-models/${target}/pages/${pageLink.id}/edit`));
+      .subscribe(() => this.router.navigate(['page-models', modelName, 'pages', pageLink.id, 'edit']));
   }
 }

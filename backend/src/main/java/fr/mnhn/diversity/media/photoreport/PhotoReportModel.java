@@ -1,22 +1,19 @@
-package fr.mnhn.diversity.media.photoReport;
+package fr.mnhn.diversity.media.photoreport;
 
-import fr.mnhn.diversity.model.meta.ImageElement;
 import fr.mnhn.diversity.model.meta.ListElement;
-import fr.mnhn.diversity.model.meta.MultiListElement;
-import fr.mnhn.diversity.model.meta.MultiListTemplateElement;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
-import java.util.List;
 
 /**
  * The model for photo report Model.
  * @author JB Nizet
  */
 public final class PhotoReportModel {
+    public static final String PHOTO_REPORT_PAGE_NAME = "report";
+
     /**
      * The model of a photo report.
      */
-    public static final String PHOTO_REPORT_PAGE_NAME = "report";
     public static final PageModel PHOTO_REPORT_PAGE_MODEL =
         PageModel.builder("report")
             .withPathFactory(slug -> "/report/" + slug)

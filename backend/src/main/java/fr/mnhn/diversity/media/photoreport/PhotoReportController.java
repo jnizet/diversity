@@ -1,4 +1,4 @@
-package fr.mnhn.diversity.media.photoReport;
+package fr.mnhn.diversity.media.photoreport;
 
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.media.MediaCategoryRepository;

@@ -3,14 +3,15 @@
 </div>
 <div class="modal-body">
   <div [formGroup]="form" class="form-group">
-    <label>{{ message }}</label>
-    <input class="form-control" id="name" formControlName="name" [readonly]="isreadonly" #name />
-    <val-errors controlName="name" label="Le nom">
-      <ng-template valError="required">Le champ est requis</ng-template>
-    </val-errors>
-    <!-- Categories (at least one, at most no care) -->
+    <div class="form-group">
+      <label>{{ message }}</label>
+      <input class="form-control" id="name" formControlName="name" [readonly]="isReadonly" #name />
+      <val-errors controlName="name" label="Le nom"></val-errors>
+    </div>
+
+    <!-- Categories (at least one) -->
     <div class="form-group" formArrayName="categoryIds">
-      <label>Catégories de l'indicateur</label>
+      <label>Catégories du média</label>
       <div class="form-row" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
         <select class="form-control custom-select col-9" [formControlName]="index" [id]="'category-' + index">
           <option [ngValue]="null"></option>
@@ -33,7 +34,6 @@
           </button>
         </div>
       </div>
-      <small id="categories-hint" class="form-text text-muted">Au moins une catégorie, au maximum deux.</small>
       <val-errors [control]="categoryIds" label="La catégorie">
         <ng-template valError="required">Au moins une catégorie est nécessaire.</ng-template>
       </val-errors>
@@ -41,6 +41,6 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="closeModal()" id="yes-button">Valider</button>
-  <button type="button" class="btn btn-primary" (click)="activeModal.dismiss()" id="no-button">Annuler</button>
+  <button type="button" class="btn btn-primary" (click)="closeModal()" id="yes-button">Valider</button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()" id="no-button">Annuler</button>
 </div>

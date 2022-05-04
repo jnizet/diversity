@@ -1,48 +1,51 @@
 <h1>Administration des pages</h1>
 
-<div class="row" *ngIf="pageLinks$ | async as pageLinks">
-  <div class="col-md-2">
-    <h2>Pages statiques</h2>
-    <ul class="list-unstyled">
-      <li *ngFor="let pageLink of pageLinks.staticPageLinks">
-        <biom-page-link [pageLink]="pageLink"></biom-page-link>
-      </li>
-    </ul>
+<ng-container *ngIf="pageLinks$ | async as pageLinks">
+  <div class="row" *ngIf="pageLinks$ | async as pageLinks">
+    <div class="col-md">
+      <h2>Pages statiques</h2>
+      <ul class="list-unstyled">
+        <li *ngFor="let pageLink of pageLinks.staticPageLinks">
+          <biom-page-link [pageLink]="pageLink"></biom-page-link>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md">
+      <h2>Indicateurs</h2>
+      <ul class="list-unstyled">
+        <li *ngFor="let pageLink of pageLinks.indicatorPageLinks">
+          <biom-page-link [pageLink]="pageLink"></biom-page-link>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md">
+      <h2>Territoires</h2>
+      <ul class="list-unstyled">
+        <li *ngFor="let pageLink of pageLinks.territoryPageLinks">
+          <biom-page-link [pageLink]="pageLink"></biom-page-link>
+        </li>
+      </ul>
+      <h3>Bassins</h3>
+      <ul class="list-unstyled">
+        <li *ngFor="let pageLink of pageLinks.zonePageLinks">
+          <biom-page-link [pageLink]="pageLink"></biom-page-link>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md">
+      <h2>Éco-gestes</h2>
+      <ul class="list-unstyled">
+        <li *ngFor="let pageLink of pageLinks.ecogesturePageLinks">
+          <biom-page-link [pageLink]="pageLink"></biom-page-link>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="col-md-2">
-    <h2>Indicateurs</h2>
-    <ul class="list-unstyled">
-      <li *ngFor="let pageLink of pageLinks.indicatorPageLinks">
-        <biom-page-link [pageLink]="pageLink"></biom-page-link>
-      </li>
-    </ul>
-  </div>
-  <div class="col-md-2">
-    <h2>Territoires</h2>
-    <ul class="list-unstyled">
-      <li *ngFor="let pageLink of pageLinks.territoryPageLinks">
-        <biom-page-link [pageLink]="pageLink"></biom-page-link>
-      </li>
-    </ul>
-    <h3>Bassins</h3>
-    <ul class="list-unstyled">
-      <li *ngFor="let pageLink of pageLinks.zonePageLinks">
-        <biom-page-link [pageLink]="pageLink"></biom-page-link>
-      </li>
-    </ul>
-  </div>
-  <div class="col-md-2">
-    <h2>Éco-gestes</h2>
-    <ul class="list-unstyled">
-      <li *ngFor="let pageLink of pageLinks.ecogesturePageLinks">
-        <biom-page-link [pageLink]="pageLink"></biom-page-link>
-      </li>
-    </ul>
-  </div>
-  <div class="col-md-2">
+
+  <div>
     <h2>Média</h2>
-    <div class="d-flex flex-row justify-content-around">
-      <div>
+    <div class="row">
+      <div class="col-md">
         <h3>Articles</h3>
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.articlePageLinks">
@@ -51,12 +54,12 @@
               <a href="#" (click)="openEditMediaModal('article', pageLink)">{{ pageLink.title }}</a>
             </span>
           </li>
-          <a class="btn btn-outline-secondary" id="create-article" role="button" (click)="openCreateMediaModal('article')">
-            <span>Créer un nouvel article</span>
-          </a>
+          <button type="button" class="btn btn-outline-secondary mt-2" id="create-article" (click)="openCreateMediaModal('article')">
+            Créer un nouvel article
+          </button>
         </ul>
       </div>
-      <div>
+      <div class="col-md">
         <h3>Entretiens</h3>
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.interviewPageLinks">
@@ -67,17 +70,17 @@
           </li>
           <button
             type="button"
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-secondary mt-2"
             id="create-interview"
             role="button"
             (click)="openCreateMediaModal('interview')"
           >
-            <span>Créer un nouvel entretien</span>
+            Créer un nouvel entretien
           </button>
         </ul>
       </div>
-      <div>
-        <h3>Reportage photo</h3>
+      <div class="col-md">
+        <h3>Reportages photo</h3>
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.photoReportsPageLinks">
             <span *ngIf="pageLink.id">
@@ -87,15 +90,15 @@
           </li>
           <button
             type="button"
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-secondary mt-2"
             id="create-photoReport"
             role="button"
             (click)="openCreateMediaModal('report')"
           >
-            <span>Créer un nouveau reportage photo</span>
+            Créer un nouveau reportage photo
           </button>
         </ul>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

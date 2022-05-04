@@ -12,10 +12,11 @@ import java.util.List;
  */
 public final class ArticleModel {
 
-    /**
-     * The model of an article. This model is used for interviews and articles.
-     */
     public static final String ARTICLE_PAGE_NAME = "article";
+
+    /**
+     * The model of an article.
+     */
     public static final PageModel ARTICLE_PAGE_MODEL =
         PageModel.builder("article")
             .withPathFactory(slug -> "/article/" + slug)

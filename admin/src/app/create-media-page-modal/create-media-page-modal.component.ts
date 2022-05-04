@@ -10,6 +10,11 @@ interface FormValue {
   name: string;
 }
 
+export interface MediaPageResult {
+  name: string;
+  values: Array<number>;
+}
+
 @Component({
   selector: 'biom-creation-modal',
   templateUrl: './create-media-page-modal.component.html',
@@ -20,7 +25,7 @@ export class CreateMediaPageModalComponent implements OnInit {
   @Input() title: string;
   @Input() initalName: string;
   @Input() intialCategories: MediaCategory[];
-  @Input() isreadonly: boolean;
+  @Input() isReadonly: boolean;
 
   categoryIds: FormArray;
   categories: Array<MediaCategory>;

@@ -3,7 +3,7 @@ package fr.mnhn.diversity.common;
 import fr.mnhn.diversity.media.MediaModel;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
-import fr.mnhn.diversity.media.photoReport.PhotoReportModel;
+import fr.mnhn.diversity.media.photoreport.PhotoReportModel;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;

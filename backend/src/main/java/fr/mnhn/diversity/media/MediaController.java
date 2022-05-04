@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import fr.mnhn.diversity.common.exception.NotFoundException;
 import fr.mnhn.diversity.media.article.ArticleModel;
 import fr.mnhn.diversity.media.interview.InterviewModel;
-import fr.mnhn.diversity.media.photoReport.PhotoReportModel;
+import fr.mnhn.diversity.media.photoreport.PhotoReportModel;
 import fr.mnhn.diversity.model.Page;
 import fr.mnhn.diversity.model.PageContent;
 import fr.mnhn.diversity.model.PageRepository;

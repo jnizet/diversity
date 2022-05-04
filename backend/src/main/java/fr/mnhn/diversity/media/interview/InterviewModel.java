@@ -13,10 +13,11 @@ import java.util.List;
  */
 public final class InterviewModel {
 
-    /**
-     * The model of an Interview. This model is used for interviews and articles.
-     */
     public static final String INTERVIEW_PAGE_NAME = "interview";
+
+    /**
+     * The model of an Interview.
+     */
     public static final PageModel INTERVIEW_PAGE_MODEL =
         PageModel.builder("interview")
             .withPathFactory(slug -> "/interview/" + slug)
