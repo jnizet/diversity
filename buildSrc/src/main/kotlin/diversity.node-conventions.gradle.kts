@@ -11,9 +11,9 @@ plugins {
 }
 
 node {
-    version = "12.18.3"
-    npmVersion = "6.14.6"
-    yarnVersion = "1.22.5"
+    version = "14.19.1"
+    npmVersion = "6.14.17"
+    yarnVersion = "1.22.18"
     download = true
 }
 
