@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthenticationComponent } from './authentication.component';
-import { ComponentTester } from 'ngx-speculoos';
+import { ComponentTester, createMock } from 'ngx-speculoos';
 import { AuthenticatedUser, AuthenticationService } from '../authentication.service';
 import { CurrentUserService } from '../current-user.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -34,8 +34,8 @@ describe('AuthenticationComponent', () => {
   let currentUserService: jasmine.SpyObj<CurrentUserService>;
 
   beforeEach(() => {
-    authenticationService = jasmine.createSpyObj<AuthenticationService>('AuthenticationService', ['login']);
-    currentUserService = jasmine.createSpyObj<CurrentUserService>('CurrentUserService', ['set']);
+    authenticationService = createMock(AuthenticationService);
+    currentUserService = createMock(CurrentUserService);
 
     TestBed.configureTestingModule({
       declarations: [AuthenticationComponent, ValidationDefaultsComponent],

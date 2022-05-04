@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { NavbarComponent } from './navbar.component';
-import { ComponentTester } from 'ngx-speculoos';
+import { ComponentTester, createMock } from 'ngx-speculoos';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticatedUser } from '../authentication.service';
@@ -37,9 +37,9 @@ describe('NavbarComponent', () => {
 
   beforeEach(() => {
     userSubject = new Subject<AuthenticatedUser>();
-    currentUserService = jasmine.createSpyObj<CurrentUserService>('CurrentUserService', ['get', 'set']);
+    currentUserService = createMock(CurrentUserService);
     currentUserService.get.and.returnValue(userSubject);
-    windowService = jasmine.createSpyObj<WindowService>('WindowService', ['setLocationHref']);
+    windowService = createMock(WindowService);
 
     TestBed.configureTestingModule({
       declarations: [NavbarComponent],

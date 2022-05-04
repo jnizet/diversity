@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { EditPageComponent } from './edit-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ComponentTester, fakeRoute, fakeSnapshot, TestInput } from 'ngx-speculoos';
+import { ComponentTester, createMock, stubRoute, TestInput } from 'ngx-speculoos';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../toast.service';
 import { PageService } from '../page.service';
@@ -31,7 +31,6 @@ import { EditImageElementComponent } from '../edit-image-element/edit-image-elem
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Image } from '../image.model';
-import { By } from '@angular/platform-browser';
 import { ImageService } from '../image.service';
 import { HeadingDirective } from '../heading/heading.directive';
 import { NgbTestingModule } from '../ngb-testing.module';
@@ -81,8 +80,9 @@ class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   get addUnitButton() {
     return this.button('#add-unit');
   }
+
   get editImageComponents() {
-    return this.debugElement.queryAll(By.directive(EditImageElementComponent));
+    return this.components(EditImageElementComponent);
   }
 
   get errors() {
@@ -210,9 +210,10 @@ describe('EditPageComponent', () => {
   };
 
   function prepare(route: ActivatedRoute) {
-    pageService = jasmine.createSpyObj<PageService>('PageService', ['getValues', 'getModel', 'update', 'create']);
-    imageService = jasmine.createSpyObj<ImageService>('ImageService', ['createImage'], { importedImages: [] });
-    toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
+    pageService = createMock(PageService);
+    imageService = createMock(ImageService);
+    imageService.importedImages = [];
+    toastService = createMock(ToastService);
 
     TestBed.configureTestingModule({
       imports: [
@@ -251,11 +252,9 @@ describe('EditPageComponent', () => {
 
   describe('in create mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: { modelName: 'home' },
-          queryParams: { name: 'accueil', categories: '1001,1002' }
-        })
+      const route = stubRoute({
+        params: { modelName: 'home' },
+        queryParams: { name: 'accueil', categories: '1001,1002' }
       });
       prepare(route);
 
@@ -307,14 +306,14 @@ describe('EditPageComponent', () => {
           files: [file]
         }
       } as unknown as Event;
-      tester.editImageComponents[0].componentInstance.onUpload(fakeFileEvent);
+      tester.editImageComponents[0].onUpload(fakeFileEvent);
       tester.link1TextInput.fillWith('Nouveau lien 1');
       tester.link1HrefInput.fillWith('https://lien1.org');
       // add another unit
       tester.addUnitButton.click();
       expect(tester.elements('input').length).toBe(10); // title + 1 text + 2 links (2 inputs) + 2 images (2 inputs)
       tester.image2AltInput.fillWith('Image 2');
-      tester.editImageComponents[1].componentInstance.onUpload(fakeFileEvent);
+      tester.editImageComponents[1].onUpload(fakeFileEvent);
       tester.link2TextInput.fillWith('Nouveau lien 2');
       tester.link2HrefInput.fillWith('https://lien2.org');
 
@@ -322,14 +321,24 @@ describe('EditPageComponent', () => {
       tester.saveButton.click();
 
       const titleCommand: TextCommand = { type: 'TEXT', key: 'presentation.title', text: 'Portail de la bio-diversité' };
-      const image1Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.0.image', imageId: 54, alt: 'Image 1' };
+      const image1Command: ImageCommand = {
+        type: 'IMAGE',
+        key: 'presentation.slides.0.image',
+        imageId: 54,
+        alt: 'Image 1'
+      };
       const link1Command: LinkCommand = {
         type: 'LINK',
         key: 'presentation.slides.0.link',
         text: 'Nouveau lien 1',
         href: 'https://lien1.org'
       };
-      const image2Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.1.image', imageId: 54, alt: 'Image 2' };
+      const image2Command: ImageCommand = {
+        type: 'IMAGE',
+        key: 'presentation.slides.1.image',
+        imageId: 54,
+        alt: 'Image 2'
+      };
       const link2Command: LinkCommand = {
         type: 'LINK',
         key: 'presentation.slides.1.link',
@@ -349,10 +358,8 @@ describe('EditPageComponent', () => {
 
   describe('in update mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: { pageId: '12' }
-        })
+      const route = stubRoute({
+        params: { pageId: '12' }
       });
       prepare(route);
 
@@ -400,15 +407,30 @@ describe('EditPageComponent', () => {
       tester.saveButton.click();
 
       const titleCommand: TextCommand = { type: 'TEXT', key: 'presentation.title', text: 'Portail de la bio-diversité' };
-      const image1Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.0.image', imageId: 1, alt: 'New alt 1' };
+      const image1Command: ImageCommand = {
+        type: 'IMAGE',
+        key: 'presentation.slides.0.image',
+        imageId: 1,
+        alt: 'New alt 1'
+      };
       const link1Command: LinkCommand = {
         type: 'LINK',
         key: 'presentation.slides.0.link',
         text: 'Nouveau lien 1',
         href: 'https://lien1.fr'
       };
-      const image2Command: ImageCommand = { type: 'IMAGE', key: 'presentation.slides.1.image', imageId: 2, alt: 'Image 2' };
-      const link2Command: LinkCommand = { type: 'LINK', key: 'presentation.slides.1.link', text: 'Lien 2', href: 'https://lien2.org' };
+      const image2Command: ImageCommand = {
+        type: 'IMAGE',
+        key: 'presentation.slides.1.image',
+        imageId: 2,
+        alt: 'Image 2'
+      };
+      const link2Command: LinkCommand = {
+        type: 'LINK',
+        key: 'presentation.slides.1.link',
+        text: 'Lien 2',
+        href: 'https://lien2.org'
+      };
       const expectedCommand: PageCommand = {
         title: 'BIOM!',
         name: 'Home',

@@ -4,14 +4,13 @@ import { EditImageElementComponent } from './edit-image-element.component';
 import { Component } from '@angular/core';
 import { ImageElement } from '../page.model';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ComponentTester } from 'ngx-speculoos';
+import { ComponentTester, createMock } from 'ngx-speculoos';
 import { ValdemortModule } from 'ngx-valdemort';
 import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ImageService } from '../image.service';
 import { Image } from '../image.model';
 import { of, Subject } from 'rxjs';
-import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbTestingModule } from '../ngb-testing.module';
 
@@ -92,7 +91,7 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
   }
 
   get editImageComponent(): EditImageElementComponent {
-    return this.debugElement.query(By.directive(EditImageElementComponent)).componentInstance;
+    return this.component(EditImageElementComponent);
   }
 
   get errors() {
@@ -106,7 +105,7 @@ describe('EditImageElementComponent', () => {
   let imageService: jasmine.SpyObj<ImageService>;
 
   beforeEach(() => {
-    imageService = jasmine.createSpyObj<ImageService>('ImageService', ['createImage']);
+    imageService = createMock(ImageService);
 
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, ValdemortModule, NgbModalModule, NgbTestingModule, FontAwesomeModule],

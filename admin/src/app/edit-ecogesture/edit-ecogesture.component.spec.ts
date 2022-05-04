@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { ValdemortModule } from 'ngx-valdemort';
-import { ComponentTester, fakeRoute, fakeSnapshot } from 'ngx-speculoos';
+import { ComponentTester, createMock, stubRoute } from 'ngx-speculoos';
 import { EditEcogestureComponent } from './edit-ecogesture.component';
 import { EcogestureService } from '../ecogesture.service';
 import { ToastService } from '../toast.service';
@@ -40,8 +40,8 @@ describe('EditEcogestureComponent', () => {
   let toastService: jasmine.SpyObj<ToastService>;
 
   function prepare(route: ActivatedRoute) {
-    ecogestureService = jasmine.createSpyObj<EcogestureService>('EcogestureService', ['get', 'create', 'update']);
-    toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
+    ecogestureService = createMock(EcogestureService);
+    toastService = createMock(ToastService);
 
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, ValdemortModule, RouterTestingModule],
@@ -63,10 +63,8 @@ describe('EditEcogestureComponent', () => {
 
   describe('in create mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: {}
-        })
+      const route = stubRoute({
+        params: {}
       });
       prepare(route);
       tester.detectChanges();
@@ -107,10 +105,8 @@ describe('EditEcogestureComponent', () => {
 
   describe('in update mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: { ecogestureId: '41' }
-        })
+      const route = stubRoute({
+        params: { ecogestureId: '41' }
       });
       prepare(route);
 

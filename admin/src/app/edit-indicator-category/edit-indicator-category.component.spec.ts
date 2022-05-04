@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { ValdemortModule } from 'ngx-valdemort';
-import { ComponentTester, fakeRoute, fakeSnapshot } from 'ngx-speculoos';
+import { ComponentTester, createMock, stubRoute } from 'ngx-speculoos';
 import { EditIndicatorCategoryComponent } from './edit-indicator-category.component';
 import { IndicatorCategoryService } from '../indicator-category.service';
 import { ToastService } from '../toast.service';
@@ -40,8 +40,8 @@ describe('EditIndicatorCategoryComponent', () => {
   let toastService: jasmine.SpyObj<ToastService>;
 
   function prepare(route: ActivatedRoute) {
-    indicatorCategoryService = jasmine.createSpyObj<IndicatorCategoryService>('IndicatorCategoryService', ['get', 'create', 'update']);
-    toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
+    indicatorCategoryService = createMock(IndicatorCategoryService);
+    toastService = createMock(ToastService);
 
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, ValdemortModule, RouterTestingModule],
@@ -63,10 +63,8 @@ describe('EditIndicatorCategoryComponent', () => {
 
   describe('in create mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: {}
-        })
+      const route = stubRoute({
+        params: {}
       });
       prepare(route);
       tester.detectChanges();
@@ -107,10 +105,8 @@ describe('EditIndicatorCategoryComponent', () => {
 
   describe('in update mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: { indicatorCategoryId: '41' }
-        })
+      const route = stubRoute({
+        params: { indicatorCategoryId: '41' }
       });
       prepare(route);
 

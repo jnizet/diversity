@@ -6,13 +6,14 @@ import { CurrentUserService } from './current-user.service';
 import { of } from 'rxjs';
 import { AuthenticatedUser } from './authentication.service';
 import { UrlTree } from '@angular/router';
+import { createMock } from 'ngx-speculoos';
 
 describe('AuthenticationGuard', () => {
   let guard: AuthenticationGuard;
   let currentUserService: jasmine.SpyObj<CurrentUserService>;
 
   beforeEach(() => {
-    currentUserService = jasmine.createSpyObj<CurrentUserService>('CurrentUserService', ['get']);
+    currentUserService = createMock(CurrentUserService);
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],

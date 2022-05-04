@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { ComponentTester } from 'ngx-speculoos';
 import { RouterOutlet } from '@angular/router';
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ToastsComponent } from './toasts/toasts.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -16,15 +15,15 @@ class AppComponentTester extends ComponentTester<AppComponent> {
   }
 
   get navbar() {
-    return this.debugElement.query(By.directive(NavbarComponent));
+    return this.element(NavbarComponent);
   }
 
   get routerOutlet() {
-    return this.debugElement.query(By.directive(RouterOutlet));
+    return this.element(RouterOutlet);
   }
 
   get toasts() {
-    return this.debugElement.query(By.directive(ToastsComponent));
+    return this.element(ToastsComponent);
   }
 }
 

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ComponentTester, TestButton } from 'ngx-speculoos';
+import { ComponentTester, createMock, TestButton } from 'ngx-speculoos';
 import { EMPTY, of } from 'rxjs';
 
 import { IndicatorsComponent } from './indicators.component';
@@ -46,9 +46,9 @@ describe('IndicatorsComponent', () => {
   };
 
   beforeEach(() => {
-    indicatorService = jasmine.createSpyObj<IndicatorService>('IndicatorService', ['list', 'delete']);
-    confirmationService = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', ['confirm']);
-    toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
+    indicatorService = createMock(IndicatorService);
+    confirmationService = createMock(ConfirmationService);
+    toastService = createMock(ToastService);
 
     TestBed.configureTestingModule({
       imports: [FontAwesomeModule, NgbModalModule, NgbTestingModule, RouterTestingModule],

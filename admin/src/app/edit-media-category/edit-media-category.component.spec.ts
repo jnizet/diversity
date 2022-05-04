@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { ValdemortModule } from 'ngx-valdemort';
-import { ComponentTester, fakeRoute, fakeSnapshot } from 'ngx-speculoos';
+import { ComponentTester, createMock, stubRoute } from 'ngx-speculoos';
 import { EditMediaCategoryComponent } from './edit-media-category.component';
 import { MediaCategoryService } from '../media-category.service';
 import { ToastService } from '../toast.service';
@@ -40,8 +40,8 @@ describe('EditMediaCategoryComponent', () => {
   let toastService: jasmine.SpyObj<ToastService>;
 
   function prepare(route: ActivatedRoute) {
-    mediaCategoryService = jasmine.createSpyObj<MediaCategoryService>('MediaCategoryService', ['get', 'create', 'update']);
-    toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
+    mediaCategoryService = createMock(MediaCategoryService);
+    toastService = createMock(ToastService);
 
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, ValdemortModule, RouterTestingModule],
@@ -63,10 +63,8 @@ describe('EditMediaCategoryComponent', () => {
 
   describe('in create mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: {}
-        })
+      const route = stubRoute({
+        params: {}
       });
       prepare(route);
       tester.detectChanges();
@@ -107,10 +105,8 @@ describe('EditMediaCategoryComponent', () => {
 
   describe('in update mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: { mediaCategoryId: '41' }
-        })
+      const route = stubRoute({
+        params: { mediaCategoryId: '41' }
       });
       prepare(route);
 

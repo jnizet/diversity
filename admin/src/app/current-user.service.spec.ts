@@ -3,14 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { CurrentUserService, USER_KEY } from './current-user.service';
 import { WindowService } from './window.service';
 import { AuthenticatedUser } from './authentication.service';
+import { createMock } from 'ngx-speculoos';
 
 describe('CurrentUserService', () => {
   let service: CurrentUserService;
-  const windowService = jasmine.createSpyObj<WindowService>('WindowService', [
-    'getLocalStorageItem',
-    'setLocalStorageItem',
-    'removeLocalStorageItem'
-  ]);
+  const windowService = createMock(WindowService);
 
   beforeEach(() => {
     TestBed.configureTestingModule({

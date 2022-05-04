@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ComponentTester, TestButton } from 'ngx-speculoos';
+import { ComponentTester, createMock, TestButton } from 'ngx-speculoos';
 import { EMPTY, of } from 'rxjs';
 
 import { MediaCategoriesComponent } from './media-categories.component';
@@ -37,9 +37,9 @@ describe('MediaCategoriesComponent', () => {
   let toastService: jasmine.SpyObj<ToastService>;
 
   beforeEach(() => {
-    categoryService = jasmine.createSpyObj<MediaCategoryService>('MediaCategoryService', ['list', 'delete']);
-    confirmationService = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', ['confirm']);
-    toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
+    categoryService = createMock(MediaCategoryService);
+    confirmationService = createMock(ConfirmationService);
+    toastService = createMock(ToastService);
 
     TestBed.configureTestingModule({
       imports: [FontAwesomeModule, NgbModalModule, NgbTestingModule, RouterTestingModule],

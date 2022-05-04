@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 import { ComponentTester } from 'ngx-speculoos';
 
 import { EditPageElementComponent } from './edit-page-element.component';
@@ -44,19 +43,19 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
   }
 
   get textComponent() {
-    return this.debugElement.query(By.directive(EditTextElementComponent));
+    return this.component(EditTextElementComponent);
   }
 
   get linkComponent() {
-    return this.debugElement.query(By.directive(EditLinkElementComponent));
+    return this.component(EditLinkElementComponent);
   }
 
   get linkComponents() {
-    return this.debugElement.queryAll(By.directive(EditLinkElementComponent));
+    return this.components(EditLinkElementComponent);
   }
 
   get imageComponent() {
-    return this.debugElement.query(By.directive(EditImageElementComponent));
+    return this.component(EditImageElementComponent);
   }
 
   get listHeading() {
@@ -105,7 +104,7 @@ describe('EditPageElementComponent', () => {
 
   it('should display an EditTextComponent for a text element', () => {
     expect(tester.textComponent).not.toBeNull();
-    const component = tester.textComponent.componentInstance as EditTextElementComponent;
+    const component = tester.textComponent;
     expect(component.editedTextElement).toBe(tester.componentInstance.element as TextElement);
   });
 
@@ -128,7 +127,7 @@ describe('EditPageElementComponent', () => {
     tester.detectChanges();
 
     expect(tester.linkComponent).not.toBeNull();
-    const component = tester.linkComponent.componentInstance as EditLinkElementComponent;
+    const component = tester.linkComponent;
     expect(component.editedLinkElement).toBe(link);
   });
 
@@ -147,7 +146,7 @@ describe('EditPageElementComponent', () => {
     tester.detectChanges();
 
     expect(tester.imageComponent).not.toBeNull();
-    const component = tester.imageComponent.componentInstance as EditImageElementComponent;
+    const component = tester.imageComponent;
     expect(component.editedImageElement).toBe(image);
   });
 
@@ -178,20 +177,20 @@ describe('EditPageElementComponent', () => {
 
     expect(tester.linkComponents.length).toBe(2);
     expect(tester.listHeading).toHaveText('Liens');
-    const component = tester.linkComponent.componentInstance as EditLinkElementComponent;
+    const component = tester.linkComponent;
     expect(component.editedLinkElement).toBe(link1);
 
     // add a new unit
     tester.addUnitButton.click();
     expect(tester.linkComponents.length).toBe(3); // plus one
-    const newComponent = tester.linkComponents[2].componentInstance as EditLinkElementComponent;
+    const newComponent = tester.linkComponents[2];
     expect(newComponent.editedLinkElement.text).toBe('');
     expect(newComponent.editedLinkElement.href).toBe('');
 
     // remove the first unit
     tester.firstRemoveUnitButton.click();
     expect(tester.linkComponents.length).toBe(2); // back to 2
-    expect(tester.linkComponent.componentInstance.editedLinkElement).toBe(link2);
+    expect(tester.linkComponent.editedLinkElement).toBe(link2);
   });
 
   it('should display a section for a section element', () => {
@@ -211,7 +210,13 @@ describe('EditPageElementComponent', () => {
       text: 'Lien 2',
       href: 'https://lien2.fr'
     };
-    const section: SectionElement = { id: 3, type: 'SECTION', name: 'links', description: 'Liens', elements: [link1, link2] };
+    const section: SectionElement = {
+      id: 3,
+      type: 'SECTION',
+      name: 'links',
+      description: 'Liens',
+      elements: [link1, link2]
+    };
     const sectionModel: SectionElement = { ...section, elements: [{ ...link1 }, { ...link2 }] };
     tester.componentInstance.form.get('element').setValue(section);
     tester.componentInstance.model = sectionModel;
@@ -219,7 +224,7 @@ describe('EditPageElementComponent', () => {
 
     expect(tester.sectionHeading).toHaveText('Liens');
     expect(tester.linkComponents.length).toBe(2);
-    const component = tester.linkComponent.componentInstance as EditLinkElementComponent;
+    const component = tester.linkComponent;
     expect(component.editedLinkElement).toBe(link1);
   });
 });

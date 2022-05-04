@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, Subject } from 'rxjs';
 import { ValdemortModule } from 'ngx-valdemort';
-import { ComponentTester, fakeRoute, fakeSnapshot } from 'ngx-speculoos';
+import { ComponentTester, createMock, stubRoute } from 'ngx-speculoos';
 import { EditIndicatorComponent } from './edit-indicator.component';
 import { IndicatorService } from '../indicator.service';
 import { ToastService } from '../toast.service';
@@ -115,10 +115,10 @@ describe('EditIndicatorComponent', () => {
   const separateWaste = { id: 301, slug: 'trier-ses-dechets' };
 
   function prepare(route: ActivatedRoute) {
-    indicatorService = jasmine.createSpyObj<IndicatorService>('IndicatorService', ['get', 'create', 'update', 'getValues']);
-    indicatorCategoryService = jasmine.createSpyObj<IndicatorCategoryService>('IndicatorCategoryService', ['list']);
-    ecogestureService = jasmine.createSpyObj<EcogestureService>('EcogestureService', ['list']);
-    toastService = jasmine.createSpyObj<ToastService>('ToastService', ['success']);
+    indicatorService = createMock(IndicatorService);
+    indicatorCategoryService = createMock(IndicatorCategoryService);
+    ecogestureService = createMock(EcogestureService);
+    toastService = createMock(ToastService);
 
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, ValdemortModule, RouterTestingModule, FontAwesomeModule],
@@ -145,10 +145,8 @@ describe('EditIndicatorComponent', () => {
 
   describe('in create mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: {}
-        })
+      const route = stubRoute({
+        params: {}
       });
       prepare(route);
       tester.detectChanges();
@@ -212,10 +210,8 @@ describe('EditIndicatorComponent', () => {
 
   describe('in update mode', () => {
     beforeEach(() => {
-      const route = fakeRoute({
-        snapshot: fakeSnapshot({
-          params: { indicatorId: '41' }
-        })
+      const route = stubRoute({
+        params: { indicatorId: '41' }
       });
       prepare(route);
 

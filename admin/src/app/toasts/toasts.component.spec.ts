@@ -1,9 +1,8 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { ToastsComponent } from './toasts.component';
-import { ComponentTester } from 'ngx-speculoos';
+import { ComponentTester, createMock } from 'ngx-speculoos';
 import { NgbToast, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
-import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { Toast, ToastService } from '../toast.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -15,7 +14,7 @@ class ToastsComponentTester extends ComponentTester<ToastsComponent> {
   }
 
   get toasts(): Array<NgbToast> {
-    return this.debugElement.queryAll(By.directive(NgbToast)).map(d => d.componentInstance);
+    return this.components(NgbToast);
   }
 }
 
@@ -24,7 +23,7 @@ describe('ToastsComponent', () => {
   let toastsSubject: Subject<Toast>;
 
   beforeEach(() => {
-    const toastService = jasmine.createSpyObj<ToastService>('ToastService', ['toasts']);
+    const toastService = createMock(ToastService);
     toastsSubject = new Subject<Toast>();
     toastService.toasts.and.returnValue(toastsSubject);
 

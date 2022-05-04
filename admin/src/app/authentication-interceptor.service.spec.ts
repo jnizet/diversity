@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { CurrentUserService } from './current-user.service';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticatedUser } from './authentication.service';
+import { createMock } from 'ngx-speculoos';
 
 describe('AuthenticationInterceptorService', () => {
   let http: HttpTestingController;
@@ -14,7 +15,7 @@ describe('AuthenticationInterceptorService', () => {
 
   beforeEach(() => {
     currentUserSubject = new BehaviorSubject<AuthenticatedUser | null>(null);
-    const currentUserService = jasmine.createSpyObj<CurrentUserService>('CurrentUserService', ['get']);
+    const currentUserService = createMock(CurrentUserService);
     currentUserService.get.and.returnValue(currentUserSubject);
 
     TestBed.configureTestingModule({

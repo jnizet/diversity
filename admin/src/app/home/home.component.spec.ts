@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { ComponentTester } from 'ngx-speculoos';
+import { ComponentTester, createMock } from 'ngx-speculoos';
 import { PageLinkComponent } from './page-link/page-link.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -45,7 +45,7 @@ describe('HomeComponent', () => {
   let tester: HomeComponentTester;
 
   beforeEach(() => {
-    const pageService = jasmine.createSpyObj<PageService>('PageService', ['getPageLinks']);
+    const pageService = createMock(PageService);
     pageService.getPageLinks.and.returnValue(
       of({
         staticPageLinks: [
@@ -115,7 +115,7 @@ describe('HomeComponent', () => {
       })
     );
 
-    const mediaService = jasmine.createSpyObj<MediaService>('MediaService', ['update']);
+    const mediaService = createMock(MediaService);
     mediaService.update.and.returnValue(of());
 
     TestBed.configureTestingModule({
