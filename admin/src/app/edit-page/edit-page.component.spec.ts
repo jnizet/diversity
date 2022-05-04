@@ -302,11 +302,11 @@ describe('EditPageComponent', () => {
       tester.image1AltInput.fillWith('Image 1');
       imageService.createImage.and.returnValue(of({ id: 54 } as Image));
       const file = {} as File;
-      const fakeFileEvent = ({
+      const fakeFileEvent = {
         target: {
           files: [file]
         }
-      } as unknown) as Event;
+      } as unknown as Event;
       tester.editImageComponents[0].componentInstance.onUpload(fakeFileEvent);
       tester.link1TextInput.fillWith('Nouveau lien 1');
       tester.link1HrefInput.fillWith('https://lien1.org');

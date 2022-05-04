@@ -241,12 +241,10 @@ function multilistElementToCommand(key: string, element: ListElement | MultiList
   //   { type: "IMAGE", key: "slides.1.image" },
   //   { type: "LINK", key: "slides.1.link" },
   // ]
-  console.log(element);
   const commands: Array<ElementCommand> = [];
   element.elements.forEach((listUnitElement, index) => {
     const unitName = listUnitElement.name;
     listUnitElement.elements.forEach(unitElement => {
-      console.log({ unitElement });
       commands.push(...elementToCommand(`${key}.${index}.${unitName}.`, unitElement));
     });
   });

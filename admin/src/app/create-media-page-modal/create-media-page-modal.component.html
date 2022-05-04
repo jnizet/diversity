@@ -14,9 +14,7 @@
       <div class="form-row" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
         <select class="form-control custom-select col-9" [formControlName]="index" [id]="'category-' + index">
           <option [ngValue]="null"></option>
-          <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">
-            {{ category.name }}
-          </option>
+          <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">{{ category.name }}</option>
         </select>
         <div class="col-3">
           <button type="button" class="btn btn-link add-category-button" (click)="addCategory()">

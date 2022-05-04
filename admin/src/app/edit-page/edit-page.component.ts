@@ -39,7 +39,7 @@ export class EditPageComponent implements OnInit {
     private imageService: ImageService,
     private router: Router
   ) {
-    this.elementsGroup = fb.group({}, Validators.required);
+    this.elementsGroup = fb.group({}, { validators: Validators.required });
     this.pageForm = fb.group({
       title: ['', Validators.required],
       elements: this.elementsGroup

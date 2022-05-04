@@ -36,15 +36,13 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
   moveDownItemIcon = faAngleDown;
   transferData = faArrowDown;
 
-  isInstatiate = false;
-
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
 
   constructor(private fb: FormBuilder, private pageService: PageService) {}
 
   ngOnInit() {
-    this.elementGroup = this.fb.group({}, [Validators.required, validElement]);
+    this.elementGroup = this.fb.group({}, { validators: [Validators.required, validElement] });
     this.elementGroup.statusChanges.subscribe(() => this.onTouched());
   }
 
@@ -107,7 +105,7 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
 
   writeValue(element: PageElement): void {
     this.element = element;
-    this.elementGroup = this.fb.group({}, [Validators.required, validElement]);
+    this.elementGroup = this.fb.group({}, { validators: [Validators.required, validElement] });
     switch (element.type) {
       case 'TEXT': {
         // the element is a text: we want a simple form with a 'text' control

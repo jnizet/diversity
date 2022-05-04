@@ -206,11 +206,11 @@ describe('EditImageElementComponent', () => {
     tester.detectChanges();
 
     const file = {} as File;
-    const fakeFileEvent = ({
+    const fakeFileEvent = {
       target: {
         files: [file]
       }
-    } as unknown) as Event;
+    } as unknown as Event;
 
     spyOn(tester.editImageComponent, 'chooseImage').and.callFake(() => tester.editImageComponent.onUpload(fakeFileEvent));
     tester.chooseImageButton.click();
@@ -239,11 +239,11 @@ describe('EditImageElementComponent', () => {
     tester.detectChanges();
 
     const file = {} as File;
-    const fakeFileEvent = ({
+    const fakeFileEvent = {
       target: {
         files: [file]
       }
-    } as unknown) as Event;
+    } as unknown as Event;
 
     spyOn(tester.editImageComponent, 'chooseImage').and.callFake(() => tester.editImageComponent.onUpload(fakeFileEvent));
     tester.chooseImageButton.click();
@@ -271,11 +271,11 @@ describe('EditImageElementComponent', () => {
     tester.altInput.fillWith('New alt');
     imageService.createImage.and.returnValue(of({ id: 54 } as Image));
     const file = {} as File;
-    const fakeFileEvent = ({
+    const fakeFileEvent = {
       target: {
         files: [file]
       }
-    } as unknown) as Event;
+    } as unknown as Event;
     tester.editImageComponent.onUpload(fakeFileEvent);
     tester.detectChanges();
 

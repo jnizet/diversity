@@ -20,24 +20,24 @@ export class MockModalService<T> {
   private modal: Modal<T>;
 
   mockClosedModal(componentInstance: T, value: any = '') {
-    this.modal = ({
+    this.modal = {
       componentInstance,
       result: of(value)
-    } as unknown) as Modal<T>;
+    } as unknown as Modal<T>;
   }
 
   mockDismissedModal(componentInstance: T) {
-    this.modal = ({
+    this.modal = {
       componentInstance,
       result: of()
-    } as unknown) as Modal<T>;
+    } as unknown as Modal<T>;
   }
 
   mockDismissedWithErrorModal(componentInstance: T) {
-    this.modal = ({
+    this.modal = {
       componentInstance,
       result: throwError('not-confirmed')
-    } as unknown) as Modal<T>;
+    } as unknown as Modal<T>;
   }
 
   open(modalComponent: Type<T>, options?: ModalOptions): Modal<T> {

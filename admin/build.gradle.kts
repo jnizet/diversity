@@ -27,33 +27,15 @@ tasks {
         args.set(listOf("lint"))
         dependsOn(prepare)
         inputs.dir("src")
-        inputs.file("tslint.json")
-        outputs.file("build/tslint-result.txt")
+        inputs.files("yarn.lock", ".eslintrc.json", "angular.json", ".prettierrc")
+        outputs.file("build/eslint-result.txt")
     }
 
     val lint by registering {
         dependsOn("yarnLint")
-        doLast {
-            file("build/tslint-result.txt").useLines { sequence ->
-                if (sequence.any { it.contains("WARNING") }) {
-                    throw GradleException("Lint warning found. Check tslint-result.txt")
-                }
-            }
-        }
-    }
-
-    // This is not a yarn_format task because the task to run is `yarn format:check`
-    // and tasks with colons are not supported
-    val checkFormat by registering(YarnTask::class) {
-        args.set(listOf("run", "format:check"))
-        dependsOn(prepare)
-        inputs.dir("src")
-        inputs.file("package.json")
-        outputs.file("build/prettier-result.txt")
     }
 
     check {
-        dependsOn(checkFormat)
         dependsOn(lint)
         dependsOn(test)
     }

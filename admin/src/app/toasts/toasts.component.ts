@@ -7,7 +7,7 @@ import { Toast, ToastService } from '../toast.service';
   selector: 'biom-toasts',
   templateUrl: './toasts.component.html',
   styleUrls: ['./toasts.component.scss'],
-  // tslint:disable-next-line:no-host-metadata-property
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: { '[class.ngb-toasts]': 'true' }
 })
 export class ToastsComponent implements OnInit {

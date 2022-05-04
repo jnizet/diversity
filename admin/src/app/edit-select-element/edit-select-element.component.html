@@ -2,8 +2,6 @@
   <label>{{ editedSelectElement.description }}</label>
   <select class="form-control custom-select" [formControl]="selectControl">
     <option [ngValue]=""></option>
-    <option *ngFor="let option of optionValue" [ngValue]="option">
-      {{ editedSelectElement.options[option] }}
-    </option>
+    <option *ngFor="let option of optionValue" [ngValue]="option">{{ editedSelectElement.options[option] }}</option>
   </select>
 </div>

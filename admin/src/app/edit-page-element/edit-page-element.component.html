@@ -53,7 +53,7 @@
             type="button"
             class="btn btn-outline-primary move-up-unit"
             (click)="moveUpListUnit(element, unitIndex)"
-            [disabled]="unitIndex == 0"
+            [disabled]="unitIndex === 0"
           >
             <fa-icon [icon]="moveUpItemIcon"></fa-icon>
             <span class="sr-only">Remonter l'élément dans la liste</span>
