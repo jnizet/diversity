@@ -36,7 +36,7 @@ export class MockModalService<T> {
   mockDismissedWithErrorModal(componentInstance: T) {
     this.modal = {
       componentInstance,
-      result: throwError('not-confirmed')
+      result: throwError(() => 'not-confirmed')
     } as unknown as Modal<T>;
   }
 

@@ -1,5 +1,4 @@
-import { fromEvent, Observable, race, Subscription, timer } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
+import { filter, first, fromEvent, Observable, race, Subscription, timer } from 'rxjs';
 
 /**
  * An animation, consisting in doing something on an element to start the animation,

@@ -5,7 +5,7 @@ import { MediaCategory } from '../media-category.model';
 import { MediaCategoryService } from '../media-category.service';
 import { ConfirmationService } from '../confirmation.service';
 import { ToastService } from '../toast.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'biom-categories',

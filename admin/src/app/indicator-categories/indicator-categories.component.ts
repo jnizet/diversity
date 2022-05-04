@@ -5,7 +5,7 @@ import { IndicatorCategory } from '../indicator-category.model';
 import { IndicatorCategoryService } from '../indicator-category.service';
 import { ConfirmationService } from '../confirmation.service';
 import { ToastService } from '../toast.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'biom-categories',

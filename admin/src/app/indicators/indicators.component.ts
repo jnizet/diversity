@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faChartLine, faPlus, faTrash, faCheckSquare, faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs';
 
 import { ConfirmationService } from '../confirmation.service';
 import { ToastService } from '../toast.service';

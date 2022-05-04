@@ -52,7 +52,7 @@ describe('ErrorInterceptorService', () => {
   it('should signal client errors', () => {
     httpClient.get('api/foo').subscribe({ error: () => {} });
 
-    http.expectOne('api/foo').error(new ErrorEvent('error'));
+    http.expectOne('api/foo').error(new ProgressEvent('error'));
 
     expect(toastService.error).toHaveBeenCalledWith(`Une erreur inattendue s'est produite à l'envoi d'une requête au serveur`);
   });

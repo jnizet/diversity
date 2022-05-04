@@ -48,8 +48,7 @@
           {"name": "fdescribe", "message": "Do not use focused test suites (fdescribe)"}
         ],
         "deprecation/deprecation": "error",
-        "no-console": "error"
-        /* TODO: enable when we migrate to RxJS v7
+        "no-console": "error",
         "no-restricted-imports": [
           "error",
           {
@@ -57,7 +56,7 @@
               "rxjs/operators"
             ]
           }
-        ]*/
+        ]
       }
     },
     {

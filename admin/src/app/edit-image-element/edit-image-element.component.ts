@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/
 import { ImageElement } from '../page.model';
 import { ModalService } from '../modal.service';
 import { ImageService } from '../image.service';
-import { finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs';
 import { faFilePdf, faImage } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

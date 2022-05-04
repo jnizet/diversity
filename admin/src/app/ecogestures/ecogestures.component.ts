@@ -4,7 +4,7 @@ import { faHandHoldingHeart, faPlus, faTrash } from '@fortawesome/free-solid-svg
 import { EcogestureService } from '../ecogesture.service';
 import { ConfirmationService } from '../confirmation.service';
 import { ToastService } from '../toast.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'biom-ecogestures',

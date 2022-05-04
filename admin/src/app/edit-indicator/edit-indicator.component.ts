@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 
 import { Indicator, IndicatorCommand, ValuedIndicator } from '../indicator.model';
 import { IndicatorService } from '../indicator.service';
 import { ToastService } from '../toast.service';
 import { IndicatorCategory } from '../indicator-category.model';
-import { finalize } from 'rxjs/operators';
 import { faMinusCircle, faPlusCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { IndicatorCategoryService } from '../indicator-category.service';
 import { SLUG_REGEX } from '../validators';
@@ -69,6 +68,10 @@ export class EditIndicatorComponent implements OnInit {
       ecogestureIds: this.ecogestureIds,
       rank: this.rank
     });
+  }
+
+  get indicatorSectionDisplayed() {
+    return this.isFetchingValues || this.valuedIndicator || this.fetchingError;
   }
 
   ngOnInit(): void {
@@ -172,10 +175,6 @@ export class EditIndicatorComponent implements OnInit {
         next: indicator => (this.valuedIndicator = indicator),
         error: () => (this.fetchingError = true)
       });
-  }
-
-  get indicatorSectionDisplayed() {
-    return this.isFetchingValues || this.valuedIndicator || this.fetchingError;
   }
 
   closeIndicatorSection() {

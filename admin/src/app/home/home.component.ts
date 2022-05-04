@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../page.service';
-import { Observable } from 'rxjs';
+import { first, Observable, switchMap } from 'rxjs';
 import { MediaPageLink, PageLink, PageLinks } from '../page.model';
 import { ModalService } from '../modal.service';
 import { CreateMediaPageModalComponent } from '../create-media-page-modal/create-media-page-modal.component';
-import { first, switchMap } from 'rxjs/operators';
 import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { MediaService } from '../media.service';
 

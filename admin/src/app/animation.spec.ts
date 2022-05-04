@@ -2,8 +2,7 @@ import { animate, classBasedAnimation, CssAnimation } from './animation';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { ComponentTester, speculoosMatchers, TestHtmlElement } from 'ngx-speculoos';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   template: '<div></div>',

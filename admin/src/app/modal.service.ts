@@ -1,7 +1,6 @@
 import { Injectable, TemplateRef, Type } from '@angular/core';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EMPTY, from, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, EMPTY, from, throwError } from 'rxjs';
 
 /**
  * The options that are passed when opening a modal.
@@ -20,7 +19,7 @@ export class Modal<T> {
   }
 
   get result() {
-    return from(this.ngbModalRef.result).pipe(catchError(err => (this.errorOnClose ? throwError(err || 'not confirmed') : EMPTY)));
+    return from(this.ngbModalRef.result).pipe(catchError(err => (this.errorOnClose ? throwError(() => err || 'not confirmed') : EMPTY)));
   }
 }
 
