@@ -22,13 +22,7 @@
     <main class="main" th:object="${page.content}" data-controller="territory">
       <div class="zoom-modal" data-territory-target="modal" data-action="click->territory#closeModal">
         <div class="zoom-modal-container">
-          <img
-            biom:image="*{zoom.map}"
-            loading="lazy"
-            data-action="click->territory#clickMap"
-            sizes="100vw"
-            class="zoomed-map"
-          />
+          <img biom:image="*{zoom.map}" loading="lazy" data-action="click->territory#clickMap" sizes="100vw" class="zoomed-map" />
         </div>
       </div>
       <section class="section-top-territoire">
@@ -38,7 +32,9 @@
             <div class="legend-text" biom:markdown="*{identity.image.alt}">Légende de la photo</div>
           </div>
           <div class="section-top-center">
-            <h1 class="section-top-title" biom:markdown="*{identity.title.text}">St-Pierre-et-Miquelon, des eaux très riches en biodiversité</h1>
+            <h1 class="section-top-title" biom:markdown="*{identity.title.text}">
+              St-Pierre-et-Miquelon, des eaux très riches en biodiversité
+            </h1>
           </div>
           <div class="top-territoire-map">
             <img
@@ -97,11 +93,10 @@
                 <div class="fact-top-wrapper">
                   <div class="fact-number" biom:markdown="*{identity.population.text}">6274</div>
                 </div>
-                <div class="fact-text">habitants
-                  <span  th:if="*{identity.population.text != '0'}" biom:markdown="*{'en ' + identity.populationYear.text}">2017
-                  </span>
-                  <span  th:if="*{identity.population.text == '0'}">permanents
-                  </span>
+                <div class="fact-text">
+                  habitants
+                  <span th:if="*{identity.population.text != '0'}" biom:markdown="*{'en ' + identity.populationYear.text}">2017 </span>
+                  <span th:if="*{identity.population.text == '0'}">permanents </span>
                 </div>
               </div>
             </div>
@@ -124,8 +119,7 @@
       <section class="section-zoom" th:if="*{zoom.title.text != 'NA'}">
         <div class="zoom-left">
           <div class="section-label">Zoom sur...</div>
-          <h3 class="section-title" biom:markdown="*{zoom.title.text}">Les sites incontournables de Saint-Pierre-et-
-            Miquelon</h3>
+          <h3 class="section-title" biom:markdown="*{zoom.title.text}">Les sites incontournables de Saint-Pierre-et- Miquelon</h3>
           <div class="preserve-lines top-paragraph" biom:markdown="*{zoom.callToAction.text}">
             Cliquez sur la carte thématique pour voir en un coup d’oeil les sites incontournables de Saint-Pierre-et-Miquelon.
           </div>
@@ -264,7 +258,9 @@
               <div class="frise-circle"></div>
               <div class="frise-text-wrapper">
                 <div class="frise-element-title" biom:markdown="${event.date.text}">1535</div>
-                <div class="top-paragraph" biom:markdown="${event.description.text}">Prise de possession française des îles par Jacques Cartier</div>
+                <div class="top-paragraph" biom:markdown="${event.description.text}">
+                  Prise de possession française des îles par Jacques Cartier
+                </div>
               </div>
             </div>
           </div>

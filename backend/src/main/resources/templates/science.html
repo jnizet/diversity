@@ -35,7 +35,13 @@
           </div>
         </div>
         <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full" />
-        <img th:if="*{header.shadowed.value}" biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full shadowed-img" />
+        <img
+          th:if="*{header.shadowed.value}"
+          biom:image="*{header.background}"
+          loading="lazy"
+          sizes="100vw"
+          class="img-full shadowed-img"
+        />
       </section>
 
       <section class="section-ecogeste-intro">
@@ -82,7 +88,9 @@
       </section>
       <section class="section-science-exemple">
         <div class="col-11 left-1">
-          <h2 class="section-title col-5" biom:markdown="*{examples.title.text}">Trois exemples de programmes participatifs en Outre-mer</h2>
+          <h2 class="section-title col-5" biom:markdown="*{examples.title.text}">
+            Trois exemples de programmes participatifs en Outre-mer
+          </h2>
           <div class="swiper-container swiper-science">
             <div class="swiper-wrapper">
               <div class="swiper-slide science-exemple-wrapper" th:each="project: *{examples.projects}">
@@ -115,7 +123,9 @@
                     </div>
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Acteur</h4>
-                      <div class="top-paragraph" biom:markdown="${project.actor.text}">Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)</div>
+                      <div class="top-paragraph" biom:markdown="${project.actor.text}">
+                        Groupe d’Etude et de Protection des Oiseaux de Guyane (GEPOG)
+                      </div>
                     </div>
                     <div class="exemple-content">
                       <h4 class="exemple-content-title">Public visé</h4>
@@ -153,11 +163,11 @@
                 <div class="text-big col-2 agir-logos-title" biom:markdown="*{application.subtitle.text}">J'agis en ligne</div>
                 <div class="agir-logos-container">
                   <a href=" https://inpn.mnhn.fr/informations/inpn-especes" class="cta-secondary yellow agir-logo-container">
-                    <img th:src="@{/assets/images/app_mobile_inpn_especes.png}" loading="lazy" alt="" class="agir-logo inpn"/>
+                    <img th:src="@{/assets/images/app_mobile_inpn_especes.png}" loading="lazy" alt="" class="agir-logo inpn" />
                     <span class="agir-logo-description">INPN Espèces</span>
                   </a>
-                  <a href="https://rom.pole-tropical.org/home"  class="cta-secondary yellow agir-logo-container">
-                    <img th:src="@{/assets/images/logo-rom.png}" loading="lazy" alt="" class="agir-logo rom"/>
+                  <a href="https://rom.pole-tropical.org/home" class="cta-secondary yellow agir-logo-container">
+                    <img th:src="@{/assets/images/logo-rom.png}" loading="lazy" alt="" class="agir-logo rom" />
                     <span class="agir-logo-description">Réseau d'observation des mangroves</span>
                   </a>
                 </div>

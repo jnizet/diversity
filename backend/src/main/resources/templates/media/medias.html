@@ -5,132 +5,189 @@
   xmlns:biom="http://www.thymeleaf.org"
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='indicateur-fiche', selectedMenu='media')}"
 >
-<head>
-  <title th:text="${page.title}">À propos</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <head>
+    <title th:text="${page.title}">À propos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-  <meta th:ref="og" property="og:title" th:attr="content=${page.content.article.title.text}" />
-  <meta th:ref="og" property="og:description" th:attr="content=${page.content.article.author.text}" />
-  <meta
-    th:ref="og"
-    property="og:image"
-    th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.article.image.imageId})}"
-  />
-</head>
-<body>
-<main class="main" th:object="${page.content}" data-controller="media">
-  <section class="section-top-indicateur">
-    <div class="half media-h1-wrapper">
-      <div class="media-h1-content">
-        <h1 class="media-h1">
-          <span class="h1-content" biom:markdown="*{article.title.text}">60%</span>
-        </h1>
-        <span class="media-article-author" biom:markdown="*{'Propos recueillis par ' + article.author.text + ' - Publié le ' + article.date.text}" />
-        <a
-          class="cta-primary blue cta-more-ecogeste"
-          th:href="*{article.button.href}"
-        >
-          <span biom:markdown="*{article.button.text}">
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class="half">
-      <img biom:image="*{article.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="img-full-height" />
-      <div class="legend-wrapper">
-        <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-        <div class="legend-text" biom:markdown="*{article.image.alt}">Chelonia mydas ©  B. Guichard</div>
-      </div>
-    </div>
-  </section>
-  <section class="media-section" data-controller="media">
-    <div class="media-category-filter-list">
-      <span class="filter-media-title">Filtrer par :</span>
-      <ul role="list" class="filter-media-list w-list-unstyled" id="categories">
-        <li class="filter-media-item category">
-          <button type="button" data-media-target="all" data-action="click->media#allClicked" class="filter-link active">
-            TOUT
-          </button>
-        </li>
-        <li class="filter-media-item category" th:each="category: ${categories}">
-          <button
-            type="button"
-            class="filter-link"
-            data-media-target="category"
-            data-action="click->media#categoryClicked"
-            th:attr="data-id=${category.id}"
-            th:text="${category.name}"
-          ></button>
-        </li>
-      </ul>
-    </div>
-    <div th:if="${!articles.empty}" data-media-target="articles">
-      <h1 class="media-articles-section-title">Articles</h1>
-      <div class="media-list">
-        <div class="swiper-container articles-list">
-          <div class="swiper-wrapper">
-            <div class="media-miniature swiper-slide" th:each="miniature : ${articles}" data-media-target="media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='ARTICLE'" th:object="${miniature.getPage().content}">
-              <a style="display:block" th:href="${'/media/article/' + miniature.getPage().name}">
-                <div class="miniature-wrapper">
-                  <img class="miniature-img" biom:image="*{presentation.image}" />
+    <meta th:ref="og" property="og:title" th:attr="content=${page.content.article.title.text}" />
+    <meta th:ref="og" property="og:description" th:attr="content=${page.content.article.author.text}" />
+    <meta
+      th:ref="og"
+      property="og:image"
+      th:attr="content=${#requests.absoluteBaseUrl()} + @{/images/{imageId}/image(imageId=${page.content.article.image.imageId})}"
+    />
+  </head>
+  <body>
+    <main class="main" th:object="${page.content}" data-controller="media">
+      <section class="section-top-indicateur">
+        <div class="half media-h1-wrapper">
+          <div class="media-h1-content">
+            <h1 class="media-h1">
+              <span class="h1-content" biom:markdown="*{article.title.text}">60%</span>
+            </h1>
+            <span
+              class="media-article-author"
+              biom:markdown="*{'Propos recueillis par ' + article.author.text + ' - Publié le ' + article.date.text}"
+            />
+            <a class="cta-primary blue cta-more-ecogeste" th:href="*{article.button.href}">
+              <span biom:markdown="*{article.button.text}"> </span>
+            </a>
+          </div>
+        </div>
+        <div class="half">
+          <img biom:image="*{article.image}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="img-full-height" />
+          <div class="legend-wrapper">
+            <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
+            <div class="legend-text" biom:markdown="*{article.image.alt}">Chelonia mydas ©  B. Guichard</div>
+          </div>
+        </div>
+      </section>
+      <section class="media-section" data-controller="media">
+        <div class="media-category-filter-list">
+          <span class="filter-media-title">Filtrer par :</span>
+          <ul role="list" class="filter-media-list w-list-unstyled" id="categories">
+            <li class="filter-media-item category">
+              <button type="button" data-media-target="all" data-action="click->media#allClicked" class="filter-link active">TOUT</button>
+            </li>
+            <li class="filter-media-item category" th:each="category: ${categories}">
+              <button
+                type="button"
+                class="filter-link"
+                data-media-target="category"
+                data-action="click->media#categoryClicked"
+                th:attr="data-id=${category.id}"
+                th:text="${category.name}"
+              ></button>
+            </li>
+          </ul>
+        </div>
+        <div th:if="${!articles.empty}" data-media-target="articles">
+          <h1 class="media-articles-section-title">Articles</h1>
+          <div class="media-list">
+            <div class="swiper-container articles-list">
+              <div class="swiper-wrapper">
+                <div
+                  class="media-miniature swiper-slide"
+                  th:each="miniature : ${articles}"
+                  data-media-target="media"
+                  th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='ARTICLE'"
+                  th:object="${miniature.getPage().content}"
+                >
+                  <a style="display: block" th:href="${'/media/article/' + miniature.getPage().name}">
+                    <div class="miniature-wrapper">
+                      <img class="miniature-img" biom:image="*{presentation.image}" />
+                    </div>
+                    <span class="miniature-title" biom:markdown="*{presentation.name.text}"> </span>
+                    <span class="miniature-date" biom:markdown="*{'Publié le ' + presentation.date.text}"> </span>
+                  </a>
                 </div>
-                <span class="miniature-title" biom:markdown="*{presentation.name.text}"> </span>
-                <span class="miniature-date" biom:markdown="*{'Publié le ' + presentation.date.text}"> </span>
-              </a>
+              </div>
+            </div>
+            <div class="media-swiper-navigation">
+              <div class="cta-swiper-nav">
+                <img
+                  th:src="@{/assets/images/Arrow_black.svg}"
+                  loading="lazy"
+                  alt=""
+                  class="swiper-next article-swiper-next media-swiper"
+                />
+              </div>
+              <div class="cta-swiper-nav">
+                <img
+                  th:src="@{/assets/images/Arrow_black.svg}"
+                  loading="lazy"
+                  alt=""
+                  class="swiper-prev article-swiper-prev media-swiper"
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div class="media-swiper-navigation">
-          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="swiper-next article-swiper-next media-swiper" /></div>
-          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="swiper-prev article-swiper-prev media-swiper" /></div>
-        </div>
-      </div>
-    </div>
-    <div class="media-interviews-section" th:if="${!interviews.empty}" data-media-target="interviews">
-      <h1 class="media-interviews-section-title">Entretiens</h1>
-      <div class="media-list">
-        <div class="swiper-container interviews-list">
-          <div class="swiper-wrapper">
-            <div class="media-miniature swiper-slide" th:each="miniature : ${interviews}" data-media-target="media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='INTERVIEW'" th:object="${miniature.getPage().content}">
-              <a style="display:block" th:href="${'/media/interview/' + miniature.getPage().name}">
-                <div class="miniature-wrapper">
-                  <img class="miniature-img" biom:image="*{presentation.image}" />
+        <div class="media-interviews-section" th:if="${!interviews.empty}" data-media-target="interviews">
+          <h1 class="media-interviews-section-title">Entretiens</h1>
+          <div class="media-list">
+            <div class="swiper-container interviews-list">
+              <div class="swiper-wrapper">
+                <div
+                  class="media-miniature swiper-slide"
+                  th:each="miniature : ${interviews}"
+                  data-media-target="media"
+                  th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='INTERVIEW'"
+                  th:object="${miniature.getPage().content}"
+                >
+                  <a style="display: block" th:href="${'/media/interview/' + miniature.getPage().name}">
+                    <div class="miniature-wrapper">
+                      <img class="miniature-img" biom:image="*{presentation.image}" />
+                    </div>
+                    <span class="miniature-title" biom:markdown="*{presentation.name.text}"> </span>
+                    <span class="miniature-date" biom:markdown="*{'Publié le ' + presentation.date.text}"> </span>
+                  </a>
                 </div>
-                <span class="miniature-title" biom:markdown="*{presentation.name.text}"> </span>
-                <span class="miniature-date" biom:markdown="*{'Publié le ' + presentation.date.text}"> </span>
-              </a>
+              </div>
+            </div>
+            <div class="media-swiper-navigation">
+              <div class="cta-swiper-nav">
+                <img
+                  th:src="@{/assets/images/Arrow_black.svg}"
+                  loading="lazy"
+                  alt=""
+                  class="interview-swiper-next swiper-next media-swiper"
+                />
+              </div>
+              <div class="cta-swiper-nav">
+                <img
+                  th:src="@{/assets/images/Arrow_black.svg}"
+                  loading="lazy"
+                  alt=""
+                  class="interview-swiper-prev swiper-prev media-swiper"
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div class="media-swiper-navigation">
-          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="interview-swiper-next swiper-next media-swiper" /></div>
-          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="interview-swiper-prev swiper-prev media-swiper" /></div>
-        </div>
-      </div>
-    </div>
-    <div class="media-interviews-section" th:if="${!reports.empty}" data-media-target="reports">
-      <h1 class="media-interviews-section-title">Reportages</h1>
-      <div class="media-list">
-        <div class="swiper-container reports-list">
-          <div class="swiper-wrapper">
-            <div class="media-miniature swiper-slide" th:each="miniature : ${reports}" data-media-target="media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='REPORT'" th:object="${miniature.getPage().content}">
-              <a style="display:block" th:href="${'/media/report/' + miniature.getPage().name}">
-                <div class="miniature-wrapper">
-                  <img class="miniature-img" biom:image="*{presentation.image}" />
+        <div class="media-interviews-section" th:if="${!reports.empty}" data-media-target="reports">
+          <h1 class="media-interviews-section-title">Reportages</h1>
+          <div class="media-list">
+            <div class="swiper-container reports-list">
+              <div class="swiper-wrapper">
+                <div
+                  class="media-miniature swiper-slide"
+                  th:each="miniature : ${reports}"
+                  data-media-target="media"
+                  th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='REPORT'"
+                  th:object="${miniature.getPage().content}"
+                >
+                  <a style="display: block" th:href="${'/media/report/' + miniature.getPage().name}">
+                    <div class="miniature-wrapper">
+                      <img class="miniature-img" biom:image="*{presentation.image}" />
+                    </div>
+                    <span class="miniature-title" biom:markdown="*{presentation.name.text}"> </span>
+                    <span class="miniature-date" biom:markdown="*{'Publié le ' + presentation.author.text}"> </span>
+                  </a>
                 </div>
-                <span class="miniature-title" biom:markdown="*{presentation.name.text}"> </span>
-                <span class="miniature-date" biom:markdown="*{'Publié le ' + presentation.author.text}"> </span>
-              </a>
+              </div>
+            </div>
+            <div class="media-swiper-navigation">
+              <div class="cta-swiper-nav">
+                <img
+                  th:src="@{/assets/images/Arrow_black.svg}"
+                  loading="lazy"
+                  alt=""
+                  class="reports-swiper-next swiper-next media-swiper"
+                />
+              </div>
+              <div class="cta-swiper-nav">
+                <img
+                  th:src="@{/assets/images/Arrow_black.svg}"
+                  loading="lazy"
+                  alt=""
+                  class="reports-swiper-prev swiper-prev media-swiper"
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div class="media-swiper-navigation">
-          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="reports-swiper-next swiper-next media-swiper" /></div>
-          <div class="cta-swiper-nav"><img th:src="@{/assets/images/Arrow_black.svg}" loading="lazy" alt="" class="reports-swiper-prev swiper-prev media-swiper" /></div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-</body>
+      </section>
+    </main>
+  </body>
 </html>

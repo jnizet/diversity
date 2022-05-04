@@ -67,7 +67,10 @@
       <!-- Indicator -->
       <section class="indicateur-push" th:if="${indicator}">
         <div class="indicateur-push-content">
-          <div class="indicateur-number-small" biom:markdown="${#indicators.formatValue(indicator.indicatorValue, indicator.indicator.isRounded)}"></div>
+          <div
+            class="indicateur-number-small"
+            biom:markdown="${#indicators.formatValue(indicator.indicatorValue, indicator.indicator.isRounded)}"
+          ></div>
           <div class="text-big" biom:markdown="${indicator.page.content.presentation.description.text}"></div>
           <a th:href="@{/indicateurs/{slug}(slug=${indicator.indicator.slug})}" class="cta-secondary">en savoir plus</a>
         </div>
@@ -116,11 +119,11 @@
               <div class="text-big" biom:markdown="${act.content.firstActionName.text}"></div>
               <div class="agir-logos-container">
                 <a href=" https://inpn.mnhn.fr/informations/inpn-especes" class="cta-secondary yellow agir-logo-container">
-                  <img th:src="@{/assets/images/app_mobile_inpn_especes.png}" loading="lazy" alt="" class="agir-logo inpn"/>
+                  <img th:src="@{/assets/images/app_mobile_inpn_especes.png}" loading="lazy" alt="" class="agir-logo inpn" />
                   <span class="agir-logo-description">INPN Espèces</span>
                 </a>
-                <a href="https://rom.pole-tropical.org/home"  class="cta-secondary yellow agir-logo-container">
-                  <img th:src="@{/assets/images/logo-rom.png}" loading="lazy" alt="" class="agir-logo rom"/>
+                <a href="https://rom.pole-tropical.org/home" class="cta-secondary yellow agir-logo-container">
+                  <img th:src="@{/assets/images/logo-rom.png}" loading="lazy" alt="" class="agir-logo rom" />
                   <span class="agir-logo-description">Réseau d'observation des mangroves</span>
                 </a>
               </div>

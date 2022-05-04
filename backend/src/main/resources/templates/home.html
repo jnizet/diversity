@@ -32,10 +32,10 @@
               <div class="section-top-wrapper">
                 <div class="col-4">
                   <h1 class="section-top-title" biom:markdown="*{title.text}">Découvrez la biodiversité des outre-mer</h1>
-                  <div class="top-paragraph" biom:markdown="*{text.text}">Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer</div>
-                  <a th:href="*{button.href}" biom:markdown="*{button.text}" class="cta-primary yellow">
-                    découvrir les territoires
-                  </a>
+                  <div class="top-paragraph" biom:markdown="*{text.text}">
+                    Partez à la rencontre des espèces et des écosystèmes des territoires français d’outre-mer
+                  </div>
+                  <a th:href="*{button.href}" biom:markdown="*{button.text}" class="cta-primary yellow"> découvrir les territoires </a>
                 </div>
               </div>
               <div class="legend-wrapper top-slide">
@@ -93,7 +93,9 @@
                       <div class="apropos-item-title">Sciences participatives</div>
                       <div class="apropos-item-underline"></div>
                     </div>
-                    <div class="apropos-item-text top-paragraph" biom:markdown="*{presentation.science.text}">Contribuez à la mise à jour de la base de donnée</div>
+                    <div class="apropos-item-text top-paragraph" biom:markdown="*{presentation.science.text}">
+                      Contribuez à la mise à jour de la base de donnée
+                    </div>
                   </a>
                 </li>
                 <li class="swiper-slide apropos-item">
@@ -125,7 +127,9 @@
 
       <section class="section-citation">
         <img th:src="@{/assets/images/quote.svg}" loading="lazy" alt="" class="citation-quote" />
-        <p biom:markdown="*{presentation.quote.text}">Les Outre-Mer regroupent 80% de la biodiversité française, réinventons notre façon de vivre et de voyager</p>
+        <p biom:markdown="*{presentation.quote.text}">
+          Les Outre-Mer regroupent 80% de la biodiversité française, réinventons notre façon de vivre et de voyager
+        </p>
       </section>
 
       <section th:replace="~{map/map::map (variant='home')}"></section>

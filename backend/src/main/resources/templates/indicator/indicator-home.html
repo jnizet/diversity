@@ -72,7 +72,11 @@
                 <a th:href="@{/indicateurs/{slug}(slug=${card.indicator.slug})}" class="indicateur-link w-inline-block">
                   <div class="indicateur-text-effect">
                     <h2 class="indicateur-item-title">
-                      <span class="indicateur-number" biom:markdown="${#indicators.formatValue(card.indicatorValue, card.indicator.isRounded)}">60 </span>
+                      <span
+                        class="indicateur-number"
+                        biom:markdown="${#indicators.formatValue(card.indicatorValue, card.indicator.isRounded)}"
+                        >60
+                      </span>
                       <span class="indicateur-description" biom:markdown="${card.page.content.presentation.description.text}"
                         >espèces sur les 100 considérées comme les plus envahissantes au monde se trouvent en outre-mer.</span
                       >

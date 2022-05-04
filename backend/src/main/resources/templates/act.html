@@ -35,7 +35,13 @@
           </div>
         </div>
         <img biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full" />
-        <img th:if="*{header.shadowed.value}" biom:image="*{header.background}" loading="lazy" sizes="100vw" class="img-full shadowed-img" />
+        <img
+          th:if="*{header.shadowed.value}"
+          biom:image="*{header.background}"
+          loading="lazy"
+          sizes="100vw"
+          class="img-full shadowed-img"
+        />
       </section>
 
       <section class="section-agir-intro">
@@ -83,7 +89,9 @@
         <div class="section-content align">
           <h2 class="section-title col-3" biom:markdown="*{science.title.text}">Les sciences participatives</h2>
           <div class="col-6 left-1">
-            <div class="top-paragraph" biom:markdown="*{science.subtitle.text}">Protégez la biodiversité ultra-marine à travers les ciences participatives.</div>
+            <div class="top-paragraph" biom:markdown="*{science.subtitle.text}">
+              Protégez la biodiversité ultra-marine à travers les ciences participatives.
+            </div>
           </div>
           <img th:src="@{/assets/images/icon-science.svg}" loading="lazy" width="141" height="146" alt="" class="agir-icon" />
         </div>
