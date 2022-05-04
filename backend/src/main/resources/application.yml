@@ -29,31 +29,33 @@ spring:
     password: diversity
   flyway:
     enabled: true
-  resources:
-    chain:
-      strategy:
-        content:
-          enabled: true
-          paths:
-            - '/*.js'
-            - '/*.css'
-      cache: true
-      compressed: true
-    cache:
-      cachecontrol:
-        max-age: '365d'
-  mail:
-    host: localhost
-  mvc:
+  web:
+    resources:
+      chain:
+        strategy:
+          content:
+            enabled: true
+            paths:
+              - '/*.js'
+              - '/*.css'
+        cache: true
+        compressed: true
+      cache:
+        cachecontrol:
+          max-age: '365d'
     locale: fr_FR
     locale-resolver: fixed
+  mail:
+    host: localhost
   servlet:
     multipart:
       max-file-size: 5MB
 
 ---
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
   datasource:
     url: jdbc:postgresql://${diversity.database.host-and-port}/diversity_test
     username: diversity
@@ -61,7 +63,9 @@ spring:
 
 ---
 spring:
-  profiles: e2e
+  config:
+    activate:
+      on-profile: e2e
   datasource:
     url: jdbc:postgresql://${diversity.database.host-and-port}/diversity_e2e
     username: diversity
@@ -74,19 +78,22 @@ diversity:
 
 ---
 spring:
-  profiles:
-    dev
-  resources:
-    static-locations:
-      - classpath:/static/
-      - file:./frontend/build/dist/
-    chain:
-      cache: false
+  config:
+    activate:
+      on-profile: dev
+  web:
+    resources:
+      static-locations:
+        - classpath:/static/
+        - file:./frontend/build/dist/
+      chain:
+        cache: false
 
 ---
 spring:
-  profiles:
-    ci
+  config:
+    activate:
+      on-profile: ci
   mail:
     host: mailhog
     port: 1025
