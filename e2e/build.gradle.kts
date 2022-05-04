@@ -1,4 +1,4 @@
-import com.moowork.gradle.node.yarn.YarnTask
+import com.github.gradle.node.yarn.task.YarnTask
 
 plugins {
     id("diversity.node-conventions")
@@ -10,7 +10,7 @@ tasks {
     // This is not a yarn_format task because the task to run is `yarn format:check`
     // and tasks with colons are not supported
     val checkFormat by registering(YarnTask::class) {
-        args = listOf("run", "format:check")
+        args.set(listOf("run", "format:check"))
         dependsOn(prepare)
         inputs.dir("cypress")
         inputs.file("package.json")
@@ -23,9 +23,9 @@ tasks {
         // On CI, we need to start the app with a different postgres host
         // so we have a dedicated task in the package.json
         if (project.findProperty("CI") != null) {
-            args = listOf("run", "e2e:standalone:ci")
+            args.set(listOf("run", "e2e:standalone:ci"))
         } else {
-            args = listOf("run", "e2e:standalone")
+            args.set(listOf("run", "e2e:standalone"))
         }
         dependsOn(prepare)
         dependsOn(":backend:bootJar")

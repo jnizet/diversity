@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.node-gradle:gradle-node-plugin:2.2.4")
+    implementation("com.github.node-gradle:gradle-node-plugin:3.2.1")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

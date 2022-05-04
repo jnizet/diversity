@@ -5,16 +5,20 @@
 
 // this precompiled script plugin avoids repeating all the stuff described above for every node project, and
 // ensures the same versions are used everywhere and configured in a single place.
+
+import com.github.gradle.node.yarn.task.YarnInstallTask
+import com.github.gradle.node.yarn.task.YarnTask
+
 plugins {
     base
     id("com.github.node-gradle.node")
 }
 
 node {
-    version = "14.19.1"
-    npmVersion = "6.14.17"
-    yarnVersion = "1.22.18"
-    download = true
+    version.set("14.19.1")
+    npmVersion.set("6.14.17")
+    yarnVersion.set("1.22.18")
+    download.set(true)
 }
 
 tasks {

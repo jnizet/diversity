@@ -1,4 +1,4 @@
-import com.moowork.gradle.node.yarn.YarnTask
+import com.github.gradle.node.yarn.task.YarnTask
 
 plugins {
     id("diversity.node-conventions")
@@ -10,7 +10,7 @@ tasks {
     // This is not a yarn_format task because the task to run is `yarn format:check`
     // and tasks with colons are not supported
     val checkFormat by registering(YarnTask::class) {
-        args = listOf("run", "format:check")
+        args.set(listOf("run", "format:check"))
         dependsOn(prepare)
         inputs.dir("src")
         inputs.file("package.json")
@@ -20,7 +20,7 @@ tasks {
     // This is not a yarn_build task because the task to run is `yarn build:prod`
     // and tasks with colons are not supported
     val yarnBuildProd by registering(YarnTask::class) {
-        args = listOf("run", "build:prod")
+        args.set(listOf("run", "build:prod"))
         dependsOn(prepare)
         inputs.file("webpack.common.js")
         inputs.file("webpack.prod.js")
