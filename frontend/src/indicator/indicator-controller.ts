@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import Swiper from 'swiper';
 
 export class IndicatorController extends Controller {

@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import Swiper from 'swiper';
 import { setElementVisible, showElement } from '../elements';
 

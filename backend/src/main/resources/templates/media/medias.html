@@ -48,7 +48,7 @@
       <span class="filter-media-title">Filtrer par :</span>
       <ul role="list" class="filter-media-list w-list-unstyled" id="categories">
         <li class="filter-media-item category">
-          <button type="button" data-target="media.all" data-action="click->media#allClicked" class="filter-link active">
+          <button type="button" data-media-target="all" data-action="click->media#allClicked" class="filter-link active">
             TOUT
           </button>
         </li>
@@ -56,7 +56,7 @@
           <button
             type="button"
             class="filter-link"
-            data-target="media.category"
+            data-media-target="category"
             data-action="click->media#categoryClicked"
             th:attr="data-id=${category.id}"
             th:text="${category.name}"
@@ -64,12 +64,12 @@
         </li>
       </ul>
     </div>
-    <div th:if="${!articles.empty}" data-target="media.articles">
+    <div th:if="${!articles.empty}" data-media-target="articles">
       <h1 class="media-articles-section-title">Articles</h1>
       <div class="media-list">
         <div class="swiper-container articles-list">
           <div class="swiper-wrapper">
-            <div class="media-miniature swiper-slide" th:each="miniature : ${articles}" data-target="media.media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='ARTICLE'" th:object="${miniature.getPage().content}">
+            <div class="media-miniature swiper-slide" th:each="miniature : ${articles}" data-media-target="media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='ARTICLE'" th:object="${miniature.getPage().content}">
               <a style="display:block" th:href="${'/media/article/' + miniature.getPage().name}">
                 <div class="miniature-wrapper">
                   <img class="miniature-img" biom:image="*{presentation.image}" />
@@ -86,12 +86,12 @@
         </div>
       </div>
     </div>
-    <div class="media-interviews-section" th:if="${!interviews.empty}" data-target="media.interviews">
+    <div class="media-interviews-section" th:if="${!interviews.empty}" data-media-target="interviews">
       <h1 class="media-interviews-section-title">Entretiens</h1>
       <div class="media-list">
         <div class="swiper-container interviews-list">
           <div class="swiper-wrapper">
-            <div class="media-miniature swiper-slide" th:each="miniature : ${interviews}" data-target="media.media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='INTERVIEW'" th:object="${miniature.getPage().content}">
+            <div class="media-miniature swiper-slide" th:each="miniature : ${interviews}" data-media-target="media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='INTERVIEW'" th:object="${miniature.getPage().content}">
               <a style="display:block" th:href="${'/media/interview/' + miniature.getPage().name}">
                 <div class="miniature-wrapper">
                   <img class="miniature-img" biom:image="*{presentation.image}" />
@@ -108,12 +108,12 @@
         </div>
       </div>
     </div>
-    <div class="media-interviews-section" th:if="${!reports.empty}" data-target="media.reports">
+    <div class="media-interviews-section" th:if="${!reports.empty}" data-media-target="reports">
       <h1 class="media-interviews-section-title">Reportages</h1>
       <div class="media-list">
         <div class="swiper-container reports-list">
           <div class="swiper-wrapper">
-            <div class="media-miniature swiper-slide" th:each="miniature : ${reports}" data-target="media.media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='REPORT'" th:object="${miniature.getPage().content}">
+            <div class="media-miniature swiper-slide" th:each="miniature : ${reports}" data-media-target="media" th:attr="data-categories=${miniature.categoryIdsAsJsonArray}, data-type='REPORT'" th:object="${miniature.getPage().content}">
               <a style="display:block" th:href="${'/media/report/' + miniature.getPage().name}">
                 <div class="miniature-wrapper">
                   <img class="miniature-img" biom:image="*{presentation.image}" />

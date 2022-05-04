@@ -1,4 +1,4 @@
-import { Application } from 'stimulus';
+import { Application } from '@hotwired/stimulus';
 import { initialize } from './global';
 import { ContactController } from './contact/contact-controller';
 import { SearchController } from './search/search-controller';

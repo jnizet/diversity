@@ -45,7 +45,7 @@
             <h3 class="filter-title">filtrer par thématique</h3>
             <ul role="list" class="filter-list w-list-unstyled" id="categories">
               <li class="filter-item category">
-                <button type="button" data-target="indicators.all" data-action="click->indicators#allClicked" class="filter-link active">
+                <button type="button" data-indicators-target="all" data-action="click->indicators#allClicked" class="filter-link active">
                   TOUT
                 </button>
               </li>
@@ -53,7 +53,7 @@
                 <button
                   type="button"
                   class="filter-link"
-                  data-target="indicators.category"
+                  data-indicators-target="category"
                   data-action="click->indicators#categoryClicked"
                   th:attr="data-id=${category.id}"
                   th:text="${category.name}"
@@ -66,7 +66,7 @@
               <li
                 class="indicateur-item"
                 th:each="card: ${cards}"
-                data-target="indicators.indicator"
+                data-indicators-target="indicator"
                 th:attr="data-categories=${card.categoryIdsAsJsonArray}"
               >
                 <a th:href="@{/indicateurs/{slug}(slug=${card.indicator.slug})}" class="indicateur-link w-inline-block">
@@ -163,12 +163,12 @@
               class="apprendre-item closed"
               th:each="question: *{questions}"
               data-controller="question-item"
-              data-target="question-item.item"
+              data-question-item-target="item"
             >
-              <div class="apprendre-top" data-action="click->question-item#questionClicked" data-target="question-item.question">
+              <div class="apprendre-top" data-action="click->question-item#questionClicked" data-question-item-target="question">
                 <div class="apprendre-title" biom:markdown="${question.question.text}"></div>
               </div>
-              <div class="apprendre-bottom" data-target="question-item.answer">
+              <div class="apprendre-bottom" data-question-item-target="answer">
                 <div class="preserve-lines" biom:markdown="${question.answer.text}"></div>
                 <blockquote biom:markdown="${question.quote.text}"></blockquote>
               </div>

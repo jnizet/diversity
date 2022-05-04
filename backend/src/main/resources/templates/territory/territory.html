@@ -20,7 +20,7 @@
 
   <body>
     <main class="main" th:object="${page.content}" data-controller="territory">
-      <div class="zoom-modal" data-target="territory.modal" data-action="click->territory#closeModal">
+      <div class="zoom-modal" data-territory-target="modal" data-action="click->territory#closeModal">
         <div class="zoom-modal-container">
           <img
             biom:image="*{zoom.map}"

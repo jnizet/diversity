@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import { hideElement, showElement } from '../elements';
 
 export class SearchController extends Controller {

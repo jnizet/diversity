@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
-    <div th:fragment="contact-popin" data-target="contact.popin" class="contact-popin d-none">
+    <div th:fragment="contact-popin" data-contact-target="popin" class="contact-popin d-none">
       <div class="cta-close" role="button" id="close-contact-button" data-action="click->contact#close">
         <div class="cta-search-text">Fermer</div>
         <img th:src="@{/assets/images/cta-close.svg}" loading="lazy" alt="" class="cta-close-img" />
@@ -12,16 +12,16 @@
           <div class="section-decoration-static">contact</div>
         </div>
         <div class="contact-form w-embed">
-          <form class="contact-form-wrapper" data-target="contact.form" data-action="contact#send" novalidate id="contact-form">
+          <form class="contact-form-wrapper" data-contact-target="form" data-action="contact#send" novalidate id="contact-form">
             <div class="field-group half">
               <label for="contact-from">Email</label>
-              <input type="email" class="w-input" data-target="contact.from" id="contact-from" />
-              <div class="error d-none" data-target="contact.invalidFrom">Veuillez saisir une adresse email valide</div>
+              <input type="email" class="w-input" data-contact-target="from" id="contact-from" />
+              <div class="error d-none" data-contact-target="invalidFrom">Veuillez saisir une adresse email valide</div>
             </div>
             <div class="field-group half">
               <label for="contact-subject">Sujet</label>
-              <input type="text" class="w-input" maxlength="100" data-target="contact.subject" id="contact-subject" />
-              <div class="error d-none" data-target="contact.invalidSubject">Veuillez saisir un sujet</div>
+              <input type="text" class="w-input" maxlength="100" data-contact-target="subject" id="contact-subject" />
+              <div class="error d-none" data-contact-target="invalidSubject">Veuillez saisir un sujet</div>
             </div>
             <div class="field-group">
               <label for="message">Message</label>
@@ -29,15 +29,15 @@
                 placeholder="Votre message"
                 maxlength="700"
                 id="contact-body"
-                data-target="contact.body"
+                data-contact-target="body"
                 data-action="input->contact#bodyChanged"
                 class="textarea w-input"
               ></textarea>
-              <div class="hint">Nombre de caractères restants&nbsp;: <span data-target="contact.remainingCharacters"></span></div>
-              <div class="error d-none" data-target="contact.invalidBody">Veuillez saisir un message</div>
+              <div class="hint">Nombre de caractères restants&nbsp;: <span data-contact-target="remainingCharacters"></span></div>
+              <div class="error d-none" data-contact-target="invalidBody">Veuillez saisir un message</div>
             </div>
-            <button class="cta-primary blue w-button" data-target="contact.send" id="contact-send">Envoyer</button>
-            <div class="field-group error d-none" data-target="contact.sendFailed" id="contact-error">L'envoi du message a échoué.</div>
+            <button class="cta-primary blue w-button" data-contact-target="send" id="contact-send">Envoyer</button>
+            <div class="field-group error d-none" data-contact-target="sendFailed" id="contact-error">L'envoi du message a échoué.</div>
           </form>
         </div>
       </div>

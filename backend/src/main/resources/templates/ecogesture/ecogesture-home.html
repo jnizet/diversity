@@ -50,7 +50,7 @@
       <!-- Ecogestures -->
       <section class="section-ecogeste-liste" data-controller="ecogestures">
         <ul role="list" class="ecogeste-list w-list-unstyled">
-          <li class="ecogeste-item" th:each="gesturePage : ${gesturePages}" data-target="ecogestures.ecogesture">
+          <li class="ecogeste-item" th:each="gesturePage : ${gesturePages}" data-ecogestures-target="ecogesture">
             <a th:href="@{/ecogestes/{gesture}(gesture=${gesturePage.name})}" class="ecogeste-link w-inline-block">
               <div class="ecogeste-bkg-wrapper">
                 <img
@@ -73,7 +73,7 @@
             id="see-more"
             class="cta-primary blue cta-more-ecogeste"
             data-action="click->ecogestures#seeMore"
-            data-target="ecogestures.more"
+            data-ecogestures-target="more"
           >
             voir plus d&#x27;écogestes
           </button>

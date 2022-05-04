@@ -24,7 +24,7 @@
 
 <body>
 <main class="main" th:object="${page.content}" data-controller="indicator">
-  <div class="visual-modal" data-target="indicator.modal" data-action="click->indicator#closeModal">
+  <div class="visual-modal" data-indicator-target="modal" data-action="click->indicator#closeModal">
     <div class="visual-modal-container">
       <img
         biom:image="*{visual.image}"

@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import { setElementVisible } from '../elements';
 
 const MINIMUM_THRESHOLD = 4;

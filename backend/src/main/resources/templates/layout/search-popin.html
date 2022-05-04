@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
-    <div th:fragment="search-popin" data-target="search.popin" class="search-popin d-none">
+    <div th:fragment="search-popin" data-search-target="popin" class="search-popin d-none">
       <div
         class="cta-close"
         role="button"
@@ -24,7 +24,7 @@
               placeholder="recherche"
               id="search"
               th:value="${#execInfo.processedTemplateName == 'search' ? param.texte : ''}"
-              data-target="search.searchInput"
+              data-search-target="searchInput"
             />
             <button class="search-input"><span class="sr-only">Rechercher</span></button>
           </form>

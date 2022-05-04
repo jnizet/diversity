@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import { hideElement, setElementVisible, showElement } from '../elements';
 
 const MAX_CHARACTERS = 700;

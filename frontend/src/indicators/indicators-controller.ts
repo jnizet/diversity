@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import { setElementVisible, showElement } from '../elements';
 import $ from 'jquery';
 
