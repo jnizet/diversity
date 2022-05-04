@@ -9,3 +9,9 @@ repositories {
 dependencies {
     implementation("com.github.node-gradle:gradle-node-plugin:2.2.4")
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}

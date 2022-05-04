@@ -10,10 +10,10 @@ javaPlatform {
     allowDependencies()
 }
 
-val jwtVersion = "0.11.2"
+val jwtVersion = "0.11.5"
 
 dependencies {
-    api(platform("org.springframework.boot:spring-boot-dependencies:2.4.0"))
+    api(platform("org.springframework.boot:spring-boot-dependencies:2.6.7"))
 
     constraints {
         api("com.ninja-squad:DbSetup:2.1.0")
@@ -21,5 +21,6 @@ dependencies {
         api("io.jsonwebtoken:jjwt-api:$jwtVersion")
         api("io.jsonwebtoken:jjwt-impl:$jwtVersion")
         api("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
+        api("com.atlassian.commonmark:commonmark:0.15.2")
     }
 }

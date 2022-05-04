@@ -33,7 +33,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("com.ninja-squad:DbSetup")
-    implementation("com.atlassian.commonmark:commonmark:0.15.2")
+    implementation("com.atlassian.commonmark:commonmark")
     implementation("io.jsonwebtoken:jjwt-api")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -43,9 +43,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-    }
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.squareup.okhttp3:mockwebserver")
 }
