@@ -35,7 +35,7 @@
             <h1 class="indicateur-h1">
               <span
                 class="indicateur-h1-number"
-                biom:markdown="${#indicators.formatValueWithoutUnit(outremerIndicatorValue, indicator.isRounded) + ' ' + outremerIndicatorValue.unit}"
+                th:text="${#indicators.formatValueWithoutUnit(outremerIndicatorValue, indicator.isRounded) + ' ' + outremerIndicatorValue.unit}"
                 >60%</span
               >
               <span class="h1-content" biom:markdown="*{presentation.description.text}"
@@ -194,7 +194,7 @@
                 <div
                   th:if="${card.indicatorValue != null}"
                   class="indicateur-slide-number"
-                  biom:markdown="${#indicators.formatValue(card.indicatorValue, indicator.isRounded)}"
+                  th:text="${#indicators.formatValue(card.indicatorValue, indicator.isRounded)}"
                 >
                   16
                 </div>
