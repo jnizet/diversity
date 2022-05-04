@@ -71,7 +71,7 @@
               <img th:src="@{/assets/images/superficie-terrestre.svg}" loading="lazy" alt="" class="fact-img" />
               <div class="fact-text-wrapper">
                 <div class="fact-top-wrapper">
-                  <div class="fact-number" biom:markdown="*{identity.area.text}">242</div>
+                  <div class="fact-number" th:text="*{identity.area.text}">242</div>
                   <div class="fact-unit">km<sup>2</sup></div>
                 </div>
                 <div class="fact-text">Superficie terrestre</div>
@@ -81,7 +81,7 @@
               <img th:src="@{/assets/images/superficie-marine.svg}" loading="lazy" alt="" class="fact-img" />
               <div class="fact-text-wrapper">
                 <div class="fact-top-wrapper">
-                  <div class="fact-number" biom:markdown="*{identity.marineArea.text}">12300</div>
+                  <div class="fact-number" th:text="*{identity.marineArea.text}">12300</div>
                   <div class="fact-unit">km<sup>2</sup></div>
                 </div>
                 <div class="fact-text">Superficie marine</div>
@@ -91,11 +91,11 @@
               <img th:src="@{/assets/images/habitants_1.svg}" loading="lazy" alt="" class="fact-img" />
               <div class="fact-text-wrapper">
                 <div class="fact-top-wrapper">
-                  <div class="fact-number" biom:markdown="*{identity.population.text}">6274</div>
+                  <div class="fact-number" th:text="*{identity.population.text}">6274</div>
                 </div>
                 <div class="fact-text">
                   habitants
-                  <span th:if="*{identity.population.text != '0'}" biom:markdown="*{'en ' + identity.populationYear.text}">2017 </span>
+                  <span th:if="*{identity.population.text != '0'}" th:text="*{'en ' + identity.populationYear.text}">2017 </span>
                   <span th:if="*{identity.population.text == '0'}">permanents </span>
                 </div>
               </div>
@@ -181,17 +181,8 @@
 
       <section th:if="${indicatorCards.size() > 0}" class="section-territoire-indicateur">
         <div class="territoire-indicateur-wrapper">
-          <div th:switch="${territory.slug}" class="indicateur-push-content left-1 indicator-card">
-            <div th:case="reunion" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-            <div th:case="saint-martin" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-            <div th:case="wallis-et-futuna" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-            <div th:case="mayotte" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-            <div th:case="saint-barthelemy" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-            <div th:case="iles-subantarctiques" class="text-big" biom:markdown="${'Aux '+ territory.name}"></div>
-            <div th:case="iles-eparses" class="text-big" biom:markdown="${'Aux '+ territory.name}"></div>
-            <div th:case="clipperton" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-            <div th:case="saint-pierre-et-miquelon" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-            <div th:case="*" class="text-big" biom:markdown="${'En '+ territory.name}"></div>
+          <div class="indicateur-push-content left-1 indicator-card">
+            <div class="text-big" th:text="${territory.location}"></div>
             <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicatorCards[0].indicatorValue, true)}"></div>
             <div class="text-big" biom:markdown="${indicatorCards[0].page.content.presentation.descriptionTerritories.text}"></div>
             <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[0].page.name})}" class="cta-secondary">En savoir plus</a>
@@ -249,7 +240,7 @@
 
       <section class="section-frise">
         <div class="frise-title-wrapper">
-          <div class="section-label" biom:markdown="${territory.name}">saint-pierre-et-miquelon</div>
+          <div class="section-label" th:text="${territory.name}">saint-pierre-et-miquelon</div>
           <h3 class="section-title col-4">Histoire naturelle &amp; temps forts</h3>
         </div>
         <div class="swiper-container swiper-frise">
@@ -334,17 +325,8 @@
             <div class="legend-text" biom:markdown="*{ecosystems.image.alt}"></div>
           </div>
         </div>
-        <div th:if="${indicatorCards.size() > 1}" th:switch="${territory.slug}" class="push-right indicator-card">
-          <div th:case="reunion" class="text-big" biom:markdown="${'A  '+ territory.name}"></div>
-          <div th:case="saint-martin" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-          <div th:case="wallis-et-futuna" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-          <div th:case="mayotte" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-          <div th:case="saint-barthelemy" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-          <div th:case="iles-subantarctiques" class="text-big" biom:markdown="${'Aux '+ territory.name}"></div>
-          <div th:case="iles-eparses" class="text-big" biom:markdown="${'Aux '+ territory.name}"></div>
-          <div th:case="clipperton" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-          <div th:case="saint-pierre-et-miquelon" class="text-big" biom:markdown="${'A '+ territory.name}"></div>
-          <div th:case="*" class="text-big" biom:markdown="${'En '+ territory.name}"></div>
+        <div th:if="${indicatorCards.size() > 1}" class="push-right indicator-card">
+          <div class="text-big" th:text="${territory.location}"></div>
           <div class="indicateur-number-small" th:text="${#indicators.formatValue(indicatorCards[1].indicatorValue, true)}"></div>
           <div class="text-big" biom:markdown="${indicatorCards[1].page.content.presentation.descriptionTerritories.text}"></div>
           <a th:href="@{/indicateurs/{slug}(slug=${indicatorCards[1].page.name})}" class="cta-secondary">En savoir plus</a>
@@ -386,7 +368,7 @@
         <div class="push-next-wrapper">
           <div class="push-next-before">territoire suivant</div>
           <div class="push-next-title-wrapper">
-            <div class="push-next-title col-4" biom:markdown="${nextTerritoryCard.territory.name}"></div>
+            <div class="push-next-title col-4" th:text="${nextTerritoryCard.territory.name}"></div>
             <img th:src="@{/assets/images/arrow_1.svg}" loading="lazy" alt="" class="push-next-arrow" />
           </div>
         </div>

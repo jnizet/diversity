@@ -32,11 +32,11 @@
               </div>
               <div class="territoire-number-block">
                 <img th:src="@{/assets/images/Habitants.svg}" loading="lazy" alt="" class="territoire-icon" />
-                <div><span biom:markdown="*{header.population.text}">6 274</span> habitants</div>
+                <div><span th:text="*{header.population.text}">6 274</span> habitants</div>
               </div>
               <div class="territoire-number-block">
                 <img th:src="@{/assets/images/Especes.svg}" loading="lazy" alt="" class="territoire-icon" />
-                <div><span biom:markdown="*{header.species.text}">85 117</span> espèces indigènes</div>
+                <div><span th:text="*{header.species.text}">85 117</span> espèces indigènes</div>
               </div>
             </div>
           </div>

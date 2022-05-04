@@ -34,7 +34,7 @@
             <h1>
               <span class="article-h1" biom:markdown="*{presentation.name.text}">placeholder</span>
             </h1>
-            <span class="article-content" biom:markdown="*{ 'Par ' + presentation.author.text + ' - Publié le ' + presentation.date.text}"
+            <span class="article-content" th:text="*{ 'Par ' + presentation.author.text + ' - Publié le ' + presentation.date.text}"
               >Paru le 12/01/2003</span
             >
           </div>

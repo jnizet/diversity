@@ -199,7 +199,7 @@
                   16
                 </div>
                 <div th:if="${card.indicatorValue == null}" class="indicateur-slide-no-data">Aucune donnée</div>
-                <div class="indicateur-slide-tiytle" biom:markdown="${card.territory.name}">Martinique</div>
+                <div class="indicateur-slide-tiytle" th:text="${card.territory.name}">Martinique</div>
                 <img
                   th:src="@{/assets/images/territories/indicator/{slug}.svg(slug=${card.territory.slug})}"
                   alt=" "
@@ -283,7 +283,7 @@
           <div class="push-next-before">indicateur suivant</div>
           <div class="push-next-title-wrapper">
             <div class="push-next-title col-4">
-              <span biom:markdown="${#indicators.formatValue(nextIndicatorCard.indicatorValue, nextIndicatorCard.indicator.isRounded)}"
+              <span th:text="${#indicators.formatValue(nextIndicatorCard.indicatorValue, nextIndicatorCard.indicator.isRounded)}"
                 >85 117</span
               >
               <span biom:markdown="${nextIndicatorCard.page.content.presentation.description.text}"></span>

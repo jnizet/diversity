@@ -12,6 +12,7 @@ import java.util.List;
 public enum Territory {
     OUTRE_MER(
         "Outre-mer",
+        "En Outre-mer",
         "Outre-mer",
         null,
         null,
@@ -19,6 +20,7 @@ public enum Territory {
     ),
     GUADELOUPE(
         "Guadeloupe",
+        "En Guadeloupe",
         "TER971",
         "guadeloupe",
         new MapCoordinates(1166, 484),
@@ -26,6 +28,7 @@ public enum Territory {
     ),
     MARTINIQUE(
         "Martinique",
+        "En Martinique",
         "TER972",
         "martinique",
         new MapCoordinates(1167, 489),
@@ -33,6 +36,7 @@ public enum Territory {
     ),
     SAINT_MARTIN(
         "Saint-Martin",
+        "À Saint-Martin",
         "TER978",
         "saint-martin",
         new MapCoordinates(1156, 473),
@@ -40,6 +44,7 @@ public enum Territory {
     ),
     SAINT_BARTHELEMY(
         "Saint-Barthélemy",
+        "À Saint-Barthélemy",
         "TER977",
         "saint-barthelemy",
         new MapCoordinates(1158, 474),
@@ -47,6 +52,7 @@ public enum Territory {
     ),
     NOUVELLE_CALEDONIE(
         "Nouvelle-Calédonie",
+        "En Nouvelle-Calédonie",
         "TER988",
         "nouvelle-caledonie",
         new MapCoordinates(684, 615),
@@ -54,6 +60,7 @@ public enum Territory {
     ),
     POLYNESIE_FRANCAISE(
         "Polynésie française",
+        "En Polynésie française",
         "TER987",
         "polynesie",
         new MapCoordinates(855, 597),
@@ -61,6 +68,7 @@ public enum Territory {
     ),
     WALLIS_ET_FUTUNA(
         "Wallis-et-Futuna",
+        "À Wallis-et-Futuna",
         "TER986",
         "wallis-et-futuna",
         new MapCoordinates(747, 580),
@@ -68,6 +76,7 @@ public enum Territory {
     ),
     REUNION(
         "La Réunion",
+        "À La Réunion",
         "TER974",
         "reunion",
         new MapCoordinates(290, 615),
@@ -75,6 +84,7 @@ public enum Territory {
     ),
     MAYOTTE(
         "Mayotte",
+        "À Mayotte",
         "TER976",
         "mayotte",
         new MapCoordinates(254, 585),
@@ -82,6 +92,7 @@ public enum Territory {
     ),
     ILES_SUBANTARCTIQUES(
         "Terres australes françaises",
+        "Aux Terres australes françaises",
         "TER984A",
         "iles-subantarctiques",
         new MapCoordinates(367, 687),
@@ -89,6 +100,7 @@ public enum Territory {
     ),
     ILES_EPARSES(
         "Îles Éparses",
+        "Aux Îles Éparses",
         "TER984B",
         "iles-eparses",
         new MapCoordinates(237, 621),
@@ -96,6 +108,7 @@ public enum Territory {
     ),
     CLIPPERTON(
         "Clipperton",
+        "À Clipperton",
         "TER989",
         "clipperton",
         new MapCoordinates(992, 501),
@@ -103,6 +116,7 @@ public enum Territory {
     ),
     GUYANE(
         "Guyane",
+        "En Guyane",
         "TER973",
         "guyane",
         new MapCoordinates(1195, 525),
@@ -110,6 +124,7 @@ public enum Territory {
     ),
     SAINT_PIERRE_ET_MIQUELON(
         "Saint-Pierre-et-Miquelon",
+        "À Saint-Pierre-et-Miquelon",
         "TER975",
         "saint-pierre-et-miquelon",
         new MapCoordinates(1181, 348),
@@ -117,6 +132,7 @@ public enum Territory {
     ),
     TERRE_ADELIE(
         "Terre Adélie",
+        "En Terre Adélie",
         "TER984C",
         "terre-adelie",
         new MapCoordinates(611, 804),
@@ -127,6 +143,11 @@ public enum Territory {
      * Name of the territory
      */
     private final String name;
+
+    /**
+     * Location of the territory, used when we want to say "En Martinique" or "A Saint-Martin"
+     */
+    private final String location;
 
     /**
      * Key representing a territory in the external HTTP services
@@ -149,11 +170,13 @@ public enum Territory {
     private final Zone zone;
 
     Territory(String name,
+              String location,
               String biomKey,
               String slug,
               MapCoordinates coordinates,
               Zone zone) {
         this.name = name;
+        this.location = location;
         this.biomKey = biomKey;
         this.slug = slug;
         this.coordinates = coordinates;
@@ -162,6 +185,10 @@ public enum Territory {
 
     public String getName() {
         return name;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public String getBiomKey() {
