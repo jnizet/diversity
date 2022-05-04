@@ -62,7 +62,7 @@ describe('Indicator home', () => {
 
   it('should open/close questions', () => {
     cy.visit('/indicateurs');
-    cy.contains('La majorité des territoires d\'outre-mer').should('not.be.visible');
+    cy.contains("La majorité des territoires d'outre-mer").should('not.be.visible');
     cy.contains("Avec ses territoires d'outre-mer").should('not.be.visible');
 
     // click a question to see the answer and quote
