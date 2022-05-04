@@ -74,12 +74,10 @@
       <ng-template valError="atLeastOne">La liste doit contenir au moins un élément</ng-template>
       <ng-template valError="invalidElement">La liste doit contenir des éléments valides</ng-template>
     </val-errors>
-    <button id="add-unit" type="button" class="btn btn-outline-primary" (click)="addListUnit(element)">
-      Ajouter un élément à la liste
-    </button>
+    <button type="button" class="btn btn-outline-primary add-unit" (click)="addListUnit(element)">Ajouter un élément à la liste</button>
   </div>
 
-  <!-- MultiistElement -->
+  <!-- MultiListElement -->
   <div *ngIf="isMultiList(element)" class="mb-5 pl-3 left-border">
     <biom-heading [level]="level" [title]="element.description"></biom-heading>
     <div formArrayName="elements">
@@ -101,8 +99,13 @@
       <ng-template valError="atLeastOne">La liste doit contenir au moins un élément</ng-template>
       <ng-template valError="invalidElement">La liste doit contenir des éléments valides</ng-template>
     </val-errors>
-    <div *ngFor="let template of element.templates">
-      <button id="add-unit" type="button" class="btn btn-outline-primary" (click)="addMultiListUnit(element, template)">
+    <div *ngIf="element.templates.length">
+      <button
+        *ngFor="let template of element.templates"
+        type="button"
+        class="btn btn-outline-primary mr-2 mb-2 add-unit"
+        (click)="addMultiListUnit(element, template)"
+      >
         Ajouter {{ template.description }}
       </button>
     </div>

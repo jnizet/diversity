@@ -78,7 +78,7 @@ class EditPageComponentTester extends ComponentTester<EditPageComponent> {
   }
 
   get addUnitButton() {
-    return this.button('#add-unit');
+    return this.button('.add-unit');
   }
 
   get editImageComponents() {
