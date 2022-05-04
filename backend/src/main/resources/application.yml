@@ -2,7 +2,7 @@ diversity:
   database:
     host-and-port: localhost:5432
   images:
-    directory: ./e2e/images
+    directory: ./images
   contact:
     email: contact@mnhn.com
     subject: Message du portail diversité
