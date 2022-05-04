@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --no-progress",
+    "build": "ng build --no-progress",
+    "watch": "ng build --watch --configuration development",
     "test": "ng test --code-coverage --no-progress --no-watch",
     "lint": "ng lint > build/tslint-result.txt",
     "format": "prettier --write \"src/**/*.+(ts|js|json|html|scss)\"",
@@ -28,7 +29,7 @@
     "ngx-valdemort": "4.0.0",
     "rxjs": "6.6.3",
     "tslib": "2.0.3",
-    "zone.js": "~0.11.4"
+    "zone.js": "0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "12.2.17",
