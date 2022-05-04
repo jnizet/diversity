@@ -223,7 +223,7 @@ class TerritoryControllerTest extends ControllerTest {
                .andExpect(content().string(containsString("<p>Risks</p>")))
                .andExpect(content().string(containsString("<p>Risk1</p>")))
                .andExpect(content().string(containsString("<p>risk1</p>")))
-               .andExpect(content().string(containsString("<p>Saint-Pierre-et-Miquelon</p>")))
+               .andExpect(content().string(containsString("Saint-Pierre-et-Miquelon")))
                .andExpect(content().string(containsString("</html>")));
     }
 

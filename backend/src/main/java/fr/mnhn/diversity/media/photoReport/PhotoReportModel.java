@@ -24,7 +24,7 @@ public final class PhotoReportModel {
                 .builder("presentation")
                 .describedAs("Présentation du reportage photo")
                 .titleText("name", "Titre principal")
-                .text("author", "Date de publication (format: JJ/MM/YYYY)")
+                .text("date", "Date de publication (format: JJ/MM/YYYY)")
                 .image("image", "Image d’illustration")
                 .checkbox("shadowed", "Ajouter une ombre sur le coté gauche de la photo")
             )

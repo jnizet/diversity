@@ -22,11 +22,15 @@ public class MediaCategoryRepository {
     }
 
     public List<MediaCategory> list() {
-        return jdbcTemplate.query("select id, name from media_category order by name", (rs, rowNum) -> new MediaCategory(rs.getLong("id"), rs.getString("name")));
+        return jdbcTemplate.query(
+            "select id, name from media_category order by name",
+            (rs, rowNum) -> new MediaCategory(rs.getLong("id"), rs.getString("name")));
     }
 
-    public List<MediaCategory> listUsedCategory() {
-        return jdbcTemplate.query("select id, name from media_category where exists(select 1 from media_category_relation where category_id = id) order by name", (rs, rowNum) -> new MediaCategory(rs.getLong("id"), rs.getString("name")));
+    public List<MediaCategory> listUsed() {
+        return jdbcTemplate.query(
+            "select id, name from media_category where exists(select 1 from media_category_relation where category_id = id) order by name",
+            (rs, rowNum) -> new MediaCategory(rs.getLong("id"), rs.getString("name")));
     }
 
     /**
