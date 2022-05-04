@@ -34,10 +34,10 @@ describe('Home', () => {
     cy.contains('tous les territoires').click({ force: true });
     cy.get('.bassin0 .bassin-circle').click({ force: true });
 
-    cy.contains('.bassin-text-title', 'Bassin Antillais');
+    cy.contains('.bassin-text-title', 'Bassin Antillais').should('be.visible');
     cy.contains('.cta-close-bassin', 'Fermer').click({ force: true });
 
-    cy.get('map-container').should('not.contain', 'Bassin Antillais');
+    cy.get('.map-container').contains('Bassin Antillais').should('not.be.visible');
   });
 
   it('should display territory in map', () => {

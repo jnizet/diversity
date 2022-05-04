@@ -39,7 +39,7 @@ describe('Contact', () => {
   });
 
   it('should send an email', () => {
-    cy.route2('POST', '/messages', {
+    cy.intercept('POST', '/messages', {
       delayMs: 1000
     }).as('sendMessage');
     cy.visit('/');
@@ -77,7 +77,7 @@ describe('Contact', () => {
   });
 
   it('should show an error if sending an email fails', () => {
-    cy.route2('POST', '/messages', {
+    cy.intercept('POST', '/messages', {
       statusCode: 500,
       delayMs: 1000,
       body: {}
@@ -99,7 +99,7 @@ describe('Contact', () => {
   });
 
   it('should show an error if network fails', () => {
-    cy.route2('POST', '/messages', {
+    cy.intercept('POST', '/messages', {
       forceNetworkError: true
     });
 
