@@ -3,13 +3,13 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin');
 
 module.exports = {
   optimization: {
     // this is applied only in production mode
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserJSPlugin(), new CssMinimizerPlugin()],
   },
   entry: {
     // a JS bundle is generated for the index.ts entry point. Since the application is really small
@@ -41,9 +41,18 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader?url=false',
-          'sass-loader',
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              url: false
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
         ],
       },
     ],
