@@ -22,10 +22,6 @@ class IndicatorsComponentTester extends ComponentTester<IndicatorsComponent> {
     return this.elements('.indicator');
   }
 
-  get roundedIndicatorIcon() {
-    return this.elements('#rounded-indicator-icon');
-  }
-
   get createLink() {
     return this.element('#create-indicator');
   }
@@ -100,10 +96,11 @@ describe('IndicatorsComponent', () => {
     expect(tester.indicators[0]).toContainText('deforestation');
     expect(tester.indicators[0]).toContainText('biom_1');
     expect(tester.indicators[0]).toContainText('Végétation');
+    expect(tester.indicators[0]).not.toContainText('arrondi');
     expect(tester.indicators[1]).toContainText('especes-menacees');
     expect(tester.indicators[1]).toContainText('biom_2');
     expect(tester.indicators[1]).not.toContainText('Végétation');
-    expect(tester.roundedIndicatorIcon.length).toBe(1);
+    expect(tester.indicators[1]).toContainText('arrondi');
     expect(tester.createLink).not.toBeNull();
   });
 

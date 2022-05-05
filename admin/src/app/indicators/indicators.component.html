@@ -2,48 +2,32 @@
 
 <div *ngIf="indicators">
   <div class="content mt-5">
-    <div *ngIf="isLoading" class="position-absolute w-100 h-100 overlay d-flex justify-content-center align-items-center">
-      <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-    <div *ngFor="let indicator of indicators; let i = index">
-      <div class="d-flex">
-        <div><fa-icon [icon]="indicatorIcon" class="me-2"></fa-icon></div>
+    <div *ngFor="let indicator of indicators; index as i; first as first; last as last">
+      <div class="d-flex align-items-center">
+        <div class="me-2"><fa-icon [icon]="indicatorIcon"></fa-icon></div>
         <div class="flex-grow-1 row indicator">
-          <div class="col-6 col-lg-3">
-            <a [routerLink]="['/indicators', indicator.id, 'edit']">{{ indicator.slug }}</a>
+          <div class="col-sm-6">
+            <div><a [routerLink]="['/indicators', indicator.id, 'edit']">{{ indicator.slug }}</a></div>
+            <div>{{ indicator.biomId }}</div>
           </div>
-          <div class="col-6 col-lg-5">{{ indicator.biomId }}</div>
-          <div class="col-lg-2">
-            <span class="badge bg-secondary ms-2" *ngFor="let category of indicator.categories">{{ category.name }}</span>
+          <div class="col-sm-6 col-lg-3">
+            <span class="badge bg-secondary me-2" *ngFor="let category of indicator.categories">{{ category.name }}</span>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <span class="badge bg-info text-dark" *ngIf="indicator.isRounded">arrondi</span>
           </div>
         </div>
-        <div class="col-6 col-lg-1">
-          <ng-container *ngIf="indicator.isRounded">
-            <fa-icon title="L'indicateur est arrondi" [icon]="roundedIndicatorIcon" id="rounded-indicator-icon"></fa-icon>
-            <span class="visually-hidden">L'indicateur est arrondi</span>
-          </ng-container>
-        </div>
-        <div class="col-6 col-lg-1 d-flex flex-column">
-          <fa-icon
-            *ngIf="i !== 0"
-            (click)="moveUp(i)"
-            title="Déplacer l'indicateur vers le haut"
-            [icon]="moveUpItemIcon"
-            id="move-up-indicator-icon"
-          ></fa-icon>
-          <span class="visually-hidden">Déplacer l'indicateur vers le haut</span>
-          <fa-icon
-            *ngIf="!isInLastPosition(i)"
-            (click)="moveDown(i)"
-            title="Déplacer l'indicateur vers le bas"
-            [icon]="moveDownItemIcon"
-            id="move-down-indicator-icon"
-          ></fa-icon>
-          <span class="visually-hidden">Déplacer l'indicateur vers le bas</span>
-        </div>
-        <div class="text-end">
+        <div class="ms-2 text-end d-flex align-items-center">
+          <div class="d-flex flex-column me-4">
+            <button class="btn btn-link p-0" [disabled]="first" (click)="moveUp(i)" id="move-up-indicator-icon">
+              <fa-icon [icon]="moveUpItemIcon"></fa-icon>
+              <span class="visually-hidden">Déplacer l'indicateur vers le haut</span>
+            </button>
+            <button class="btn btn-link p-0" [disabled]="last" (click)="moveDown(i)" id="move-down-indicator-icon">
+              <fa-icon [icon]="moveDownItemIcon"></fa-icon>
+              <span class="visually-hidden">Déplacer l'indicateur vers le bas</span>
+            </button>
+          </div>
           <button (click)="deleteIndicator(indicator)" type="button" class="btn btn-outline-danger btn-sm delete-indicator-button">
             <fa-icon [icon]="deleteIndicatorIcon"></fa-icon>
             <span class="visually-hidden">Supprimer l'indicateur</span>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faChartLine, faPlus, faTrash, faCheckSquare, faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faChartLine, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { switchMap, tap } from 'rxjs';
 
 import { ConfirmationService } from '../confirmation.service';
@@ -18,10 +18,8 @@ export class IndicatorsComponent implements OnInit {
   indicatorIcon = faChartLine;
   createIndicatorIcon = faPlus;
   deleteIndicatorIcon = faTrash;
-  roundedIndicatorIcon = faCheckSquare;
   moveUpItemIcon = faAngleUp;
   moveDownItemIcon = faAngleDown;
-  isLoading = false;
   constructor(
     private indicatorService: IndicatorService,
     private confirmationService: ConfirmationService,
@@ -43,23 +41,15 @@ export class IndicatorsComponent implements OnInit {
       .subscribe(indicators => (this.indicators = indicators));
   }
 
-  isInLastPosition(index: number) {
-    return index === this.indicators.length - 1;
-  }
-
   moveUp(indicatorIndex: number) {
-    this.isLoading = true;
     this.indicatorService.swap(this.indicators[indicatorIndex].id, this.indicators[indicatorIndex - 1].id).subscribe(indicators => {
       this.indicators = indicators.sort((a, b) => a.rank - b.rank);
-      this.isLoading = false;
     });
   }
 
   moveDown(indicatorIndex: number) {
-    this.isLoading = true;
     this.indicatorService.swap(this.indicators[indicatorIndex].id, this.indicators[indicatorIndex + 1].id).subscribe(indicators => {
       this.indicators = indicators.sort((a, b) => a.rank - b.rank);
-      this.isLoading = false;
     });
   }
 
