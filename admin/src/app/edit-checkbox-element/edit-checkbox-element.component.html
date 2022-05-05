@@ -1,4 +1,4 @@
-<div class="mb-3">
-  <input type="checkbox" class="me-3" [formControl]="checkboxControl" />
-  <label class="form-label">{{ editedCheckboxElement.description }}</label>
+<div class="form-check mb-3">
+  <input type="checkbox" class="form-check-input" [formControl]="checkboxControl" [id]="'checkbox-' + idSuffix" />
+  <label class="form-check-label" [for]="'checkbox-' + idSuffix">{{ editedCheckboxElement.description }}</label>
 </div>

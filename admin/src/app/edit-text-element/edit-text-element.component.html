@@ -1,6 +1,12 @@
 <div class="mb-3">
-  <label class="form-label">{{ editedTextElement.description }}</label>
-  <textarea *ngIf="editedTextElement.multiLine" class="form-control" rows="4" [formControl]="textControl"></textarea>
-  <input *ngIf="!editedTextElement.multiLine" class="form-control" [formControl]="textControl" />
+  <label class="form-label" [for]="'text' + idSuffix">{{ editedTextElement.description }}</label>
+  <textarea
+    *ngIf="editedTextElement.multiLine"
+    class="form-control"
+    rows="4"
+    [formControl]="textControl"
+    [id]="'text' + idSuffix"
+  ></textarea>
+  <input *ngIf="!editedTextElement.multiLine" class="form-control" [formControl]="textControl" [id]="'text' + idSuffix" />
   <val-errors [control]="textControl" label="Le texte"></val-errors>
 </div>

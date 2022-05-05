@@ -1,6 +1,7 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { SelectElement } from '../page.model';
 import { ControlValueAccessor, FormBuilder, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IdGeneratorService } from '../id-generator.service';
 
 /**
  * Form element allowing to select a value for a select element of a page.
@@ -13,6 +14,8 @@ import { ControlValueAccessor, FormBuilder, FormControl, NG_VALUE_ACCESSOR } fro
 })
 export class EditSelectElementComponent implements ControlValueAccessor {
   editedSelectElement: SelectElement;
+  idSuffix: string;
+
   get optionValue() {
     return Object.keys(this.editedSelectElement?.options);
   }
@@ -20,7 +23,8 @@ export class EditSelectElementComponent implements ControlValueAccessor {
   private onChange: (value: SelectElement) => void = () => {};
   private onTouched: () => void = () => {};
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, idGenerator: IdGeneratorService) {
+    this.idSuffix = idGenerator.generateSuffix();
     this.selectControl = this.fb.control('');
     this.selectControl.valueChanges.subscribe((value: string) => {
       if (this.selectControl.valid) {

@@ -2,13 +2,13 @@
   <label>{{ editedLinkElement.description }}</label>
   <div class="row gx-2">
     <div class="col">
-      <label class="form-label">Texte</label>
-      <input class="form-control link-text" formControlName="text" />
+      <label class="form-label" [for]="'text' + idSuffix">Texte</label>
+      <input class="form-control link-text" formControlName="text" [id]="'text' + idSuffix" />
       <val-errors controlName="text" label="Le texte"></val-errors>
     </div>
     <div class="col">
-      <label class="form-label">Lien</label>
-      <input class="form-control link-href" formControlName="href" />
+      <label class="form-label" [for]="'href' + idSuffix">Lien</label>
+      <input class="form-control link-href" formControlName="href" [id]="'href' + idSuffix" />
       <val-errors controlName="href" label="Le lien"></val-errors>
     </div>
   </div>

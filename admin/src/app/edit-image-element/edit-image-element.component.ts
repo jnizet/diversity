@@ -5,6 +5,7 @@ import { ModalService } from '../modal.service';
 import { ImageService } from '../image.service';
 import { finalize } from 'rxjs';
 import { faFilePdf, faImage } from '@fortawesome/free-solid-svg-icons';
+import { IdGeneratorService } from '../id-generator.service';
 
 @Component({
   selector: 'biom-edit-image-element',
@@ -29,7 +30,15 @@ export class EditImageElementComponent {
   private onChange: (value: ImageElement) => void = () => {};
   private onTouched: () => void = () => {};
 
-  constructor(private fb: FormBuilder, private modalService: ModalService, private imageService: ImageService) {
+  idSuffix: string;
+
+  constructor(
+    private fb: FormBuilder,
+    private modalService: ModalService,
+    private imageService: ImageService,
+    idGenerator: IdGeneratorService
+  ) {
+    this.idSuffix = idGenerator.generateSuffix();
     this.imageGroup = this.fb.group({
       imageId: [null, Validators.required],
       alt: ['', Validators.required]

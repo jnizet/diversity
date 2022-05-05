@@ -1,6 +1,7 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { LinkElement } from '../page.model';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { IdGeneratorService } from '../id-generator.service';
 
 @Component({
   selector: 'biom-edit-link-element',
@@ -19,8 +20,10 @@ export class EditLinkElementComponent implements ControlValueAccessor {
   linkGroup: FormGroup;
   private onChange: (value: LinkElement) => void = () => {};
   private onTouched: () => void = () => {};
+  idSuffix: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, idGenerator: IdGeneratorService) {
+    this.idSuffix = idGenerator.generateSuffix();
     this.linkGroup = this.fb.group({
       text: ['', Validators.required],
       href: ['', Validators.required]

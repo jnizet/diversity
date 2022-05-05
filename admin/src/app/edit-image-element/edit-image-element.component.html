@@ -2,8 +2,10 @@
   <label>{{ editedImageElement.description }}</label>
   <div class="row gx-2">
     <div class="col-lg-4">
-      <label class="form-label" *ngIf="!editedImageElement.document">Source de l'image</label>
-      <label class="form-label" *ngIf="editedImageElement.document">Document</label>
+      <label [for]="'file' + idSuffix" class="form-label">
+        <ng-container *ngIf="!editedImageElement.document">Source de l'image</ng-container>
+        <ng-container *ngIf="editedImageElement.document">Document</ng-container>
+      </label>
       <div class="border rounded p-2" [class.border-danger]="imageGroup.get('imageId').invalid && imageGroup.get('imageId').touched">
         <div class="text-center thumbnail">
           <div *ngIf="uploading" class="spinner-border text-primary mt-4 uploading" role="status">
@@ -66,7 +68,7 @@
       <val-errors controlName="alt" label="La légende"></val-errors>
     </div>
   </div>
-  <input type="file" [accept]="acceptedFiles" class="d-none" (change)="onUpload($event)" #imageFileInput />
+  <input [id]="'file' + idSuffix" type="file" [accept]="acceptedFiles" class="d-none" (change)="onUpload($event)" #imageFileInput />
 </div>
 
 <ng-template #imageModalContent let-modal>

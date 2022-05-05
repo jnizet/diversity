@@ -1,6 +1,6 @@
 <div class="mb-3">
-  <label class="form-label">{{ editedSelectElement.description }}</label>
-  <select class="form-select" [formControl]="selectControl">
+  <label class="form-label" [for]="'select' + idSuffix">{{ editedSelectElement.description }}</label>
+  <select class="form-select" [formControl]="selectControl" [id]="'select' + idSuffix">
     <option [ngValue]=""></option>
     <option *ngFor="let option of optionValue" [ngValue]="option">{{ editedSelectElement.options[option] }}</option>
   </select>
