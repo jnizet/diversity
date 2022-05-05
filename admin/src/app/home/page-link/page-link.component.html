@@ -1,8 +1,8 @@
 <span *ngIf="pageLink.id">
-  <fa-icon [icon]="pageIcon" class="mr-2"></fa-icon>
+  <fa-icon [icon]="pageIcon" class="me-2"></fa-icon>
   <a [routerLink]="['/page-models', pageLink.modelName, 'pages', pageLink.id, 'edit']">{{ pageLink.title }}</a>
 </span>
 <span *ngIf="!pageLink.id" class="no-page">
-  <fa-icon [icon]="noPageIcon" class="mr-2"></fa-icon>
+  <fa-icon [icon]="noPageIcon" class="me-2"></fa-icon>
   <a [routerLink]="['/page-models', pageLink.modelName, 'pages', 'create']" [queryParams]="{ name: pageLink.name }">{{ pageLink.name }}</a>
 </span>

@@ -1,5 +1,5 @@
-<div class="form-group">
-  <label>{{ editedTextElement.description }}</label>
+<div class="mb-3">
+  <label class="form-label">{{ editedTextElement.description }}</label>
   <textarea *ngIf="editedTextElement.multiLine" class="form-control" rows="4" [formControl]="textControl"></textarea>
   <input *ngIf="!editedTextElement.multiLine" class="form-control" [formControl]="textControl" />
   <val-errors [control]="textControl" label="Le texte"></val-errors>

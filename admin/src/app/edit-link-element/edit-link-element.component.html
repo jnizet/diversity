@@ -1,13 +1,13 @@
 <div class="link" [formGroup]="linkGroup">
   <label>{{ editedLinkElement.description }}</label>
-  <div class="form-row">
+  <div class="row gx-2">
     <div class="col">
-      <label>Texte</label>
+      <label class="form-label">Texte</label>
       <input class="form-control link-text" formControlName="text" />
       <val-errors controlName="text" label="Le texte"></val-errors>
     </div>
     <div class="col">
-      <label>Lien</label>
+      <label class="form-label">Lien</label>
       <input class="form-control link-href" formControlName="href" />
       <val-errors controlName="href" label="Le lien"></val-errors>
     </div>

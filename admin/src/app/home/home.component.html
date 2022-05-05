@@ -50,8 +50,8 @@
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.articlePageLinks">
             <span *ngIf="pageLink.id">
-              <fa-icon [icon]="pageIcon" class="mr-2"></fa-icon>
-              <a href="#" (click)="openEditMediaModal('article', pageLink)">{{ pageLink.title }}</a>
+              <fa-icon [icon]="pageIcon" class="me-2"></fa-icon>
+              <a href="#" role="button" (click)="$event.preventDefault(); openEditMediaModal('article', pageLink)">{{ pageLink.title }}</a>
             </span>
           </li>
           <button type="button" class="btn btn-outline-secondary mt-2" id="create-article" (click)="openCreateMediaModal('article')">
@@ -64,8 +64,10 @@
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.interviewPageLinks">
             <span *ngIf="pageLink.id">
-              <fa-icon [icon]="pageIcon" class="mr-2"></fa-icon>
-              <a href="#" (click)="openEditMediaModal('interview', pageLink)">{{ pageLink.title }}</a>
+              <fa-icon [icon]="pageIcon" class="me-2"></fa-icon>
+              <a href="#" role="button" (click)="$event.preventDefault(); openEditMediaModal('interview', pageLink)"
+                >{{ pageLink.title }}</a
+              >
             </span>
           </li>
           <button
@@ -84,8 +86,8 @@
         <ul class="list-unstyled">
           <li *ngFor="let pageLink of pageLinks.photoReportsPageLinks">
             <span *ngIf="pageLink.id">
-              <fa-icon [icon]="pageIcon" class="mr-2"></fa-icon>
-              <a href="#" (click)="openEditMediaModal('report', pageLink)">{{ pageLink.title }}</a>
+              <fa-icon [icon]="pageIcon" class="me-2"></fa-icon>
+              <a href="#" role="button" (click)="$event.preventDefault(); openEditMediaModal('report', pageLink)">{{ pageLink.title }}</a>
             </span>
           </li>
           <button

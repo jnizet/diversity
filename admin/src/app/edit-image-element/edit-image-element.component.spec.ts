@@ -83,7 +83,7 @@ class DummyFormComponentTester extends ComponentTester<DummyFormComponent> {
   }
 
   get closeDialogButton(): HTMLButtonElement {
-    return document.querySelector('button.close');
+    return document.querySelector('button.btn-close');
   }
 
   get formValue() {

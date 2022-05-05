@@ -2,7 +2,7 @@
   <div class="col-md-3 mt-5">
     <div class="sticky-top">
       <h5>VOLET DE NAVIGATION</h5>
-      <div class="ml-5 my-4" *ngFor="let element of editedPage.elements">
+      <div class="ms-5 my-4" *ngFor="let element of editedPage.elements">
         <a role="button" name="index--{{ element.name }}" (click)="scrollTo(element.name)">{{ element.description }}</a>
       </div>
     </div>
@@ -19,8 +19,8 @@
       <button (click)="import()" class="btn btn-primary my-2" id="import-button">Importer</button>
     </div>
     <form [formGroup]="pageForm" (ngSubmit)="savePage()">
-      <div class="form-group">
-        <label for="title">Titre de la page</label>
+      <div class="mb-3">
+        <label class="form-label" for="title">Titre de la page</label>
         <input id="title" class="form-control" formControlName="title" />
         <val-errors controlName="title" label="Le titre"></val-errors>
       </div>
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="mb-1">
-        <button #saveButton type="submit" [disabled]="imageImported.length !== 0" class="btn btn-primary mr-2" id="save-button">
+        <button #saveButton type="submit" [disabled]="imageImported.length !== 0" class="btn btn-primary me-2" id="save-button">
           Enregistrer
         </button>
         <a class="btn btn-danger" routerLink="/">Annuler</a>

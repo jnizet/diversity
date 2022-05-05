@@ -4,16 +4,16 @@
   <div class="content mt-5">
     <div *ngFor="let ecogesture of ecogestures">
       <div class="d-flex">
-        <div><fa-icon [icon]="ecogestureIcon" class="mr-2"></fa-icon></div>
+        <div><fa-icon [icon]="ecogestureIcon" class="me-2"></fa-icon></div>
         <div class="flex-grow-1 row ecogesture">
           <div class="col-6 col-md-4">
             <a [routerLink]="['/ecogestures', ecogesture.id, 'edit']">{{ ecogesture.slug }}</a>
           </div>
         </div>
-        <div class="text-right">
+        <div class="text-end">
           <button (click)="deleteEcogesture(ecogesture)" type="button" class="btn btn-outline-danger btn-sm delete-ecogesture-button">
             <fa-icon [icon]="deleteEcogestureIcon"></fa-icon>
-            <span class="sr-only">Supprimer l'éco-geste</span>
+            <span class="visually-hidden">Supprimer l'éco-geste</span>
           </button>
         </div>
       </div>
@@ -21,9 +21,9 @@
     </div>
   </div>
 
-  <div class="text-right mt-2">
+  <div class="text-end mt-2">
     <a class="btn btn-outline-secondary" id="create-ecogesture" routerLink="/ecogestures/new">
-      <fa-icon [icon]="createEcogestureIcon" class="mr-1"></fa-icon>
+      <fa-icon [icon]="createEcogestureIcon" class="me-1"></fa-icon>
       <span>Créer un nouvel éco-geste</span>
     </a>
   </div>

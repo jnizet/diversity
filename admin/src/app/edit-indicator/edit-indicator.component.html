@@ -4,12 +4,12 @@
   <div class="col-md-6 d-md-block" [class.d-none]="indicatorSectionDisplayed">
     <form [formGroup]="form" (ngSubmit)="save()">
       <!-- Slug -->
-      <div class="form-group">
-        <label for="slug">Slug</label>
+      <div class="mb-3">
+        <label class="form-label" for="slug">Slug</label>
         <input class="form-control" formControlName="slug" id="slug" />
-        <small id="slug-id-hint" class="form-text text-muted"
-          >Nom définissant l'adresse de l'indicateur dans le portail. Par ex: <code>especes-envahissantes</code></small
-        >
+        <div id="slug-id-hint" class="form-text">
+          Nom définissant l'adresse de l'indicateur dans le portail. Par ex: <code>especes-envahissantes</code>
+        </div>
         <val-errors controlName="slug" label="Le slug">
           <ng-template valError="pattern"
             >Le slug doit avoir la forme <code>mot-autre-mot</code>, avec autant de mots et tirets que nécessaires, et seulement des
@@ -19,13 +19,13 @@
       </div>
 
       <!-- BIOM identifier -->
-      <div class="form-group">
-        <label for="biom-id">Identifiant BIOM</label>
+      <div class="mb-3">
+        <label class="form-label" for="biom-id">Identifiant BIOM</label>
         <input class="form-control" formControlName="biomId" id="biom-id" />
-        <small id="biom-id-hint" class="form-text text-muted"
-          >Identifiant permettant de récupérer l'indicateur dans l'entrepôt de données. Par ex:
-          <code>8816092b-1ce3-4ae7-815d-019e99ecf545</code></small
-        >
+        <div id="biom-id-hint" class="form-text">
+          Identifiant permettant de récupérer l'indicateur dans l'entrepôt de données. Par ex:
+          <code>8816092b-1ce3-4ae7-815d-019e99ecf545</code>
+        </div>
         <button
           type="button"
           class="btn btn-secondary btn-sm"
@@ -39,19 +39,21 @@
       </div>
 
       <!-- Categories (at least one, at most two) -->
-      <div class="form-group" formArrayName="categoryIds">
-        <label>Catégories de l'indicateur</label>
-        <div class="form-row" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
-          <select class="form-control custom-select col-9" [formControlName]="index" [id]="'category-' + index">
-            <option [ngValue]="null"></option>
-            <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">
-              {{ category.name }}
-            </option>
-          </select>
+      <div class="mb-3" formArrayName="categoryIds">
+        <label class="form-label">Catégories de l'indicateur</label>
+        <div class="row gx-2" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
+          <div class="col-9">
+            <select class="form-select" [formControlName]="index" [id]="'category-' + index">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
           <div class="col-3">
             <!-- Add a category if less than 2 -->
             <button *ngIf="categoryIds.controls.length < 2" type="button" class="btn btn-link add-category-button" (click)="addCategory()">
-              <span class="sr-only">Ajouter une catégorie</span>
+              <span class="visually-hidden">Ajouter une catégorie</span>
               <fa-icon [icon]="addIcon"></fa-icon>
             </button>
             <!-- Remove a category if more than 1 -->
@@ -61,63 +63,65 @@
               class="btn btn-link remove-category-button"
               (click)="removeCategory(index)"
             >
-              <span class="sr-only">Supprimer une catégorie</span>
+              <span class="visually-hidden">Supprimer une catégorie</span>
               <fa-icon [icon]="removeIcon"></fa-icon>
             </button>
           </div>
         </div>
-        <small id="categories-hint" class="form-text text-muted">Au moins une catégorie, au maximum deux.</small>
+        <div id="categories-hint" class="form-text">Au moins une catégorie, au maximum deux.</div>
         <val-errors [control]="categoryIds" label="La catégorie">
           <ng-template valError="required">Au moins une catégorie est nécessaire.</ng-template>
         </val-errors>
       </div>
 
       <!-- Ecogestures -->
-      <div class="form-group" formArrayName="ecogestureIds">
-        <label>Éco-gestes de l'indicateur</label>
+      <div class="mb-3" formArrayName="ecogestureIds">
+        <label class="form-label">Éco-gestes de l'indicateur</label>
         <div
-          class="form-row"
+          class="row gx-2"
           [class.mt-2]="!first"
           *ngFor="let ecogestureControl of ecogestureIds.controls; index as index; first as first"
         >
-          <select class="form-control custom-select col-9" [formControlName]="index" [id]="'ecogesture-' + index">
-            <option [ngValue]="null"></option>
-            <option *ngFor="let ecogesture of unselectedEcogestures(ecogestureControl.value)" [ngValue]="ecogesture.id">
-              {{ ecogesture.slug }}
-            </option>
-          </select>
+          <div class="col-9">
+            <select class="form-select col-9" [formControlName]="index" [id]="'ecogesture-' + index">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let ecogesture of unselectedEcogestures(ecogestureControl.value)" [ngValue]="ecogesture.id">
+                {{ ecogesture.slug }}
+              </option>
+            </select>
+          </div>
           <div class="col-3">
             <!-- Add an ecogesture -->
             <button type="button" class="btn btn-link add-ecogesture-button" (click)="addEcogesture()">
-              <span class="sr-only">Ajouter un éco-geste</span>
+              <span class="visually-hidden">Ajouter un éco-geste</span>
               <fa-icon [icon]="addIcon"></fa-icon>
             </button>
             <!-- Remove an ecogesture -->
             <button type="button" class="btn btn-link remove-ecogesture-button" (click)="removeEcogesture(index)">
-              <span class="sr-only">Supprimer un éco-geste</span>
+              <span class="visually-hidden">Supprimer un éco-geste</span>
               <fa-icon [icon]="removeIcon"></fa-icon>
             </button>
           </div>
         </div>
       </div>
       <!-- Round the indicator value-->
-      <div class="form-group form-check">
+      <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" formControlName="isRounded" id="is-rounded" />
-        <label class="form-check-label">Arrondir l'indicateur</label>
+        <label class="form-check-label" for="is-rounded">Arrondir l'indicateur</label>
       </div>
       <div>
-        <button class="btn btn-primary mr-2" id="save-button">Enregistrer</button>
+        <button class="btn btn-primary me-2" id="save-button">Enregistrer</button>
         <a routerLink="/indicators" class="btn btn-danger">Annuler</a>
       </div>
     </form>
   </div>
   <div class="p-3 bg-light border rounded col-md-6" id="indicator-section" *ngIf="indicatorSectionDisplayed">
-    <button *ngIf="indicatorSectionDisplayed && !isFetchingValues" class="close" (click)="closeIndicatorSection()">&times;</button>
+    <button *ngIf="indicatorSectionDisplayed && !isFetchingValues" class="btn-close float-end" (click)="closeIndicatorSection()"></button>
     <div class="text-center my-5" *ngIf="isFetchingValues">
       <fa-icon [icon]="spinnerIcon" [spin]="true" id="fetching-spinner"></fa-icon>
     </div>
     <div *ngIf="valuedIndicator" id="valued-indicator">
-      <h2 class="mr-4">{{ valuedIndicator.shortLabel }}</h2>
+      <h2 class="me-4">{{ valuedIndicator.shortLabel }}</h2>
       <table class="table table-hover" *ngIf="valuedIndicator">
         <thead>
           <tr>

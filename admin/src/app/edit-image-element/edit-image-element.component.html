@@ -1,13 +1,13 @@
 <div class="image" [formGroup]="imageGroup">
   <label>{{ editedImageElement.description }}</label>
-  <div class="form-row">
+  <div class="row gx-2">
     <div class="col-lg-4">
-      <label *ngIf="!editedImageElement.document">Source de l'image</label>
-      <label *ngIf="editedImageElement.document">Document</label>
+      <label class="form-label" *ngIf="!editedImageElement.document">Source de l'image</label>
+      <label class="form-label" *ngIf="editedImageElement.document">Document</label>
       <div class="border rounded p-2" [class.border-danger]="imageGroup.get('imageId').invalid && imageGroup.get('imageId').touched">
         <div class="text-center thumbnail">
           <div *ngIf="uploading" class="spinner-border text-primary mt-4 uploading" role="status">
-            <span class="sr-only">Téléchargement en cours...</span>
+            <span class="visually-hidden">Téléchargement en cours...</span>
           </div>
           <div *ngIf="!uploading && !imageGroup.value.imageId" class="text-center text-muted no-image mt-2">
             <fa-icon [icon]="imageIcon" size="4x"></fa-icon>
@@ -18,13 +18,13 @@
           <ng-container *ngIf="!uploading && imageGroup.value.imageId">
             <div *ngIf="!editedImageElement.document" class="image-div">
               <a role="button" (click)="openImageModal(imageModalContent)">
-                <span class="sr-only">Cliquer pour agrandir l'image</span>
+                <span class="visually-hidden">Cliquer pour agrandir l'image</span>
                 <img *ngIf="imageGroup.value.imageId" [alt]="imageGroup.value.alt" [src]="imageUrl" class="img-thumbnail" />
               </a>
             </div>
             <div *ngIf="editedImageElement.document" class="document-div">
               <a [href]="'/images/' + imageGroup.value.imageId + '/document'" class="text-decoration-none text-muted">
-                <span class="sr-only">Cliquer pour télécharger le document</span>
+                <span class="visually-hidden">Cliquer pour télécharger le document</span>
                 <fa-icon [icon]="documentIcon" size="4x"></fa-icon>
               </a>
             </div>
@@ -49,7 +49,7 @@
           </button>
         </div>
       </div>
-      <small class="form-text text-muted image-hint">
+      <div class="form-text image-hint">
         <span *ngIf="editedImageElement.multiSize">
           L'image doit être une grande photo au format JPEG, et sera redimensionnée automatiquement.
         </span>
@@ -57,11 +57,11 @@
         <span *ngIf="!editedImageElement.multiSize && !editedImageElement.document">
           L'image ne sera <strong>pas</strong> redimensionnée.
         </span>
-      </small>
+      </div>
       <val-errors controlName="imageId" [label]="editedImageElement.document ? 'Le document' : 'L\'image'"></val-errors>
     </div>
     <div class="col-lg-8">
-      <label>Légende / Texte alternatif</label>
+      <label class="form-label">Légende / Texte alternatif</label>
       <input class="form-control image-alt" formControlName="alt" />
       <val-errors controlName="alt" label="La légende"></val-errors>
     </div>
@@ -71,9 +71,7 @@
 
 <ng-template #imageModalContent let-modal>
   <div class="modal-header">
-    <button type="button" class="close" aria-label="Fermer" (click)="modal.dismiss()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" aria-label="Fermer" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
     <div class="text-center">

@@ -1,25 +1,30 @@
 <div class="modal-header">
   <h4 class="modal-title">{{ title }}</h4>
+  <button type="button" class="btn-close" aria-label="Fermer" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">
-  <div [formGroup]="form" class="form-group">
-    <div class="form-group">
-      <label>{{ message }}</label>
+  <div [formGroup]="form" class="mb-3">
+    <div class="mb-3">
+      <label class="form-label" for="name">{{ message }}</label>
       <input class="form-control" id="name" formControlName="name" [readonly]="isReadonly" #name />
       <val-errors controlName="name" label="Le nom"></val-errors>
     </div>
 
     <!-- Categories (at least one) -->
-    <div class="form-group" formArrayName="categoryIds">
-      <label>Catégories du média</label>
-      <div class="form-row" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
-        <select class="form-control custom-select col-9" [formControlName]="index" [id]="'category-' + index">
-          <option [ngValue]="null"></option>
-          <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">{{ category.name }}</option>
-        </select>
+    <div class="mb-3" formArrayName="categoryIds">
+      <label class="form-label">Catégories du média</label>
+      <div class="row gx-2" [class.mt-2]="!first" *ngFor="let categoryControl of categoryIds.controls; index as index; first as first">
+        <div class="col-9">
+          <select class="form-select" [formControlName]="index" [id]="'category-' + index">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let category of unselectedCategories(categoryControl.value)" [ngValue]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
         <div class="col-3">
           <button type="button" class="btn btn-link add-category-button" (click)="addCategory()">
-            <span class="sr-only">Ajouter une catégorie</span>
+            <span class="visually-hidden">Ajouter une catégorie</span>
             <fa-icon [icon]="addIcon"></fa-icon>
           </button>
           <!-- Remove a category if more than 1 -->
@@ -29,7 +34,7 @@
             class="btn btn-link remove-category-button"
             (click)="removeCategory(index)"
           >
-            <span class="sr-only">Supprimer une catégorie</span>
+            <span class="visually-hidden">Supprimer une catégorie</span>
             <fa-icon [icon]="removeIcon"></fa-icon>
           </button>
         </div>

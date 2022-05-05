@@ -4,16 +4,16 @@
   <div class="content mt-5">
     <div *ngFor="let category of categories">
       <div class="d-flex">
-        <div><fa-icon [icon]="categoryIcon" class="mr-2"></fa-icon></div>
+        <div><fa-icon [icon]="categoryIcon" class="me-2"></fa-icon></div>
         <div class="flex-grow-1 row category">
           <div class="col-6 col-md-4">
             <a [routerLink]="['/indicator-categories', category.id, 'edit']">{{ category.name }}</a>
           </div>
         </div>
-        <div class="text-right">
+        <div class="text-end">
           <button (click)="deleteCategory(category)" type="button" class="btn btn-outline-danger btn-sm delete-category-button">
             <fa-icon [icon]="deleteCategoryIcon"></fa-icon>
-            <span class="sr-only">Supprimer la catégorie</span>
+            <span class="visually-hidden">Supprimer la catégorie</span>
           </button>
         </div>
       </div>
@@ -21,9 +21,9 @@
     </div>
   </div>
 
-  <div class="text-right mt-2">
+  <div class="text-end mt-2">
     <a class="btn btn-outline-secondary" id="create-category" routerLink="/indicator-categories/new">
-      <fa-icon [icon]="createCategoryIcon" class="mr-1"></fa-icon>
+      <fa-icon [icon]="createCategoryIcon" class="me-1"></fa-icon>
       <span>Créer une nouvelle catégorie</span>
     </a>
   </div>

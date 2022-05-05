@@ -1,6 +1,6 @@
 <div *ngIf="element" [formGroup]="elementGroup">
   <!-- SectionElement -->
-  <div class="mb-5 pl-3 left-border" *ngIf="isSection(element)">
+  <div class="mb-5 ps-3 left-border" *ngIf="isSection(element)">
     <div class="d-flex justify-content-between">
       <biom-heading [level]="level" [title]="element.description"></biom-heading>
       <button
@@ -11,7 +11,7 @@
         (click)="importSectionData()"
       >
         <fa-icon [icon]="transferData"></fa-icon>
-        <span class="sr-only">Importé les valeurs de la préprod</span>
+        <span class="visually-hidden">Importé les valeurs de la préprod</span>
       </button>
     </div>
     <div *ngFor="let sectionElement of element.elements">
@@ -35,7 +35,7 @@
     </div>
   </div>
   <!-- ListElement -->
-  <div *ngIf="isList(element)" class="mb-5 pl-3 left-border">
+  <div *ngIf="isList(element)" class="mb-5 ps-3 left-border">
     <biom-heading [level]="level" [title]="element.description"></biom-heading>
     <div formArrayName="elements">
       <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2 unit">
@@ -56,7 +56,7 @@
             [disabled]="unitIndex === 0"
           >
             <fa-icon [icon]="moveUpItemIcon"></fa-icon>
-            <span class="sr-only">Remonter l'élément dans la liste</span>
+            <span class="visually-hidden">Remonter l'élément dans la liste</span>
           </button>
           <button
             type="button"
@@ -65,7 +65,7 @@
             [disabled]="unitIndex + 1 >= element.elements.length"
           >
             <fa-icon [icon]="moveDownItemIcon"></fa-icon>
-            <span class="sr-only">Redescendre l'élément dans la liste</span>
+            <span class="visually-hidden">Redescendre l'élément dans la liste</span>
           </button>
         </div>
       </div>
@@ -78,7 +78,7 @@
   </div>
 
   <!-- MultiListElement -->
-  <div *ngIf="isMultiList(element)" class="mb-5 pl-3 left-border">
+  <div *ngIf="isMultiList(element)" class="mb-5 ps-3 left-border">
     <biom-heading [level]="level" [title]="element.description"></biom-heading>
     <div formArrayName="elements">
       <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2 unit">
@@ -103,7 +103,7 @@
       <button
         *ngFor="let template of element.templates"
         type="button"
-        class="btn btn-outline-primary mr-2 mb-2 add-unit"
+        class="btn btn-outline-primary me-2 mb-2 add-unit"
         (click)="addMultiListUnit(element, template)"
       >
         Ajouter {{ template.description }}

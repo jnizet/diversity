@@ -1,54 +1,56 @@
 <nav *ngIf="user$ | async as user" class="navbar navbar-expand-lg navbar-dark bg-dark py-1">
-  <a class="navbar-brand" routerLink="/">
-    <img src="assets/logo.png" alt="Logo" />
-    Administration
-  </a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    [attr.aria-expanded]="!collapsed"
-    [attr.aria-label]="'Afficher/maquer la navigation'"
-    (click)="collapsed = !collapsed"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" [ngbCollapse]="collapsed">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" id="navbar-indicators">
-        <a class="nav-link" routerLink="/indicators" (click)="collapsed = true">
-          <fa-icon [icon]="indicatorsIcon" class="mr-1"></fa-icon>
-          <span>Indicateurs BIOM</span>
-        </a>
-      </li>
-      <li class="nav-item" id="navbar-indicator-categories">
-        <a class="nav-link" routerLink="/indicator-categories" (click)="collapsed = true">
-          <fa-icon [icon]="indicatorCategoriesIcon" class="mr-1"></fa-icon>
-          <span>Catégories des indicateurs</span>
-        </a>
-      </li>
-      <li class="nav-item" id="ecogestures">
-        <a class="nav-link" routerLink="/ecogestures" (click)="collapsed = true">
-          <fa-icon [icon]="ecogesturesIcon" class="mr-1"></fa-icon>
-          <span>Éco-gestes</span>
-        </a>
-      </li>
-      <li class="nav-item" id="navbar-media-categories">
-        <a class="nav-link" routerLink="/media-categories" (click)="collapsed = true">
-          <span>Catégories des medias</span>
-        </a>
-      </li>
-    </ul>
-    <div class="navbar-nav">
-      <li class="navbar-text">
-        <fa-icon [icon]="userIcon" class="mr-1"></fa-icon>
-        {{ user.login }}
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" role="button" (click)="logout($event)" id="nav-logout">
-          <span class="sr-only">Déconnexion</span>
-          <fa-icon [icon]="logoutIcon"></fa-icon>
-        </a>
-      </li>
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">
+      <img src="assets/logo.png" alt="Logo" />
+      Administration
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      [attr.aria-expanded]="!collapsed"
+      [attr.aria-label]="'Afficher/maquer la navigation'"
+      (click)="collapsed = !collapsed"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [ngbCollapse]="collapsed">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item" id="navbar-indicators">
+          <a class="nav-link" routerLink="/indicators" (click)="collapsed = true">
+            <fa-icon [icon]="indicatorsIcon" class="me-1"></fa-icon>
+            <span>Indicateurs BIOM</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navbar-indicator-categories">
+          <a class="nav-link" routerLink="/indicator-categories" (click)="collapsed = true">
+            <fa-icon [icon]="indicatorCategoriesIcon" class="me-1"></fa-icon>
+            <span>Catégories des indicateurs</span>
+          </a>
+        </li>
+        <li class="nav-item" id="ecogestures">
+          <a class="nav-link" routerLink="/ecogestures" (click)="collapsed = true">
+            <fa-icon [icon]="ecogesturesIcon" class="me-1"></fa-icon>
+            <span>Éco-gestes</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navbar-media-categories">
+          <a class="nav-link" routerLink="/media-categories" (click)="collapsed = true">
+            <span>Catégories des medias</span>
+          </a>
+        </li>
+      </ul>
+      <div class="navbar-nav">
+        <li class="navbar-text">
+          <fa-icon [icon]="userIcon" class="me-1"></fa-icon>
+          {{ user.login }}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" role="button" (click)="logout($event)" id="nav-logout">
+            <span class="visually-hidden">Déconnexion</span>
+            <fa-icon [icon]="logoutIcon"></fa-icon>
+          </a>
+        </li>
+      </div>
     </div>
   </div>
 </nav>

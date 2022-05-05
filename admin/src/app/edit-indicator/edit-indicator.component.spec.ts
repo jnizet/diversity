@@ -76,7 +76,7 @@ class EditIndicatorComponentTester extends ComponentTester<EditIndicatorComponen
   }
 
   get closeIndicatorSection() {
-    return this.indicatorSection.button('.close');
+    return this.indicatorSection.button('.btn-close');
   }
 
   get spinner() {
