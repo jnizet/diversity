@@ -1,47 +1,51 @@
-<div class="row" *ngIf="editedPage">
-  <div class="col-md-3 mt-5">
-    <div class="sticky-top">
-      <h5>VOLET DE NAVIGATION</h5>
-      <div class="ms-5 my-4" *ngFor="let element of editedPage.elements">
-        <a role="button" name="index--{{ element.name }}" (click)="scrollTo(element.name)">{{ element.description }}</a>
-      </div>
-    </div>
+<ng-container *ngIf="editedPage">
+  <div *ngIf="imageImported.length !== 0" class="alert alert-info sticky-top" role="alert">{{ imageImportedLabel }}</div>
+  <div class="d-flex justify-content-between mb-4">
+    <h1>
+      {{ mode === 'update' ? 'Modifier' : 'Créer' }} la page
+      <small>
+        <code>{{ editedPage.name }}</code>
+      </small>
+    </h1>
+    <button (click)="import()" class="btn btn-primary my-2" id="import-button">Importer</button>
   </div>
-  <div class="col-md-9">
-    <div *ngIf="imageImported.length !== 0" class="alert alert-info sticky-top" role="alert">{{ imageImportedLabel }}</div>
-    <div class="d-flex justify-content-between">
-      <h1>
-        {{ mode === 'update' ? 'Modifier' : 'Créer' }} la page
-        <small>
-          <code>{{ editedPage.name }}</code>
-        </small>
-      </h1>
-      <button (click)="import()" class="btn btn-primary my-2" id="import-button">Importer</button>
-    </div>
-    <form [formGroup]="pageForm" (ngSubmit)="savePage()">
-      <div class="mb-3">
-        <label class="form-label" for="title">Titre de la page</label>
-        <input id="title" class="form-control" formControlName="title" />
-        <val-errors controlName="title" label="Le titre"></val-errors>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sticky-top d-none d-md-block">
+        <h2 class="fs-5 mb-4" style="font-variant: small-caps">Volet de navigation</h2>
+        <ul class="list-unstyled">
+          <li *ngFor="let element of editedPage.elements" class="ms-1 mb-2">
+            <a role="button" name="index--{{ element.name }}" (click)="scrollTo(element.name)">{{ element.description }}</a>
+          </li>
+        </ul>
       </div>
-      <div formGroupName="elements">
-        <div *ngFor="let element of editedPage.elements" id="page-element--{{ element.name }}">
-          <biom-edit-page-element
-            [formControlName]="element.name"
-            [pageName]="editedPage.name"
-            [pageModelName]="editedPage.modelName"
-            [submitted]="submitted"
-            [elementModel]="getElementModel(element.name)"
-            [level]="2"
-          ></biom-edit-page-element>
+    </div>
+    <div class="col-md-9">
+      <form [formGroup]="pageForm" (ngSubmit)="savePage()">
+        <div class="mb-3">
+          <label class="form-label" for="title">Titre de la page</label>
+          <input id="title" class="form-control" formControlName="title" />
+          <val-errors controlName="title" label="Le titre"></val-errors>
         </div>
-      </div>
-      <div class="mb-1">
-        <button #saveButton type="submit" [disabled]="imageImported.length !== 0" class="btn btn-primary me-2" id="save-button">
-          Enregistrer
-        </button>
-        <a class="btn btn-danger" routerLink="/">Annuler</a>
-      </div>
-    </form>
+        <div formGroupName="elements">
+          <div *ngFor="let element of editedPage.elements" id="page-element--{{ element.name }}">
+            <biom-edit-page-element
+              [formControlName]="element.name"
+              [pageName]="editedPage.name"
+              [pageModelName]="editedPage.modelName"
+              [submitted]="submitted"
+              [elementModel]="getElementModel(element.name)"
+              [level]="2"
+            ></biom-edit-page-element>
+          </div>
+        </div>
+        <div class="mb-1">
+          <button #saveButton type="submit" [disabled]="imageImported.length !== 0" class="btn btn-primary me-2" id="save-button">
+            Enregistrer
+          </button>
+          <a class="btn btn-danger" routerLink="/">Annuler</a>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
+</ng-container>
