@@ -7,7 +7,6 @@ import fr.mnhn.diversity.model.Checkbox;
 import fr.mnhn.diversity.model.Select;
 import fr.mnhn.diversity.model.meta.CheckboxElement;
 import fr.mnhn.diversity.model.meta.MultiListElement;
-import fr.mnhn.diversity.model.meta.MultiListTemplateElement;
 import fr.mnhn.diversity.model.meta.SelectElement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,53 +172,60 @@ public class PageRestController {
         }
 
         @Override
-        public Void visitMultiListElement(MultiListElement section) {
-            Map<Integer, List<PageElementDTO>> elementsByIndex =new HashMap<>();
-            List<String> alreadyVisitIndex = new ArrayList<>();
-            String name = section.getName();
-            String key = prefix + name  + "." ;
-            PageValuesPopulatorVisitor templateVisitor = new PageValuesPopulatorVisitor(null, "");
+        public Void visitMultiListElement(MultiListElement multiList) {
+            List<SectionElementDTO> elements = new ArrayList<>();
 
-            if(page != null) {
-                section.getTemplates().stream().forEach(t ->
-                    page.getElements().keySet().stream().filter(e ->
-                        e.contains(t.getName()) && e.contains(prefix)
-                    ).forEach(e -> {
-                        var index = e.substring(key.length(), e.length() - 1).split("\\.")[0];
-                        String elementsPrefix = key + index + ".";
-                        if(!alreadyVisitIndex.contains(elementsPrefix)) {
-                            alreadyVisitIndex.add(elementsPrefix);
-                            PageValuesPopulatorVisitor listVisitor = new PageValuesPopulatorVisitor(
-                                page, elementsPrefix);
-                            t.accept(listVisitor);
-                            elementsByIndex.put(Integer.parseInt(index), listVisitor.getElements());
+            // if the list model has no element (which should never happen), there is nothing to add to the list
+            if (multiList.getTemplates().isEmpty()) {
+                return null;
+            }
+
+            String listKey = prefix + multiList.getName();
+
+            if (page != null) {
+                // here we find what the max index is
+                // then build an element for each index, and add the elements to the unit
+                int maxListIndex = PageUtils.findMaxListIndex(page, listKey + ".");
+                for (int i = 0; i <= maxListIndex; i++) {
+                    String elementsPrefix = listKey + "." + i + ".";
+                    String firstKeyWithPrefix = PageUtils.findFirstKeyWithPrefix(page, elementsPrefix);
+                    if (firstKeyWithPrefix != null) {
+                        String endOfKey = firstKeyWithPrefix.substring(elementsPrefix.length());
+                        int dotIndex = endOfKey.indexOf('.');
+                        if (dotIndex >= 0) {
+                            String templateName = endOfKey.substring(0, dotIndex);
+                            SectionElement sectionElement = multiList.getTemplates()
+                                                                     .stream()
+                                                                     .filter(t -> t.getName().equals(templateName))
+                                                                     .findAny()
+                                                                     .orElse(null);
+                            if (sectionElement != null) {
+                                PageValuesPopulatorVisitor sectionVisitor =
+                                    new PageValuesPopulatorVisitor(page, elementsPrefix);
+                                sectionElement.accept(sectionVisitor);
+                                sectionVisitor.getElements().forEach(e -> elements.add((SectionElementDTO) e));
+                            }
+                            else {
+                                throw new IllegalArgumentException(templateName + " is not a valid template name of multi list " + multiList);
+                            }
                         }
-                    }));
+                        else {
+                            throw new IllegalArgumentException("expected dot in " + firstKeyWithPrefix + " after " + elementsPrefix);
+                        }
+                    }
+                }
             }
 
-            for (PageElement element : section.getTemplates()) {
-                element.accept(templateVisitor);
-            }
+            PageValuesPopulatorVisitor sectionVisitor =
+                new PageValuesPopulatorVisitor(null, listKey);
+            multiList.getTemplates().forEach(template -> {
+                template.accept(sectionVisitor);
+            });
+            List<SectionElementDTO> templates =
+                sectionVisitor.getElements().stream().map(e -> ((SectionElementDTO) e)).collect(Collectors.toList());
 
-            Map<Integer, List<PageElementDTO>> elementsByIndexSorted = new TreeMap<>(elementsByIndex);
+            this.elements.add(new MultiListElementDTO(multiList, elements, templates));
 
-            MultiListElementDTO sectionElementDTO = new MultiListElementDTO(section, elementsByIndexSorted.values().stream().flatMap(List::stream).collect(
-                Collectors.toList()), templateVisitor.getElements());
-            elements.add(sectionElementDTO);
-            return null;
-        }
-
-        @Override
-        public Void visitMultiListTemplateElement(
-            MultiListTemplateElement multiListTemplateElement) {
-            String name = multiListTemplateElement.getName();
-            String key = prefix + name;
-            PageValuesPopulatorVisitor sectionVisitor = new PageValuesPopulatorVisitor(page, key + ".");
-            for (PageElement element : multiListTemplateElement.getElements()) {
-                element.accept(sectionVisitor);
-            }
-            MultiListTemplateElementDTO sectionElementDTO = new MultiListTemplateElementDTO(multiListTemplateElement, sectionVisitor.getElements());
-            elements.add(sectionElementDTO);
             return null;
         }
 

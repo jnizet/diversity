@@ -51,26 +51,26 @@
         <div class="article-body-element-wrapper">
           <span class="article-introduction" biom:markdown="*{body.introduction.text}"></span>
         </div>
-        <div th:each="element: *{#media.orderMediaList(body.titre_question)}">
-          <div th:if="${#media.getContentType(element) == 'paragraph'}" class="article-body-element-wrapper">
-            <span class="article-paragraph" biom:markdown="${element.paragraph.paragraphText.text}"></span>
+        <div th:each="element: *{body.titre_question}">
+          <div th:if="${element.template == 'paragraph'}" class="article-body-element-wrapper">
+            <span class="article-paragraph" biom:markdown="${element.content.paragraphText.text}"></span>
           </div>
-          <div th:if="${#media.getContentType(element) == 'image'}" class="article-body-element-wrapper article-img-element">
+          <div th:if="${element.template == 'image'}" class="article-body-element-wrapper article-img-element">
             <div class="image-wrapper">
-              <img biom:image="${element.image.imageElement}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="article-img" />
+              <img biom:image="${element.content.imageElement}" loading="lazy" sizes="(max-width: 991px) 100vw, 50vw" class="article-img" />
               <div class="legend-wrapper">
                 <img th:src="@{/assets/images/Pin.svg}" loading="lazy" alt="" />
-                <div class="legend-text" biom:markdown="${element.image.imageElement.alt}">Chelonia mydas ©  B. Guichard</div>
+                <div class="legend-text" biom:markdown="${element.content.imageElement.alt}">Chelonia mydas ©  B. Guichard</div>
               </div>
             </div>
           </div>
-          <div th:if="${#media.getContentType(element) == 'questionAnswer'}" class="article-body-element-wrapper">
-            <h3 class="article-question" biom:markdown="${'Q: ' + element.questionAnswer.question.text}"></h3>
-            <span class="article-paragraph" biom:markdown="${element.questionAnswer.response.text}"></span>
+          <div th:if="${element.template == 'questionAnswer'}" class="article-body-element-wrapper">
+            <h3 class="article-question" biom:markdown="${'Q: ' + element.content.question.text}"></h3>
+            <span class="article-paragraph" biom:markdown="${element.content.response.text}"></span>
           </div>
-          <div th:if="${#media.getContentType(element) == 'citation'}" class="article-citation-wrapper">
+          <div th:if="${element.template == 'citation'}" class="article-citation-wrapper">
             <img src="/assets/images/quote.svg" loading="lazy" alt="" class="article-citation-quote" />
-            <span class="article-citation" biom:markdown="${element.citation.citationElement.text}"></span>
+            <span class="article-citation" biom:markdown="${element.content.citationElement.text}"></span>
           </div>
         </div>
       </section>

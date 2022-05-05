@@ -29,6 +29,19 @@ public class PageUtils {
     }
 
     /**
+     * Finds any key starting with the given prefix in the page, or null if none is found
+     */
+    public static String findFirstKeyWithPrefix(Page page, String keyPrefix) {
+        return page.getElements()
+                   .values()
+                   .stream()
+                   .map(Element::getKey)
+                   .filter(key -> key.startsWith(keyPrefix))
+                   .findAny()
+                   .orElse(null);
+    }
+
+    /**
      * Returns the element of the page with the specified key, after checking its existence and validity.
      */
     public static Element getElement(Page page, String key, ElementType elementType) {

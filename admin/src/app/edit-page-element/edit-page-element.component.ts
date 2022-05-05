@@ -198,7 +198,7 @@ export class EditPageElementComponent implements ControlValueAccessor, OnInit {
     element.elements.push(listUnitElement);
   }
 
-  addMultiListUnit(element: MultiListElement, template: ListUnitElement) {
+  addMultiListUnit(element: MultiListElement, template: SectionElement) {
     // push it to the list elements
     element.elements.push(template);
     this.elementsArray.push(this.fb.control(template, [Validators.required, validElement]));

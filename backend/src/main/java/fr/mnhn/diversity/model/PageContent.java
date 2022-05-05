@@ -65,6 +65,15 @@ public final class PageContent {
      *         }
      *     }
      * </pre>
+     *
+     * Note that for multi lists, the list elements will look like
+     * <pre>
+     *     {
+     *         template: "name of the template"
+     *         content: { ... }
+     *     }
+     * </pre>
+     * so that the UI can know what type of section each element of the multi list has
      */
     private final Map<String, Object> content;
 
@@ -80,8 +89,7 @@ public final class PageContent {
         this.content = content;
     }
 
-    public PageContent(Page page,
-                       Map<String, Object> content) {
+    public PageContent(Page page, Map<String, Object> content) {
         this(page.getId(), page.getName(), page.getModelName(), page.getTitle(), content);
     }
 

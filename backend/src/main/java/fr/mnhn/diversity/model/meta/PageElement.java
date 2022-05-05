@@ -12,7 +12,7 @@ public abstract class PageElement {
 
     public PageElement(String name, String description) {
         Objects.requireNonNull(name, "name may not be null");
-        Objects.requireNonNull(description, "description may not be null");
+        Objects.requireNonNull(description, "description of element " + name + " may not be null");
         if (name.isBlank()) {
             throw new IllegalArgumentException("name may not be blank");
         }

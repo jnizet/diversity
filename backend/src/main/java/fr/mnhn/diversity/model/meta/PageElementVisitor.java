@@ -7,7 +7,6 @@ package fr.mnhn.diversity.model.meta;
 public interface PageElementVisitor<T> {
     T visitSection(SectionElement section);
     T visitMultiListElement(MultiListElement multiListElement);
-    T visitMultiListTemplateElement(MultiListTemplateElement multiListTemplateElement);
     T visitList(ListElement list);
     T visitText(TextElement text);
     T visitImage(ImageElement image);

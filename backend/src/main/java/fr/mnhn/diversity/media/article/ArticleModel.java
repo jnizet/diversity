@@ -1,10 +1,8 @@
 package fr.mnhn.diversity.media.article;
 
 import fr.mnhn.diversity.model.meta.MultiListElement;
-import fr.mnhn.diversity.model.meta.MultiListTemplateElement;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
-import java.util.List;
 
 /**
  * The model for article Model.
@@ -34,20 +32,26 @@ public final class ArticleModel {
                 .describedAs("Corps de l'article")
                 .multiLineText("introduction", " Introduction de l’article")
                 .list(
-                    MultiListElement.builder("titre_question")
-                        .templates( List.of(
-                            MultiListTemplateElement.builder("questionAnswer").describedAs("un bloc question/réponse")
+                    MultiListElement
+                        .builder("titre_question")
+                        .describedAs("Ajouter un élément")
+                        .template(
+                            SectionElement.builder("questionAnswer").describedAs("un bloc question/réponse")
                                 .titleText("question", "Question")
-                                .multiLineText("response", "Réponse"),
-                            MultiListTemplateElement.builder("paragraph").describedAs("un paragraphe")
-                                .multiLineText("paragraphText", "Paragraphe"),
-                            MultiListTemplateElement.builder("image").describedAs("une image")
-                                .multiSizeImage("imageElement", "Image"),
-                            MultiListTemplateElement.builder("citation").describedAs("une citation")
+                                .multiLineText("response", "Réponse")
+                        )
+                        .template(
+                            SectionElement.builder("paragraph").describedAs("un paragraphe")
+                                .multiLineText("paragraphText", "Paragraphe")
+                        )
+                        .template(
+                            SectionElement.builder("image").describedAs("une image")
+                                .multiSizeImage("imageElement", "Image")
+                        )
+                        .template(
+                            SectionElement.builder("citation").describedAs("une citation")
                                 .multiLineText("citationElement", "Citation")
                         ))
-                        .describedAs("Ajouter un élément")
-                )
             )
             .build();
 

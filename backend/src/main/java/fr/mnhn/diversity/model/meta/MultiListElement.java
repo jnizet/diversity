@@ -1,16 +1,20 @@
 package fr.mnhn.diversity.model.meta;
 
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class MultiListElement extends ContainerElement {
+public class MultiListElement extends PageElement {
 
-    private final List<MultiListTemplateElement> templates;
+    private final List<SectionElement> templates;
 
     private MultiListElement(MultiListElement.Builder builder) {
-        super(builder.name, builder.description, builder.elements);
-        templates = builder.templates;
+        super(builder.name, builder.description);
+        templates = List.copyOf(builder.templates);
     }
 
     @Override
@@ -27,7 +31,7 @@ public class MultiListElement extends ContainerElement {
         return new MultiListElement.Builder(name);
     }
 
-    public List<MultiListTemplateElement> getTemplates() {
+    public List<SectionElement> getTemplates() {
         return templates;
     }
 
@@ -35,15 +39,16 @@ public class MultiListElement extends ContainerElement {
         public Builder(String name) {
             super(name);
         }
-        private List<MultiListTemplateElement> templates = Collections.emptyList();
+        private List<SectionElement> templates = new ArrayList<>();
 
         @Override
         public MultiListElement build() {
             return new MultiListElement(this);
         }
 
-        public MultiListElement.Builder templates(List<MultiListTemplateElement.Builder> templates) {
-            this.templates = templates.stream().map(t -> t.build()).collect(Collectors.toList());
+        public MultiListElement.Builder template(SectionElement.Builder templateBuilder) {
+            SectionElement template = templateBuilder.build();
+            this.templates.add(template);
             return this;
         }
 

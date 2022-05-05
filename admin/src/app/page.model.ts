@@ -55,14 +55,14 @@ export interface ListElement extends ContainerElement {
   elements: Array<ListUnitElement>;
 }
 
-export interface MultiListElement extends ContainerElement {
-  type: 'MULTI_LIST';
-  elements: Array<ListUnitElement>;
-  templates: Array<ListUnitElement>;
-}
-
 export interface SectionElement extends ContainerElement {
   type: 'SECTION';
+}
+
+export interface MultiListElement extends ContainerElement {
+  type: 'MULTI_LIST';
+  elements: Array<SectionElement>;
+  templates: Array<SectionElement>;
 }
 
 export type PageElement =

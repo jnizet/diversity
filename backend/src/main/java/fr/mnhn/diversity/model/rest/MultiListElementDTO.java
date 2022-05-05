@@ -1,25 +1,24 @@
 package fr.mnhn.diversity.model.rest;
 
-import fr.mnhn.diversity.model.meta.ListElement;
-import fr.mnhn.diversity.model.meta.MultiListElement;
-import fr.mnhn.diversity.model.meta.MultiListTemplateElement;
 import java.util.List;
 
-public class MultiListElementDTO extends PageElementDTO {
-    private final List<? extends PageElementDTO> elements;
-    private final List<PageElementDTO> templates;
+import fr.mnhn.diversity.model.meta.MultiListElement;
 
-    public MultiListElementDTO(MultiListElement list, List<? extends PageElementDTO> elements, List<PageElementDTO> templates) {
-        super(PageElementType.MULTI_LIST, list);
+public class MultiListElementDTO extends PageElementDTO {
+    private final List<SectionElementDTO> elements;
+    private final List<SectionElementDTO> templates;
+
+    public MultiListElementDTO(MultiListElement multiListElement, List<SectionElementDTO> elements, List<SectionElementDTO> templates) {
+        super(PageElementType.MULTI_LIST, multiListElement);
         this.elements = elements;
         this.templates = templates;
     }
 
-    public List<? extends  PageElementDTO> getElements() {
+    public List<SectionElementDTO> getElements() {
         return elements;
     }
 
-    public List<PageElementDTO> getTemplates() {
+    public List<SectionElementDTO> getTemplates() {
         return templates;
     }
 }

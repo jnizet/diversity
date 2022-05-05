@@ -10,6 +10,7 @@ import java.util.Map;
 
 import fr.mnhn.diversity.common.exception.BadRequestException;
 import fr.mnhn.diversity.model.meta.ListElement;
+import fr.mnhn.diversity.model.meta.MultiListElement;
 import fr.mnhn.diversity.model.meta.PageModel;
 import fr.mnhn.diversity.model.meta.SectionElement;
 import okhttp3.mockwebserver.MockResponse;
@@ -92,6 +93,19 @@ class PageServiceTest {
                     .image("image", "Image")
                     .text("legend", "Legend")
                 )
+                .list(MultiListElement.builder("articleElements")
+                    .describedAs("Article elements")
+                    .template(
+                        SectionElement.builder("imageSection")
+                                      .describedAs("Image section")
+                                      .multiSizeImage("image", "Image")
+                    )
+                    .template(
+                        SectionElement.builder("paragraphSection")
+                                    .describedAs("Paragraph section")
+                                    .text("paragraph", "Paragraph")
+                    )
+                )
                 .build();
 
         Page page = new Page(1L, "Home", "home", "Welcome", List.of(
@@ -102,7 +116,9 @@ class PageServiceTest {
             Element.image(5L, "carousel.0.image", 2L, "0"),
             Element.text(6L, "carousel.0.legend", "Image 0"),
             Element.image(7L, "carousel.1.image", 3L, "1"),
-            Element.text(8L, "carousel.1.legend", "Image 1")
+            Element.text(8L, "carousel.1.legend", "Image 1"),
+            Element.text(9L, "articleElements.0.paragraphSection.paragraph", "Paragraph 1"),
+            Element.image(10L, "articleElements.1.imageSection.image", 4L, "Image 2", true)
         ));
 
         PageContent result = service.buildPageContent(pageModel, page);
@@ -130,6 +146,20 @@ class PageServiceTest {
                     Map.of(
                         "image", Element.image(7L, "carousel.1.image", 3L, "1", false),
                         "legend", Element.text(8L, "carousel.1.legend", "Image 1")
+                    )
+                ),
+                "articleElements", List.of(
+                    Map.of(
+                        "template", "paragraphSection",
+                        "content", Map.of(
+                            "paragraph", Element.text(9L, "articleElements.0.paragraphSection.paragraph", "Paragraph 1")
+                        )
+                    ),
+                    Map.of(
+                        "template", "imageSection",
+                        "content", Map.of(
+                            "image", Element.image(10L, "articleElements.1.imageSection.image", 4L, "Image 2", true)
+                        )
                     )
                 )
             )
