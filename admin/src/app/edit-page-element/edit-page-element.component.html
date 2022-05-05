@@ -38,35 +38,39 @@
   <div *ngIf="isList(element)" class="mb-5 ps-3 left-border">
     <biom-heading [level]="level" [title]="element.description"></biom-heading>
     <div formArrayName="elements">
-      <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2 unit">
+      <div *ngFor="let listElement of element.elements; index as unitIndex; first as firstUnit; last as lastUnit" class="mb-2 unit">
         <biom-edit-page-element
           [formControlName]="unitIndex"
           [submitted]="isSubmitted"
           [elementModel]="getElementModel(listElement.name)"
           [level]="level + 1"
         ></biom-edit-page-element>
-        <div class="list-element-buttons-controller">
-          <button type="button" class="btn btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
-            Enlever l'élément de la liste
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-primary move-up-unit"
-            (click)="moveUpListUnit(element, unitIndex)"
-            [disabled]="unitIndex === 0"
-          >
-            <fa-icon [icon]="moveUpItemIcon"></fa-icon>
-            <span class="visually-hidden">Remonter l'élément dans la liste</span>
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-primary move-down-unit"
-            (click)="moveDownListUnit(element, unitIndex)"
-            [disabled]="unitIndex + 1 >= element.elements.length"
-          >
-            <fa-icon [icon]="moveDownItemIcon"></fa-icon>
-            <span class="visually-hidden">Redescendre l'élément dans la liste</span>
-          </button>
+        <div class="list-element-buttons-controller d-flex align-items-start justify-content-between">
+          <div>
+            <button type="button" class="btn btn-sm btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
+              Enlever l'élément de la liste
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary move-up-unit"
+              (click)="moveUpListUnit(element, unitIndex)"
+              [disabled]="firstUnit"
+            >
+              <fa-icon [icon]="moveUpItemIcon"></fa-icon>
+              <span class="visually-hidden">Monter l'élément dans la liste</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary move-down-unit"
+              (click)="moveDownListUnit(element, unitIndex)"
+              [disabled]="lastUnit"
+            >
+              <fa-icon [icon]="moveDownItemIcon"></fa-icon>
+              <span class="visually-hidden">Descendre l'élément dans la liste</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -81,17 +85,40 @@
   <div *ngIf="isMultiList(element)" class="mb-5 ps-3 left-border">
     <biom-heading [level]="level" [title]="element.description"></biom-heading>
     <div formArrayName="elements">
-      <div *ngFor="let listElement of element.elements; index as unitIndex" class="mb-2 unit">
+      <div *ngFor="let listElement of element.elements; index as unitIndex; first as firstUnit; last as lastUnit" class="mb-2 unit">
         <biom-edit-page-element
           [formControlName]="unitIndex"
           [submitted]="isSubmitted"
           [elementModel]="getMultiListElementModel(listElement.name)"
           [level]="level + 1"
         ></biom-edit-page-element>
-        <div class="list-element-buttons-controller">
-          <button type="button" class="btn btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
-            Enlever l'élément de la liste
-          </button>
+
+        <div class="multi-list-element-buttons-controller row">
+          <div class="col">
+            <button type="button" class="btn btn-sm btn-outline-danger remove-unit" (click)="removeListUnit(element, unitIndex)">
+              Enlever l'élément de la liste
+            </button>
+          </div>
+          <div class="col-auto">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary move-up-unit me-1"
+              (click)="moveUpListUnit(element, unitIndex)"
+              [disabled]="firstUnit"
+            >
+              <fa-icon [icon]="moveUpItemIcon"></fa-icon>
+              <span class="visually-hidden">Monter l'élément dans la liste</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary move-down-unit"
+              (click)="moveDownListUnit(element, unitIndex)"
+              [disabled]="lastUnit"
+            >
+              <fa-icon [icon]="moveDownItemIcon"></fa-icon>
+              <span class="visually-hidden">Descendre l'élément dans la liste</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
