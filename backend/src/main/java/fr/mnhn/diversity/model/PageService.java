@@ -257,8 +257,6 @@ public class PageService {
                     String elementsPrefix = keyPrefix + i + ".";
                     PagePopulatorVisitor listVisitor = new PagePopulatorVisitor(page, elementsPrefix, usedElements);
                     for (PageElement element : list.getElements()) {
-                        var a  = page;
-                        var b = element;
                         element.accept(listVisitor);
                     }
                     theList.add(listVisitor.getResult());

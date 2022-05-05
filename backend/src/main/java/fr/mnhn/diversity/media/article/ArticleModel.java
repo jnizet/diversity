@@ -42,7 +42,7 @@ public final class ArticleModel {
                             MultiListTemplateElement.builder("paragraph").describedAs("un paragraphe")
                                 .multiLineText("paragraphText", "Paragraphe"),
                             MultiListTemplateElement.builder("image").describedAs("une image")
-                                .multiSizeImage("imageElement", "image_article"),
+                                .multiSizeImage("imageElement", "Image"),
                             MultiListTemplateElement.builder("citation").describedAs("une citation")
                                 .multiLineText("citationElement", "Citation")
                         ))
