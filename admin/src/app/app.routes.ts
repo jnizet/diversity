@@ -42,7 +42,7 @@ export const APP_ROUTES: Routes = [
             component: EditMediaCategoryComponent
           },
           {
-            path: ':media/edit',
+            path: ':mediaCategoryId/edit',
             component: EditMediaCategoryComponent
           }
         ]

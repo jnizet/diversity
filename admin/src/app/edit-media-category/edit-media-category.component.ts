@@ -64,7 +64,7 @@ export class EditMediaCategoryComponent implements OnInit {
 
     obs.subscribe(() => {
       this.router.navigate(['/media-categories']);
-      this.toastService.success(`La catégorie d'indicateur a été ${this.mode === 'update' ? 'modifiée' : 'créée'}`);
+      this.toastService.success(`La catégorie de média a été ${this.mode === 'update' ? 'modifiée' : 'créée'}`);
     });
   }
 }

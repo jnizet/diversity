@@ -71,7 +71,7 @@ describe('EditMediaCategoryComponent', () => {
     });
 
     it('should have a title', () => {
-      expect(tester.title).toContainText(`Créer une catégorie d'indicateur`);
+      expect(tester.title).toContainText(`Créer une catégorie de média`);
     });
 
     it('should display an empty form', () => {
@@ -99,7 +99,7 @@ describe('EditMediaCategoryComponent', () => {
       };
       expect(mediaCategoryService.create).toHaveBeenCalledWith(expectedCommand);
       expect(router.navigate).toHaveBeenCalledWith(['/media-categories']);
-      expect(toastService.success).toHaveBeenCalledWith(`La catégorie d'indicateur a été créée`);
+      expect(toastService.success).toHaveBeenCalledWith(`La catégorie de média a été créée`);
     });
   });
 
@@ -121,7 +121,7 @@ describe('EditMediaCategoryComponent', () => {
     });
 
     it('should have a title', () => {
-      expect(tester.title).toContainText(`Modifier une catégorie d'indicateur`);
+      expect(tester.title).toContainText(`Modifier une catégorie de média`);
     });
 
     it('should display a filled form', () => {
@@ -139,7 +139,7 @@ describe('EditMediaCategoryComponent', () => {
       };
       expect(mediaCategoryService.update).toHaveBeenCalledWith(41, expectedCommand);
       expect(router.navigate).toHaveBeenCalledWith(['/media-categories']);
-      expect(toastService.success).toHaveBeenCalledWith(`La catégorie d'indicateur a été modifiée`);
+      expect(toastService.success).toHaveBeenCalledWith(`La catégorie de média a été modifiée`);
     });
   });
 });
