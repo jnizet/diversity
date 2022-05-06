@@ -31,4 +31,11 @@ describe('AuthenticationService', () => {
     testRequest.flush(expected);
     expect(actual).toBe(expected);
   });
+
+  it('should set and get the requested path', () => {
+    expect(service.getAndResetRequestedPath()).toBeFalsy();
+    service.setRequestedPath('/foo');
+    expect(service.getAndResetRequestedPath()).toBe('/foo');
+    expect(service.getAndResetRequestedPath()).toBeFalsy();
+  });
 });

@@ -36,7 +36,7 @@ export class AuthenticationComponent {
     this.authenticationService.login(this.form.value).subscribe({
       next: user => {
         this.currentUserService.set(user);
-        this.router.navigate(['/']);
+        this.router.navigateByUrl(this.authenticationService.getAndResetRequestedPath() ?? '/');
       },
       error: () => animate(this.authenticationButton.nativeElement, classBasedAnimation('shake')).subscribe()
     });

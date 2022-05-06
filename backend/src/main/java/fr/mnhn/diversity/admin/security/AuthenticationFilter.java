@@ -41,18 +41,16 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-
         String host = request.getRemoteHost();
         String key = extractKey(request);
 
-        if (key != null && isReadOnlyApiFromServerRequest(request) && apiKeyRepository
-            .existsByHostAndKey(host, key)){
+        if (key != null && isReadOnlyApiFromServerRequest(request) && apiKeyRepository.existsByHostAndKey(host, key)) {
             chain.doFilter(request, response);
             return;
         }
         String login = extractLoginFromToken(request);
         if (isProtectedApiRequest(request) && (login == null || !userRepository.existsByLogin(login))) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized orgin: " + host);
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized origin: " + host);
         } else {
             chain.doFilter(request, response);
         }
@@ -65,7 +63,6 @@ public class AuthenticationFilter implements Filter {
 
     private boolean isReadOnlyApiFromServerRequest(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         return requestURI.startsWith("/api") && !requestURI.equals("/api/authentication") && request.getMethod().equals("GET");
     }
 

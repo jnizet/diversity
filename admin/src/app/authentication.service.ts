@@ -17,9 +17,21 @@ export interface AuthenticatedUser {
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private requestedPath?: string;
+
   constructor(private http: HttpClient) {}
 
   login(credentials: Credentials): Observable<AuthenticatedUser> {
     return this.http.post<AuthenticatedUser>('/api/authentication', credentials);
+  }
+
+  setRequestedPath(path: string) {
+    this.requestedPath = path;
+  }
+
+  getAndResetRequestedPath(): string | undefined {
+    const path = this.requestedPath;
+    this.requestedPath = undefined;
+    return path;
   }
 }

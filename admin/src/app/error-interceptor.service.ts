@@ -1,11 +1,13 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { ToastService } from './toast.service';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class ErrorInterceptorService implements HttpInterceptor {
-  constructor(private toastService: ToastService) {}
+  constructor(private toastService: ToastService, private router: Router, private authenticationService: AuthenticationService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
@@ -22,7 +24,11 @@ export class ErrorInterceptorService implements HttpInterceptor {
       const body = error.error;
       const functionalError = body?.functionalError;
 
-      if (status === 400 && functionalError) {
+      if (status === HttpStatusCode.Unauthorized) {
+        this.toastService.error(`Vous devez être (ré-)identifié. Redirection vers la page d'identification...`);
+        this.authenticationService.setRequestedPath(this.router.url);
+        this.router.navigate(['/login']);
+      } else if (status === HttpStatusCode.BadRequest && functionalError) {
         // The backend returns a message that we can use for the error (as we don't handle other languages than French)
         // If that's not the case, we fallback on the functional error code.
         const errorMessage = body?.message ?? functionalError;
