@@ -21,6 +21,6 @@ dependencies {
         api("io.jsonwebtoken:jjwt-api:$jwtVersion")
         api("io.jsonwebtoken:jjwt-impl:$jwtVersion")
         api("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
-        api("com.atlassian.commonmark:commonmark:0.15.2")
+        api("org.commonmark:commonmark:0.18.2")
     }
 }

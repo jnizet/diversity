@@ -33,7 +33,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("com.ninja-squad:DbSetup")
-    implementation("com.atlassian.commonmark:commonmark")
+    implementation("org.commonmark:commonmark")
     implementation("io.jsonwebtoken:jjwt-api")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
