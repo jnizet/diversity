@@ -10,7 +10,6 @@ public class MediaModel {
             .withPath("/media")
             .section(SectionElement.builder("article").describedAs("Article à la une")
                 .text("title", "Titre de l’article : input pour saisir le titre de l’article (peut être différent du titre sur la page de l’article)")
-                .text("title", "Titre de l’article : input pour saisir le titre de l’article (peut être différent du titre sur la page de l’article)")
                 .text("author", "Auteur")
                 .text("date", "Date de publication")
                 .link("button", "Bouton")

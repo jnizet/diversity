@@ -6,7 +6,7 @@
   th:replace="~{layout/main :: layout(title=~{::title}, opengraph=~{::meta%og}, content=~{::main}, bodyClass='indicateur-fiche', selectedMenu='media')}"
 >
   <head>
-    <title th:text="${page.title}">À propos</title>
+    <title th:text="${page.title}">Paroles d'acteurs</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <meta th:ref="og" property="og:title" th:attr="content=${page.content.article.title.text}" />
