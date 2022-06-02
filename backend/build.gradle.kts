@@ -2,11 +2,13 @@ plugins {
     java
     id("org.springframework.boot")
     id("com.google.cloud.tools.jib") version "3.1.4"
+    id("red.sukun1899.wanko") version "1.0.0"
 }
 
 buildscript {
     dependencies {
         classpath("com.google.cloud.tools:jib-spring-boot-extension-gradle:0.1.0")
+        classpath("org.postgresql:postgresql:42.3.5")
     }
 }
 
@@ -127,4 +129,18 @@ tasks {
             }
         }
     }
+
+    register("insertTestData") {
+        group = "application"
+        dependsOn("wankoRun")
+        description = "Inserts the test data located in database/testing/test-data.sql"
+    }
+}
+
+wanko {
+    url = "jdbc:postgresql://localhost:5432/diversity"
+    user = "diversity"
+    password = "diversity"
+    driverClassName = "org.postgresql.Driver"
+    sqlDir = project.file("database/testing/test-data.sql").absolutePath
 }

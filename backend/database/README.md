@@ -9,3 +9,7 @@ The files are executed sequentially, following the order of their name.
 If you want to add testing data, you can run:
 
     psql -U diversity -d diversity -h localhost -f backend/database/testing/test-data.sql
+
+or, if you don't have a PostgreSQL client
+
+    ./gradlew insertTestData
