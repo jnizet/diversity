@@ -37,7 +37,7 @@ See the [database README](./database/README.md) for details. The data located in
 located in the `images` directory.
 
 This `images` directory is a symbolic link to `../biom-backup/diversity/data`. In order to have that directory
-available, you need to execute the following comands, from the parent directory of this project (so that
+available, you need to execute the following commands, from the parent directory of this project (so that
 `biom-backup` is a sibling of `diversity`):
 
 ```bash
